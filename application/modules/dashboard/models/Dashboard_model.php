@@ -85,9 +85,12 @@
 			$idUser = $this->session->userdata("id");
 
 			for ($i = $mesInicial; $i <= $mesFinal; $i++) {
-					$data['fk_id_mes'] = $i;
-					$data['fk_id_actividad'] = $idActividad;
-					$data['fk_id_user'] = $idUser;
+					$data = array(
+						'fk_id_mes' => $i,
+						'fk_id_actividad' => $idActividad,
+						'fk_id_user' => $idUser,
+						'fecha_creacion' => date("Y-m-d G:i:s")
+					);	
 					$query = $this->db->insert('actividad_ejecucion', $data);
 			}
 
@@ -132,6 +135,38 @@
 		}
 
 		/**
+		 * Guardar Programacion Actividades
+		 * @since 23/04/2022
+		 */
+		public function guardarProgramacion() 
+		{
+				//update states
+				$query = 1;
+				
+				$datos = $this->input->post('form');
+				if($datos) {
+					$tot = count($datos['id']);
+					for ($i = 0; $i < $tot; $i++) 
+					{					
+						$data = array(
+							'programado' => $datos['programado'][$i],
+							'ejecutado' => $datos['ejecutado'][$i],
+							'descripcion_actividades' => $datos['descripcion'][$i],
+							'fecha_actualizacion' => date("Y-m-d G:i:s")
+						);
+						$this->db->where('id_ejecucion_actividad', $datos['id'][$i]);
+						$query = $this->db->update('actividad_ejecucion', $data);
+					}
+				}
+				
+				if ($query){
+					return true;
+				} else{
+					return false;
+				}
+		}
+
+		/**
 		 * Guardar Ejecucion Actividades
 		 * @since 17/04/2022
 		 */
@@ -142,6 +177,7 @@
 		
 				$data = array(
 					'fk_id_responsable' => $idUser,
+					'programado' => $this->input->post('programado'),
 					'ejecutado' => $this->input->post('ejecutado'),
 					'descripcion_actividades' => $this->input->post('descripcion'),
 					'fecha_actualizacion' => date("Y-m-d G:i:s")

@@ -269,65 +269,62 @@ $(function(){
 							</thead>
 						</table>
 
-						<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
-							<thead>
-								<tr class="headings">
-									<th class="column-title" colspan="5">-- EJECUCIÓN ACTIVIDAD --</th>
-								</tr>
-								
-								<tr class="headings">
-									<th class="column-title" style="width: 10%">Mes</th>
-									<th class="column-title" style="width: 10%">Programado</th>
-									<th class="column-title" style="width: 10%">Ejecutado</th>
-									<th class="column-title" style="width: 60%">Descripción</th>
-									<th class="column-title text-center" style="width: 10%">Links</th>
-								</tr>
-							</thead>
+						<form  name="ejecucion" id="ejecucion" method="post" action="<?php echo base_url("dashboard/update_programacion"); ?>">
 
-							<tbody>
-										
-							<?php
-								foreach ($infoEjecucion as $data):
-									$deshabilidar = '';
-									$variable = 'estado_trimestre_' . $data['numero_trimestre'];
-									if($estadoActividad && $estadoActividad[0][$variable] == 1){
-										$deshabilidar = 'disabled';
-									}
-
-									echo "<tr>";
-									echo "<td >$data[mes]</td>";
-									echo "<td >$data[programado]</td>";
-									
-									$idRecord = $data['id_ejecucion_actividad'];
-									$idActividad = $data['fk_id_actividad'];
-							?>		
-									
-						<form  name="ejecucion_<?php echo $idRecord ?>" id="ejecucion_<?php echo $idRecord ?>" method="post" action="<?php echo base_url("dashboard/update_ejecucion"); ?>">
-
-							<input type="hidden" id="hddId" name="hddId" value="<?php echo $idRecord; ?>"/>
 							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $idActividad; ?>"/>
-							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-							<td>
-								<input type="text" id="ejecutado" name="ejecutado" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" required <?php echo $deshabilidar; ?> >
-							</td>
-							<td>
-								<textarea id="descripcion" name="descripcion" placeholder="Descripción" class="form-control" rows="2" required <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
-							</td>
-								
-							<td class='text-center'>
-								<input type="submit" id="btnSubmit2" name="btnSubmit2" value="Guardar" class="btn btn-primary btn-xs" <?php echo $deshabilidar; ?> />
-							</form>
-								<br><br>
-								<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/deleteEjecucion/' . $idCuadroBase . '/' . $idActividad . '/' . $idRecord) ?>' id="btn-delete" title="Delete" <?php echo $deshabilidar; ?> >
-										<span class="fa fa-trash-o" aria-hidden="true"> </span>
-								</a>
-							</td>
-							<?php
-									echo "</tr>";
-								endforeach;
-							?>
-							</tbody>
-						</table>
+							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>		
+
+							<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
+								<thead>
+									<tr class="headings">
+										<th class="column-title" colspan="4">-- EJECUCIÓN ACTIVIDAD --</th>
+										<th class="column-title" >
+											<button type="submit" class="btn btn-primary btn-xs" id="btnSubmit2" name="btnSubmit2" >
+												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+											</button>
+										</th>
+									</tr>
+									
+									<tr class="headings">
+										<th class="column-title" style="width: 10%">Mes</th>
+										<th class="column-title" style="width: 12%">Programado</th>
+										<th class="column-title" style="width: 12%">Ejecutado</th>
+										<th class="column-title" style="width: 56%">Descripción</th>
+										<th class="column-title text-center" style="width: 10%">Links</th>
+									</tr>
+								</thead>
+
+								<tbody>
+								<?php
+									foreach ($infoEjecucion as $data):
+										echo "<tr>";
+										echo "<td >$data[mes]</td>";							
+										$idRecord = $data['id_ejecucion_actividad'];
+										$idActividad = $data['fk_id_actividad'];
+								?>		
+										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
+										<td>
+											<input type="text" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" required >
+										</td>
+										<td>
+											<input type="text" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" >
+										</td>
+										<td>
+											<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="2"><?php echo $data['descripcion_actividades']; ?></textarea>
+										</td>
+											
+										<td class='text-center'>
+											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/deleteEjecucion/' . $idCuadroBase . '/' . $idActividad . '/' . $idRecord) ?>' id="btn-delete" title="Delete" >
+													<span class="fa fa-trash-o" aria-hidden="true"> </span>
+											</a>
+										</td>
+								<?php
+										echo "</tr>";
+									endforeach;
+								?>
+								</tbody>
+							</table>
+						</form>
 					</div>	
 		<?php
 			}

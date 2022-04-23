@@ -292,6 +292,27 @@ class Dashboard extends CI_Controller {
     }
 
 	/**
+	 * Actualizar programacion
+     * @since 23/04/2022
+     * @author BMOTTAG
+	 */
+	public function update_programacion()
+	{					
+			$idActividad = $this->input->post('hddIdActividad');
+			$idCuadroBase = $this->input->post('hddIdCuadroBase');
+
+			if ($this->dashboard_model->guardarProgramacion()) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', "Se actualizó la información!!");
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			redirect(base_url('dashboard/actividades/' . $idCuadroBase . '/' . $idActividad), 'refresh');
+    }
+
+	/**
 	 * Actualizar ejecucion
      * @since 17/04/2022
      * @author BMOTTAG
@@ -300,9 +321,6 @@ class Dashboard extends CI_Controller {
 	{					
 			$idActividad = $this->input->post('hddIdActividad');
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
-
-			$arrParam = array("idActividad" => $idActividad);
-			$infoActividad = $this->general_model->get_actividades($arrParam);
 
 			if ($this->dashboard_model->guardarEjecucion()) {
 				$data["result"] = true;
