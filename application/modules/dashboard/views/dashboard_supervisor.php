@@ -1,20 +1,3 @@
-<script>
-$(function(){ 
-    $(".btn-primary").click(function () {   
-            var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-                url: base_url + 'dashboard/cargarModalCuadroBase',
-                data: {'idEstrategia': oID},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatos').html(data);
-                }
-            });
-    }); 
-});
-</script>
-
 <div id="page-wrapper">
     <div class="row"><br>
 		<div class="col-md-12">
@@ -76,14 +59,6 @@ if ($retornoError) {
                                     ?>
                                     </a>
                                     </small>
-
-                                    <div class="pull-right">
-                                        <div class="btn-group">                                                                             
-                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_estrategia']; ?>">
-                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Plan de Desarrollo Distrital
-                                            </button>
-                                        </div>
-                                    </div>
                                 </h4>
                             </div>
                             <div id="collapse<?php echo $lista['id_estrategia']; ?>" class="panel-collapse collapse">
@@ -94,6 +69,19 @@ if ($retornoError) {
                                         $metas = $this->general_model->get_lista_metas($arrParam);
                                         $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                         $resultados = $this->general_model->get_lista_resultados($arrParam);
+                                        //consulto los ID de cuadro base para los que es responsable
+                                        $filtroCuadroBase = $this->general_model->get_cuadro_base_by_responsable($arrParam);
+                                        $valor = '';
+                                        if($filtroCuadroBase){
+                                            $tot = count($filtroCuadroBase);
+                                            for ($i = 0; $i < $tot; $i++) {
+                                                $valor = $valor . $filtroCuadroBase[$i]['fk_id_cuadro_base'];
+                                                if($i != ($tot-1)){
+                                                    $valor .= ",";
+                                                }
+                                            }
+                                        }
+                                        $arrParam = array("filtroCuadroBase" => $valor);
                                         $cuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
 
                                         if($metas){
@@ -201,13 +189,3 @@ if ($retornoError) {
         </div>
     </div>
 </div>
-
-<!--INICIO Modal -->
-<div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" id="tablaDatos">
-
-        </div>
-    </div>
-</div>                       
-<!--FIN Modal  -->

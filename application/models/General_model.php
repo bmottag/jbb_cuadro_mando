@@ -267,9 +267,12 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select();
 				$this->db->join('objetivos_estrategicos O', 'O.id_objetivo_estrategico = E.fk_id_objetivo_estrategico', 'INNER');
-
 				if (array_key_exists("idEstratega", $arrData)) {
-					$this->db->where('E.id_estrategia ', $arrData["idEstratega"]);
+					$this->db->where('E.id_estrategia', $arrData["idEstratega"]);
+				}
+				if (array_key_exists("filtroEstrategias", $arrData)) {
+					$where = "E.id_estrategia IN (" . $arrData["filtroEstrategias"] . ")";
+					$this->db->where($where);
 				}
 				$this->db->order_by('numero_estrategia', 'asc');
 				$query = $this->db->get('estrategias E');
@@ -297,6 +300,10 @@ class General_model extends CI_Model {
 				$this->db->join('param_dependencias D', 'D.id_dependencia = C.fk_id_dependencia', 'INER');
 				if (array_key_exists("idCuadroBase", $arrData)) {
 					$this->db->where('C.id_cuadro_base', $arrData["idCuadroBase"]);
+				}
+				if (array_key_exists("filtroCuadroBase", $arrData)) {
+					$where = "C.id_cuadro_base IN (" . $arrData["filtroCuadroBase"] . ")";
+					$this->db->where($where);
 				}
 				if (array_key_exists("idEstrategia", $arrData)) {
 					$this->db->where('C.fk_id_estrategia', $arrData["idEstrategia"]);
@@ -443,6 +450,55 @@ class General_model extends CI_Model {
 				$query = $this->db->get('actividad_ejecucion E');
 				if ($query->num_rows() > 0) {
 					return $query->row_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta lista de estratgias
+		 * @since 23/04/2022
+		 */
+		public function get_estrategias_by_responsable($arrData) 
+		{		
+				$userRol = $this->session->userdata("rol");
+				$idUser = $this->session->userdata("id");
+				
+				$this->db->select('fk_id_estrategia');
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				if($userRol == 4){
+					$this->db->where('A.fk_id_responsable', $idUser);
+				}
+				$this->db->group_by("C.fk_id_estrategia");
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta lista de cuadro bases
+		 * @since 23/04/2022
+		 */
+		public function get_cuadro_base_by_responsable($arrData) 
+		{		
+				$userRol = $this->session->userdata("rol");
+				$idUser = $this->session->userdata("id");
+				
+				$this->db->select('fk_id_cuadro_base');
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				if($userRol == 4){
+					$this->db->where('A.fk_id_responsable', $idUser);
+				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('C.fk_id_estrategia', $arrData["idEstrategia"]);
+				}
+				$this->db->group_by("A.fk_id_cuadro_base");
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
 				} else {
 					return false;
 				}
