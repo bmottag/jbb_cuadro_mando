@@ -225,8 +225,8 @@ class Dashboard extends CI_Controller {
 			if ($nuevaActividad = $this->dashboard_model->guardarActividad()) 
 			{	
 				if ($idActividad == ''){
-					//generar los programas
-					$this->dashboard_model->save_programa_actividad($nuevaActividad);					
+					$this->dashboard_model->save_programa_actividad($nuevaActividad);//generar los programas
+					$this->dashboard_model->guardarTrimestre(false, $nuevaActividad, '', 0, 1);//generar REGISTRO DE ESTADO ACTIVIDAD			
 				}
 				$data["result"] = true;		
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);

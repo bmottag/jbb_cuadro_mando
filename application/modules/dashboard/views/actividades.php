@@ -287,9 +287,9 @@ $(function(){
 									
 									<tr class="headings">
 										<th class="column-title" style="width: 10%">Mes</th>
-										<th class="column-title" style="width: 12%">Programado</th>
-										<th class="column-title" style="width: 12%">Ejecutado</th>
-										<th class="column-title" style="width: 56%">Descripción</th>
+										<th class="column-title" style="width: 15%">Programado</th>
+										<th class="column-title" style="width: 55%">Ejecutado</th>
+										<th class="column-title text-center" style="width: 10%">Estado</th>
 										<th class="column-title text-center" style="width: 10%">Links</th>
 									</tr>
 								</thead>
@@ -297,6 +297,32 @@ $(function(){
 								<tbody>
 								<?php
 									foreach ($infoEjecucion as $data):
+										$variable = 'estado_trimestre_' . $data['numero_trimestre'];
+										if($estadoActividad){
+											switch ($estadoActividad[0][$variable]) {
+												case 0:
+													$valor = 'No Iniciada';
+													$clase = "text-primary";
+													break;
+												case 1:
+													$valor = 'En Proceso';
+													$clase = "text-warning";
+													break;
+												case 2:
+													$valor = 'Cerrada';
+													$clase = "text-warning";
+													break;
+												case 3:
+													$valor = 'Aprobada';
+													$clase = "text-success";
+													break;
+												case 4:
+													$valor = 'Devuelta';
+													$clase = "text-danger";
+													break;
+											}
+										}
+
 										echo "<tr>";
 										echo "<td >$data[mes]</td>";							
 										$idRecord = $data['id_ejecucion_actividad'];
@@ -307,12 +333,21 @@ $(function(){
 											<input type="text" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" required >
 										</td>
 										<td>
-											<input type="text" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" >
+											<?php
+												if($data['ejecutado'] && $data['ejecutado'] > 0){
+													echo $data['ejecutado']; 
+													if($data['descripcion_actividades'] > 0){
+														echo "<br><b>Descripción:</b></br>" . $data['descripcion_actividades'];
+													}
+													if($data['evidencias'] > 0){
+														echo "<br><b>Evidencias:</b></br>" . $data['evidencias'];
+													}
+												}
+											?>
 										</td>
-										<td>
-											<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="2"><?php echo $data['descripcion_actividades']; ?></textarea>
+										<td class='text-center'>
+											<p class="<?php echo $clase; ?>"><strong><?php echo $valor; ?></strong></p>
 										</td>
-											
 										<td class='text-center'>
 											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/deleteEjecucion/' . $idCuadroBase . '/' . $idActividad . '/' . $idRecord) ?>' id="btn-delete" title="Delete" >
 													<span class="fa fa-trash-o" aria-hidden="true"> </span>
@@ -331,17 +366,11 @@ $(function(){
 		?>
 <!-- FIN HISTORICO -->
 				</div>
-				<!-- /.panel-body -->
 			</div>
-			<!-- /.panel -->
 		</div>
-		<!-- /.col-lg-12 -->
 	</div>
-	<!-- /.row -->
 </div>
-<!-- /#page-wrapper -->
 		
-				
 <!--INICIO Modal -->
 <div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
 	<div class="modal-dialog" role="document">
