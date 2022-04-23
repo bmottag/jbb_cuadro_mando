@@ -59,16 +59,44 @@
 				{
 					$data['fk_id_cuadro_base'] = $idCuadroBase;
 					$query = $this->db->insert('actividades', $data);
+					$idActividad = $this->db->insert_id();	
 				} else {
 					$this->db->where('id_actividad', $idActividad);
 					$query = $this->db->update('actividades', $data);
 				}
 				if ($query) {
-					return true;
+					return $idActividad;
 				} else {
 					return false;
 				}
 		}
+
+		/**
+		 * Adicionar registros de programacion por mes
+	     * @since 23/04/2022
+	     * @author BMOTTAG
+		 */
+		public function save_programa_actividad($idActividad) 
+		{
+			//add the new record
+			$query = 1;
+			$mesInicial = $this->input->post('fecha_inicial');
+			$mesFinal = $this->input->post('fecha_final');
+			$idUser = $this->session->userdata("id");
+
+			for ($i = $mesInicial; $i <= $mesFinal; $i++) {
+					$data['fk_id_mes'] = $i;
+					$data['fk_id_actividad'] = $idActividad;
+					$data['fk_id_user'] = $idUser;
+					$query = $this->db->insert('actividad_ejecucion', $data);
+			}
+
+			if($query) {
+				return true;
+			} else{
+				return false;
+			}
+		}	
 
 		/**
 		 * Guardar Ejecucion Actividades
@@ -76,7 +104,6 @@
 		 */
 		public function guardarProgramado() 
 		{
-				$idCuadroBase = $this->input->post('hddIdCuadroBase');
 				$idActividad = $this->input->post('hddIdActividad');
 				$idEjecucion = $this->input->post('hddId');
 				$idUser = $this->session->userdata("id");
@@ -92,9 +119,9 @@
 					$data['fk_id_mes'] = $this->input->post('mes');
 					$data['fk_id_actividad'] = $idActividad;
 					$data['fk_id_user'] = $idUser;
-					$query = $this->db->insert(' actividad_ejecucion ', $data);
+					$query = $this->db->insert('actividad_ejecucion', $data);
 				} else {
-					$this->db->where('id_ejecucion_actividad ', $idEjecucion);
+					$this->db->where('id_ejecucion_actividad', $idEjecucion);
 					$query = $this->db->update(' actividad_ejecucion ', $data);
 				}
 				if ($query) {

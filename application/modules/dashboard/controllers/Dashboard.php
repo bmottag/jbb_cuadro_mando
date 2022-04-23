@@ -217,13 +217,17 @@ class Dashboard extends CI_Controller {
 	{			
 			header('Content-Type: application/json');
 			$data = array();
-			
+			$idActividad = $this->input->post('hddId');
 			$data["idRecord"] = $this->input->post('hddIdCuadroBase');
 		
 			$msj = "Se guardo la información!";
 
-			if ($this->dashboard_model->guardarActividad()) 
-			{				
+			if ($nuevaActividad = $this->dashboard_model->guardarActividad()) 
+			{	
+				if ($idActividad == ''){
+					//generar los programas
+					$this->dashboard_model->save_programa_actividad($nuevaActividad);					
+				}
 				$data["result"] = true;		
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
 			} else {
