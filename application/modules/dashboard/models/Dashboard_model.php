@@ -175,7 +175,6 @@
 		
 				$data = array(
 					'fk_id_responsable' => $idUser,
-					'programado' => $this->input->post('programado'),
 					'ejecutado' => $this->input->post('ejecutado'),
 					'descripcion_actividades' => $this->input->post('descripcion'),
 					'fecha_actualizacion' => date("Y-m-d G:i:s")
@@ -194,16 +193,16 @@
 		 * Guardar estado del Trimestre
 		 * @since 17/04/2022
 		 */
-		public function guardarTrimestre($estadoTrimestre, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
+		public function guardarTrimestre($banderaActividad, $estadoActividad, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
 		{	
 				$data = array(
 					'trimestre_' . $numeroTrimestre => $cumplimientoTrimestre,
-					'estado_trimestre_' . $numeroTrimestre => 1,
+					'estado_trimestre_' . $numeroTrimestre => $estadoActividad,
 					'avance_poa' => $avancePOA
 				);	
 
 				//revisar si es para adicionar o editar
-				if ($estadoTrimestre) 
+				if ($banderaActividad) 
 				{
 					$this->db->where('fk_id_actividad', $idActividad);
 					$query = $this->db->update('actividad_estado', $data);

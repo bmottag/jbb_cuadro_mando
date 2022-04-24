@@ -1,46 +1,3 @@
-<script>
-$(function(){ 
-	$(".btn-info").click(function () {	
-			var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-				url: base_url + 'dashboard/cargarModalActividad',
-				data: {'idCuadrobase': oID, 'idActividad': 'x'},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatos').html(data);
-                }
-            });
-	});	
-
-	$(".btn-success").click(function () {	
-			var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-				url: base_url + 'dashboard/cargarModalActividad',
-				data: {'idCuadrobase': '', 'idActividad': oID},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatos').html(data);
-                }
-            });
-	});
-
-	$(".btn-warning").click(function () {	
-			var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-				url: base_url + 'dashboard/cargarModalProgramarActividad',
-				data: {'idActividad': oID},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatosEjecucion').html(data);
-                }
-            });
-	});	
-});
-</script>
-
 <div id="page-wrapper">
 	<br>
 	
@@ -52,7 +9,7 @@ $(function(){
 		?>
 		<!-- End of menu -->
 		<div class="col-lg-9">
-			<div class="panel panel-info small">
+			<div class="panel panel-primary small">
 				<div class="panel-heading">
 					<i class="fa fa-thumb-tack"></i> <strong>ACTIVIDADES</strong>
 					<div class="pull-right">
@@ -61,12 +18,6 @@ $(function(){
 								if($idActividad != 'x'){
 							?>
 									<a class="btn btn-primary btn-xs" href=" <?php echo base_url('dashboard/actividades/' . $idCuadroBase); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Regresar</a> 
-							<?php
-								}else{
-							?>
-									<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $infoCuadroBase[0]['id_cuadro_base']; ?>">
-											<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Actividades
-									</button>
 							<?php
 								}
 							?>
@@ -162,18 +113,6 @@ $(function(){
 								echo "<td class='text-center'>" . $lista['mes_inicial'] . "</td>";
 								echo "<td class='text-center'>" . $lista['mes_final'] . "</td>";
 								echo "<td class='text-center'>";
-						?>
-									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_actividad']; ?>" >
-										<span class="fa fa-pencil" aria-hidden="true">
-									</button>
-						<?php
-							if($idActividad != 'x') {
-						?>
-									<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEjecucion" id="<?php echo $lista['id_actividad']; ?>">
-											<i class="fa fa-signal"></i>
-									</button>
-						<?php
-							}
 								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
 								echo "</td>";
 								echo "</tr>";
@@ -269,97 +208,90 @@ $(function(){
 							</thead>
 						</table>
 
-						<form  name="ejecucion" id="ejecucion" method="post" action="<?php echo base_url("dashboard/update_programacion"); ?>">
+						<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
+							<thead>
+								<tr class="headings">
+									<th class="column-title" colspan="6">-- EJECUCIÓN ACTIVIDAD --</th>
+								</tr>
+								
+								<tr class="headings">
+									<th class="column-title" style="width: 10%">Mes</th>
+									<th class="column-title" style="width: 15%">Programado</th>
+									<th class="column-title" style="width: 10%">Ejecutado</th>
+									<th class="column-title" style="width: 45%">Descripción</th>
+									<th class="column-title text-center" style="width: 10%">Estado</th>
+									<th class="column-title text-center" style="width: 10%">Enlaces</th>
+								</tr>
+							</thead>
 
-							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $idActividad; ?>"/>
-							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>		
-
-							<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
-								<thead>
-									<tr class="headings">
-										<th class="column-title" colspan="4">-- EJECUCIÓN ACTIVIDAD --</th>
-										<th class="column-title" >
-											<button type="submit" class="btn btn-primary btn-xs" id="btnSubmit2" name="btnSubmit2" >
-												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-											</button>
-										</th>
-									</tr>
-									
-									<tr class="headings">
-										<th class="column-title" style="width: 10%">Mes</th>
-										<th class="column-title" style="width: 15%">Programado</th>
-										<th class="column-title" style="width: 55%">Ejecutado</th>
-										<th class="column-title text-center" style="width: 10%">Estado</th>
-										<th class="column-title text-center" style="width: 10%">Links</th>
-									</tr>
-								</thead>
-
-								<tbody>
-								<?php
-									foreach ($infoEjecucion as $data):
-										$variable = 'estado_trimestre_' . $data['numero_trimestre'];
-										if($estadoActividad){
-											switch ($estadoActividad[0][$variable]) {
-												case 0:
-													$valor = 'No Iniciada';
-													$clase = "text-primary";
-													break;
-												case 1:
-													$valor = 'En Proceso';
-													$clase = "text-warning";
-													break;
-												case 2:
-													$valor = 'Cerrada';
-													$clase = "text-warning";
-													break;
-												case 3:
-													$valor = 'Aprobada';
-													$clase = "text-success";
-													break;
-												case 4:
-													$valor = 'Devuelta';
-													$clase = "text-danger";
-													break;
-											}
+							<tbody>
+							<?php
+								foreach ($infoEjecucion as $data):
+									$variable = 'estado_trimestre_' . $data['numero_trimestre'];
+									if($estadoActividad){
+										switch ($estadoActividad[0][$variable]) {
+											case 0:
+												$valor = 'No Iniciada';
+												$clase = "text-primary";
+												$deshabilidar = '';
+												break;
+											case 1:
+												$valor = 'En Proceso';
+												$clase = "text-warning";
+												$deshabilidar = '';
+												break;
+											case 2:
+												$valor = 'Cerrada';
+												$clase = "text-warning";
+												$deshabilidar = 'disabled';
+												break;
+											case 3:
+												$valor = 'Aprobada';
+												$clase = "text-success";
+												$deshabilidar = 'disabled';
+												break;
+											case 4:
+												$valor = 'Devuelta';
+												$clase = "text-danger";
+												$deshabilidar = 'disabled';
+												break;
 										}
+									}						
+									$idRecord = $data['id_ejecucion_actividad'];
+									$idActividad = $data['fk_id_actividad'];
+							?>		
+									
+								<form  name="ejecucion_<?php echo $idRecord ?>" id="ejecucion_<?php echo $idRecord ?>" method="post" action="<?php echo base_url("dashboard/update_ejecucion"); ?>">
 
-										echo "<tr>";
-										echo "<td >$data[mes]</td>";							
-										$idRecord = $data['id_ejecucion_actividad'];
-										$idActividad = $data['fk_id_actividad'];
-								?>		
-										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
+									<input type="hidden" id="hddId" name="hddId" value="<?php echo $idRecord; ?>"/>
+									<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $idActividad; ?>"/>
+									<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
+
+									<tr>
+										<td ><?php echo $data['mes']; ?></td>
+										<td ><?php echo $data['programado']; ?></td>
 										<td>
-											<input type="text" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" required >
+											<input type="text" id="ejecutado" name="ejecutado" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" required <?php echo $deshabilidar; ?> >
 										</td>
 										<td>
-											<?php
-												if($data['ejecutado'] && $data['ejecutado'] > 0){
-													echo $data['ejecutado']; 
-													if($data['descripcion_actividades'] > 0){
-														echo "<br><b>Descripción:</b></br>" . $data['descripcion_actividades'];
-													}
-													if($data['evidencias'] > 0){
-														echo "<br><b>Evidencias:</b></br>" . $data['evidencias'];
-													}
-												}
-											?>
+											<textarea id="descripcion" name="descripcion" placeholder="Descripción" class="form-control" rows="2" required <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
 										</td>
 										<td class='text-center'>
 											<p class="<?php echo $clase; ?>"><strong><?php echo $valor; ?></strong></p>
 										</td>
 										<td class='text-center'>
-											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/deleteEjecucion/' . $idCuadroBase . '/' . $idActividad . '/' . $idRecord) ?>' id="btn-delete" title="Delete" >
-													<span class="fa fa-trash-o" aria-hidden="true"> </span>
-											</a>
+											<button type="submit" class="btn btn-primary btn-xs" id="btnSubmit_<?php echo $idRecord; ?>" name="btnSubmit_<?php echo $idRecord; ?>" <?php echo $deshabilidar; ?>>
+												<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+											</button>
 										</td>
-								<?php
-										echo "</tr>";
-									endforeach;
-								?>
-								</tbody>
-							</table>
-						</form>
+									</tr>
+								</form>
+							<?php
+								endforeach;
+							?>
+							</tbody>
+						</table>
+
 					</div>	
 		<?php
 			}
@@ -371,26 +303,6 @@ $(function(){
 	</div>
 </div>
 		
-<!--INICIO Modal -->
-<div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" id="tablaDatos">
-
-		</div>
-	</div>
-</div>                       
-<!--FIN Modal -->
-
-<!--INICIO Modal -->
-<div class="modal fade text-center" id="modalEjecucion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" id="tablaDatosEjecucion">
-
-		</div>
-	</div>
-</div>                       
-<!--FIN Modal -->
-
 <!-- Tables -->
 <script>
 $(document).ready(function() {

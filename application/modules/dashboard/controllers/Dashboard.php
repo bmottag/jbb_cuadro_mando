@@ -171,7 +171,12 @@ class Dashboard extends CI_Controller {
 			}
 
 			$data["activarBTN1"] = true;//para activar el boton
-			$data["view"] = "actividades";
+
+			$userRol = $this->session->userdata("role");
+			$data["view"] = "actividades";				
+			if($userRol == ID_ROL_SUPERVISOR){
+				$data["view"] = "actividades_ejecucion";
+			}
 			$this->load->view("layout_calendar", $data);
 	}	
 
@@ -226,7 +231,10 @@ class Dashboard extends CI_Controller {
 			{	
 				if ($idActividad == ''){
 					$this->dashboard_model->save_programa_actividad($nuevaActividad);//generar los programas
-					$this->dashboard_model->guardarTrimestre(false, $nuevaActividad, '', 0, 1);//generar REGISTRO DE ESTADO ACTIVIDAD			
+					//generar REGISTRO DE ESTADO ACTIVIDAD
+					$banderaActividad = false;
+					$estadoActividad = 1;
+					$this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $nuevaActividad, '', 0, 1);			
 				}
 				$data["result"] = true;		
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
@@ -369,16 +377,9 @@ class Dashboard extends CI_Controller {
 			if (empty($idCuadroBase) || empty($idActividad) || empty($numeroTrimestre) ) {
 				show_error('ERROR!!! - You are in the wrong place.');
 			}
-		
-			$arrParam = array(
-				"table" => "actividad_estado",
-				"order" => "id_estado_actividad",
-				"column" => "fk_id_actividad",
-				"id" => $idActividad
-			);
-			$estadoTrimestre = $this->general_model->get_basic_search($arrParam);
-
-			if ($this->dashboard_model->guardarTrimestre($estadoTrimestre, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre)) {
+			$banderaActividad = true;
+			$estadoActividad = 2;
+			if ($this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre)) {
 				$this->session->set_flashdata('retornoExito', 'Se cerro el trimestre.');
 			} else {
 				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
