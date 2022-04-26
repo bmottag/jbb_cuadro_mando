@@ -1,8 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/programas.js"); ?>"></script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="exampleModalLabel">Formulario Proyectos de Inversión
-	<br><small>Adicionar/Editar Proyectos de Inversión.</small>
+	<h4 class="modal-title" id="exampleModalLabel">Formulario Programa Estratégico
+	<br><small>Adicionar/Editar Programa Estratégico.</small>
 	</h4>
 </div>
 
@@ -15,7 +15,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="numero_programa_estrategico">No. Programa Estratégico: *</label>
-					<input type="number" id="numero_programa_estrategico" name="numero_programa_estrategico" class="form-control" value="<?php echo $information?$information[0]["numero_programa_estrategico"]:""; ?>" placeholder="No. Programa Estratégico" required >
+					<input type="number" min="1" max="9999" id="numero_programa_estrategico" name="numero_programa_estrategico" class="form-control" value="<?php echo $information?$information[0]["numero_programa_estrategico"]:""; ?>" placeholder="No. Programa Estratégico" required >
 				</div>
 			</div>
 		</div>

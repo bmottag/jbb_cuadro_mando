@@ -4,7 +4,7 @@ $( document ).ready( function () {
 	
 	$( "#form" ).validate( {
 		rules: {
-			numero_ods:		{ required: true, minlength: 2, maxlength:4 },
+			numero_ods:		{ required: true, minlength: 1, maxlength:4 },
 			ods:			{ required: true }
 		},
 		errorElement: "em",

@@ -4,7 +4,7 @@ $( document ).ready( function () {
 	
 	$( "#form" ).validate( {
 		rules: {
-			numero_proposito:		{ required: true, minlength: 2, maxlength:4 },
+			numero_proposito:		{ required: true, minlength: 1, maxlength:4 },
 			proposito:				{ required: true }
 		},
 		errorElement: "em",

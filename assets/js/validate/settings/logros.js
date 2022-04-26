@@ -5,7 +5,7 @@ $( document ).ready( function () {
 	
 	$( "#form" ).validate( {
 		rules: {
-			numero_logro:		{ required: true, minlength: 2, maxlength:4 },
+			numero_logro:		{ required: true, minlength: 1, maxlength:4 },
 			logro:				{ required: true }
 		},
 		errorElement: "em",

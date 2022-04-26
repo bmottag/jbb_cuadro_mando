@@ -5,7 +5,7 @@ $( document ).ready( function () {
 	
 	$( "#form" ).validate( {
 		rules: {
-			numero_meta_pdd:		{ required: true, minlength: 2, maxlength:4 },
+			numero_meta_pdd:		{ required: true, minlength: 1, maxlength:4 },
 			meta_pdd:				{ required: true }
 		},
 		errorElement: "em",

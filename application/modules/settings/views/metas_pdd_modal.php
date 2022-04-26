@@ -15,7 +15,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="numero_meta_pdd">No. Meta PDD: *</label>
-					<input type="number" id="numero_meta_pdd" name="numero_meta_pdd" class="form-control" value="<?php echo $information?$information[0]["numero_meta_pdd"]:""; ?>" placeholder="No. Meta PDD" required >
+					<input type="number" min="1" max="9999" id="numero_meta_pdd" name="numero_meta_pdd" class="form-control" value="<?php echo $information?$information[0]["numero_meta_pdd"]:""; ?>" placeholder="No. Meta PDD" required >
 				</div>
 			</div>
 		</div>

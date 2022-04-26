@@ -15,7 +15,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="numero_logro">No. Logro: *</label>
-					<input type="number" id="numero_logro" name="numero_logro" class="form-control" value="<?php echo $information?$information[0]["numero_logro"]:""; ?>" placeholder="No. Logro" required >
+					<input type="number" min="1" max="9999" id="numero_logro" name="numero_logro" class="form-control" value="<?php echo $information?$information[0]["numero_logro"]:""; ?>" placeholder="No. Logro" required >
 				</div>
 			</div>
 		</div>

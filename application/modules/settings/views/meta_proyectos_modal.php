@@ -1,8 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/metas_proyectos.js"); ?>"></script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="exampleModalLabel">Formulario Meta Proyectos Invesrión
-	<br><small>Adicionar/Editar Meta Proyectos Invesrión.</small>
+	<h4 class="modal-title" id="exampleModalLabel">Formulario Meta Proyectos Inversión
+	<br><small>Adicionar/Editar Meta Proyectos Inversión.</small>
 	</h4>
 </div>
 
@@ -15,7 +15,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="numero_meta_proyecto">No. Meta Proyecto Inversión: *</label>
-					<input type="number" id="numero_meta_proyecto" name="numero_meta_proyecto" class="form-control" value="<?php echo $information?$information[0]["numero_meta_proyecto"]:""; ?>" placeholder="No. Meta Proyecto Inversión" required >
+					<input type="number" min="1" max="9999" id="numero_meta_proyecto" name="numero_meta_proyecto" class="form-control" value="<?php echo $information?$information[0]["numero_meta_proyecto"]:""; ?>" placeholder="No. Meta Proyecto Inversión" required >
 				</div>
 			</div>
 		</div>

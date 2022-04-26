@@ -5,7 +5,7 @@ $( document ).ready( function () {
 	
 	$( "#form" ).validate( {
 		rules: {
-			numero_programa_estrategico:		{ required: true, minlength: 2, maxlength:4 },
+			numero_programa_estrategico:		{ required: true, minlength: 1, maxlength:4 },
 			programa_estrategico:				{ required: true }
 		},
 		errorElement: "em",

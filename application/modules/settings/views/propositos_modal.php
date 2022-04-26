@@ -15,7 +15,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="numero_proposito">No. Propósito: *</label>
-					<input type="number" id="numero_proposito" name="numero_proposito" class="form-control" value="<?php echo $information?$information[0]["numero_proposito"]:""; ?>" placeholder="No. Propósito" required >
+					<input type="number" min="1" max="9999" id="numero_proposito" name="numero_proposito" class="form-control" value="<?php echo $information?$information[0]["numero_proposito"]:""; ?>" placeholder="No. Propósito" required >
 				</div>
 			</div>
 		</div>

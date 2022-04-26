@@ -4,7 +4,7 @@ $( document ).ready( function () {
 	
 	$( "#form" ).validate( {
 		rules: {
-			numero_meta_proyecto:		{ required: true, minlength: 2, maxlength: 4 },
+			numero_meta_proyecto:		{ required: true, minlength: 1, maxlength: 4 },
 			meta_proyecto:				{ required: true },
 			presupuesto_meta:			{ required: true, minlength: 2, maxlength: 10 },
 			proceso_calidad:			{ required: true, minlength: 2, maxlength: 50 },

@@ -15,7 +15,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="numero_ods">No. ODS: *</label>
-					<input type="number" id="numero_ods" name="numero_ods" class="form-control" value="<?php echo $information?$information[0]["numero_ods"]:""; ?>" placeholder="No. ODS" required >
+					<input type="number" min="1" max="9999" id="numero_ods" name="numero_ods" class="form-control" value="<?php echo $information?$information[0]["numero_ods"]:""; ?>" placeholder="No. ODS" required >
 				</div>
 			</div>
 		</div>
