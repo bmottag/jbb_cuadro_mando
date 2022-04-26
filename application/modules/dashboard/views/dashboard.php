@@ -18,7 +18,7 @@ $(function(){
 <div id="page-wrapper">
     <div class="row"><br>
 		<div class="col-md-12">
-            <p class="text-primary"><strong>Bienvenido: </strong><?php echo $this->session->firstname; ?></p>
+            <p class="text-primary"><strong>Bienvenido(a): </strong><?php echo $this->session->firstname; ?></p>
 		</div>
 		<!-- /.col-lg-12 -->
     </div>
@@ -76,7 +76,10 @@ if ($retornoError) {
                                     ?>
                                     </a>
                                     </small>
-
+<?php
+    $userRol = $this->session->userdata("role");          
+    if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
+?>
                                     <div class="pull-right">
                                         <div class="btn-group">                                                                             
                                             <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_estrategia']; ?>">
@@ -84,6 +87,7 @@ if ($retornoError) {
                                             </button>
                                         </div>
                                     </div>
+<?php } ?>
                                 </h4>
                             </div>
                             <div id="collapse<?php echo $lista['id_estrategia']; ?>" class="panel-collapse collapse">
@@ -166,7 +170,7 @@ if ($retornoError) {
                                                     <th><small>Meta PDD</small></th>
                                                     <th><small>ODS</small></th>
                                                     <th><small>Responsable</small></th>
-                                                    <th><small>Ver Actividades</small></th>
+                                                    <th><small>Actividades</small></th>
 
                                                 </tr>
                                             </thead>

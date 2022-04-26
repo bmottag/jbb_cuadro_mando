@@ -410,6 +410,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('E.fk_id_actividad', $arrData["idActividad"]);
 				}
+				if (array_key_exists("numeroTrimestre", $arrData)) {
+					$this->db->where('P.numero_trimestre', $arrData["numeroTrimestre"]);
+				}
 				$this->db->order_by('E.fk_id_mes', 'asc');
 				$query = $this->db->get('actividad_ejecucion E');
 				if ($query->num_rows() > 0) {
@@ -418,6 +421,31 @@ class General_model extends CI_Model {
 					return false;
 				}
 		}
+
+		/**
+		 * Consulta historial de la actividad
+		 * @since 24/04/2022
+		 */
+		public function get_historial_actividad($arrData) 
+		{		
+				$this->db->select('H.*, U.first_name, P.estado, P.clase, P.icono');
+				$this->db->join('param_estados P', 'P.valor = H.fk_id_estado', 'INNER');
+				$this->db->join('usuarios U', 'U.id_user = H.fk_id_usuario', 'INNER');
+				if (array_key_exists("idActividad", $arrData)) {
+					$this->db->where('H.fk_id_actividad', $arrData["idActividad"]);
+				}
+				if (array_key_exists("numeroTrimestre", $arrData)) {
+					$this->db->where('H.numero_trimestre', $arrData["numeroTrimestre"]);
+				}
+				$this->db->order_by('H.id_historial ', 'desc');
+				$query = $this->db->get('actividad_historial H');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 		/**
 		 * Sumar programacion para una actividad
@@ -503,6 +531,29 @@ class General_model extends CI_Model {
 				}
 				$this->db->group_by("A.fk_id_cuadro_base");
 				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta informacion de los estados de las actividades
+		 * @since 24/04/2022
+		 */
+		public function get_estados_actividades($arrData) 
+		{		
+				$this->db->select('E.*, P.estado primer_estado, P.clase primer_clase, X.estado segundo_estado, X.clase segundo_clase, Y.estado tercer_estado, Y.clase tercer_clase, Z.estado cuarta_estado, Z.clase cuarta_clase');
+				$this->db->join('param_estados P', 'P.valor = E.estado_trimestre_1', 'INNER');
+				$this->db->join('param_estados X', 'X.valor = E.estado_trimestre_2', 'INNER');
+				$this->db->join('param_estados Y', 'Y.valor = E.estado_trimestre_3', 'INNER');
+				$this->db->join('param_estados Z', 'Z.valor = E.estado_trimestre_4', 'INNER');
+				if (array_key_exists("idActividad", $arrData)) {
+					$this->db->where('E.fk_id_actividad', $arrData["idActividad"]);
+				}
+				$this->db->order_by('E.fk_id_actividad', 'asc');
+				$query = $this->db->get('actividad_estado E');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {

@@ -216,6 +216,52 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add estado actividad
+		 * @since 24/04/2022
+		 */
+		public function addHistorialActividad($arrData) 
+		{
+			$idUser = $this->session->userdata("id");
+			
+			$data = array(
+				'fk_id_actividad' => $arrData["idActividad"],
+				'fk_id_usuario' => $idUser,
+				'numero_trimestre' => $arrData["numeroTrimestre"],
+				'fecha_cambio' => date("Y-m-d G:i:s"),
+				'observacion' => $arrData["observacion"],
+				'fk_id_estado' => $arrData["estado"]
+			);
+			
+			$query = $this->db->insert('actividad_historial', $data);
+
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Update estado de la actividad
+		 * @since 24/12/2022
+		 */
+		public function updateEstadoActividad($arrData)
+		{			
+			$columna = 'estado_trimestre_' . $arrData["numeroTrimestre"];
+			$data = array(
+				$columna => $arrData["estado"]
+			);			
+			$this->db->where('fk_id_actividad', $arrData["idActividad"]);
+			$query = $this->db->update('actividad_estado', $data);
+
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 		
 		
 		

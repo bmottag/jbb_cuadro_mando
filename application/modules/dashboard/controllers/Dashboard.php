@@ -126,10 +126,11 @@ class Dashboard extends CI_Controller {
 	 * ACTIVIDADES
 	 * @since 15/04/2022
 	 */
-	public function actividades($idCuadroBase, $idActividad = 'x')
+	public function actividades($idCuadroBase, $idActividad = 'x', $numeroTrimestre = 'x')
 	{				
 			$data['idActividad'] = $idActividad;
 			$data['idCuadroBase'] = $idCuadroBase;
+			$data['numeroTrimestre'] = false;
 			$data['infoEjecucion'] = false;
 			$arrParam = array("idCuadroBase" => $idCuadroBase);
 			$data['infoCuadroBase'] = $this->general_model->get_lista_cuadro_mando($arrParam);
@@ -141,33 +142,12 @@ class Dashboard extends CI_Controller {
 			if($idActividad != 'x') {
 				$arrParam = array("idActividad" => $idActividad);
 				$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
-
-				$data['infoEjecucion'] = $this->general_model->get_ejecucion_actividades($arrParam);
-				//consulta sumatorias de programacion
-				if($data['infoEjecucion']){
-					$data['sumaProgramado'] = $this->general_model->sumarProgramado($arrParam);
-					$data['sumaEjecutado'] = $this->general_model->sumarEjecutado($arrParam);
-					$arrParam['numeroTrimestre'] = 1;
-					$data['sumaProgramadoTrimestre1'] = $this->general_model->sumarProgramado($arrParam);
-					$data['sumaEjecutadoTrimestre1'] = $this->general_model->sumarEjecutado($arrParam);
-					$arrParam['numeroTrimestre'] = 2;
-					$data['sumaProgramadoTrimestre2'] = $this->general_model->sumarProgramado($arrParam);
-					$data['sumaEjecutadoTrimestre2'] = $this->general_model->sumarEjecutado($arrParam);
-					$arrParam['numeroTrimestre'] = 3;
-					$data['sumaProgramadoTrimestre3'] = $this->general_model->sumarProgramado($arrParam);
-					$data['sumaEjecutadoTrimestre3'] = $this->general_model->sumarEjecutado($arrParam);
-					$arrParam['numeroTrimestre'] = 4;
-					$data['sumaProgramadoTrimestre4'] = $this->general_model->sumarProgramado($arrParam);
-					$data['sumaEjecutadoTrimestre4'] = $this->general_model->sumarEjecutado($arrParam);
+				if($numeroTrimestre != 'x') {
+					$data['numeroTrimestre'] = $numeroTrimestre;
+					$arrParam['numeroTrimestre'] = $numeroTrimestre;
+					$data['listaHistorial'] = $this->general_model->get_historial_actividad($arrParam);
 				}
-
-				$arrParam = array(
-					"table" => "actividad_estado",
-					"order" => "id_estado_actividad",
-					"column" => "fk_id_actividad",
-					"id" => $idActividad
-				);
-				$data['estadoActividad']  = $this->general_model->get_basic_search($arrParam);
+				$data['infoEjecucion'] = $this->general_model->get_ejecucion_actividades($arrParam);
 			}
 
 			$data["activarBTN1"] = true;//para activar el boton
@@ -233,8 +213,20 @@ class Dashboard extends CI_Controller {
 					$this->dashboard_model->save_programa_actividad($nuevaActividad);//generar los programas
 					//generar REGISTRO DE ESTADO ACTIVIDAD
 					$banderaActividad = false;
-					$estadoActividad = 1;
-					$this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $nuevaActividad, '', 0, 1);			
+					$estadoActividad = 0;
+					$this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $nuevaActividad, '', 0, 1);
+					//guardar el historial de los 4 trimestres
+					for($i=1;$i<5;$i++) {
+						$arrParam = array(
+							"idActividad" => $nuevaActividad,
+							"numeroTrimestre" => $i,
+							"observacion" => 'Registro de la actividad',
+							"estado" => 0
+						);
+
+						//actualizo el estado del trimestre de la actividad
+						$this->dashboard_model->addHistorialActividad($arrParam);
+					}
 				}
 				$data["result"] = true;		
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
@@ -329,8 +321,22 @@ class Dashboard extends CI_Controller {
 	{					
 			$idActividad = $this->input->post('hddIdActividad');
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
+			$mes = $this->input->post('hddMes');
 
-			if ($this->dashboard_model->guardarEjecucion()) {
+			if ($this->dashboard_model->guardarEjecucion())
+			{
+				//actualizo el estado del trimestre de la actividad
+				$arrParam = array(
+					"idActividad" => $idActividad,
+					"numeroTrimestre" => $this->input->post('hddNumeroTrimestre'),
+					"observacion" => 'Se realizó registro de información para el mes de ' . $mes . '.',
+					"estado" => 1
+				);
+				$this->dashboard_model->addHistorialActividad($arrParam);
+
+				//actualizo el estado del trimestre de la actividad
+				$this->dashboard_model->updateEstadoActividad($arrParam);
+
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', "Se actualizó la información!!");
 			} else {
@@ -389,7 +395,7 @@ class Dashboard extends CI_Controller {
     }
 
 	/**
-	 * SUPERVIDOR DASHBOARD
+	 * SUPERVISOR DASHBOARD
 	 * @since 23/04/2022
 	 */
 	public function supervisor()
@@ -406,11 +412,66 @@ class Dashboard extends CI_Controller {
 					}
 				}
 			}
-			$arrParam = array("filtroEstrategias" => $valor);
-			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
-			$data["view"] = "dashboard_supervisor";
+			$data['listaEstrategias'] = false;
+			if($valor){
+				$arrParam = array("filtroEstrategias" => $valor);
+				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+			}
+			$data["view"] = "dashboard_supervisor";	
 			$this->load->view("layout_calendar", $data);
 	}
+
+	/**
+	 * PLANEACION DASHBOARD
+	 * @since 23/04/2022
+	 */
+	public function seguimiento()
+	{				
+			$arrParam = array();
+			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+			$data["view"] = "dashboard";
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * Save estado de la actividad
+     * @since 24/04/2022
+     * @author BMOTTAG
+	 */
+	public function save_estado_actividad()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$data["idCuadroBase"] = $this->input->post('hddIdCuadroBase');
+			$data["idActividad"] = $this->input->post('hddIdActividad');
+			$data["numeroTrimestre"] = $this->input->post('hddNumeroTrimestre');
+			$data["record"] = $data["idCuadroBase"] . '/' . $data["idActividad"] . '/' . $data["numeroTrimestre"];
+			$msj = "Se cambio el estado del trimestre de la actividad.";
+			
+			$arrParam = array(
+				"idActividad" => $data["idActividad"],
+				"numeroTrimestre" => $data["numeroTrimestre"],
+				"observacion" => $this->input->post('observacion'),
+				"estado" => $this->input->post('estado')
+			);
+
+			if ($this->dashboard_model->addHistorialActividad($arrParam)) 
+			{
+				//actualizo el estado del trimestre de la actividad
+				$this->dashboard_model->updateEstadoActividad($arrParam);
+				
+				$data["result"] = true;
+				$data["mensaje"] = $msj;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Ask for help.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
 
 
 

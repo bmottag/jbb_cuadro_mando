@@ -1,7 +1,7 @@
 <div id="page-wrapper">
     <div class="row"><br>
 		<div class="col-md-12">
-            <p class="text-primary"><strong>Bienvenido: </strong><?php echo $this->session->firstname; ?></p>
+            <p class="text-primary"><strong>Bienvenido(a): </strong><?php echo $this->session->firstname; ?></p>
 		</div>
 		<!-- /.col-lg-12 -->
     </div>
@@ -45,7 +45,12 @@ if ($retornoError) {
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="panel-group" id="accordion">
-                    <?php 
+                    <?php         
+                    if(!$listaEstrategias){ 
+                        echo '<div class="col-lg-12">
+                                <p class="text-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No le han asignado actividades.</p>
+                            </div>';
+                    }else{
                         foreach ($listaEstrategias as $lista):
                     ?>
                         <div class="panel panel-info">
@@ -182,6 +187,7 @@ if ($retornoError) {
 
                     <?php
                         endforeach;
+                    }
                     ?>
                     </div>          
                 </div>

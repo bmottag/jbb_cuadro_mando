@@ -11,7 +11,7 @@
 		<div class="col-lg-9">
 			<div class="panel panel-primary small">
 				<div class="panel-heading">
-					<i class="fa fa-thumb-tack"></i> <strong>ACTIVIDADES</strong>
+					<i class="fa fa-thumb-tack"></i> <strong>ACTIVIDADES <?php 	if($infoEjecucion){ echo ' - REGISTRO EJECUCIÓN'; } ?></strong>
 					<div class="pull-right">
 						<div class="btn-group">
 							<?php
@@ -116,6 +116,108 @@
 								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
 								echo "</td>";
 								echo "</tr>";
+
+								$arrParam = array("idActividad" => $lista["id_actividad"]);
+								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
+
+								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
+								$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
+								$arrParam['numeroTrimestre'] = 1;
+								$sumaProgramadoTrimestre1 = $this->general_model->sumarProgramado($arrParam);
+								$sumaEjecutadoTrimestre1 = $this->general_model->sumarEjecutado($arrParam);
+								$arrParam['numeroTrimestre'] = 2;
+								$sumaProgramadoTrimestre2 = $this->general_model->sumarProgramado($arrParam);
+								$sumaEjecutadoTrimestre2 = $this->general_model->sumarEjecutado($arrParam);
+								$arrParam['numeroTrimestre'] = 3;
+								$sumaProgramadoTrimestre3 = $this->general_model->sumarProgramado($arrParam);
+								$sumaEjecutadoTrimestre3 = $this->general_model->sumarEjecutado($arrParam);
+								$arrParam['numeroTrimestre'] = 4;
+								$sumaProgramadoTrimestre4 = $this->general_model->sumarProgramado($arrParam);
+								$sumaEjecutadoTrimestre4 = $this->general_model->sumarEjecutado($arrParam);
+
+								$cumplimiento1 = 0;
+								$cumplimiento2 = 0;
+								$cumplimiento3 = 0;
+								$cumplimiento4 = 0;
+								$avancePOA1 = 0;
+								$avancePOA2 = 0;
+								$avancePOA3 = 0;
+								$avancePOA4 = 0;
+								$avancePOA = 0;
+								if($sumaProgramado['programado'] > 0){
+									$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
+								}
+								if($sumaProgramadoTrimestre1['programado'] > 0){
+									$cumplimiento1 = round($sumaEjecutadoTrimestre1['ejecutado'] / $sumaProgramadoTrimestre1['programado'] * 100, 2);
+									$avancePOA1 = round($sumaEjecutadoTrimestre1['ejecutado'] / $sumaProgramadoTrimestre1['programado'] * $ponderacion, 2) . '%';
+								}
+								if($sumaProgramadoTrimestre2['programado'] > 0){
+									$cumplimiento2 = round($sumaEjecutadoTrimestre2['ejecutado'] / $sumaProgramadoTrimestre2['programado'] * 100,2);
+									$avancePOA2 = round($sumaEjecutadoTrimestre2['ejecutado'] / $sumaProgramadoTrimestre2['programado'] * $ponderacion, 2) . '%';
+								}
+								if($sumaProgramadoTrimestre3['programado'] > 0){
+									$cumplimiento3 = round($sumaEjecutadoTrimestre3['ejecutado'] / $sumaProgramadoTrimestre3['programado'] * 100,2);
+									$avancePOA3 = round($sumaEjecutadoTrimestre3['ejecutado'] / $sumaProgramadoTrimestre3['programado'] * $ponderacion, 2) . '%';
+								}
+								if($sumaProgramadoTrimestre4['programado'] > 0){
+									$cumplimiento4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * 100,2);
+									$avancePOA4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * $ponderacion, 2) . '%';
+								}
+?>
+								<thead>
+									<tr class="headings">
+										<th class="column-title" colspan="2">
+											<p>Programado Año: <?php echo $sumaProgramado['programado']; ?></p>
+											<p>Acance POA: <?php echo $avancePOA . '%'; ?></p>
+										</th>
+										<th class="column-title" colspan="2">
+											<p>Programado Trimestre I: <?php echo $sumaProgramadoTrimestre1['programado']; ?></p>
+											<p>Programado Trimestre II: <?php echo $sumaProgramadoTrimestre2['programado']; ?></p>
+											<p>Programado Trimestre III: <?php echo $sumaProgramadoTrimestre3['programado']; ?></p>
+											<p>Programado Trimestre IV: <?php echo $sumaProgramadoTrimestre4['programado']; ?></p>
+										</th>
+										<th class="column-title" colspan="4">
+											<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '% '; ?>
+											<?php if($cumplimiento1 > 0 && $estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
+											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento1 . '/' . $avancePOA . '/1') ?>' id="btn-delete" title="Cerrar">
+													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
+											</a>
+											<?php } ?>
+											</p>
+
+											<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '% '; ?>
+											<?php if($cumplimiento2 > 0 && $estadoActividad[0]['estado_trimestre_2'] == 1){ ?>
+											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento2 . '/' . $avancePOA . '/2') ?>' id="btn-delete" title="Cerrar">
+													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
+											</a>
+											<?php } ?>												
+											</p>
+
+											<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '% '; ?>
+											<?php if($cumplimiento3 > 0 && $estadoActividad[0]['estado_trimestre_3'] == 1){ ?>
+											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento3 . '/' . $avancePOA . '/3') ?>' id="btn-delete" title="Cerrar">
+													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
+											</a>
+											<?php } ?>
+											</p>
+											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '% '; ?>
+											<?php if($cumplimiento4 > 0 && $estadoActividad[0]['estado_trimestre_4'] == 1){ ?>
+											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento4 . '/' . $avancePOA . '/4') ?>' id="btn-delete" title="Cerrar">
+													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
+											</a>
+											<?php } ?>
+											</p>
+										</th>
+										<th class="column-title" colspan="2">
+											<p>Avance POA I: <?php echo $avancePOA1; ?></p>
+											<p>Avance POA II: <?php echo $avancePOA2; ?></p>
+											<p>Avance POA III: <?php echo $avancePOA3; ?></p>
+											<p>Avance POA IV: <?php echo $avancePOA4; ?></p>
+										</th>
+									</tr>
+								</thead>
+<?php
+
 							endforeach;
 						?>
 						</tbody>
@@ -127,87 +229,6 @@
 			if($infoEjecucion){
 		?>
 					<div class="table-responsive">
-
-						<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
-
-							<thead>
-								<tr class="headings">
-									<th class="column-title">
-										<?php
-											$cumplimiento1 = 0;
-											$cumplimiento2 = 0;
-											$cumplimiento3 = 0;
-											$cumplimiento4 = 0;
-											$avancePOA1 = 0;
-											$avancePOA2 = 0;
-											$avancePOA3 = 0;
-											$avancePOA4 = 0;
-											$avancePOA = 0;
-											if($sumaProgramado['programado'] > 0){
-												$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
-											}
-											if($sumaProgramadoTrimestre1['programado'] > 0){
-												$cumplimiento1 = round($sumaEjecutadoTrimestre1['ejecutado'] / $sumaProgramadoTrimestre1['programado'] * 100, 2);
-												$avancePOA1 = round($sumaEjecutadoTrimestre1['ejecutado'] / $sumaProgramadoTrimestre1['programado'] * $ponderacion, 2) . '%';
-											}
-											if($sumaProgramadoTrimestre2['programado'] > 0){
-												$cumplimiento2 = round($sumaEjecutadoTrimestre2['ejecutado'] / $sumaProgramadoTrimestre2['programado'] * 100,2);
-												$avancePOA2 = round($sumaEjecutadoTrimestre2['ejecutado'] / $sumaProgramadoTrimestre2['programado'] * $ponderacion, 2) . '%';
-											}
-											if($sumaProgramadoTrimestre3['programado'] > 0){
-												$cumplimiento3 = round($sumaEjecutadoTrimestre3['ejecutado'] / $sumaProgramadoTrimestre3['programado'] * 100,2);
-												$avancePOA3 = round($sumaEjecutadoTrimestre3['ejecutado'] / $sumaProgramadoTrimestre3['programado'] * $ponderacion, 2) . '%';
-											}
-											if($sumaProgramadoTrimestre4['programado'] > 0){
-												$cumplimiento4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * 100,2);
-												$avancePOA4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * $ponderacion, 2) . '%';
-											}
-										?>
-										Programado Año: <?php echo $sumaProgramado['programado']; ?>
-										<br>Acance POA: <?php echo $avancePOA . '%'; ?>
-									</th>
-									<th class="column-title" colspan="2">
-										Programado Trimestre I: <?php echo $sumaProgramadoTrimestre1['programado']; ?>
-										<br>Programado Trimestre II: <?php echo $sumaProgramadoTrimestre2['programado']; ?>
-										<br>Programado Trimestre III: <?php echo $sumaProgramadoTrimestre3['programado']; ?>
-										<br>Programado Trimestre IV: <?php echo $sumaProgramadoTrimestre4['programado']; ?>
-									</th>
-									<th class="column-title">
-										Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '%'; ?>
-										<?php if($cumplimiento1 > 0){ ?>
-										<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento1 . '/' . $avancePOA . '/1') ?>' id="btn-delete" title="Cerrar">
-												Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-										</a>
-										<?php } ?>
-										<br>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '%'; ?>
-										<?php if($cumplimiento2 > 0){ ?>
-										<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento2 . '/' . $avancePOA . '/2') ?>' id="btn-delete" title="Cerrar">
-												Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-										</a>
-										<?php } ?>
-										<br>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?>
-										<?php if($cumplimiento3 > 0){ ?>
-										<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento3 . '/' . $avancePOA . '/3') ?>' id="btn-delete" title="Cerrar">
-												Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-										</a>
-										<?php } ?>
-										<br>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?>
-										<?php if($cumplimiento4 > 0){ ?>
-										<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento4 . '/' . $avancePOA . '/4') ?>' id="btn-delete" title="Cerrar">
-												Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-										</a>
-										<?php } ?>
-									</th>
-									<th class="column-title" colspan="2">
-										Avance POA I: <?php echo $avancePOA1; ?>
-										<br>Avance POA II: <?php echo $avancePOA2; ?>
-										<br>Avance POA III: <?php echo $avancePOA3; ?>
-										<br>Avance POA IV: <?php echo $avancePOA4; ?>
-									</th>
-								</tr>
-							</thead>
-						</table>
-
 						<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
 							<thead>
 								<tr class="headings">
@@ -266,12 +287,13 @@
 									<input type="hidden" id="hddId" name="hddId" value="<?php echo $idRecord; ?>"/>
 									<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $idActividad; ?>"/>
 									<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-
+									<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $data['numero_trimestre']; ?>"/>
+									<input type="hidden" id="hddMes" name="hddMes" value="<?php echo $data['mes']; ?>"/>
 									<tr>
 										<td ><?php echo $data['mes']; ?></td>
 										<td ><?php echo $data['programado']; ?></td>
 										<td>
-											<input type="text" id="ejecutado" name="ejecutado" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" required <?php echo $deshabilidar; ?> >
+											<input type="number" id="ejecutado" name="ejecutado" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" min="0" max="<?php echo $data['programado']; ?>" required <?php echo $deshabilidar; ?> >
 										</td>
 										<td>
 											<textarea id="descripcion" name="descripcion" placeholder="Descripción" class="form-control" rows="2" required <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
