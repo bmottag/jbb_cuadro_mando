@@ -301,7 +301,7 @@ class Settings extends CI_Controller {
 	public function objetivos_estrategicos()
 	{
 			$arrParam = array(
-				"table" => " objetivos_estrategicos",
+				"table" => "objetivos_estrategicos",
 				"order" => "id_objetivo_estrategico",
 				"id" => "x"
 			);
@@ -926,6 +926,75 @@ class Settings extends CI_Controller {
 				
 				redirect("/equipos",'refresh');
 	}
+
+	/**
+	 * Estrategias
+     * @since 26/04/2022
+     * @author BMOTTAG
+	 */
+	public function estrategias()
+	{			
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_estrategias($arrParam);
+			
+			$data["view"] = 'estrategias';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario estrategias
+     * @since 26/04/2022
+     */
+    public function cargarModalEstrategias() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idEstrategia"] = $this->input->post("idEstrategia");	
+	
+			$arrParam = array(
+				"table" => "objetivos_estrategicos",
+				"order" => "id_objetivo_estrategico",
+				"id" => "x"
+			);
+			$data['objetivos'] = $this->general_model->get_basic_search($arrParam);
+
+			if ($data["idEstrategia"] != 'x') {
+				$arrParam = array(
+					"idEstrategia" => $data["idEstrategia"]
+				);
+				$data['information'] = $this->general_model->get_estrategias($arrParam);
+			}			
+			$this->load->view("estrategias_modal", $data);
+    }
+	
+	/**
+	 * Update estrategias
+     * @since 26/04/2022
+     * @author BMOTTAG
+	 */
+	public function save_estrategias()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idEstrategia = $this->input->post('hddId');
+
+			$msj = "Se adicionó la Estretegia!";
+			if ($idEstrategia != '') {
+				$msj = "Se actualizó la Estrategia!";
+			}			
+
+			if ($idEstrategia = $this->settings_model->saveEstrategia()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
 	
 
 	

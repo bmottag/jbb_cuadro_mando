@@ -324,6 +324,34 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add/Edit ESTRATEGIA
+		 * @since 26/04/2022
+		 */
+		public function saveEstrategia() 
+		{
+				$idEstrategia = $this->input->post('hddId');
+				
+				$data = array(
+					'fk_id_objetivo_estrategico' => $this->input->post('idObjetivo'),
+					'numero_estrategia' => $this->input->post('numero_estrategia'),
+					'estrategia' => $this->input->post('estrategia')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idEstrategia == '') {
+					$query = $this->db->insert('estrategias', $data);		
+				} else {
+					$this->db->where('id_estrategia', $idEstrategia);
+					$query = $this->db->update('estrategias', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		

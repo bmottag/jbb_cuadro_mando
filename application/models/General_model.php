@@ -267,8 +267,8 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select();
 				$this->db->join('objetivos_estrategicos O', 'O.id_objetivo_estrategico = E.fk_id_objetivo_estrategico', 'INNER');
-				if (array_key_exists("idEstratega", $arrData)) {
-					$this->db->where('E.id_estrategia', $arrData["idEstratega"]);
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('E.id_estrategia', $arrData["idEstrategia"]);
 				}
 				if (array_key_exists("filtroEstrategias", $arrData)) {
 					$where = "E.id_estrategia IN (" . $arrData["filtroEstrategias"] . ")";
