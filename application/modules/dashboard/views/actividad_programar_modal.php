@@ -30,7 +30,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="programado">Programado: *</label>
-					<input type="text" id="programado" name="programado" class="form-control" value="" placeholder="Programado" required >
+					<input type="number" step="any" min="0" id="programado" name="programado" class="form-control" value="" placeholder="Programado" required >
 				</div>
 			</div>
 		</div>

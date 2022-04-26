@@ -6,7 +6,7 @@ $( document ).ready( function () {
 		rules: {
 			numero_actividad: 			{ required: true, number: true, minlength: 1, maxlength:3 },
 			descripcion: 				{ required: true },
-			meta_plan: 					{ required: true, minlength: 4, maxlength:80 },
+			meta_plan: 					{ required: true, minlength: 1, maxlength:10 },
 			unidad_medida: 				{ required: true },
 			nombre_indicador: 			{ required: true },
 			tipo_indicador:				{ required: true },

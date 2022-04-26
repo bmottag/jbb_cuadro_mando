@@ -279,13 +279,28 @@ class Dashboard extends CI_Controller {
 		
 			$msj = "Se guardo la información!";
 
-			if ($this->dashboard_model->guardarProgramado()) 
-			{				
-				$data["result"] = true;		
-				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
-			} else {
-				$data["result"] = "error";
-				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			//validar si ya exite programacion para el mes enviado
+			$validarMes = false;
+
+			$arrParam = array(
+				'idActividad' => $idActividad,
+				'idMes' => $this->input->post('mes')
+			);
+			$validarMes = $this->general_model->get_ejecucion_actividades($arrParam);
+
+			if($validarMes){
+					$data["result"] = "error";
+					$data["mensaje"] = " Error. Este mes ya se encuentra dentro de la programación.";
+					$this->session->set_flashdata('retornoError', 'Este mes ya se encuentra dentro de la programación');
+			}else{
+				if ($this->dashboard_model->guardarProgramado()) 
+				{				
+					$data["result"] = true;		
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+				} else {
+					$data["result"] = "error";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
 			}
 		
 			echo json_encode($data);

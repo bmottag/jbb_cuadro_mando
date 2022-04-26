@@ -410,6 +410,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('E.fk_id_actividad', $arrData["idActividad"]);
 				}
+				if (array_key_exists("idMes", $arrData)) {
+					$this->db->where('E.fk_id_mes', $arrData["idMes"]);
+				}
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('P.numero_trimestre', $arrData["numeroTrimestre"]);
 				}

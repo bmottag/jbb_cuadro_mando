@@ -126,11 +126,11 @@ $(function(){
 							foreach ($listaActividades as $lista):
 								switch ($lista['unidad_medida']) {
 									case 1:
-										$valor = 'Número';
+										$unidadMedida = 'Número';
 										$clase = "text-success";
 										break;
 									case 2:
-										$valor = 'Porcentaje';
+										$unidadMedida = 'Porcentaje';
 										$clase = "text-danger";
 										break;
 								}
@@ -155,7 +155,7 @@ $(function(){
 								echo "<td>" . $lista['descripcion_actividad'] . "</td>";
 								echo "<td>" . $lista['meta_plan_operativo_anual'] . "</td>";
 								echo "<td class='text-center'>";
-								echo '<p class="' . $clase . '"><strong>' . $valor . '</strong></p>';
+								echo '<p class="' . $clase . '"><strong>' . $unidadMedida . '</strong></p>';
 								echo "</td>";
 								echo "<td>" . $lista['nombre_indicador'] . "</td>";
 								echo "<td class='text-center'>";
@@ -413,9 +413,9 @@ $(function(){
 									
 									<tr class="headings">
 										<th class="column-title" style="width: 10%">Mes</th>
-										<th class="column-title" style="width: 15%">Programado</th>
-										<th class="column-title" style="width: 55%">Ejecutado</th>
-										<th class="column-title text-center" style="width: 10%">Estado</th>
+										<th class="column-title" style="width: 15%">Programado (<?php echo $unidadMedida; ?>)</th>
+										<th class="column-title" style="width: 15%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
+										<th class="column-title" style="width: 50%">Descripción</th>
 										<th class="column-title text-center" style="width: 10%">Enlaces</th>
 									</tr>
 								</thead>
@@ -423,32 +423,6 @@ $(function(){
 								<tbody>
 								<?php
 									foreach ($infoEjecucion as $data):
-										$variable = 'estado_trimestre_' . $data['numero_trimestre'];
-										if($estadoActividad){
-											switch ($estadoActividad[0][$variable]) {
-												case 0:
-													$valor = 'No Iniciada';
-													$clase = "text-primary";
-													break;
-												case 1:
-													$valor = 'En Proceso';
-													$clase = "text-warning";
-													break;
-												case 2:
-													$valor = 'Cerrada';
-													$clase = "text-warning";
-													break;
-												case 3:
-													$valor = 'Aprobada';
-													$clase = "text-success";
-													break;
-												case 4:
-													$valor = 'Devuelta';
-													$clase = "text-danger";
-													break;
-											}
-										}
-
 										echo "<tr>";
 										echo "<td >$data[mes]</td>";							
 										$idRecord = $data['id_ejecucion_actividad'];
@@ -456,12 +430,18 @@ $(function(){
 								?>		
 										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
 										<td>
-											<input type="text" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" required >
+											<input type="number" step="any" min="0" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" max="50000" required >
 										</td>
 										<td>
 											<?php
 												if($data['ejecutado'] && $data['ejecutado'] > 0){
 													echo $data['ejecutado']; 
+												}
+											?>
+										</td>
+										<td>
+											<?php
+												if($data['ejecutado'] && $data['ejecutado'] > 0){
 													if($data['descripcion_actividades'] > 0){
 														echo "<br><b>Descripción:</b></br>" . $data['descripcion_actividades'];
 													}
@@ -470,9 +450,6 @@ $(function(){
 													}
 												}
 											?>
-										</td>
-										<td class='text-center'>
-											<p class="<?php echo $clase; ?>"><strong><?php echo $valor; ?></strong></p>
 										</td>
 										<td class='text-center'>
 									<?php
