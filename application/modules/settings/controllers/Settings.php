@@ -995,6 +995,252 @@ class Settings extends CI_Controller {
 
 			echo json_encode($data);
     }
+
+	/**
+	 * Delete ODS
+     * @since 26/4/2022
+	 */
+	public function delete_ods()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idODS = $this->input->post('identificador');
+
+			$arrParam = array(
+				"idODS" => $idODS
+			);
+			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+
+			if($infoCuadroBase){
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! No se puede eliminar porque la ODS ya esta relacionada en un Plan de Desarrollo Distrital.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}else{
+				$arrParam = array(
+					"table" => "ods",
+					"primaryKey" => "id_ods",
+					"id" => $idODS
+				);
+				
+				if ($this->general_model->deleteRecord($arrParam)) 
+				{
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó la ODS.');
+				} else {
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! Ask for help.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
+			}
+			
+			echo json_encode($data);
+    }
+
+	/**
+	 * Delete meta pdd
+     * @since 26/4/2022
+	 */
+	public function delete_meta_pdd()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idMetaPDD = $this->input->post('identificador');
+
+			$arrParam = array(
+				"idMetaPDD" => $idMetaPDD
+			);
+			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+
+			if($infoCuadroBase){
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! No se puede eliminar porque la Meta PDD ya esta relacionada en un Plan de Desarrollo Distrital.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}else{
+				$arrParam = array(
+					"table" => "meta_pdd",
+					"primaryKey" => "id_meta_pdd",
+					"id" => $idMetaPDD
+				);
+				
+				if ($this->general_model->deleteRecord($arrParam)) 
+				{
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó la Meta PDD.');
+				} else {
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! Ask for help.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
+			}
+			
+			echo json_encode($data);
+    }
+
+	/**
+	 * Delete programa
+     * @since 26/4/2022
+	 */
+	public function delete_programa()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idPrograma = $this->input->post('identificador');
+
+			$arrParam = array(
+				"idPrograma" => $idPrograma
+			);
+			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+
+			if($infoCuadroBase){
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! No se puede eliminar porque el Programa Estratégico ya esta relacionada en un Plan de Desarrollo Distrital.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}else{
+				$arrParam = array(
+					"table" => "programa_estrategico",
+					"primaryKey" => "id_programa_estrategico",
+					"id" => $idPrograma
+				);
+				
+				if ($this->general_model->deleteRecord($arrParam)) 
+				{
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó el Programa Estratégico.');
+				} else {
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! Ask for help.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
+			}
+			
+			echo json_encode($data);
+    }
+
+	/**
+	 * Delete logro
+     * @since 26/4/2022
+	 */
+	public function delete_logro()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idLogro = $this->input->post('identificador');
+
+			$arrParam = array(
+				"idLogro" => $idLogro
+			);
+			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+
+			if($infoCuadroBase){
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! No se puede eliminar porque el Logro ya esta relacionada en un Plan de Desarrollo Distrital.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}else{
+				$arrParam = array(
+					"table" => "logros",
+					"primaryKey" => "id_logros",
+					"id" => $idLogro
+				);
+				
+				if ($this->general_model->deleteRecord($arrParam)) 
+				{
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó el Logro.');
+				} else {
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! Ask for help.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
+			}
+			
+			echo json_encode($data);
+    }
+
+	/**
+	 * Delete proposito
+     * @since 26/4/2022
+	 */
+	public function delete_proposito()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idProposito = $this->input->post('identificador');
+
+			$arrParam = array(
+				"idProposito" => $idProposito
+			);
+			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+
+			if($infoCuadroBase){
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! No se puede eliminar porque el Propósito ya esta relacionada en un Plan de Desarrollo Distrital.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}else{
+				$arrParam = array(
+					"table" => "propositos",
+					"primaryKey" => "id_proposito",
+					"id" => $idProposito
+				);
+				
+				if ($this->general_model->deleteRecord($arrParam)) 
+				{
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó el Propósito.');
+				} else {
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! Ask for help.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
+			}
+			
+			echo json_encode($data);
+    }
+
+	/**
+	 * Delete meta proyecto inversion
+     * @since 26/4/2022
+	 */
+	public function delete_meta_proyecto()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idMetaProyecto = $this->input->post('identificador');
+
+			$arrParam = array(
+				"idMetaProyecto" => $idMetaProyecto
+			);
+			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+
+			if($infoCuadroBase){
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! No se puede eliminar porque la Meta Proyecto Inversión ya esta relacionada en un Plan de Desarrollo Distrital.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}else{
+				$arrParam = array(
+					"table" => "meta_proyecto_inversion",
+					"primaryKey" => "id_meta_proyecto_inversion",
+					"id" => $idMetaProyecto
+				);
+				
+				if ($this->general_model->deleteRecord($arrParam)) 
+				{
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó el Propósito.');
+				} else {
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! Ask for help.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
+			}
+			
+			echo json_encode($data);
+    }
 	
 
 	

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/metas_pdd.js"); ?>"></script>
 <script>
 $(function(){ 
 	$(".btn-success").click(function () {	
@@ -44,7 +45,7 @@ $(function(){
 						</div>
 					</div>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body small">
 
 <?php
 	$retornoExito = $this->session->flashdata('retornoExito');
@@ -88,6 +89,10 @@ $(function(){
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_meta_pdd']; ?>" >
 										Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
+									</button>
+
+									<button type="button" id="<?php echo $lista['id_meta_pdd']; ?>" class='btn btn-danger btn-xs' title="Eliminar">
+											<i class="fa fa-trash-o"></i>
 									</button>
 						<?php
 									echo "</td>";

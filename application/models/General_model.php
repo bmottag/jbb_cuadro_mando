@@ -308,6 +308,24 @@ class General_model extends CI_Model {
 				if (array_key_exists("idEstrategia", $arrData)) {
 					$this->db->where('C.fk_id_estrategia', $arrData["idEstrategia"]);
 				}
+				if (array_key_exists("idMetaProyecto", $arrData)) {
+					$this->db->where('C.fk_id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
+				}
+				if (array_key_exists("idProposito", $arrData)) {
+					$this->db->where('C.fk_id_proposito', $arrData["idProposito"]);
+				}
+				if (array_key_exists("idLogro", $arrData)) {
+					$this->db->where('C.fk_id_logro', $arrData["idLogro"]);
+				}
+				if (array_key_exists("idPrograma", $arrData)) {
+					$this->db->where('C.fk_id_programa_estrategico', $arrData["idPrograma"]);
+				}
+				if (array_key_exists("idMetaPDD", $arrData)) {
+					$this->db->where('C.fk_id_meta_pdd', $arrData["idMetaPDD"]);
+				}
+				if (array_key_exists("idODS", $arrData)) {
+					$this->db->where('C.fk_id_ods', $arrData["idODS"]);
+				}
 				$query = $this->db->get('cuadro_base C');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();

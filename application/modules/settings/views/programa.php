@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/programas.js"); ?>"></script>
 <script>
 $(function(){ 
 	$(".btn-success").click(function () {	
@@ -88,6 +89,9 @@ $(function(){
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_programa_estrategico']; ?>" >
 										Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
+									</button>
+									<button type="button" id="<?php echo $lista['id_programa_estrategico']; ?>" class='btn btn-danger btn-xs' title="Eliminar">
+											<i class="fa fa-trash-o"></i>
 									</button>
 						<?php
 									echo "</td>";
