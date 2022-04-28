@@ -1,13 +1,11 @@
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/actividades_ejecucion.js"); ?>"></script>
 <div id="page-wrapper">
 	<br>
 	
-	<!-- /.row -->
 	<div class="row">
-		<!-- Start of menu -->
 		<?php
 			$this->load->view('menu');
 		?>
-		<!-- End of menu -->
 		<div class="col-lg-9">
 			<div class="panel panel-primary small">
 				<div class="panel-heading">
@@ -177,36 +175,47 @@
 											<p>Programado Trimestre IV: <?php echo $sumaProgramadoTrimestre4['programado']; ?></p>
 										</th>
 										<th class="column-title" colspan="4">
-											<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '% '; ?>
-											<?php if($cumplimiento1 > 0 && $estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
-											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento1 . '/' . $avancePOA . '/1') ?>' id="btn-delete" title="Cerrar">
-													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-											</a>
-											<?php } ?>
-											</p>
 
-											<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '% '; ?>
-											<?php if($cumplimiento2 > 0 && $estadoActividad[0]['estado_trimestre_2'] == 1){ ?>
-											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento2 . '/' . $avancePOA . '/2') ?>' id="btn-delete" title="Cerrar">
-													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-											</a>
-											<?php } ?>												
-											</p>
+											<form name="form" id="form" role="form" method="post" >
+												<input type="hidden" id="idCuadroBase" name="idCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
+												<input type="hidden" id="idActividad" name="idActividad" value="<?php echo $lista["id_actividad"]; ?>"/>
+												<input type="hidden" id="cumplimiento1" name="cumplimiento1" value="<?php echo $cumplimiento1; ?>"/>
+												<input type="hidden" id="cumplimiento2" name="cumplimiento2" value="<?php echo $cumplimiento2; ?>"/>
+												<input type="hidden" id="cumplimiento3" name="cumplimiento3" value="<?php echo $cumplimiento3; ?>"/>
+												<input type="hidden" id="cumplimiento4" name="cumplimiento4" value="<?php echo $cumplimiento4; ?>"/>
+												<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
 
-											<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '% '; ?>
-											<?php if($cumplimiento3 > 0 && $estadoActividad[0]['estado_trimestre_3'] == 1){ ?>
-											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento3 . '/' . $avancePOA . '/3') ?>' id="btn-delete" title="Cerrar">
-													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-											</a>
-											<?php } ?>
-											</p>
-											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '% '; ?>
-											<?php if($cumplimiento4 > 0 && $estadoActividad[0]['estado_trimestre_4'] == 1){ ?>
-											<a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/update_trimestre/' . $idCuadroBase . '/' . $idActividad . '/' . $cumplimiento4 . '/' . $avancePOA . '/4') ?>' id="btn-delete" title="Cerrar">
-													Cerrar <span class="fa fa-times" aria-hidden="true"> </span>
-											</a>
-											<?php } ?>
-											</p>
+												<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '% '; ?>
+													<?php if($cumplimiento1 > 0 && $estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
+														<button type="button" id="1" class='btn btn-danger btn-xs' title="Cerrar Trimestre I">
+																Cerrar Trimestre I  <i class="fa fa-arrow-right"></i>
+														</button>
+													<?php } ?>
+												</p>
+
+												<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '% '; ?>
+													<?php if($cumplimiento2 > 0 && $estadoActividad[0]['estado_trimestre_2'] == 1){ ?>
+														<button type="button" id="2" class='btn btn-danger btn-xs' title="Cerrar Trimestre II">
+																Cerrar Trimestre II  <i class="fa fa-arrow-right"></i>
+														</button>
+													<?php } ?>												
+												</p>
+
+												<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '% '; ?>
+													<?php if($cumplimiento3 > 0 && $estadoActividad[0]['estado_trimestre_3'] == 1){ ?>
+														<button type="button" id="3" class='btn btn-danger btn-xs' title="Cerrar Trimestre III">
+																Cerrar Trimestre III  <i class="fa fa-arrow-right"></i>
+														</button>
+													<?php } ?>
+												</p>
+												<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '% '; ?>
+													<?php if($cumplimiento4 > 0 && $estadoActividad[0]['estado_trimestre_4'] == 1){ ?>
+														<button type="button" id="4" class='btn btn-danger btn-xs' title="Cerrar Trimestre IV">
+																Cerrar Trimestre IV  <i class="fa fa-arrow-right"></i>
+														</button>
+													<?php } ?>
+												</p>
+											</form>
 										</th>
 										<th class="column-title" colspan="2">
 											<p>Avance POA I: <?php echo $avancePOA1; ?></p>

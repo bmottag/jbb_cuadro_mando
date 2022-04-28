@@ -408,7 +408,7 @@ class Dashboard extends CI_Controller {
      * @since 17/04/2022
      * @author BMOTTAG
      */
-    public function update_trimestre($idCuadroBase, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
+    public function update_trimestre___ANTERIRO($idCuadroBase, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
 	{
 			if (empty($idCuadroBase) || empty($idActividad) || empty($numeroTrimestre) ) {
 				show_error('ERROR!!! - You are in the wrong place.');
@@ -422,6 +422,32 @@ class Dashboard extends CI_Controller {
 			}
 
 			redirect(base_url('dashboard/actividades/' . $idCuadroBase . '/' . $idActividad), 'refresh');
+    }
+
+    /**
+     * Datos de actividades por TRIMESTRE
+     * @since 17/04/2022
+     * @author BMOTTAG
+     */
+	public function update_trimestre()
+	{
+		header('Content-Type: application/json');
+
+		$data["idCuadroBase"] = $this->input->post('idCuadroBase');
+		$data["idActividad"] = $idActividad = $this->input->post('idActividad');
+		$cumplimientoTrimestre = $this->input->post('cumplimientoTrimestre');
+		$avancePOA = $this->input->post('avancePOA');
+		$numeroTrimestre = $this->input->post('numeroTrimestre');
+
+		$banderaActividad = true;
+		$estadoActividad = 2;
+		if ($this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre)){
+			$data["result"] = true;
+			$data["msj"] = "Se cerro el trimestre.";
+		} else {
+			$data["result"] = true;
+		}
+		echo json_encode($data);
     }
 
 	/**

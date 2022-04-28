@@ -257,16 +257,16 @@ $(function(){
 											<p class="<?php echo $estadoActividad[0]['cuarta_clase']; ?>"><strong><?php echo $estadoActividad[0]['cuarta_estado']; ?></strong></p>
 										</th>
 										<th class="column-title">
-											<p><a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' id="btn-delete" title="Cerrar">
+											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' title="Seguimiento I">
 													Seguimiento I <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>
-											<p><a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/2') ?>' id="btn-delete" title="Cerrar">
+											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/2') ?>' title="Seguimiento II">
 													Seguimiento II <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>
-											<p><a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/3') ?>' id="btn-delete" title="Cerrar">
+											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/3') ?>' title="Seguimiento III">
 													Seguimiento III <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>
-											<p><a class='btn btn-danger btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/4') ?>' id="btn-delete" title="Cerrar">
+											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/4') ?>' title="Seguimiento IV">
 													Seguimiento IV <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>											
 										</th>					
@@ -442,10 +442,10 @@ $(function(){
 										<td>
 											<?php
 												if($data['ejecutado'] && $data['ejecutado'] > 0){
-													if($data['descripcion_actividades'] > 0){
-														echo "<br><b>Descripción:</b></br>" . $data['descripcion_actividades'];
+													if($data['descripcion_actividades'] != ''){
+														echo "<b>Descripción:</b></br>" . $data['descripcion_actividades'];
 													}
-													if($data['evidencias'] > 0){
+													if($data['evidencias'] != ''){
 														echo "<br><b>Evidencias:</b></br>" . $data['evidencias'];
 													}
 												}
