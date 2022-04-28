@@ -17,6 +17,21 @@ class Dashboard extends CI_Controller {
 	{				
 			$arrParam = array();
 			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+			$arrParam = array(
+				"table" => "objetivos_estrategicos",
+				"order" => "objetivo_estrategico",
+				"id" => "x"
+			);
+			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"id" => "x"
+			);
+			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+
 			$data["view"] = "dashboard";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -445,6 +460,20 @@ class Dashboard extends CI_Controller {
 	{				
 			$arrParam = array();
 			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+			$arrParam = array(
+				"table" => "objetivos_estrategicos",
+				"order" => "objetivo_estrategico",
+				"id" => "x"
+			);
+			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"id" => "x"
+			);
+			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
 			$data["view"] = "dashboard";
 			$this->load->view("layout_calendar", $data);
 	}

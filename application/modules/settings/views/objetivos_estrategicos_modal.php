@@ -1,8 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/objetivos_estrategicos.js"); ?>"></script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="exampleModalLabel">Formulario Objetivos Estratégicos
-	<br><small>Adicionar/Editar Objetivos Estratégicos.</small>
+	<h4 class="modal-title" id="exampleModalLabel">Formulario Estrategias
+	<br><small>Adicionar/Editar Estrategias.</small>
 	</h4>
 </div>
 
@@ -14,8 +14,8 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="objetivo_estrategico">Objetivo Estratégico: *</label>
-					<input type="text" id="objetivo_estrategico" name="objetivo_estrategico" class="form-control" value="<?php echo $information?$information[0]["objetivo_estrategico"]:""; ?>" placeholder="Objetivo Estratégico" required >
+					<label class="control-label" for="objetivo_estrategico">Estrategia: *</label>
+					<input type="text" id="objetivo_estrategico" name="objetivo_estrategico" class="form-control" value="<?php echo $information?$information[0]["objetivo_estrategico"]:""; ?>" placeholder="Estrategia" required >
 				</div>
 			</div>
 		</div>

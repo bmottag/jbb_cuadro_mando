@@ -6,7 +6,7 @@ $( document ).ready( function () {
 		rules: {
 			numero_meta_proyecto:		{ required: true, minlength: 1, maxlength: 4 },
 			meta_proyecto:				{ required: true },
-			presupuesto_meta:			{ required: true, minlength: 2, maxlength: 10 },
+			presupuesto_meta:			{ required: true, minlength: 2, maxlength: 11 },
 			proceso_calidad:			{ required: true, minlength: 2, maxlength: 50 },
 		},
 		errorElement: "em",

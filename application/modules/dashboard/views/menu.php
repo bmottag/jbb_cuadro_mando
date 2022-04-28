@@ -2,7 +2,7 @@
 	<div class="panel panel-info">
 		<div class="panel-heading small">
 			<i class="fa fa-thumb-tack"></i> 
-				<strong>Estrategia: </strong>
+				<strong>Objetivos Estratégicos: </strong>
 				<br><?php echo $listaEstrategias[0]['numero_estrategia'] . ' ' . $listaEstrategias[0]['estrategia']; ?>
 		</div>
 		<div class="panel-body small">

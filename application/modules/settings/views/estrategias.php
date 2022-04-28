@@ -22,7 +22,7 @@ $(function(){
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h4 class="list-group-item-heading">
-					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - ESTRATEGIAS
+					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - OBJETIVOS ESTRATÉGICOS
 					</h4>
 				</div>
 			</div>
@@ -34,11 +34,11 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA ESTRATEGIAS
+					<i class="fa fa-building"></i> LISTA OBJETIVOS ESTRATÉGICOS
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Estrategias
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Objetivos Estratégicos
 							</button>
 						</div>
 					</div>
@@ -72,8 +72,8 @@ $(function(){
 					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
 						<thead>
 							<tr>
-								<th class="text-center">Objetivo Estratégico</th>
 								<th class="text-center">Estrategia</th>
+								<th class="text-center">Objetivo Estratégico</th>
 								<th class="text-center">Editar</th>
 							</tr>
 						</thead>

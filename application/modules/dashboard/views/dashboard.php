@@ -52,10 +52,254 @@ if ($retornoError) {
     <?php
 }
 ?> 
-			
+	
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    MISIÓN
+                </div>
+                <div class="panel-body">
+                    <p>Investigar y conservar la flora de los ecosistemas alto andinos y de páramo y gestionar las coberturas vegetales urbanas, contribuyendo a la generación, aplicación y apropiación social del conocimiento para la adaptación al cambio climático, al mejoramiento de la calidad de vida y al desarrollo sostenible en el Distrito Capital y la Región.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    VISIÓN
+                </div>
+                <div class="panel-body">
+                    <p>En el 2038 seremos reconocidos nacional e internacionalmente como un centro de investigación de referencia en los ecosistemas alto andinos y de páramo y como destino de naturaleza, que contribuye a la transformación del pensamiento ambiental para la sostenibilidad del territorio.
+                    <br>
+                    </p>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Avances Estrategias <b><?php echo date("Y"); ?></b>
+                </div>
+                <div class="panel-body small">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Estrategia</th>
+                                <th>% Avance Vigencia <b><?php echo date("Y"); ?></b></th>
+                            </tr>
+                        </thead>
+                        <?php
+                        $i=0;
+                        foreach ($listaObjetivos as $lista):
+                            $i++;
+                            if($i==1){
+                                $valor = 75;
+                            }elseif($i==2){
+                                $valor = 38;
+                            }elseif($i==3){
+                                $valor = 57;
+                            }elseif($i==4){
+                                $valor = 26;
+                            }elseif($i==5){
+                                $valor = 86;
+                            }elseif($i==6){
+                                $valor = 57;
+                            }else{
+                                $valor = 100;
+                            }
+                            
+                            if($valor > 70){
+                                $estilos = "bg-success";
+                            }elseif($valor > 40 && $valor <= 70){
+                                $estilos = "bg-warning";
+                            }else{
+                                $estilos = "bg-danger";
+                            }
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>" . $lista["objetivo_estrategico"] . "</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress progress-striped">
+                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $valor .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $valor . '%</div>
+                                    </div>';
+                            echo "</td>";
+
+                            echo "</tr>";
+                        endforeach
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Avances de Objetivo Estratégico otros años
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Avance Dependencias <b><?php echo date("Y"); ?></b>
+                </div>
+                <div class="panel-body small">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Dependencia</th>
+                                <th>Avance Plan Estratégico <b><?php echo date("Y"); ?></b></th>
+                            </tr>
+                        </thead>
+                        <?php
+                        $i=0;
+                        foreach ($listaDependencia as $lista):
+                            $i++;
+                            if($i==1){
+                                $valor = 100;
+                            }elseif($i==2){
+                                $valor = 98;
+                            }elseif($i==3){
+                                $valor = 100;
+                            }elseif($i==4){
+                                $valor = 100;
+                            }elseif($i==5){
+                                $valor = 86;
+                            }elseif($i==6){
+                                $valor = 90;
+                            }elseif($i==6){
+                                $valor = 90;
+                            }elseif($i==7){
+                                $valor = 92;
+                            }else{
+                                $valor = 100;
+                            }
+                            
+                            if($valor > 70){
+                                $estilos = "bg-success";
+                            }elseif($valor > 40 && $valor <= 70){
+                                $estilos = "bg-warning";
+                            }else{
+                                $estilos = "bg-danger";
+                            }
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>" . $lista["dependencia"] . "</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress progress-striped">
+                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $valor .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $valor . '%</div>
+                                    </div>';
+                            echo "</td>";
+
+                            echo "</tr>";
+                        endforeach
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Resultados de la Administración</b>
+                </div>
+                <div class="panel-body small">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Administración</th>
+                                <th>Avance Plan Estratégico <b><?php echo date("Y"); ?></b></th>
+                            </tr>
+                        </thead>
+                        <?php
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Centro de investigación reconocido</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 80%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">80%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Consolidación de alianzas estratégicas para la conservación de las coberturas vegetales</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 90%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="90">50%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Cultura organizacional</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 70%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">70%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Enriquecimiento de colecciones vivas  y de referencia uso sostenible de flora en la ciudad región</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Fortalecimiento de la gestión y el desempeño institucional</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 50%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">50%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Gestión de coberturas vegetales</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Centro de investigación reconocido</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>Gestión del conocimiento trasformación del pensamiento</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress">
+                                      <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 80%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">80%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "</tr>";
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-success">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <i class="fa fa-thumb-tack fa-fw"></i> <b>Plan Estratégico</b>
                 </div>
@@ -71,8 +315,8 @@ if ($retornoError) {
                                     <small>
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $lista['id_estrategia']; ?>">
                                     <?php 
-                                        echo '<strong>Objetivo Estratégico: </strong>' . $lista['objetivo_estrategico'] . ' ' . $lista['estrategia'];
-                                        echo '<br><strong>Estrategia: </strong>' . $lista['numero_estrategia'] . ' ' . $lista['estrategia']; 
+                                        echo '<strong>Estrategia: </strong><br>' . $lista['objetivo_estrategico'] . ' ' . $lista['descripcion_objetivo_estrategico'];
+                                        echo '<br><br><strong>Objetivo Estratégico: </strong><br>' . $lista['numero_estrategia'] . ' ' . $lista['estrategia']; 
                                     ?>
                                     </a>
                                     </small>

@@ -3,7 +3,7 @@
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	<h4 class="modal-title" id="exampleModalLabel">Plan de Desarrollo Distrital
-	<br><small><b>Estrategia: </b><?php echo $infoEstrategia[0]['numero_estrategia'] . ' ' . $infoEstrategia[0]['estrategia']; ?></small>
+	<br><small><b>Objetivos Estratégicos: </b><?php echo $infoEstrategia[0]['numero_estrategia'] . ' ' . $infoEstrategia[0]['estrategia']; ?></small>
 	</h4>
 </div>
 
