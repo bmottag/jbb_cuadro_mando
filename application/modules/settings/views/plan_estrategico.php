@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/plan_estrategico.js"); ?>"></script>
 <script>
 $(function(){ 
     $(".btn-primary").click(function () {   
@@ -211,7 +212,14 @@ if ($retornoError) {
                                                 echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
                                                 echo "<td><small>" . $lista["dependencia"] . "</small></td>";
-                                                echo "<td><a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a></td>";
+                                                echo "<td>";
+                                                echo "<a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a>";
+?>
+                                                <button type="button" id="<?php echo $lista['id_cuadro_base']; ?>" class='btn btn-danger btn-xs' title="Eliminar">
+                                                        <i class="fa fa-trash-o"></i>
+                                                </button>
+<?php
+                                                echo "</td>";
                                                 echo "</tr>";
                                             endforeach
                                             ?>

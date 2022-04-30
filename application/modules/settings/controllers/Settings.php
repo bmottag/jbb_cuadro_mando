@@ -1369,6 +1369,47 @@ class Settings extends CI_Controller {
 
 			echo json_encode($data);	
     }
+
+	/**
+	 * Delete Plan Estrategico
+     * @since 26/4/2022
+	 */
+	public function delete_plan_estrategico()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idCuadroBase = $this->input->post('identificador');
+
+			$arrParam = array(
+				"idCuadroBase" => $idCuadroBase
+			);
+			$infoActividades = $this->general_model->get_actividades($arrParam);
+
+			if($infoActividades){
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! No se puede eliminar porque el Plan de Desarrollo Distrital ya tiene asignas Actividades.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}else{
+				$arrParam = array(
+					"table" => "cuadro_base ",
+					"primaryKey" => "id_cuadro_base",
+					"id" => $idCuadroBase
+				);
+				
+				if ($this->general_model->deleteRecord($arrParam)) 
+				{
+					$data["result"] = true;
+					$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó el Plan de Desarrollo Distrital.');
+				} else {
+					$data["result"] = "error";
+					$data["mensaje"] = "Error!!! Ask for help.";
+					$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+				}
+			}
+			
+			echo json_encode($data);
+    }
 	
 
 	
