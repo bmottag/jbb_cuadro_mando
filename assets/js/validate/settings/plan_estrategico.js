@@ -44,7 +44,7 @@ $( document ).ready( function () {
 			
 				$.ajax({
 					type: "POST",	
-					url: base_url + "dashboard/save_cuadro_base",	
+					url: base_url + "settings/save_cuadro_base",	
 					data: $("#form").serialize(),
 					dataType: "json",
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -64,7 +64,7 @@ $( document ).ready( function () {
 							$("#div_load").css("display", "none");
 							$('#btnSubmit').removeAttr('disabled');
 
-							var url = base_url + "dashboard/admin";
+							var url = base_url + "settings/plan_estrategico";
 							$(location).attr("href", url);
 						}
 						else

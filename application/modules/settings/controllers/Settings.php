@@ -1241,6 +1241,134 @@ class Settings extends CI_Controller {
 			
 			echo json_encode($data);
     }
+
+	/**
+	 * PLAN ESTRATEGICO
+	 * @since 30/04/2022
+	 */
+	public function plan_estrategico()
+	{				
+			$arrParam = array();
+			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+			$arrParam = array(
+				"table" => "objetivos_estrategicos",
+				"order" => "objetivo_estrategico",
+				"id" => "x"
+			);
+			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"id" => "x"
+			);
+			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			$data["view"] = "plan_estrategico";
+			$this->load->view("layout_calendar", $data);
+	}
+
+    /**
+     * Cargo modal - formulario cuadro base
+     * @since 16/04/2022
+     */
+    public function cargarModalCuadroBase() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idEstrategia"] = $this->input->post("idEstrategia");
+
+			$arrParam = array("idEstratega" => $data["idEstrategia"]);
+			$data['infoEstrategia'] = $this->general_model->get_estrategias($arrParam);
+
+			$arrParam = array(
+				"table" => "proyecto_inversion",
+				"order" => "id_proyecto_inversion",
+				"id" => "x"
+			);
+			$data['listaProyectos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "meta_proyecto_inversion",
+				"order" => "numero_meta_proyecto",
+				"id" => "x"
+			);
+			$data['listaMetasProyectos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => " propositos",
+				"order" => "numero_proposito",
+				"id" => "x"
+			);
+			$data['listaPropositos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => " logros",
+				"order" => "numero_logro",
+				"id" => "x"
+			);
+			$data['listaLogros'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => " programa_estrategico",
+				"order" => "numero_programa_estrategico",
+				"id" => "x"
+			);
+			$data['listaPrograma'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "meta_pdd",
+				"order" => "numero_meta_pdd",
+				"id" => "x"
+			);
+			$data['listaMetasPDD'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "ods",
+				"order" => "numero_ods",
+				"id" => "x"
+			);
+			$data['listaODS'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"id" => "x"
+			);
+			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+						
+			$this->load->view("plan_estrategico_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar cuadro base
+     * @since 16/04/2022
+     * @author BMOTTAG
+	 */
+	public function save_cuadro_base()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idEstrategia = $this->input->post('hddIdEstrategia');
+			
+			$msj = "Se adicionó la información!";
+			if ($idEstrategia != '') {
+				$msj = "Se actualizó la información!";
+			}
+
+			if ($idEstrategia = $this->settings_model->savePlanEstrategico()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 
 	

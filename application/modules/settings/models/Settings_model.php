@@ -352,6 +352,35 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Guardar cuadro base
+		 * @since 16/04/2022
+		 */
+		public function savePlanEstrategico() 
+		{
+				$idEstrategia = $this->input->post('hddIdEstrategia');
+		
+				$data = array(
+					'fk_id_proyecto_inversion' => $this->input->post('id_proyecto_inversion'),
+					'fk_id_meta_proyecto_inversion' => $this->input->post('id_meta_proyecto_inversion'),
+					'fk_id_proposito' => $this->input->post('id_proposito'),
+					'fk_id_logro' => $this->input->post('id_logros'),
+					'fk_id_programa_estrategico' => $this->input->post('id_programa_estrategico'),
+					'fk_id_meta_pdd' => $this->input->post('id_meta_pdd'),
+					'fk_id_ods' => $this->input->post('id_ods'),
+					'fk_id_dependencia ' => $this->input->post('id_dependencia')
+				);	
+
+				$data['fk_id_estrategia'] = $idEstrategia;
+				$query = $this->db->insert('cuadro_base', $data);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		
