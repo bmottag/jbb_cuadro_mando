@@ -582,5 +582,41 @@ class General_model extends CI_Model {
 				}
 		}
 
+		/**
+		 * Consulta lista de actividades
+		 * @since 30/04/2022
+		 */
+		public function get_actividades_full($arrData) 
+		{		
+				$this->db->select("A.*, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_id_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");
+				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
+				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INER');
+				$this->db->join('proyecto_inversion P', 'P.id_proyecto_inversion = C.fk_id_proyecto_inversion', 'INER');
+				$this->db->join('meta_proyecto_inversion M', 'M.id_meta_proyecto_inversion = C.fk_id_meta_proyecto_inversion', 'INER');
+				$this->db->join('propositos X', 'X.id_proposito = C.fk_id_proposito', 'INER');
+				$this->db->join('logros L', 'L.id_logros  = C.fk_id_logro', 'INER');
+				$this->db->join('programa_estrategico Y', 'Y.id_programa_estrategico = C.fk_id_programa_estrategico', 'INER');
+				$this->db->join('meta_pdd Z', 'Z.id_meta_pdd = C.fk_id_meta_pdd', 'INER');
+				$this->db->join('ods O', 'O.id_ods = C.fk_id_ods', 'INER');
+				$this->db->join('param_dependencias D', 'D.id_dependencia = C.fk_id_dependencia', 'INER');
+
+				if (array_key_exists("idActividad", $arrData)) {
+					$this->db->where('A.id_actividad', $arrData["idActividad"]);
+				}
+				if (array_key_exists("idCuadroBase", $arrData)) {
+					$this->db->where('A.fk_id_cuadro_base', $arrData["idCuadroBase"]);
+				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('C.fk_id_estrategia', $arrData["idEstrategia"]);
+				}
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }

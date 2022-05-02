@@ -1,20 +1,3 @@
-<script>
-$(function(){ 
-    $(".btn-primary").click(function () {   
-            var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-                url: base_url + 'dashboard/cargarModalCuadroBase',
-                data: {'idEstrategia': oID},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatos').html(data);
-                }
-            });
-    }); 
-});
-</script>
-
 <div id="page-wrapper">
     <div class="row"><br>
 		<div class="col-md-12">
@@ -136,16 +119,16 @@ if ($retornoError) {
             </div>
         </div>
 
-                <div class="col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Avances de Objetivo Estratégico otros años
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-bar-chart"></div>
-                        </div>
-                    </div>
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Avances de Objetivo Estratégico años anteriores
                 </div>
+                <div class="panel-body">
+                    <div id="morris-bar-chart"></div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -331,7 +314,7 @@ if ($retornoError) {
                                         $metas = $this->general_model->get_lista_metas($arrParam);
                                         $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                         $resultados = $this->general_model->get_lista_resultados($arrParam);
-                                        $cuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+                                        $actividades = $this->general_model->get_actividades_full($arrParam);
 
                                         if($metas){
                                     ?>
@@ -388,13 +371,18 @@ if ($retornoError) {
                                     <?php
                                         }
 
-                                        if(!$cuadroBase){
+                                        if(!$actividades){
                                             echo "<small>No hay definidas las relaciones para esta estretegia.</small>";
                                         }else{
                                     ?>                              
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th class="text-center">No.</th>
+                                                    <th>Actividad</th>
+                                                    <th>Ponderación</th>
+                                                    <th>Fecha Inicial</th>
+                                                    <th>Fecha Final</th>
                                                     <th><small>Proyecto Inversión</small></th>
                                                     <th><small>Meta Proyecto Inversión</small></th>
                                                     <th><small>Propósito</small></th>
@@ -403,14 +391,17 @@ if ($retornoError) {
                                                     <th><small>Meta PDD</small></th>
                                                     <th><small>ODS</small></th>
                                                     <th><small>Responsable</small></th>
-                                                    <th><small>Actividades</small></th>
-
                                                 </tr>
                                             </thead>
 
                                             <?php
-                                            foreach ($cuadroBase as $lista):
+                                            foreach ($actividades as $lista):
                                                 echo "<tr>";
+                                                echo "<td class='text-center'>" . $lista['numero_actividad'] . "</td>";
+                                                echo "<td>" . $lista['descripcion_actividad'] . "</td>";
+                                                echo "<td class='text-right'>" . $lista['ponderacion'] . "%</td>";
+                                                echo "<td class='text-center'>" . $lista['mes_inicial'] . "</td>";
+                                                echo "<td class='text-center'>" . $lista['mes_final'] . "</td>";
                                                 echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proposito"] . "</small></td>";
@@ -419,7 +410,6 @@ if ($retornoError) {
                                                 echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
                                                 echo "<td><small>" . $lista["dependencia"] . "</small></td>";
-                                                echo "<td><a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a></td>";
                                                 echo "</tr>";
                                             endforeach
                                             ?>
