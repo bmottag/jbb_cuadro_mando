@@ -610,6 +610,10 @@ class General_model extends CI_Model {
 				if (array_key_exists("idEstrategia", $arrData)) {
 					$this->db->where('C.fk_id_estrategia', $arrData["idEstrategia"]);
 				}
+				if (array_key_exists("filtroCuadroBase", $arrData)) {
+					$where = "C.id_cuadro_base IN (" . $arrData["filtroCuadroBase"] . ")";
+					$this->db->where($where);
+				}
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();

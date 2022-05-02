@@ -59,8 +59,8 @@ if ($retornoError) {
                                     <small>
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $lista['id_estrategia']; ?>">
                                     <?php 
-                                        echo '<strong>Objetivo Estratégico: </strong>' . $lista['objetivo_estrategico'] . ' ' . $lista['estrategia'];
-                                        echo '<br><strong>Estrategia: </strong>' . $lista['numero_estrategia'] . ' ' . $lista['estrategia']; 
+                                        echo '<strong>Estrategia: </strong><br>' . $lista['objetivo_estrategico'] . ' ' . $lista['descripcion_objetivo_estrategico'];
+                                        echo '<br><br><strong>Objetivo Estratégico: </strong><br>' . $lista['numero_estrategia'] . ' ' . $lista['estrategia']; 
                                     ?>
                                     </a>
                                     </small>
@@ -87,7 +87,7 @@ if ($retornoError) {
                                             }
                                         }
                                         $arrParam = array("filtroCuadroBase" => $valor);
-                                        $cuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+                                        $actividades = $this->general_model->get_actividades_full($arrParam);
 
                                         if($metas){
                                     ?>
@@ -144,13 +144,18 @@ if ($retornoError) {
                                     <?php
                                         }
 
-                                        if(!$cuadroBase){
+                                        if(!$actividades){
                                             echo "<small>No hay definidas las relaciones para esta estretegia.</small>";
                                         }else{
                                     ?>                              
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th class="text-center">No.</th>
+                                                    <th><small>Actividad</small></th>
+                                                    <th><small>Ponderación</small></th>
+                                                    <th><small>Fecha Inicial</small></th>
+                                                    <th><small>Fecha Final</small></th>
                                                     <th><small>Proyecto Inversión</small></th>
                                                     <th><small>Meta Proyecto Inversión</small></th>
                                                     <th><small>Propósito</small></th>
@@ -159,14 +164,19 @@ if ($retornoError) {
                                                     <th><small>Meta PDD</small></th>
                                                     <th><small>ODS</small></th>
                                                     <th><small>Responsable</small></th>
-                                                    <th><small>Ver Actividades</small></th>
-
                                                 </tr>
                                             </thead>
 
                                             <?php
-                                            foreach ($cuadroBase as $lista):
+                                            foreach ($actividades as $lista):
                                                 echo "<tr>";
+                                                echo "<td class='text-center'><small>" . $lista['numero_actividad'] . "</small>";
+                                                echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
+                                                echo "</td>";
+                                                echo "<td><small>" . $lista['descripcion_actividad'] . "</small></td>";
+                                                echo "<td class='text-right'><small>" . $lista['ponderacion'] . "%</small></td>";
+                                                echo "<td class='text-center'><small>" . $lista['mes_inicial'] . "</small></td>";
+                                                echo "<td class='text-center'><small>" . $lista['mes_final'] . "</td>";
                                                 echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proposito"] . "</small></td>";
@@ -175,7 +185,6 @@ if ($retornoError) {
                                                 echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
                                                 echo "<td><small>" . $lista["dependencia"] . "</small></td>";
-                                                echo "<td><a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a></td>";
                                                 echo "</tr>";
                                             endforeach
                                             ?>

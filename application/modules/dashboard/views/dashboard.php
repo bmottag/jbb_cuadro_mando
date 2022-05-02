@@ -379,10 +379,10 @@ if ($retornoError) {
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">No.</th>
-                                                    <th>Actividad</th>
-                                                    <th>Ponderación</th>
-                                                    <th>Fecha Inicial</th>
-                                                    <th>Fecha Final</th>
+                                                    <th><small>Actividad</small></th>
+                                                    <th><small>Ponderación</small></th>
+                                                    <th><small>Fecha Inicial</small></th>
+                                                    <th><small>Fecha Final</small></th>
                                                     <th><small>Proyecto Inversión</small></th>
                                                     <th><small>Meta Proyecto Inversión</small></th>
                                                     <th><small>Propósito</small></th>
@@ -397,11 +397,13 @@ if ($retornoError) {
                                             <?php
                                             foreach ($actividades as $lista):
                                                 echo "<tr>";
-                                                echo "<td class='text-center'>" . $lista['numero_actividad'] . "</td>";
-                                                echo "<td>" . $lista['descripcion_actividad'] . "</td>";
-                                                echo "<td class='text-right'>" . $lista['ponderacion'] . "%</td>";
-                                                echo "<td class='text-center'>" . $lista['mes_inicial'] . "</td>";
-                                                echo "<td class='text-center'>" . $lista['mes_final'] . "</td>";
+                                                echo "<td class='text-center'><small>" . $lista['numero_actividad'] . "</small>";
+                                                echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
+                                                echo "</td>";
+                                                echo "<td><small>" . $lista['descripcion_actividad'] . "</small></td>";
+                                                echo "<td class='text-right'><small>" . $lista['ponderacion'] . "%</small></td>";
+                                                echo "<td class='text-center'><small>" . $lista['mes_inicial'] . "</small></td>";
+                                                echo "<td class='text-center'><small>" . $lista['mes_final'] . "</td>";
                                                 echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proposito"] . "</small></td>";
