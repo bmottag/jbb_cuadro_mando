@@ -588,7 +588,8 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full($arrData) 
 		{		
-				$this->db->select("A.*, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_id_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");
+				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_id_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");
+				$this->db->join('actividad_estado E', 'E.fk_id_actividad  = A.id_actividad', 'LEFT');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INER');

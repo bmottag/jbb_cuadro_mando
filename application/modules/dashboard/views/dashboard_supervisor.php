@@ -174,7 +174,14 @@ if ($retornoError) {
                                                 echo "</td>";
                                                 echo "<td><small>" . $lista['descripcion_actividad'] . "</small></td>";
                                                 echo "<td class='text-right'><small>" . $lista['meta_plan_operativo_anual'] . "</small></td>";
-                                                echo "<td class='text-center'><small></small></td>";
+                                                echo "<td class='text-center'><small>";
+                                                if($lista["avance_poa"]){
+                                               
+                                                echo $lista["avance_poa"] . "%";
+                                                }else{
+                                                    echo 0;
+                                                }
+                                                echo "</small></td>";
                                                 echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
