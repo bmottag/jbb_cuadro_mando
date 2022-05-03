@@ -18,6 +18,27 @@
 					<input type="number" min="1" max="9999" id="numero_meta_proyecto" name="numero_meta_proyecto" class="form-control" value="<?php echo $information?$information[0]["numero_meta_proyecto"]:""; ?>" placeholder="No. Meta Proyecto Inversión" required >
 				</div>
 			</div>
+
+			<div class="col-sm-6">		
+				<div class="form-group text-left">
+					<label class="control-label" for="vigencia">Vigencia: *</label>
+					<select name="vigencia" id="vigencia" class="form-control" required>
+						<option value='' >Select...</option>
+						<?php
+							$year = date('Y');
+							$lastYear = $year - 1;
+							$nextYear = $year + 2;
+							for ($i = $lastYear; $i < $nextYear; $i++) {
+						?>
+							<option value='<?php echo $i; ?>' <?php
+							if ($information && $i == $information[0]["vigencia_meta_proyecto"]) {
+								echo 'selected="selected"';
+							}
+							?>><?php echo $i; ?></option>
+						<?php } ?>									
+					</select>
+				</div>
+			</div>
 		</div>
 
 		<div class="row">				
@@ -33,14 +54,19 @@
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
 					<label class="control-label" for="presupuesto_meta">Presupuesto Meta: *</label>
-					<input type="text" id="presupuesto_meta" name="presupuesto_meta" class="form-control" value="<?php echo $information?$information[0]["presupuesto_meta"]:""; ?>" placeholder="Presupuesto Meta" required >
+					<input type="number" min="0" max="10000000000" id="presupuesto_meta" name="presupuesto_meta" class="form-control" value="<?php echo $information?$information[0]["presupuesto_meta"]:""; ?>" placeholder="Presupuesto Meta" required >
 				</div>
 			</div>
 
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
 					<label class="control-label" for="proceso_calidad">Proceso Calidad: *</label>
-					<input type="text" id="proceso_calidad" name="proceso_calidad" class="form-control" value="<?php echo $information?$information[0]["proceso_calidad"]:""; ?>" placeholder="Proyecto de Inversión" required >
+					<select name="proceso_calidad" id="proceso_calidad" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($proceso_calidad); $i++) { ?>
+							<option value="<?php echo $proceso_calidad[$i]["id_proceso_calidad"]; ?>" <?php if($information && $information[0]["fk_id_proceso_calidad"] == $proceso_calidad[$i]["id_proceso_calidad"]) { echo "selected"; }  ?>><?php echo $proceso_calidad[$i]["proceso_calidad"]; ?></option>	
+						<?php } ?>
+					</select>
 				</div>
 			</div>
 		</div>

@@ -77,6 +77,8 @@ $(function(){
 								<th class="text-center">No.</th>
 								<th class="text-center">Meta Proyecto Inversión</th>
 								<th class="text-center">Presupuesto Meta</th>
+								<th class="text-center">Proceso Calidad</th>
+								<th class="text-center">Vigencia</th>
 								<th class="text-center">Editar</th>
 							</tr>
 						</thead>
@@ -86,7 +88,9 @@ $(function(){
 									echo "<tr>";
 									echo "<td class='text-center'>" . $lista['numero_meta_proyecto'] . "</td>";
 									echo "<td>" . $lista['meta_proyecto'] . "</td>";
-									echo "<td>" . $lista['presupuesto_meta'] . "</td>";
+									echo "<td class='text-right'>$ " . number_format($lista['presupuesto_meta']) . "</td>";
+									echo "<td class='text-right'>" . $lista['proceso_calidad'] . "</td>";
+									echo "<td class='text-center'>" . $lista['vigencia_meta_proyecto'] . "</td>";
 									echo "<td class='text-center'>";
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_meta_proyecto_inversion']; ?>" >

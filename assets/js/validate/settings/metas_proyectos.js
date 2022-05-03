@@ -1,13 +1,15 @@
 $( document ).ready( function () {
 
 	$("#numero_meta_proyecto").bloquearTexto().maxlength(4);
+	$("#presupuesto_meta").bloquearTexto().maxlength(11);
 	
 	$( "#form" ).validate( {
 		rules: {
 			numero_meta_proyecto:		{ required: true, minlength: 1, maxlength: 4 },
+			vigencia:					{ required: true },
 			meta_proyecto:				{ required: true },
-			presupuesto_meta:			{ required: true, minlength: 2, maxlength: 11 },
-			proceso_calidad:			{ required: true, minlength: 2, maxlength: 50 },
+			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 11 },
+			proceso_calidad:			{ required: true },
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {

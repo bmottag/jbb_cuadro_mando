@@ -720,12 +720,8 @@ class Settings extends CI_Controller {
 	 */
 	public function metas_proyectos()
 	{
-			$arrParam = array(
-				"table" => "meta_proyecto_inversion",
-				"order" => "numero_meta_proyecto",
-				"id" => "x"
-			);
-			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_meta_proyecto($arrParam);
 			
 			$data["view"] = 'meta_proyectos';
 			$this->load->view("layout_calendar", $data);
@@ -741,15 +737,19 @@ class Settings extends CI_Controller {
 			
 			$data['information'] = FALSE;
 			$data["idMetaProyecto"] = $this->input->post("idMetaProyecto");	
+
+			$arrParam = array(
+				"table" => "param_proceso_calidad",
+				"order" => "proceso_calidad",
+				"id" => "x"
+			);
+			$data['proceso_calidad'] = $this->general_model->get_basic_search($arrParam);
 			
 			if ($data["idMetaProyecto"] != 'x') {
 				$arrParam = array(
-					"table" => "meta_proyecto_inversion",
-					"order" => "numero_meta_proyecto",
-					"column" => "id_meta_proyecto_inversion",
-					"id" => $data["idMetaProyecto"]
+					"idMetaProyecto" => $data["idMetaProyecto"]
 				);
-				$data['information'] = $this->general_model->get_basic_search($arrParam);
+				$data['information'] = $this->general_model->get_meta_proyecto($arrParam);
 			}
 			
 			$this->load->view("meta_proyectos_modal", $data);
@@ -767,9 +767,9 @@ class Settings extends CI_Controller {
 			
 			$idMetaProyecto = $this->input->post('hddId');
 			
-			$msj = "Se adicionó la ODS!";
+			$msj = "Se adicionó la Meta Proyecto de Inversión!";
 			if ($idMetaProyecto != '') {
-				$msj = "Se actualizó la ODS!";
+				$msj = "Se actualizó la la Meta Proyecto de Inversión!";
 			}
 
 			if ($idMetaProyecto = $this->settings_model->saveMetasProyectos()) {

@@ -622,5 +622,25 @@ class General_model extends CI_Model {
 				}
 		}
 
+		/**
+		 * Consulta lista de meta proyecto inversion
+		 * @since 3/05/2022
+		 */
+		public function get_meta_proyecto($arrData) 
+		{		
+				$this->db->select();
+				$this->db->join('param_proceso_calidad P', 'P.id_proceso_calidad = M.fk_id_proceso_calidad', 'LEFT');
+				if (array_key_exists("idMetaProyecto", $arrData)) {
+					$this->db->where('M.id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
+				}
+				$this->db->order_by('numero_meta_proyecto', 'asc');
+				$query = $this->db->get('meta_proyecto_inversion M');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }
