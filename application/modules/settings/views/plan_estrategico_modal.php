@@ -14,34 +14,6 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="id_proyecto_inversion">Proyecto Inversión: *</label>
-					<select name="id_proyecto_inversion" id="id_proyecto_inversion" class="form-control" required >
-						<option value="">Seleccione...</option>
-						<?php for ($i = 0; $i < count($listaProyectos); $i++) { ?>
-							<option value="<?php echo $listaProyectos[$i]["id_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaProyectos[$i]["id_proyecto_inversion"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto_inversion"] . ' ' . $listaProyectos[$i]["nombre_proyecto_inversion"]; ?></option>		
-						<?php } ?>
-					</select>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="form-group text-left">
-					<label class="control-label" for="id_meta_proyecto_inversion">Metas Proyectos de Inversión: *</label>
-					<select name="id_meta_proyecto_inversion" id="id_meta_proyecto_inversion" class="form-control" required >
-						<option value="">Seleccione...</option>
-						<?php for ($i = 0; $i < count($listaMetasProyectos); $i++) { ?>
-							<option value="<?php echo $listaMetasProyectos[$i]["id_meta_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaMetasProyectos[$i]["id_meta_proyecto_inversion "]) { echo "selected"; }  ?>><?php echo $listaMetasProyectos[$i]["numero_meta_proyecto"] . ' ' . $listaMetasProyectos[$i]["meta_proyecto"]; ?></option>		
-						<?php } ?>
-					</select>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="form-group text-left">
 					<label class="control-label" for="id_proposito">Propósitos: *</label>
 					<select name="id_proposito" id="id_proposito" class="form-control" required >
 						<option value="">Seleccione...</option>
@@ -89,6 +61,34 @@
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaMetasPDD); $i++) { ?>
 							<option value="<?php echo $listaMetasPDD[$i]["id_meta_pdd"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaMetasPDD[$i]["id_meta_pdd"]) { echo "selected"; }  ?>><?php echo $listaMetasPDD[$i]["numero_meta_pdd"] . ' ' . $listaMetasPDD[$i]["meta_pdd"]; ?></option>		
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group text-left">
+					<label class="control-label" for="id_proyecto_inversion">Proyecto Inversión: *</label>
+					<select name="id_proyecto_inversion" id="id_proyecto_inversion" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($listaProyectos); $i++) { ?>
+							<option value="<?php echo $listaProyectos[$i]["id_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaProyectos[$i]["id_proyecto_inversion"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto_inversion"] . ' ' . $listaProyectos[$i]["nombre_proyecto_inversion"]; ?></option>		
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group text-left">
+					<label class="control-label" for="id_meta_proyecto_inversion">Metas Proyectos de Inversión: *</label>
+					<select name="id_meta_proyecto_inversion" id="id_meta_proyecto_inversion" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($listaMetasProyectos); $i++) { ?>
+							<option value="<?php echo $listaMetasProyectos[$i]["id_meta_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaMetasProyectos[$i]["id_meta_proyecto_inversion "]) { echo "selected"; }  ?>><?php echo $listaMetasProyectos[$i]["numero_meta_proyecto"] . ' ' . $listaMetasProyectos[$i]["meta_proyecto"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>

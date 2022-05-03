@@ -188,28 +188,27 @@ if ($retornoError) {
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th><small>Proyecto Inversión</small></th>
                                                     <th><small>Meta Proyecto Inversión</small></th>
-                                                    <th><small>Propósito</small></th>
-                                                    <th><small>Logro</small></th>
-                                                    <th><small>Programa Estretégico</small></th>
+                                                    <th><small>Proyecto Inversión</small></th>
                                                     <th><small>Meta PDD</small></th>
+                                                    <th><small>Programa Estretégico</small></th>
+                                                    <th><small>Logro</small></th>
+                                                    <th><small>Propósito</small></th>
                                                     <th><small>ODS</small></th>
                                                     <th><small>Responsable</small></th>
                                                     <th><small>Actividades</small></th>
-
                                                 </tr>
                                             </thead>
 
                                             <?php
                                             foreach ($cuadroBase as $lista):
                                                 echo "<tr>";
-                                                echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
-                                                echo "<td><small>" . $lista["proposito"] . "</small></td>";
-                                                echo "<td><small>" . $lista["logro"] . "</small></td>";
-                                                echo "<td><small>" . $lista["programa"] . "</small></td>";
+                                                echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
+                                                echo "<td><small>" . $lista["programa"] . "</small></td>";
+                                                echo "<td><small>" . $lista["logro"] . "</small></td>";
+                                                echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
                                                 echo "<td><small>" . $lista["dependencia"] . "</small></td>";
                                                 echo "<td>";

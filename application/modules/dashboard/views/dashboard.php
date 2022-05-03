@@ -378,17 +378,16 @@ if ($retornoError) {
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">No.</th>
+                                                    <th class="text-center"><small>No.</small></th>
                                                     <th><small>Actividad</small></th>
-                                                    <th><small>Ponderación</small></th>
-                                                    <th><small>Fecha Inicial</small></th>
-                                                    <th><small>Fecha Final</small></th>
-                                                    <th><small>Proyecto Inversión</small></th>
+                                                    <th><small>Meta Plan Operativo Anual</small></th>
+                                                    <th><small>Avance</small></th>
                                                     <th><small>Meta Proyecto Inversión</small></th>
-                                                    <th><small>Propósito</small></th>
-                                                    <th><small>Logro</small></th>
-                                                    <th><small>Programa Estretégico</small></th>
+                                                    <th><small>Proyecto Inversión</small></th>
                                                     <th><small>Meta PDD</small></th>
+                                                    <th><small>Programa Estretégico</small></th>
+                                                    <th><small>Logro</small></th>
+                                                    <th><small>Propósito</small></th>
                                                     <th><small>ODS</small></th>
                                                     <th><small>Responsable</small></th>
                                                 </tr>
@@ -401,15 +400,14 @@ if ($retornoError) {
                                                 echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
                                                 echo "</td>";
                                                 echo "<td><small>" . $lista['descripcion_actividad'] . "</small></td>";
-                                                echo "<td class='text-right'><small>" . $lista['ponderacion'] . "%</small></td>";
-                                                echo "<td class='text-center'><small>" . $lista['mes_inicial'] . "</small></td>";
-                                                echo "<td class='text-center'><small>" . $lista['mes_final'] . "</td>";
-                                                echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
+                                                echo "<td class='text-right'><small>" . $lista['meta_plan_operativo_anual'] . "</small></td>";
+                                                echo "<td class='text-center'><small></small></td>";
                                                 echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
-                                                echo "<td><small>" . $lista["proposito"] . "</small></td>";
-                                                echo "<td><small>" . $lista["logro"] . "</small></td>";
-                                                echo "<td><small>" . $lista["programa"] . "</small></td>";
+                                                echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
+                                                echo "<td><small>" . $lista["programa"] . "</small></td>";
+                                                echo "<td><small>" . $lista["logro"] . "</small></td>";
+                                                echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
                                                 echo "<td><small>" . $lista["dependencia"] . "</small></td>";
                                                 echo "</tr>";
