@@ -54,7 +54,7 @@
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
 					<label class="control-label" for="presupuesto_meta">Presupuesto Meta: *</label>
-					<input type="number" min="0" max="10000000000" id="presupuesto_meta" name="presupuesto_meta" class="form-control" value="<?php echo $information?$information[0]["presupuesto_meta"]:""; ?>" placeholder="Presupuesto Meta" required >
+					<input type="number" min="0" id="presupuesto_meta" name="presupuesto_meta" class="form-control" value="<?php echo $information?$information[0]["presupuesto_meta"]:""; ?>" placeholder="Presupuesto Meta" required >
 				</div>
 			</div>
 

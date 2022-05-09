@@ -1,14 +1,14 @@
 $( document ).ready( function () {
 
 	$("#numero_meta_proyecto").bloquearTexto().maxlength(4);
-	$("#presupuesto_meta").bloquearTexto().maxlength(11);
+	$("#presupuesto_meta").bloquearTexto().maxlength(15);
 	
 	$( "#form" ).validate( {
 		rules: {
 			numero_meta_proyecto:		{ required: true, minlength: 1, maxlength: 4 },
 			vigencia:					{ required: true },
 			meta_proyecto:				{ required: true },
-			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 11 },
+			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 15 },
 			proceso_calidad:			{ required: true },
 		},
 		errorElement: "em",
