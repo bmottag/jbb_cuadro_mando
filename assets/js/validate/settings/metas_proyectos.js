@@ -8,8 +8,7 @@ $( document ).ready( function () {
 			numero_meta_proyecto:		{ required: true, minlength: 1, maxlength: 4 },
 			vigencia:					{ required: true },
 			meta_proyecto:				{ required: true },
-			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 15 },
-			proceso_calidad:			{ required: true },
+			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 15 }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {

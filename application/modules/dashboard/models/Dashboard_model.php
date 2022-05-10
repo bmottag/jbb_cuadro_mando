@@ -23,7 +23,9 @@
 					'fk_id_responsable' => $this->input->post('id_responsable'),
 					'ponderacion ' => $this->input->post('ponderacion'),
 					'fecha_inicial' => $this->input->post('fecha_inicial'),
-					'fecha_final' => $this->input->post('fecha_final')
+					'fecha_final' => $this->input->post('fecha_final'),
+					'presupuesto_actividad' => $this->input->post('presupuesto_actividad'),
+					'fk_id_proceso_calidad' => $this->input->post('proceso_calidad')
 				);	
 
 				//revisar si es para adicionar o editar

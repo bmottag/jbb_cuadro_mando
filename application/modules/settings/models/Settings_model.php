@@ -308,7 +308,6 @@
 					'numero_meta_proyecto' => $this->input->post('numero_meta_proyecto'),
 					'meta_proyecto' => $this->input->post('meta_proyecto'),
 					'presupuesto_meta' => $this->input->post('presupuesto_meta'),
-					'fk_id_proceso_calidad' => $this->input->post('proceso_calidad'),
 					'vigencia_meta_proyecto' => $this->input->post('vigencia'),
 				);
 				

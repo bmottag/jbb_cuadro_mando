@@ -289,7 +289,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_lista_cuadro_mando($arrData) 
 		{		
-				$this->db->select("id_cuadro_base, fk_id_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");				
+				$this->db->select("id_cuadro_base, fk_id_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, id_meta_proyecto_inversion, meta_proyecto, presupuesto_meta, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");				
 				$this->db->join('proyecto_inversion P', 'P.id_proyecto_inversion = C.fk_id_proyecto_inversion', 'INER');
 				$this->db->join('meta_proyecto_inversion M', 'M.id_meta_proyecto_inversion = C.fk_id_meta_proyecto_inversion', 'INER');
 				$this->db->join('propositos X', 'X.id_proposito = C.fk_id_proposito', 'INER');
@@ -400,6 +400,7 @@ class General_model extends CI_Model {
 				$this->db->select('A.*, P.mes mes_inicial, X.mes mes_final');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
+				$this->db->join('param_proceso_calidad Z', 'Z.id_proceso_calidad = A.fk_id_proceso_calidad', 'LEFT');
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
 				}
@@ -630,7 +631,6 @@ class General_model extends CI_Model {
 		public function get_meta_proyecto($arrData) 
 		{		
 				$this->db->select();
-				$this->db->join('param_proceso_calidad P', 'P.id_proceso_calidad = M.fk_id_proceso_calidad', 'LEFT');
 				if (array_key_exists("idMetaProyecto", $arrData)) {
 					$this->db->where('M.id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
 				}
@@ -638,6 +638,28 @@ class General_model extends CI_Model {
 				$query = $this->db->get('meta_proyecto_inversion M');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta sumatoria de presupuesto para actividad por meta proyecto
+		 * @since 30/04/2022
+		 */
+		public function get_sumatoria_presupuesto($arrData) 
+		{		
+				$this->db->select("SUM(presupuesto_actividad) sumatoria");
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INER');
+				$this->db->join('meta_proyecto_inversion M', 'M.id_meta_proyecto_inversion = C.fk_id_meta_proyecto_inversion', 'INER');
+
+				if (array_key_exists("idMetaProyecto", $arrData)) {
+					$this->db->where('M.id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
+				}
+
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->row_array();
 				} else {
 					return false;
 				}

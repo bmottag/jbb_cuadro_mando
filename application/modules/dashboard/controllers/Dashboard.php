@@ -96,6 +96,13 @@ class Dashboard extends CI_Controller {
 			$data['listaUsuarios'] = $this->general_model->get_user($arrParam);
 
 			$arrParam = array(
+				"table" => "param_proceso_calidad",
+				"order" => "proceso_calidad",
+				"id" => "x"
+			);
+			$data['proceso_calidad'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
 				"table" => "param_meses",
 				"order" => "id_mes",
 				"id" => "x"
@@ -106,9 +113,22 @@ class Dashboard extends CI_Controller {
 			{
 				$arrParam = array("idActividad" => $data["idActividad"]);
 				$data['information'] = $this->general_model->get_actividades($arrParam);
-				
 				$data["idCuadrobase"] = $data['information'][0]['fk_id_cuadro_base'];
 			}
+
+
+			$arrParam = array("idCuadroBase" => $data["idCuadrobase"]);
+			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
+//calcular sumatoria de los presupuesto de las actividades
+			$idMetaProyecto = $infoCuadroBase[0]["id_meta_proyecto_inversion"];
+			$arrParam = array("idMetaProyecto" => $idMetaProyecto);
+			$sumatoriaPresupuestoActividades  = $this->general_model->get_sumatoria_presupuesto($arrParam);
+			$data["saldoPresupuesto"] = $infoCuadroBase[0]["presupuesto_meta"] - $sumatoriaPresupuestoActividades['sumatoria'];
+			if ($data["idActividad"] != 'x') 
+			{
+				$data["saldoPresupuesto"] = $data["saldoPresupuesto"] - $data['information'][0]['presupuesto_actividad'];
+			}
+//fin calculo
 			$this->load->view("actividad_modal", $data);
     }
 

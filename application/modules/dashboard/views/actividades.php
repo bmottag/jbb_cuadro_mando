@@ -116,8 +116,8 @@ $(function(){
 								<th>Nombre Indicador</th>
 								<th>Tipo Indicador</th>
 								<th>Ponderación</th>
-								<th>Fecha Inicial</th>
-								<th>Fecha Final</th>
+								<th>Fechas</th>
+								<th>Presupuesto Meta</th>
 								<th class="text-center">Enlaces</th>
 							</tr>
 						</thead>
@@ -162,8 +162,10 @@ $(function(){
 								echo '<p class="' . $clase2 . '"><strong>' . $valor2 . '</strong></p>';
 								echo "</td>";
 								echo "<td class='text-right'>" . $lista['ponderacion'] . "%</td>";
-								echo "<td class='text-center'>" . $lista['mes_inicial'] . "</td>";
-								echo "<td class='text-center'>" . $lista['mes_final'] . "</td>";
+								echo "<td class='text-center'>";
+								echo $lista['mes_inicial'] . '-' . $lista['mes_final'];
+								echo "</td>";
+								echo "<td class='text-right'>$ " . number_format($lista['presupuesto_actividad']) . "</td>";
 								echo "<td class='text-center'>";
         
     							if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){

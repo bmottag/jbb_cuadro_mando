@@ -57,18 +57,6 @@
 					<input type="number" min="0" id="presupuesto_meta" name="presupuesto_meta" class="form-control" value="<?php echo $information?$information[0]["presupuesto_meta"]:""; ?>" placeholder="Presupuesto Meta" required >
 				</div>
 			</div>
-
-			<div class="col-sm-6">		
-				<div class="form-group text-left">
-					<label class="control-label" for="proceso_calidad">Proceso Calidad: *</label>
-					<select name="proceso_calidad" id="proceso_calidad" class="form-control" required >
-						<option value="">Seleccione...</option>
-						<?php for ($i = 0; $i < count($proceso_calidad); $i++) { ?>
-							<option value="<?php echo $proceso_calidad[$i]["id_proceso_calidad"]; ?>" <?php if($information && $information[0]["fk_id_proceso_calidad"] == $proceso_calidad[$i]["id_proceso_calidad"]) { echo "selected"; }  ?>><?php echo $proceso_calidad[$i]["proceso_calidad"]; ?></option>	
-						<?php } ?>
-					</select>
-				</div>
-			</div>
 		</div>
 		
 		<div class="form-group">

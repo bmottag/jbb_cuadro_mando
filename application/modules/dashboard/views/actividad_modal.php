@@ -19,6 +19,13 @@
 					<input type="number" id="numero_actividad" name="numero_actividad" class="form-control" value="<?php echo $information?$information[0]["numero_actividad"]:""; ?>" placeholder="No. Actividad" required >
 				</div>
 			</div>
+
+			<div class="col-sm-6">		
+				<div class="form-group text-left">
+					<label class="control-label" for="presupuesto_actividad">Presupuesto Meta: *</label>
+					<input type="number" min="0" max="<?php echo $saldoPresupuesto; ?>" id="presupuesto_actividad" name="presupuesto_actividad" class="form-control" value="<?php echo $information?$information[0]["presupuesto_actividad"]:""; ?>" placeholder="Presupuesto Meta" required >
+				</div>
+			</div>
 		</div>
 
 		<div class="row">				
@@ -112,6 +119,20 @@
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaMeses); $i++) { ?>
 							<option value="<?php echo $listaMeses[$i]["id_mes"]; ?>" <?php if($information && $information[0]["fecha_final"] == $listaMeses[$i]["id_mes"]) { echo "selected"; }  ?>><?php echo $listaMeses[$i]["mes"]; ?></option>		
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6">		
+				<div class="form-group text-left">
+					<label class="control-label" for="proceso_calidad">Proceso Calidad: *</label>
+					<select name="proceso_calidad" id="proceso_calidad" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($proceso_calidad); $i++) { ?>
+							<option value="<?php echo $proceso_calidad[$i]["id_proceso_calidad"]; ?>" <?php if($information && $information[0]["fk_id_proceso_calidad"] == $proceso_calidad[$i]["id_proceso_calidad"]) { echo "selected"; }  ?>><?php echo $proceso_calidad[$i]["proceso_calidad"]; ?></option>	
 						<?php } ?>
 					</select>
 				</div>

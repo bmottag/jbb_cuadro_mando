@@ -737,13 +737,6 @@ class Settings extends CI_Controller {
 			
 			$data['information'] = FALSE;
 			$data["idMetaProyecto"] = $this->input->post("idMetaProyecto");	
-
-			$arrParam = array(
-				"table" => "param_proceso_calidad",
-				"order" => "proceso_calidad",
-				"id" => "x"
-			);
-			$data['proceso_calidad'] = $this->general_model->get_basic_search($arrParam);
 			
 			if ($data["idMetaProyecto"] != 'x') {
 				$arrParam = array(
