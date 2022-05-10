@@ -1,18 +1,31 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/plan_estrategico.js"); ?>"></script>
 <script>
 $(function(){ 
-    $(".btn-primary").click(function () {   
+    $(".btn-primary").click(function () {  
             var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'settings/cargarModalCuadroBase',
-                data: {'idEstrategia': oID},
+                data: {'idEstrategia': oID, 'idCuadroBase': 'x'},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatos').html(data);
                 }
             });
     }); 
+        
+    $(".btn-info").click(function () {  
+            var oID = $(this).attr("id");
+            $.ajax ({
+                type: 'POST',
+                url: base_url + 'settings/cargarModalCuadroBase',
+                data: {'idEstrategia': '', 'idCuadroBase': oID},
+                cache: false,
+                success: function (data) {
+                    $('#tablaDatos').html(data);
+                }
+            });
+    });
 });
 </script>
 
@@ -196,7 +209,7 @@ if ($retornoError) {
                                                     <th><small>Propósito</small></th>
                                                     <th><small>ODS</small></th>
                                                     <th><small>Responsable</small></th>
-                                                    <th><small>Actividades</small></th>
+                                                    <th><small>Enlaces</small></th>
                                                 </tr>
                                             </thead>
 
@@ -214,6 +227,10 @@ if ($retornoError) {
                                                 echo "<td>";
                                                 echo "<a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a>";
 ?>
+                                                <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_cuadro_base']; ?>" >
+                                                    Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
+                                                </button>
+
                                                 <button type="button" id="<?php echo $lista['id_cuadro_base']; ?>" class='btn btn-danger btn-xs' title="Eliminar">
                                                         <i class="fa fa-trash-o"></i>
                                                 </button>

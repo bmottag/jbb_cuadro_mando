@@ -1272,6 +1272,14 @@ class Settings extends CI_Controller {
 			
 			$data['information'] = FALSE;
 			$data["idEstrategia"] = $this->input->post("idEstrategia");
+			$data["idCuadroBase"] = $this->input->post("idCuadroBase");
+
+			if ($data["idCuadroBase"] != 'x') {
+				$arrParam = array("idCuadroBase" => $data["idCuadroBase"]);
+				$data['information'] = $this->general_model->get_lista_cuadro_mando($arrParam);//info bloques
+				
+				$data["idEstrategia"] = $data['information'][0]['fk_id_estrategia'];
+			}
 
 			$arrParam = array("idEstratega" => $data["idEstrategia"]);
 			$data['infoEstrategia'] = $this->general_model->get_estrategias($arrParam);

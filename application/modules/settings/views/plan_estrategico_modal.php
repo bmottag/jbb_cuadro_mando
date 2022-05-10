@@ -18,7 +18,7 @@
 					<select name="id_proposito" id="id_proposito" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaPropositos); $i++) { ?>
-							<option value="<?php echo $listaPropositos[$i]["id_proposito"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaPropositos[$i]["id_proposito"]) { echo "selected"; }  ?>><?php echo $listaPropositos[$i]["numero_proposito"] . ' ' . $listaPropositos[$i]["proposito"]; ?></option>		
+							<option value="<?php echo $listaPropositos[$i]["id_proposito"]; ?>" <?php if($information && $information[0]["fk_id_proposito"] == $listaPropositos[$i]["id_proposito"]) { echo "selected"; }  ?>><?php echo $listaPropositos[$i]["numero_proposito"] . ' ' . $listaPropositos[$i]["proposito"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
@@ -32,7 +32,7 @@
 					<select name="id_logros" id="id_logros" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaLogros); $i++) { ?>
-							<option value="<?php echo $listaLogros[$i]["id_logros"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaLogros[$i]["id_logros"]) { echo "selected"; }  ?>><?php echo $listaLogros[$i]["numero_logro"] . ' ' . $listaLogros[$i]["logro"]; ?></option>		
+							<option value="<?php echo $listaLogros[$i]["id_logros"]; ?>" <?php if($information && $information[0]["fk_id_logro"] == $listaLogros[$i]["id_logros"]) { echo "selected"; }  ?>><?php echo $listaLogros[$i]["numero_logro"] . ' ' . $listaLogros[$i]["logro"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
@@ -46,7 +46,7 @@
 					<select name="id_programa_estrategico" id="id_programa_estrategico" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaPrograma); $i++) { ?>
-							<option value="<?php echo $listaPrograma[$i]["id_programa_estrategico"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaPrograma[$i]["id_programa_estrategico"]) { echo "selected"; }  ?>><?php echo $listaPrograma[$i]["numero_programa_estrategico"] . ' ' . $listaPrograma[$i]["programa_estrategico"]; ?></option>		
+							<option value="<?php echo $listaPrograma[$i]["id_programa_estrategico"]; ?>" <?php if($information && $information[0]["fk_id_programa_estrategico"] == $listaPrograma[$i]["id_programa_estrategico"]) { echo "selected"; }  ?>><?php echo $listaPrograma[$i]["numero_programa_estrategico"] . ' ' . $listaPrograma[$i]["programa_estrategico"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
@@ -60,7 +60,7 @@
 					<select name="id_meta_pdd" id="id_meta_pdd" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaMetasPDD); $i++) { ?>
-							<option value="<?php echo $listaMetasPDD[$i]["id_meta_pdd"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaMetasPDD[$i]["id_meta_pdd"]) { echo "selected"; }  ?>><?php echo $listaMetasPDD[$i]["numero_meta_pdd"] . ' ' . $listaMetasPDD[$i]["meta_pdd"]; ?></option>		
+							<option value="<?php echo $listaMetasPDD[$i]["id_meta_pdd"]; ?>" <?php if($information && $information[0]["fk_id_meta_pdd"] == $listaMetasPDD[$i]["id_meta_pdd"]) { echo "selected"; }  ?>><?php echo $listaMetasPDD[$i]["numero_meta_pdd"] . ' ' . $listaMetasPDD[$i]["meta_pdd"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
@@ -74,7 +74,7 @@
 					<select name="id_proyecto_inversion" id="id_proyecto_inversion" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaProyectos); $i++) { ?>
-							<option value="<?php echo $listaProyectos[$i]["id_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaProyectos[$i]["id_proyecto_inversion"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto_inversion"] . ' ' . $listaProyectos[$i]["nombre_proyecto_inversion"]; ?></option>		
+							<option value="<?php echo $listaProyectos[$i]["id_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_proyecto_inversion"] == $listaProyectos[$i]["id_proyecto_inversion"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto_inversion"] . ' ' . $listaProyectos[$i]["nombre_proyecto_inversion"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
@@ -88,7 +88,7 @@
 					<select name="id_meta_proyecto_inversion" id="id_meta_proyecto_inversion" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaMetasProyectos); $i++) { ?>
-							<option value="<?php echo $listaMetasProyectos[$i]["id_meta_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaMetasProyectos[$i]["id_meta_proyecto_inversion "]) { echo "selected"; }  ?>><?php echo $listaMetasProyectos[$i]["numero_meta_proyecto"] . ' ' . $listaMetasProyectos[$i]["meta_proyecto"]; ?></option>		
+							<option value="<?php echo $listaMetasProyectos[$i]["id_meta_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_id_meta_proyecto_inversion"] == $listaMetasProyectos[$i]["id_meta_proyecto_inversion"]) { echo "selected"; }  ?>><?php echo $listaMetasProyectos[$i]["numero_meta_proyecto"] . ' ' . $listaMetasProyectos[$i]["meta_proyecto"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
@@ -102,7 +102,7 @@
 					<select name="id_ods" id="id_ods" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaODS); $i++) { ?>
-							<option value="<?php echo $listaODS[$i]["id_ods"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaODS[$i]["id_ods"]) { echo "selected"; }  ?>><?php echo $listaODS[$i]["numero_ods"] . ' ' . $listaODS[$i]["ods"]; ?></option>		
+							<option value="<?php echo $listaODS[$i]["id_ods"]; ?>" <?php if($information && $information[0]["fk_id_ods"] == $listaODS[$i]["id_ods"]) { echo "selected"; }  ?>><?php echo $listaODS[$i]["numero_ods"] . ' ' . $listaODS[$i]["ods"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
@@ -114,7 +114,7 @@
 					<select name="id_dependencia" id="id_dependencia" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaDependencia); $i++) { ?>
-							<option value="<?php echo $listaDependencia[$i]["id_dependencia"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaDependencia[$i]["dependencia"]; ?></option>		
+							<option value="<?php echo $listaDependencia[$i]["id_dependencia"]; ?>" <?php if($information && $information[0]["fk_id_dependencia"] == $listaDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaDependencia[$i]["dependencia"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>
