@@ -62,6 +62,72 @@ if ($retornoError) {
     </div>
 
     <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Avance Dependencias <b><?php echo date("Y"); ?></b>
+                </div>
+                <div class="panel-body small">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Dependencia</th>
+                                <th>Avance Plan Estratégico <b><?php echo date("Y"); ?></b></th>
+                                <th>No. Actividades</th>
+                            </tr>
+                        </thead>
+                        <?php
+                        $i=0;
+                        foreach ($listaDependencia as $lista):
+                            $arrParam = array(
+                                "idDependencia" => $lista["id_dependencia"]
+                            );
+                            $nroActividades = $this->dashboard_model->countActividades($arrParam);
+                            $i++;
+                            if($i==1){
+                                $valor = 100;
+                            }elseif($i==2){
+                                $valor = 98;
+                            }elseif($i==3){
+                                $valor = 100;
+                            }elseif($i==4){
+                                $valor = 100;
+                            }elseif($i==5){
+                                $valor = 86;
+                            }elseif($i==6){
+                                $valor = 90;
+                            }elseif($i==6){
+                                $valor = 90;
+                            }elseif($i==7){
+                                $valor = 92;
+                            }else{
+                                $valor = 100;
+                            }
+                            
+                            if($valor > 70){
+                                $estilos = "bg-success";
+                            }elseif($valor > 40 && $valor <= 70){
+                                $estilos = "bg-warning";
+                            }else{
+                                $estilos = "bg-danger";
+                            }
+                            echo "<tr>";
+                            echo "<td style='width: 50%'><small>" . $lista["dependencia"] . "</small></td>";
+                            echo "<td>";
+                            echo '<div class="progress progress-striped">
+                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $valor .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $valor . '%</div>
+                                    </div>';
+                            echo "</td>";
+                            echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
+                            echo "</tr>";
+                        endforeach
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -118,7 +184,7 @@ if ($retornoError) {
                 </div>
             </div>
         </div>
-
+<!--
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -133,66 +199,8 @@ if ($retornoError) {
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-bell fa-fw"></i> Avance Dependencias <b><?php echo date("Y"); ?></b>
-                </div>
-                <div class="panel-body small">
+-->
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Dependencia</th>
-                                <th>Avance Plan Estratégico <b><?php echo date("Y"); ?></b></th>
-                            </tr>
-                        </thead>
-                        <?php
-                        $i=0;
-                        foreach ($listaDependencia as $lista):
-                            $i++;
-                            if($i==1){
-                                $valor = 100;
-                            }elseif($i==2){
-                                $valor = 98;
-                            }elseif($i==3){
-                                $valor = 100;
-                            }elseif($i==4){
-                                $valor = 100;
-                            }elseif($i==5){
-                                $valor = 86;
-                            }elseif($i==6){
-                                $valor = 90;
-                            }elseif($i==6){
-                                $valor = 90;
-                            }elseif($i==7){
-                                $valor = 92;
-                            }else{
-                                $valor = 100;
-                            }
-                            
-                            if($valor > 70){
-                                $estilos = "bg-success";
-                            }elseif($valor > 40 && $valor <= 70){
-                                $estilos = "bg-warning";
-                            }else{
-                                $estilos = "bg-danger";
-                            }
-                            echo "<tr>";
-                            echo "<td style='width: 50%'><small>" . $lista["dependencia"] . "</small></td>";
-                            echo "<td>";
-                            echo '<div class="progress progress-striped">
-                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $valor .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $valor . '%</div>
-                                    </div>';
-                            echo "</td>";
-
-                            echo "</tr>";
-                        endforeach
-                        ?>
-                    </table>
-                </div>
-            </div>
-        </div>
 
         <div class="col-lg-4">
             <div class="panel panel-default">

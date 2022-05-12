@@ -151,6 +151,7 @@
 					'fk_id_responsable' => $idUser,
 					'ejecutado' => $this->input->post('ejecutado'),
 					'descripcion_actividades' => $this->input->post('descripcion'),
+					'evidencias' => $this->input->post('evidencia'),
 					'fecha_actualizacion' => date("Y-m-d G:i:s")
 				);	
 				$this->db->where('id_ejecucion_actividad ', $idEjecucion);
@@ -235,6 +236,27 @@
 			} else {
 				return false;
 			}
+		}
+
+		/**
+		 * Contar actividades por dependencia
+		 * @author BMOTTAG
+		 * @since  8/12/2016
+		 */
+		public function countActividades($arrData)
+		{
+
+				$sql = "SELECT count(id_actividad) CONTEO";
+				$sql.= " FROM  actividades A";
+				$sql.= " INNER JOIN cuadro_base C ON C.id_cuadro_base = A.fk_id_cuadro_base";
+
+				if (array_key_exists("idDependencia", $arrData)) {
+					$sql.= " WHERE C.fk_id_dependencia >= '". $arrData["idDependencia"]. "'";
+				}
+
+				$query = $this->db->query($sql);
+				$row = $query->row();
+				return $row->CONTEO;
 		}
 		
 		

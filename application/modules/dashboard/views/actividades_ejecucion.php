@@ -248,7 +248,7 @@
 									<th class="column-title" style="width: 10%">Mes</th>
 									<th class="column-title" style="width: 15%">Programado</th>
 									<th class="column-title" style="width: 10%">Ejecutado</th>
-									<th class="column-title" style="width: 45%">Descripción</th>
+									<th class="column-title" style="width: 45%">Descripción / Evidencias</th>
 									<th class="column-title text-center" style="width: 10%">Estado</th>
 									<th class="column-title text-center" style="width: 10%">Enlaces</th>
 								</tr>
@@ -306,6 +306,8 @@
 										</td>
 										<td>
 											<textarea id="descripcion" name="descripcion" placeholder="Descripción" class="form-control" rows="2" required <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
+											<br>
+											<textarea id="evidencia" name="evidencia" placeholder="Evidencia" class="form-control" rows="2" required <?php echo $deshabilidar; ?>><?php echo $data['evidencias']; ?></textarea>
 										</td>
 										<td class='text-center'>
 											<p class="<?php echo $clase; ?>"><strong><?php echo $valor; ?></strong></p>
