@@ -241,10 +241,10 @@ $(function(){
 											<p>Acance POA: <?php echo $avancePOA . '%'; ?></p>
 										</th>
 										<th class="column-title" colspan="2">
-											<p>Programado Trimestre I: <?php echo $sumaProgramadoTrimestre1['programado']; ?></p>
-											<p>Programado Trimestre II: <?php echo $sumaProgramadoTrimestre2['programado']; ?></p>
-											<p>Programado Trimestre III: <?php echo $sumaProgramadoTrimestre3['programado']; ?></p>
-											<p>Programado Trimestre IV: <?php echo $sumaProgramadoTrimestre4['programado']; ?></p>
+											<p>Programado Trimestre I: <?php echo number_format($sumaProgramadoTrimestre1['programado'],2); ?></p>
+											<p>Programado Trimestre II: <?php echo number_format($sumaProgramadoTrimestre2['programado'],2); ?></p>
+											<p>Programado Trimestre III: <?php echo number_format($sumaProgramadoTrimestre3['programado'],2); ?></p>
+											<p>Programado Trimestre IV: <?php echo number_format($sumaProgramadoTrimestre4['programado'],2); ?></p>
 										</th>
 										<th class="column-title" colspan="2">
 											<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '%'; ?></p>
@@ -252,7 +252,7 @@ $(function(){
 											<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?></p>
 											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
 										</th>
-										<th class="column-title">
+										<th class="column-title small">
 											<p class="<?php echo $estadoActividad[0]['primer_clase']; ?>"><strong><?php echo $estadoActividad[0]['primer_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['segundo_clase']; ?>"><strong><?php echo $estadoActividad[0]['segundo_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['tercer_clase']; ?>"><strong><?php echo $estadoActividad[0]['tercer_estado']; ?></strong></p>
@@ -414,10 +414,10 @@ $(function(){
 									</tr>
 									
 									<tr class="headings">
-										<th class="column-title" style="width: 10%">Mes</th>
-										<th class="column-title" style="width: 15%">Programado (<?php echo $unidadMedida; ?>)</th>
-										<th class="column-title" style="width: 15%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
-										<th class="column-title" style="width: 50%">Descripción</th>
+										<th class="column-title" style="width: 7%">Mes</th>
+										<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
+										<th class="column-title" style="width: 13%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
+										<th class="column-title" style="width: 50%">Descripción / Evidencias</th>
 										<th class="column-title text-center" style="width: 10%">Enlaces</th>
 									</tr>
 								</thead>

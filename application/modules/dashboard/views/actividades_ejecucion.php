@@ -62,8 +62,8 @@
 								<th>Nombre Indicador</th>
 								<th>Tipo Indicador</th>
 								<th>Ponderación</th>
-								<th>Fecha Inicial</th>
-								<th>Fecha Final</th>
+								<th>Fechas</th>
+								<th>Presupuesto Meta</th>
 								<th class="text-center">Enlaces</th>
 							</tr>
 						</thead>
@@ -72,11 +72,11 @@
 							foreach ($listaActividades as $lista):
 								switch ($lista['unidad_medida']) {
 									case 1:
-										$valor = 'Número';
+										$unidadMedida = 'Número';
 										$clase = "text-success";
 										break;
 									case 2:
-										$valor = 'Porcentaje';
+										$unidadMedida = 'Porcentaje';
 										$clase = "text-danger";
 										break;
 								}
@@ -101,15 +101,17 @@
 								echo "<td>" . $lista['descripcion_actividad'] . "</td>";
 								echo "<td>" . $lista['meta_plan_operativo_anual'] . "</td>";
 								echo "<td class='text-center'>";
-								echo '<p class="' . $clase . '"><strong>' . $valor . '</strong></p>';
+								echo '<p class="' . $clase . '"><strong>' . $unidadMedida . '</strong></p>';
 								echo "</td>";
 								echo "<td>" . $lista['nombre_indicador'] . "</td>";
 								echo "<td class='text-center'>";
 								echo '<p class="' . $clase2 . '"><strong>' . $valor2 . '</strong></p>';
 								echo "</td>";
 								echo "<td class='text-right'>" . $lista['ponderacion'] . "%</td>";
-								echo "<td class='text-center'>" . $lista['mes_inicial'] . "</td>";
-								echo "<td class='text-center'>" . $lista['mes_final'] . "</td>";
+								echo "<td class='text-center'>";
+								echo $lista['mes_inicial'] . '-' . $lista['mes_final'];
+								echo "</td>";
+								echo "<td class='text-right'>$ " . number_format($lista['presupuesto_actividad']) . "</td>";
 								echo "<td class='text-center'>";
 								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
 								echo "</td>";
@@ -169,12 +171,24 @@
 											<p>Acance POA: <?php echo $avancePOA . '%'; ?></p>
 										</th>
 										<th class="column-title" colspan="2">
-											<p>Programado Trimestre I: <?php echo $sumaProgramadoTrimestre1['programado']; ?></p>
-											<p>Programado Trimestre II: <?php echo $sumaProgramadoTrimestre2['programado']; ?></p>
-											<p>Programado Trimestre III: <?php echo $sumaProgramadoTrimestre3['programado']; ?></p>
-											<p>Programado Trimestre IV: <?php echo $sumaProgramadoTrimestre4['programado']; ?></p>
+											<p>Programado Trimestre I: <?php echo number_format($sumaProgramadoTrimestre1['programado'],2); ?></p>
+											<p>Programado Trimestre II: <?php echo number_format($sumaProgramadoTrimestre2['programado'],2); ?></p>
+											<p>Programado Trimestre III: <?php echo number_format($sumaProgramadoTrimestre3['programado'],2); ?></p>
+											<p>Programado Trimestre IV: <?php echo number_format($sumaProgramadoTrimestre4['programado'],2); ?></p>
 										</th>
-										<th class="column-title" colspan="4">
+										<th class="column-title" colspan="2">
+											<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '%'; ?></p>
+											<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '%'; ?></p>
+											<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?></p>
+											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
+										</th>
+										<th class="column-title small">
+											<p class="<?php echo $estadoActividad[0]['primer_clase']; ?>"><strong><?php echo $estadoActividad[0]['primer_estado']; ?></strong></p>
+											<p class="<?php echo $estadoActividad[0]['segundo_clase']; ?>"><strong><?php echo $estadoActividad[0]['segundo_estado']; ?></strong></p>
+											<p class="<?php echo $estadoActividad[0]['tercer_clase']; ?>"><strong><?php echo $estadoActividad[0]['tercer_estado']; ?></strong></p>
+											<p class="<?php echo $estadoActividad[0]['cuarta_clase']; ?>"><strong><?php echo $estadoActividad[0]['cuarta_estado']; ?></strong></p>
+										</th>
+										<th class="column-title">
 
 											<form name="form" id="form" role="form" method="post" >
 												<input type="hidden" id="idCuadroBase" name="idCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
@@ -185,7 +199,7 @@
 												<input type="hidden" id="cumplimiento4" name="cumplimiento4" value="<?php echo $cumplimiento4; ?>"/>
 												<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
 
-												<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '% '; ?>
+												<p>
 													<?php if($cumplimiento1 > 0 && $estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
 														<button type="button" id="1" class='btn btn-danger btn-xs' title="Cerrar Trimestre I">
 																Cerrar Trimestre I  <i class="fa fa-arrow-right"></i>
@@ -193,7 +207,7 @@
 													<?php } ?>
 												</p>
 
-												<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '% '; ?>
+												<p>
 													<?php if($cumplimiento2 > 0 && $estadoActividad[0]['estado_trimestre_2'] == 1){ ?>
 														<button type="button" id="2" class='btn btn-danger btn-xs' title="Cerrar Trimestre II">
 																Cerrar Trimestre II  <i class="fa fa-arrow-right"></i>
@@ -201,14 +215,14 @@
 													<?php } ?>												
 												</p>
 
-												<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '% '; ?>
+												<p>
 													<?php if($cumplimiento3 > 0 && $estadoActividad[0]['estado_trimestre_3'] == 1){ ?>
 														<button type="button" id="3" class='btn btn-danger btn-xs' title="Cerrar Trimestre III">
 																Cerrar Trimestre III  <i class="fa fa-arrow-right"></i>
 														</button>
 													<?php } ?>
 												</p>
-												<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '% '; ?>
+												<p>
 													<?php if($cumplimiento4 > 0 && $estadoActividad[0]['estado_trimestre_4'] == 1){ ?>
 														<button type="button" id="4" class='btn btn-danger btn-xs' title="Cerrar Trimestre IV">
 																Cerrar Trimestre IV  <i class="fa fa-arrow-right"></i>
@@ -245,11 +259,10 @@
 								</tr>
 								
 								<tr class="headings">
-									<th class="column-title" style="width: 10%">Mes</th>
-									<th class="column-title" style="width: 15%">Programado</th>
-									<th class="column-title" style="width: 10%">Ejecutado</th>
-									<th class="column-title" style="width: 45%">Descripción / Evidencias</th>
-									<th class="column-title text-center" style="width: 10%">Estado</th>
+									<th class="column-title" style="width: 7%">Mes</th>
+									<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
+									<th class="column-title" style="width: 13%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
+									<th class="column-title" style="width: 50%">Descripción / Evidencias</th>
 									<th class="column-title text-center" style="width: 10%">Enlaces</th>
 								</tr>
 							</thead>
@@ -302,15 +315,12 @@
 										<td ><?php echo $data['mes']; ?></td>
 										<td ><?php echo $data['programado']; ?></td>
 										<td>
-											<input type="number" id="ejecutado" name="ejecutado" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" min="0" max="<?php echo $data['programado']; ?>" required <?php echo $deshabilidar; ?> >
+											<input type="number" id="ejecutado" name="ejecutado" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>" step="any" min="0" required <?php echo $deshabilidar; ?> >
 										</td>
 										<td>
 											<textarea id="descripcion" name="descripcion" placeholder="Descripción" class="form-control" rows="2" required <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
 											<br>
 											<textarea id="evidencia" name="evidencia" placeholder="Evidencia" class="form-control" rows="2" required <?php echo $deshabilidar; ?>><?php echo $data['evidencias']; ?></textarea>
-										</td>
-										<td class='text-center'>
-											<p class="<?php echo $clase; ?>"><strong><?php echo $valor; ?></strong></p>
 										</td>
 										<td class='text-center'>
 											<button type="submit" class="btn btn-primary btn-xs" id="btnSubmit_<?php echo $idRecord; ?>" name="btnSubmit_<?php echo $idRecord; ?>" <?php echo $deshabilidar; ?>>
