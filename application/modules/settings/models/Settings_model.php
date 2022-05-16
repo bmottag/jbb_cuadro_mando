@@ -360,6 +360,7 @@
 		public function savePlanEstrategico() 
 		{
 				$idEstrategia = $this->input->post('hddIdEstrategia');
+				$idCuadroBase = $this->input->post('hddIdCuadroBase');
 		
 				$data = array(
 					'fk_id_proyecto_inversion' => $this->input->post('id_proyecto_inversion'),
@@ -370,10 +371,16 @@
 					'fk_id_meta_pdd' => $this->input->post('id_meta_pdd'),
 					'fk_id_ods' => $this->input->post('id_ods'),
 					'fk_id_dependencia ' => $this->input->post('id_dependencia')
-				);	
+				);
 
-				$data['fk_id_estrategia'] = $idEstrategia;
-				$query = $this->db->insert('cuadro_base', $data);
+				//revisar si es para adicionar o editar
+				if ($idCuadroBase == 'x') {
+					$data['fk_id_estrategia'] = $idEstrategia;
+					$query = $this->db->insert('cuadro_base', $data);
+				} else {
+					$this->db->where('id_cuadro_base', $idCuadroBase);
+					$query = $this->db->update('cuadro_base', $data);
+				}
 
 				if ($query) {
 					return true;

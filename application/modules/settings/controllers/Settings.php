@@ -1354,9 +1354,10 @@ class Settings extends CI_Controller {
 			$data = array();
 			
 			$idEstrategia = $this->input->post('hddIdEstrategia');
-			
+			$idCuadroBase = $this->input->post('hddIdCuadroBase');
+		
 			$msj = "Se adicionó la información!";
-			if ($idEstrategia != '') {
+			if ($idCuadroBase != 'x') {
 				$msj = "Se actualizó la información!";
 			}
 

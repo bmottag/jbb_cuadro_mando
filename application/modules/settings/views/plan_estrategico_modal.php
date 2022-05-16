@@ -10,6 +10,7 @@
 <div class="modal-body">
 	<form name="form" id="form" role="form" method="post" >
 		<input type="hidden" id="hddIdEstrategia" name="hddIdEstrategia" value="<?php echo $idEstrategia; ?>"/>
+		<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
 
 		<div class="row">
 			<div class="col-sm-12">
