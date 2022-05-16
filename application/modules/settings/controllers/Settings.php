@@ -1281,7 +1281,7 @@ class Settings extends CI_Controller {
 				$data["idEstrategia"] = $data['information'][0]['fk_id_estrategia'];
 			}
 
-			$arrParam = array("idEstratega" => $data["idEstrategia"]);
+			$arrParam = array("idEstrategia" => $data["idEstrategia"]);
 			$data['infoEstrategia'] = $this->general_model->get_estrategias($arrParam);
 
 			$arrParam = array(
