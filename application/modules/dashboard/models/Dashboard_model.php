@@ -251,7 +251,7 @@
 				$sql.= " INNER JOIN cuadro_base C ON C.id_cuadro_base = A.fk_id_cuadro_base";
 
 				if (array_key_exists("idDependencia", $arrData)) {
-					$sql.= " WHERE C.fk_id_dependencia >= '". $arrData["idDependencia"]. "'";
+					$sql.= " WHERE C.fk_id_dependencia = '". $arrData["idDependencia"]. "'";
 				}
 
 				$query = $this->db->query($sql);
