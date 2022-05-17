@@ -23,7 +23,7 @@
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
 					<label class="control-label" for="presupuesto_actividad">Presupuesto Meta: *</label>
-					<input type="number" min="0" max="<?php echo $saldoPresupuesto; ?>" id="presupuesto_actividad" name="presupuesto_actividad" class="form-control" value="<?php echo $information?$information[0]["presupuesto_actividad"]:""; ?>" placeholder="Presupuesto Meta" required >
+					<input type="number" min="0" id="presupuesto_actividad" name="presupuesto_actividad" class="form-control" value="<?php echo $information?$information[0]["presupuesto_actividad"]:""; ?>" placeholder="Presupuesto Meta" required >
 				</div>
 			</div>
 		</div>
