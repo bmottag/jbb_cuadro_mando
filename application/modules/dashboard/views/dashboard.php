@@ -78,45 +78,33 @@ if ($retornoError) {
                             </tr>
                         </thead>
                         <?php
-                        $i=0;
                         foreach ($listaDependencia as $lista):
                             $arrParam = array(
-                                "idDependencia" => $lista["id_dependencia"]
+                                "idDependencia" => $lista["id_dependencia"],
+                                "vigencia" => date("Y")
                             );
                             $nroActividades = $this->dashboard_model->countActividades($arrParam);
-                            $i++;
-                            if($i==1){
-                                $valor = 100;
-                            }elseif($i==2){
-                                $valor = 98;
-                            }elseif($i==3){
-                                $valor = 100;
-                            }elseif($i==4){
-                                $valor = 100;
-                            }elseif($i==5){
-                                $valor = 86;
-                            }elseif($i==6){
-                                $valor = 90;
-                            }elseif($i==6){
-                                $valor = 90;
-                            }elseif($i==7){
-                                $valor = 92;
-                            }else{
-                                $valor = 100;
-                            }
-                            
-                            if($valor > 70){
-                                $estilos = "bg-success";
-                            }elseif($valor > 40 && $valor <= 70){
+                            $avance = $this->dashboard_model->sumAvance($arrParam);
+                            $avancePOA = $avance["avance_poa"];
+             
+                            if(!$avancePOA){
+                                $avancePOA = 0;
                                 $estilos = "bg-warning";
                             }else{
-                                $estilos = "bg-danger";
+                                if($avancePOA > 70){
+                                    $estilos = "progress-bar-success";
+                                }elseif($avancePOA > 40 && $avancePOA <= 70){
+                                    $estilos = "progress-bar-warning";
+                                }else{
+                                    $estilos = "progress-bar-danger";
+                                }
                             }
                             echo "<tr>";
-                            echo "<td style='width: 50%'><small>" . $lista["dependencia"] . "</small></td>";
-                            echo "<td>";
+                            echo "<td style='width: 40%'><small>" . $lista["dependencia"] . "</small></td>";
+                            echo "<td class='text-center'>";
+                            echo "<b>" . $avancePOA ."%</b>";
                             echo '<div class="progress progress-striped">
-                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $valor .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $valor . '%</div>
+                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $avancePOA .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $avancePOA . '%</div>
                                     </div>';
                             echo "</td>";
                             echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";

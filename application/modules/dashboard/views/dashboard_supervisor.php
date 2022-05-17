@@ -182,7 +182,9 @@ if ($retornoError) {
                                                     echo 0;
                                                 }
                                                 echo "</small></td>";
-                                                echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
+                                                echo "<td><small>";
+                                                echo $lista["meta_proyecto"] . "<br><b>Vigencia: " . $lista["vigencia_meta_proyecto"] . "</b>";  
+                                                echo "</small></td>";
                                                 echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                                 echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
                                                 echo "<td><small>" . $lista["programa"] . "</small></td>";
