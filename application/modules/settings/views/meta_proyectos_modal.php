@@ -58,6 +58,22 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="valor_meta">Valor: *</label>
+					<input type="text" id="valor_meta" name="valor_meta" class="form-control" value="<?php echo $information?$information[0]["valor_meta_proyecto"]:""; ?>" placeholder="Valor" required >
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="unidad_meta">Unidad: *</label>
+					<input type="text" id="unidad_meta" name="unidad_meta" class="form-control" value="<?php echo $information?$information[0]["unidad_meta_proyecto"]:""; ?>" placeholder="Unidad" required >
+				</div>
+			</div>
+		</div>
 		
 		<div class="form-group">
 			<div id="div_load" style="display:none">		

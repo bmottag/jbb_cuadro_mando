@@ -2,13 +2,16 @@ $( document ).ready( function () {
 
 	$("#numero_meta_proyecto").bloquearTexto().maxlength(4);
 	$("#presupuesto_meta").bloquearTexto().maxlength(15);
+	$("#valor_meta").bloquearTexto().maxlength(10);
 	
 	$( "#form" ).validate( {
 		rules: {
 			numero_meta_proyecto:		{ required: true, minlength: 1, maxlength: 4 },
 			vigencia:					{ required: true },
 			meta_proyecto:				{ required: true },
-			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 15 }
+			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 15 },
+			valor_meta:					{ required: true, minlength: 1, maxlength:10 },
+			unidad_meta:				{ required: true, minlength: 2, maxlength: 30 }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {
