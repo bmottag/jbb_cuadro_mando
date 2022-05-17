@@ -476,6 +476,56 @@ class Dashboard extends CI_Controller {
 			echo json_encode($data);
     }
 
+    /**
+     * Eliminar actividad 
+     * @since 16/05/2022
+     * @author BMOTTAG
+     */
+	public function delete_actividad()
+	{
+		header('Content-Type: application/json');
+
+		$data["idActividad"] = $this->input->post('idActividad');
+
+		$arrParam = array("idActividad" => $data["idActividad"]);
+		$infoActividad = $this->general_model->get_actividades($arrParam);
+		$data["idCuadrobase"] = $infoActividad[0]['fk_id_cuadro_base'];
+
+		$arrParam = array(
+			"table" => "actividad_ejecucion",
+			"primaryKey" => "fk_id_actividad",
+			"id" => $data["idActividad"]
+		);
+		$this->general_model->deleteRecord($arrParam);
+
+		$arrParam = array(
+			"table" => "actividad_estado",
+			"primaryKey" => "fk_id_actividad",
+			"id" => $data["idActividad"]
+		);
+		$this->general_model->deleteRecord($arrParam);
+
+		$arrParam = array(
+			"table" => " actividad_historial",
+			"primaryKey" => "fk_id_actividad",
+			"id" => $data["idActividad"]
+		);
+		$this->general_model->deleteRecord($arrParam);
+
+		$arrParam = array(
+			"table" => " actividades",
+			"primaryKey" => "id_actividad",
+			"id" => $data["idActividad"]
+		);
+		if ($this->general_model->deleteRecord($arrParam)) {
+			$data["result"] = true;
+			$data["msj"] = "Se eliminó la actividad.";
+		} else {
+			$data["result"] = true;
+		}
+		echo json_encode($data);
+    }
+
 
 
 

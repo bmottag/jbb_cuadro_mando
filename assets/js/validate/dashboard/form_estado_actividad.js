@@ -1,4 +1,45 @@
 $( document ).ready( function () {
+
+	$(".btn-danger").click(function () {				
+			//Activa icono guardando
+			if(window.confirm('Esta seguro de eliminar la actividad? Se borrará toda la información relacionada con la actividad.'))
+			{
+					$(".btn-danger").attr('disabled','-1');
+					var idActividad = $(this).attr("id");
+					$.ajax ({
+						type: 'POST',
+						url: base_url + 'dashboard/delete_actividad',
+						data: {'idActividad': idActividad},
+						cache: false,
+						success: function(data){
+												
+							if( data.result == "error" )
+							{
+								alert(data.mensaje);
+								$(".btn-danger").removeAttr('disabled');							
+								return false;
+							} 
+											
+							if( data.result )//true
+							{	                                                        
+								$(".btn-danger").removeAttr('disabled');
+								var url = base_url + "dashboard/actividades/" + data.idCuadrobase;
+								$(location).attr("href", url);
+							}
+							else
+							{
+								alert('Error. Reload the web page.');
+								$(".btn-danger").removeAttr('disabled');
+							}	
+						},
+						error: function(result) {
+							alert('Error. Reload the web page.');
+							$(".btn-danger").removeAttr('disabled');
+						}
+
+					});
+			}
+	});
 			
 	$( "#formEstado" ).validate( {
 		rules: {
@@ -23,166 +64,6 @@ $( document ).ready( function () {
 		}
 	});
 
-	$("#btnClose").click(function(){
-		if(window.confirm('Are you sure you want to close this Work Order Report?'))
-		{
-				$.ajax({
-					type: "POST",	
-					url: base_url + "workorders/update_workorder",
-					data: $("#form").serialize(),
-					dataType: "json",
-					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-					cache: false,
-					
-					success: function(data){
-                                            
-						if( data.result == "error" )
-						{
-							//alert(data.mensaje);
-							$("#div_cargando").css("display", "none");
-							$('#btnSubmit').removeAttr('disabled');							
-							
-							$("#span_msj").html(data.mensaje);
-							$("#div_msj").css("display", "inline");
-							return false;
-						
-						} 
-										
-						if( data.result )//true
-						{	                                                        
-							$("#div_cargando").css("display", "none");
-							$("#div_guardado").css("display", "inline");
-							$('#btnSubmit').removeAttr('disabled');
-
-							var url = base_url + "workorders/add_workorder/" + data.idWorkorder;
-							$(location).attr("href", url);
-						}
-						else
-						{
-							alert('Error. Reload the web page.');
-							$("#div_cargando").css("display", "none");
-							$("#div_error").css("display", "inline");
-							$('#btnSubmit').removeAttr('disabled');
-						}	
-					},
-					error: function(result) {
-						alert('Error. Reload the web page.');
-						$("#div_cargando").css("display", "none");
-						$("#div_error").css("display", "inline");
-						$('#btnSubmit').removeAttr('disabled');
-					}
-					
-		
-				});
-			
-		}
-	});
-	
-	$('#company').change(function () {
-
-		var idCompany = $('#company').val();
-		if (idCompany > 0 || idCompany != '') {			
-				$.ajax({
-					type: "POST",	
-					url: base_url + "workorders/foremanInfo",	
-					data: {'idCompany': idCompany},
-					dataType: "json",
-					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-					cache: false,
-					success: function(data){
-						if( data.result )//true
-						{	                   
-							$("#foreman").val(data.foreman_name);
-							$("#movilNumber").val(data.foreman_movil);
-							$("#email").val(data.foreman_email);
-						}
-
-					}
-				});	
-		}
-				
-	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-				
-	$("#btnSubmit").click(function(){		
-	
-		if ($("#form").valid() == true){
-		
-				//Activa icono guardando
-				$('#btnSubmit').attr('disabled','-1');
-				$("#div_guardado").css("display", "none");
-				$("#div_error").css("display", "none");
-				$("#div_msj").css("display", "none");
-				$("#div_cargando").css("display", "inline");
-
-			
-				$.ajax({
-					type: "POST",	
-					url: base_url + "workorders/save_workorder",	
-					data: $("#form").serialize(),
-					dataType: "json",
-					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-					cache: false,
-					
-					success: function(data){
-                                            
-						if( data.result == "error" )
-						{
-							//alert(data.mensaje);
-							$("#div_cargando").css("display", "none");
-							$('#btnSubmit').removeAttr('disabled');							
-							
-							$("#span_msj").html(data.mensaje);
-							$("#div_msj").css("display", "inline");
-							return false;
-						
-						} 
-
-						
-										
-						if( data.result )//true
-						{	                                                        
-							$("#div_cargando").css("display", "none");
-							$("#div_guardado").css("display", "inline");
-							$('#btnSubmit').removeAttr('disabled');
-
-							var url = base_url + "workorders/add_workorder/" + data.idWorkorder;
-							$(location).attr("href", url);
-						}
-						else
-						{
-							alert('Error. Reload the web page.');
-							$("#div_cargando").css("display", "none");
-							$("#div_error").css("display", "inline");
-							$('#btnSubmit').removeAttr('disabled');
-						}	
-					},
-					error: function(result) {
-						alert('Error. Reload the web page.');
-						$("#div_cargando").css("display", "none");
-						$("#div_error").css("display", "inline");
-						$('#btnSubmit').removeAttr('disabled');
-					}
-					
-		
-				});	
-		
-		}//if			
-	});
-	
 	$("#btnEstado").click(function(){		
 	
 		if ($("#formEstado").valid() == true){
