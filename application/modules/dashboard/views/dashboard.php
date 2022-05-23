@@ -106,6 +106,51 @@ if ($retornoError) {
                             echo '<div class="progress progress-striped">
                                       <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $avancePOA .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $avancePOA . '%</div>
                                     </div>';
+
+?>
+<!--
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" style="width:40%">
+    Free Space
+  </div>
+  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:10%">
+    Warning
+  </div>
+  <div class="progress-bar progress-bar-danger" role="progressbar" style="width:20%">
+    Danger
+  </div>
+</div>
+
+
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+  aria-valuemin="0" aria-valuemax="100" style="width:40%">
+    40% Complete (success)
+  </div>
+</div>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+  aria-valuemin="0" aria-valuemax="100" style="width:50%">
+    50% Complete (info)
+  </div>
+</div>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+  aria-valuemin="0" aria-valuemax="100" style="width:60%">
+    60% Complete (warning)
+  </div>
+</div>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70"
+  aria-valuemin="0" aria-valuemax="100" style="width:70%">
+    70% Complete (danger)
+  </div>
+</div>
+-->
+<?php
                             echo "</td>";
                             echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
                             echo "</tr>";
@@ -306,10 +351,12 @@ if ($retornoError) {
                                 <div class="panel-body">
                                     <?php 
                                         $idEstrategia = $lista['id_estrategia'];
-                                        $arrParam['idEstrategia'] = $idEstrategia;
+                                        $arrParam = array('idEstrategia' => $idEstrategia);
                                         $metas = $this->general_model->get_lista_metas($arrParam);
                                         $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                         $resultados = $this->general_model->get_lista_resultados($arrParam);
+
+                                        $arrParam = array('numeroEstrategia' => $lista['numero_estrategia']);
                                         $actividades = $this->general_model->get_actividades_full($arrParam);
 
                                         if($metas){

@@ -1271,17 +1271,17 @@ class Settings extends CI_Controller {
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data['information'] = FALSE;
-			$data["idEstrategia"] = $this->input->post("idEstrategia");
+			$data["numeroEstrategia"] = $this->input->post("numeroEstrategia");
 			$data["idCuadroBase"] = $this->input->post("idCuadroBase");
 
 			if ($data["idCuadroBase"] != 'x') {
 				$arrParam = array("idCuadroBase" => $data["idCuadroBase"]);
 				$data['information'] = $this->general_model->get_lista_cuadro_mando($arrParam);//info bloques
 				
-				$data["idEstrategia"] = $data['information'][0]['fk_id_estrategia'];
+				$data["numeroEstrategia"] = $data['information'][0]['fk_numero_estrategia'];
 			}
 
-			$arrParam = array("idEstrategia" => $data["idEstrategia"]);
+			$arrParam = array("numeroEstrategia" => $data["numeroEstrategia"]);
 			$data['infoEstrategia'] = $this->general_model->get_estrategias($arrParam);
 
 			$arrParam = array(
@@ -1353,7 +1353,6 @@ class Settings extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			
-			$idEstrategia = $this->input->post('hddIdEstrategia');
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
 		
 			$msj = "Se adicionó la información!";
@@ -1361,7 +1360,7 @@ class Settings extends CI_Controller {
 				$msj = "Se actualizó la información!";
 			}
 
-			if ($idEstrategia = $this->settings_model->savePlanEstrategico()) {
+			if ($this->settings_model->savePlanEstrategico()) {
 				$data["result"] = true;				
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
 			} else {

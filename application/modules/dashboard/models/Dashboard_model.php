@@ -249,7 +249,7 @@
 				$sql = "SELECT count(id_actividad) CONTEO";
 				$sql.= " FROM  actividades A";
 				$sql.= " INNER JOIN cuadro_base C ON C.id_cuadro_base = A.fk_id_cuadro_base";
-				$sql.= " INNER JOIN meta_proyecto_inversion M ON M.id_meta_proyecto_inversion = C.fk_id_meta_proyecto_inversion";
+				$sql.= " INNER JOIN meta_proyecto_inversion M ON M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion";
 				$sql.= " WHERE 1=1 ";
 				if (array_key_exists("idDependencia", $arrData)) {
 					$sql.= " AND C.fk_id_dependencia = '". $arrData["idDependencia"]. "'";
@@ -273,7 +273,7 @@
 			$this->db->select_sum('avance_poa');
 			$this->db->join('actividades A', 'A.id_actividad = E.fk_id_actividad', 'INNER');
 			$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-			$this->db->join('meta_proyecto_inversion M', 'M.id_meta_proyecto_inversion = C.fk_id_meta_proyecto_inversion', 'INNER');
+			$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
 			if (array_key_exists("idDependencia", $arrData)) {
 				$this->db->where('fk_id_dependencia', $arrData["idDependencia"]);
 			}

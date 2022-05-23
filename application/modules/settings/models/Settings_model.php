@@ -361,23 +361,23 @@
 		 */
 		public function savePlanEstrategico() 
 		{
-				$idEstrategia = $this->input->post('hddIdEstrategia');
+				$numeroEstrategia = $this->input->post('hddNumeroEstrategia');
 				$idCuadroBase = $this->input->post('hddIdCuadroBase');
 		
 				$data = array(
-					'fk_id_proyecto_inversion' => $this->input->post('id_proyecto_inversion'),
-					'fk_id_meta_proyecto_inversion' => $this->input->post('id_meta_proyecto_inversion'),
-					'fk_id_proposito' => $this->input->post('id_proposito'),
-					'fk_id_logro' => $this->input->post('id_logros'),
-					'fk_id_programa_estrategico' => $this->input->post('id_programa_estrategico'),
-					'fk_id_meta_pdd' => $this->input->post('id_meta_pdd'),
-					'fk_id_ods' => $this->input->post('id_ods'),
+					'fk_numero_proyecto_inversion' => $this->input->post('id_proyecto_inversion'),
+					'fk_nu_meta_proyecto_inversion' => $this->input->post('id_meta_proyecto_inversion'),
+					'fk_numero_proposito' => $this->input->post('id_proposito'),
+					'fk_numero_logro' => $this->input->post('id_logros'),
+					'fk_numero_programa_estrategico' => $this->input->post('id_programa_estrategico'),
+					'fk_numero_meta_pdd' => $this->input->post('id_meta_pdd'),
+					'fk_numero_ods' => $this->input->post('id_ods'),
 					'fk_id_dependencia ' => $this->input->post('id_dependencia')
 				);
 
 				//revisar si es para adicionar o editar
 				if ($idCuadroBase == 'x') {
-					$data['fk_id_estrategia'] = $idEstrategia;
+					$data['fk_numero_estrategia'] = $numeroEstrategia;
 					$query = $this->db->insert('cuadro_base', $data);
 				} else {
 					$this->db->where('id_cuadro_base', $idCuadroBase);

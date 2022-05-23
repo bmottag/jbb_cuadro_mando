@@ -32,11 +32,6 @@ class Dashboard extends CI_Controller {
 			);
 			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
 
-
-			$arrParam = array(
-				"idEstrategia" => 1
-			);
-
 			$data["view"] = "dashboard";
 			$this->load->view("layout_calendar", $data);
 	}

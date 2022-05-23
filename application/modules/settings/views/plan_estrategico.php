@@ -6,7 +6,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'settings/cargarModalCuadroBase',
-                data: {'idEstrategia': oID, 'idCuadroBase': 'x'},
+                data: {'numeroEstrategia': oID, 'idCuadroBase': 'x'},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatos').html(data);
@@ -19,7 +19,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'settings/cargarModalCuadroBase',
-                data: {'idEstrategia': '', 'idCuadroBase': oID},
+                data: {'numeroEstrategia': '', 'idCuadroBase': oID},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatos').html(data);
@@ -121,7 +121,7 @@ if ($retornoError) {
 ?>
                                     <div class="pull-right">
                                         <div class="btn-group">                                                                             
-                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_estrategia']; ?>">
+                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['numero_estrategia']; ?>">
                                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Plan de Desarrollo Distrital
                                             </button>
                                         </div>
@@ -133,10 +133,12 @@ if ($retornoError) {
                                 <div class="panel-body">
                                     <?php 
                                         $idEstrategia = $lista['id_estrategia'];
-                                        $arrParam['idEstrategia'] = $idEstrategia;
+                                        $arrParam = array('idEstrategia' => $idEstrategia);
                                         $metas = $this->general_model->get_lista_metas($arrParam);
                                         $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                         $resultados = $this->general_model->get_lista_resultados($arrParam);
+
+                                        $arrParam = array('numeroEstrategia' => $lista['numero_estrategia']);
                                         $cuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
 
                                         if($metas){
