@@ -117,23 +117,15 @@ $(function(){
 								<th>Tipo Indicador</th>
 								<th>Ponderación</th>
 								<th>Fechas</th>
-								<th>Presupuesto Meta</th>
+								<th>Responsable</th>
 								<th class="text-center">Enlaces</th>
 							</tr>
 						</thead>
 						<tbody>							
 						<?php
 							foreach ($listaActividades as $lista):
-								switch ($lista['unidad_medida']) {
-									case 1:
-										$unidadMedida = 'Número';
-										$clase = "text-success";
-										break;
-									case 2:
-										$unidadMedida = 'Porcentaje';
-										$clase = "text-danger";
-										break;
-								}
+								$unidadMedida = $lista['unidad_medida'];
+								$clase = "text-danger";
 
 								switch ($lista['tipo_indicador']) {
 									case 1:
@@ -165,7 +157,7 @@ $(function(){
 								echo "<td class='text-center'>";
 								echo $lista['mes_inicial'] . '-' . $lista['mes_final'];
 								echo "</td>";
-								echo "<td class='text-right'>$ " . number_format($lista['presupuesto_actividad']) . "</td>";
+								echo "<td class='text-right'>" . $lista['responsable'] . "</td>";
 								echo "<td class='text-center'>";
         
     							if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){

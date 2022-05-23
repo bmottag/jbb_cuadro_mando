@@ -50,7 +50,7 @@ class Dashboard extends CI_Controller {
 			$data['infoCuadroBase'] = $this->general_model->get_lista_cuadro_mando($arrParam);
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
 
-			$arrParam = array("idEstrategia" => $data['infoCuadroBase'][0]['fk_id_estrategia']);
+			$arrParam = array("numeroEstrategia" => $data['infoCuadroBase'][0]['fk_numero_estrategia']);
 			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
 
 			if($idActividad != 'x') {
