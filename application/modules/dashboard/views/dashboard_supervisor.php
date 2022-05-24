@@ -75,6 +75,8 @@ if ($retornoError) {
                                         $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                         $resultados = $this->general_model->get_lista_resultados($arrParam);
                                         //consulto los ID de cuadro base para los que es responsable
+
+                                        $arrParam = array('numeroEstrategia' => $lista['numero_estrategia']);
                                         $filtroCuadroBase = $this->general_model->get_cuadro_base_by_responsable($arrParam);
                                         $valor = '';
                                         if($filtroCuadroBase){
@@ -170,7 +172,7 @@ if ($retornoError) {
                                             foreach ($actividades as $lista):
                                                 echo "<tr>";
                                                 echo "<td class='text-center'><small>" . $lista['numero_actividad'] . "</small>";
-                                                echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
+                                                echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
                                                 echo "</td>";
                                                 echo "<td><small>" . $lista['descripcion_actividad'] . "</small></td>";
                                                 echo "<td class='text-right'><small>" . $lista['meta_plan_operativo_anual'] . "</small></td>";

@@ -402,11 +402,13 @@ class General_model extends CI_Model {
 		{		
 				$userRol = $this->session->userdata("role");
 				$idUser = $this->session->userdata("id");
-			
+				$idDependencia = $this->session->userdata("dependencia");
+							
 				$this->db->select('A.*, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				//$this->db->join('param_proceso_calidad Z', 'Z.id_proceso_calidad = A.fk_id_proceso_calidad', 'LEFT');
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
@@ -415,7 +417,7 @@ class General_model extends CI_Model {
 					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}
 				if($userRol == ID_ROL_SUPERVISOR){
-					$this->db->where('A.fk_id_responsable', $idUser);
+					$this->db->where('C.fk_id_dependencia', $idDependencia);
 				}
 				if (array_key_exists("idCuadroBase", $arrData)) {
 					$this->db->where('A.fk_id_cuadro_base', $arrData["idCuadroBase"]);
@@ -529,13 +531,21 @@ class General_model extends CI_Model {
 		{		
 				$userRol = $this->session->userdata("role");
 				$idUser = $this->session->userdata("id");
+				$idDependencia = $this->session->userdata("dependencia");
 				
-				$this->db->select('fk_id_estrategia');
+				$this->db->select('id_estrategia');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				$this->db->join('estrategias E', 'E.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+				if($userRol == ID_ROL_SUPERVISOR){
+					$this->db->where('C.fk_id_dependencia', $idDependencia);
+				}
+
+			/*	
 				if($userRol == ID_ROL_SUPERVISOR){
 					$this->db->where('A.fk_id_responsable', $idUser);
 				}
-				$this->db->group_by("C.fk_id_estrategia");
+			*/
+				$this->db->group_by("E.id_estrategia");
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
@@ -552,14 +562,15 @@ class General_model extends CI_Model {
 		{		
 				$userRol = $this->session->userdata("role");
 				$idUser = $this->session->userdata("id");
+				$idDependencia = $this->session->userdata("dependencia");
 				
 				$this->db->select('fk_id_cuadro_base');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				if($userRol == ID_ROL_SUPERVISOR){
-					$this->db->where('A.fk_id_responsable', $idUser);
+					$this->db->where('C.fk_id_dependencia', $idDependencia);
 				}
-				if (array_key_exists("idEstrategia", $arrData)) {
-					$this->db->where('C.fk_id_estrategia', $arrData["idEstrategia"]);
+				if (array_key_exists("numeroEstrategia", $arrData)) {
+					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
 				}
 				$this->db->group_by("A.fk_id_cuadro_base");
 				$query = $this->db->get('actividades A');

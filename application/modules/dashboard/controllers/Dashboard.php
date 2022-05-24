@@ -361,10 +361,11 @@ class Dashboard extends CI_Controller {
 			$arrParam = array();
 			$filtroEstrategias = $this->general_model->get_estrategias_by_responsable($arrParam);
 			$valor = '';
+
 			if($filtroEstrategias){
 				$tot = count($filtroEstrategias);
 				for ($i = 0; $i < $tot; $i++) {
-					$valor = $valor . $filtroEstrategias[$i]['fk_id_estrategia'];
+					$valor = $valor . $filtroEstrategias[$i]['id_estrategia'];
 					if($i != ($tot-1)){
 						$valor .= ",";
 					}
@@ -374,8 +375,8 @@ class Dashboard extends CI_Controller {
 			if($valor){
 				$arrParam = array("filtroEstrategias" => $valor);
 				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
-
 			}
+
 			$data["view"] = "dashboard_supervisor";	
 			$this->load->view("layout_calendar", $data);
 	}

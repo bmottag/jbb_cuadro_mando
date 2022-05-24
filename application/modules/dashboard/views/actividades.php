@@ -157,7 +157,7 @@ $(function(){
 								echo "<td class='text-center'>";
 								echo $lista['mes_inicial'] . '-' . $lista['mes_final'];
 								echo "</td>";
-								echo "<td class='text-right'>" . $lista['responsable'] . "</td>";
+								echo "<td>" . $lista['responsable'] . "</td>";
 								echo "<td class='text-center'>";
         
     							if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){

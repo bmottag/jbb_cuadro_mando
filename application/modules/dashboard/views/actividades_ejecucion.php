@@ -13,7 +13,7 @@
 					<div class="pull-right">
 						<div class="btn-group">
 							<?php
-								if($idActividad != 'x'){
+								if($numeroActividad != 'x'){
 							?>
 									<a class="btn btn-primary btn-xs" href=" <?php echo base_url('dashboard/actividades/' . $idCuadroBase); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Regresar</a> 
 							<?php
@@ -63,23 +63,15 @@
 								<th>Tipo Indicador</th>
 								<th>Ponderación</th>
 								<th>Fechas</th>
-								<th>Presupuesto Meta</th>
+								<th>Responsable</th>
 								<th class="text-center">Enlaces</th>
 							</tr>
 						</thead>
 						<tbody>							
 						<?php
 							foreach ($listaActividades as $lista):
-								switch ($lista['unidad_medida']) {
-									case 1:
-										$unidadMedida = 'Número';
-										$clase = "text-success";
-										break;
-									case 2:
-										$unidadMedida = 'Porcentaje';
-										$clase = "text-danger";
-										break;
-								}
+								$unidadMedida = $lista['unidad_medida'];
+								$clase = "text-danger";
 
 								switch ($lista['tipo_indicador']) {
 									case 1:
@@ -111,15 +103,15 @@
 								echo "<td class='text-center'>";
 								echo $lista['mes_inicial'] . '-' . $lista['mes_final'];
 								echo "</td>";
-								echo "<td class='text-right'>$ " . number_format($lista['presupuesto_actividad']) . "</td>";
+								echo "<td>" . $lista['responsable'] . "</td>";
 								echo "<td class='text-center'>";
-								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
+								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
 								echo "</td>";
 								echo "</tr>";
 
-								$arrParam = array("idActividad" => $lista["id_actividad"]);
+								$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
-
+$estadoActividad = false;
 								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
 								$arrParam['numeroTrimestre'] = 1;
@@ -183,10 +175,12 @@
 											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
 										</th>
 										<th class="column-title small">
+											<?php if($estadoActividad){ ?>
 											<p class="<?php echo $estadoActividad[0]['primer_clase']; ?>"><strong><?php echo $estadoActividad[0]['primer_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['segundo_clase']; ?>"><strong><?php echo $estadoActividad[0]['segundo_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['tercer_clase']; ?>"><strong><?php echo $estadoActividad[0]['tercer_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['cuarta_clase']; ?>"><strong><?php echo $estadoActividad[0]['cuarta_estado']; ?></strong></p>
+											<?php } ?>
 										</th>
 										<th class="column-title">
 
@@ -272,6 +266,7 @@
 							<?php
 								foreach ($infoEjecucion as $data):
 									$variable = 'estado_trimestre_' . $data['numero_trimestre'];
+									$deshabilidar = '';
 									if($estadoActividad){
 										switch ($estadoActividad[0][$variable]) {
 											case 0:
@@ -302,13 +297,13 @@
 										}
 									}						
 									$idRecord = $data['id_ejecucion_actividad'];
-									$idActividad = $data['fk_id_actividad'];
+									$numeroActividad = $data['fk_numero_actividad'];
 							?>		
 									
 								<form  name="ejecucion_<?php echo $idRecord ?>" id="ejecucion_<?php echo $idRecord ?>" method="post" action="<?php echo base_url("dashboard/update_ejecucion"); ?>">
 
 									<input type="hidden" id="hddId" name="hddId" value="<?php echo $idRecord; ?>"/>
-									<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $idActividad; ?>"/>
+									<input type="hidden" id="hddnumeroActividad" name="hddnumeroActividad" value="<?php echo $numeroActividad; ?>"/>
 									<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
 									<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $data['numero_trimestre']; ?>"/>
 									<input type="hidden" id="hddMes" name="hddMes" value="<?php echo $data['mes']; ?>"/>

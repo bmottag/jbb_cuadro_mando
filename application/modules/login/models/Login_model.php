@@ -32,6 +32,7 @@
 	    				$user["id"] = $row->id_user;
 	    				$user["firstname"] = $row->first_name;
 	    				$user["lastname"] = $row->last_name;
+	    				$user["dependencia"] = $row->fk_id_dependencia_u;
 						$user["logUser"] = $row->log_user;
 	    				$user["movil"] = $row->movil;
 						$user["state"] = $row->state;
