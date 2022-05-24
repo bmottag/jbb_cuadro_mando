@@ -85,7 +85,7 @@ if ($retornoError) {
                             );
                             $nroActividades = $this->dashboard_model->countActividades($arrParam);
                             $avance = $this->dashboard_model->sumAvance($arrParam);
-                            $avancePOA = $avance["avance_poa"];
+                            $avancePOA = number_format($avance["avance_poa"],2);
              
                             if(!$avancePOA){
                                 $avancePOA = 0;
@@ -161,7 +161,7 @@ if ($retornoError) {
             </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-bell fa-fw"></i> Avances Estrategias <b><?php echo date("Y"); ?></b>
@@ -173,43 +173,45 @@ if ($retornoError) {
                             <tr>
                                 <th>Estrategia</th>
                                 <th>% Avance Vigencia <b><?php echo date("Y"); ?></b></th>
+                                <th>No. Actividades</th>
                             </tr>
                         </thead>
                         <?php
                         $i=0;
                         foreach ($listaObjetivos as $lista):
-                            $i++;
-                            if($i==1){
-                                $valor = 75;
-                            }elseif($i==2){
-                                $valor = 38;
-                            }elseif($i==3){
-                                $valor = 57;
-                            }elseif($i==4){
-                                $valor = 26;
-                            }elseif($i==5){
-                                $valor = 86;
-                            }elseif($i==6){
-                                $valor = 57;
-                            }else{
-                                $valor = 100;
+                            $arrParam = array(
+                                "idObjetivo" => $lista["id_objetivo_estrategico"],
+                                "vigencia" => date("Y")
+                            );
+                            $nroActividades = $this->dashboard_model->countActividades($arrParam);
+                            $avance = $this->dashboard_model->sumAvance($arrParam);
+                            $promedio = 0;
+                            if($nroActividades){
+                                $promedio = number_format($avance["avance_poa"]/$nroActividades,2);
                             }
-                            
-                            if($valor > 70){
-                                $estilos = "bg-success";
-                            }elseif($valor > 40 && $valor <= 70){
+                                         
+                            if(!$promedio){
+                                $promedio = 0;
                                 $estilos = "bg-warning";
                             }else{
-                                $estilos = "bg-danger";
+                                if($promedio > 70){
+                                    $estilos = "progress-bar-success";
+                                }elseif($promedio > 40 && $promedio <= 70){
+                                    $estilos = "progress-bar-warning";
+                                }else{
+                                    $estilos = "progress-bar-danger";
+                                }
                             }
+
                             echo "<tr>";
                             echo "<td style='width: 50%'><small>" . $lista["objetivo_estrategico"] . "</small></td>";
-                            echo "<td>";
+                            echo "<td class='text-center'>";
+                            echo "<b>" . $promedio ."%</b>";
                             echo '<div class="progress progress-striped">
-                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $valor .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $valor . '%</div>
+                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $promedio .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $promedio . '%</div>
                                     </div>';
                             echo "</td>";
-
+                            echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
                             echo "</tr>";
                         endforeach
                         ?>
@@ -232,7 +234,7 @@ if ($retornoError) {
     </div>
 
     <div class="row">
--->
+
 
 
         <div class="col-lg-4">
@@ -319,6 +321,9 @@ if ($retornoError) {
                 </div>
             </div>
         </div>
+-->
+
+
     </div>
 
     <div class="row">

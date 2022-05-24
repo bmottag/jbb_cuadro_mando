@@ -249,6 +249,7 @@
 				$sql.= " FROM  actividades A";
 				$sql.= " INNER JOIN cuadro_base C ON C.id_cuadro_base = A.fk_id_cuadro_base";
 				$sql.= " INNER JOIN meta_proyecto_inversion M ON M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion";
+				$sql.= " INNER JOIN estrategias E ON E.numero_estrategia = C.fk_numero_estrategia";
 				$sql.= " WHERE 1=1 ";
 				if (array_key_exists("idDependencia", $arrData)) {
 					$sql.= " AND C.fk_id_dependencia = '". $arrData["idDependencia"]. "'";
@@ -257,6 +258,12 @@
 					}
 				}
 
+				if (array_key_exists("idObjetivo", $arrData)) {
+					$sql.= " AND E.fk_id_objetivo_estrategico = '". $arrData["idObjetivo"]. "'";
+					if (array_key_exists("vigencia", $arrData)) {
+						$sql.= " AND M.vigencia_meta_proyecto = '". $arrData["vigencia"]. "'";
+					}
+				}
 
 				$query = $this->db->query($sql);
 				$row = $query->row();
@@ -273,8 +280,13 @@
 			$this->db->join('actividades A', 'A.numero_actividad = E.fk_numero_actividad', 'INNER');
 			$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 			$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
+			$this->db->join('estrategias X', 'X.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+
 			if (array_key_exists("idDependencia", $arrData)) {
 				$this->db->where('fk_id_dependencia', $arrData["idDependencia"]);
+			}
+			if (array_key_exists("idObjetivo", $arrData)) {
+				$this->db->where('fk_id_objetivo_estrategico', $arrData["idObjetivo"]);
 			}
 			if (array_key_exists("vigencia", $arrData)) {
 				$this->db->where('vigencia_meta_proyecto', $arrData["vigencia"]);
