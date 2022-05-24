@@ -1,12 +1,10 @@
 $( document ).ready( function () {
 
 	$("#numero_actividad").bloquearTexto().maxlength(4);
-	$("#presupuesto_actividad").bloquearTexto().maxlength(15);
 		
 	$( "#form" ).validate( {
 		rules: {
 			numero_actividad: 			{ required: true, number: true, minlength: 1, maxlength:3 },
-			presupuesto_actividad:		{ required: true, minlength: 1, maxlength: 15 },
 			descripcion: 				{ required: true },
 			meta_plan: 					{ required: true, minlength: 1, maxlength:10 },
 			unidad_medida: 				{ required: true },

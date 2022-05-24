@@ -86,9 +86,12 @@ class Dashboard extends CI_Controller {
 			$data["idCuadrobase"] = $this->input->post("idCuadrobase");
 			$data["idActividad"] = $this->input->post("idActividad");
 
-			//Lista de usuarios activos
-			$arrParam = array("filtroState" => TRUE);
-			$data['listaUsuarios'] = $this->general_model->get_user($arrParam);
+			$arrParam = array(
+				"table" => " param_area_responsable",
+				"order" => "area_responsable",
+				"id" => "x"
+			);
+			$data['listaAreaResponsable'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
 				"table" => "param_proceso_calidad",
@@ -114,16 +117,7 @@ class Dashboard extends CI_Controller {
 
 			$arrParam = array("idCuadroBase" => $data["idCuadrobase"]);
 			$infoCuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
-//calcular sumatoria de los presupuesto de las actividades
-			$idMetaProyecto = $infoCuadroBase[0]["id_meta_proyecto_inversion"];
-			$arrParam = array("idMetaProyecto" => $idMetaProyecto);
-			$sumatoriaPresupuestoActividades  = $this->general_model->get_sumatoria_presupuesto($arrParam);
-			$data["saldoPresupuesto"] = $infoCuadroBase[0]["presupuesto_meta"] - $sumatoriaPresupuestoActividades['sumatoria'];
-			if ($data["idActividad"] != 'x') 
-			{
-				$data["saldoPresupuesto"] = $data["saldoPresupuesto"] - $data['information'][0]['presupuesto_actividad'];
-			}
-//fin calculo
+
 			$this->load->view("actividad_modal", $data);
     }
 

@@ -19,13 +19,6 @@
 					<input type="number" id="numero_actividad" name="numero_actividad" class="form-control" value="<?php echo $information?$information[0]["numero_actividad"]:""; ?>" placeholder="No. Actividad" required >
 				</div>
 			</div>
-
-			<div class="col-sm-6">		
-				<div class="form-group text-left">
-					<label class="control-label" for="presupuesto_actividad">Presupuesto Meta: *</label>
-					<input type="number" min="0" id="presupuesto_actividad" name="presupuesto_actividad" class="form-control" value="<?php echo $information?$information[0]["presupuesto_actividad"]:""; ?>" placeholder="Presupuesto Meta" required >
-				</div>
-			</div>
 		</div>
 
 		<div class="row">				
@@ -48,11 +41,7 @@
 			<div class="col-sm-6">
 				<div class="form-group text-left">
 					<label class="control-label" for="unidad_medida">Unidad de Medida: *</label>
-					<select name="unidad_medida" id="unidad_medida" class="form-control" required>
-						<option value=''>Select...</option>
-						<option value=1 <?php if($information && $information[0]["unidad_medida"] == 1) { echo "selected"; }  ?>>Número</option>
-						<option value=2 <?php if($information && $information[0]["unidad_medida"] == 2) { echo "selected"; }  ?>>Porcentaje</option>
-					</select>
+					<input type="text" id="unidad_medida" name="unidad_medida" class="form-control" value="<?php echo $information?$information[0]["unidad_medida"]:""; ?>" placeholder="Unidad de Medida" required >
 				</div>
 			</div>
 		</div>
@@ -91,8 +80,8 @@
 					<label class="control-label" for="id_responsable">Responsable: *</label>
 					<select name="id_responsable" id="id_responsable" class="form-control" required >
 						<option value="">Seleccione...</option>
-						<?php for ($i = 0; $i < count($listaUsuarios); $i++) { ?>
-							<option value="<?php echo $listaUsuarios[$i]["id_user"]; ?>" <?php if($information && $information[0]["fk_id_responsable"] == $listaUsuarios[$i]["id_user"]) { echo "selected"; }  ?>><?php echo $listaUsuarios[$i]["first_name"] . ' ' . $listaUsuarios[$i]["last_name"]; ?></option>		
+						<?php for ($i = 0; $i < count($listaAreaResponsable); $i++) { ?>
+							<option value="<?php echo $listaAreaResponsable[$i]["id_area_responsable"]; ?>" <?php if($information && $information[0]["fk_id_area_responsable"] == $listaAreaResponsable[$i]["id_area_responsable"]) { echo "selected"; }  ?>><?php echo $listaAreaResponsable[$i]["area_responsable"]; ?></option>		
 						<?php } ?>
 					</select>
 				</div>

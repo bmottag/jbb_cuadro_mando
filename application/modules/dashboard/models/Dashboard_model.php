@@ -20,12 +20,11 @@
 					'unidad_medida' => $this->input->post('unidad_medida'),
 					'nombre_indicador' => $this->input->post('nombre_indicador'),
 					'tipo_indicador' => $this->input->post('tipo_indicador'),
-					'fk_id_responsable' => $this->input->post('id_responsable'),
 					'ponderacion ' => $this->input->post('ponderacion'),
 					'fecha_inicial' => $this->input->post('fecha_inicial'),
 					'fecha_final' => $this->input->post('fecha_final'),
-					'presupuesto_actividad' => $this->input->post('presupuesto_actividad'),
-					'fk_id_proceso_calidad' => $this->input->post('proceso_calidad')
+					'fk_id_proceso_calidad' => $this->input->post('proceso_calidad'),
+					'fk_id_area_responsable' => $this->input->post('id_responsable')
 				);	
 
 				//revisar si es para adicionar o editar
