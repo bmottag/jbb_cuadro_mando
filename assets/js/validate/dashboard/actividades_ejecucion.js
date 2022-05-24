@@ -7,7 +7,7 @@ $( document ).ready( function () {
 					$(".btn-danger").attr('disabled','-1');
 					var numeroTrimestre = $(this).attr("id");
 					var idCuadroBase = $('#idCuadroBase').val();
-				    var idActividad = $('#idActividad').val();
+				    var numeroActividad = $('#numeroActividad').val();
 				    var avancePOA = $('#avancePOA').val();
 					if(numeroTrimestre == 1){
 						var cumplimientoTrimestre = $('#cumplimiento1').val();
@@ -22,7 +22,7 @@ $( document ).ready( function () {
 					$.ajax ({
 						type: 'POST',
 						url: base_url + 'dashboard/update_trimestre',
-						data: {'numeroTrimestre': numeroTrimestre,'idCuadroBase': idCuadroBase,'idActividad': idActividad,'cumplimientoTrimestre': cumplimientoTrimestre,'avancePOA': avancePOA },
+						data: {'numeroTrimestre': numeroTrimestre,'idCuadroBase': idCuadroBase,'numeroActividad': numeroActividad,'cumplimientoTrimestre': cumplimientoTrimestre,'avancePOA': avancePOA },
 						cache: false,
 						success: function(data){
 												
@@ -36,7 +36,7 @@ $( document ).ready( function () {
 							if( data.result )//true
 							{	                                                        
 								$(".btn-danger").removeAttr('disabled');
-								var url = base_url + "dashboard/actividades/" + data.idCuadroBase + "/" + data.idActividad;
+								var url = base_url + "dashboard/actividades/" + data.idCuadroBase + "/" + data.numeroActividad;
 								$(location).attr("href", url);
 							}
 							else

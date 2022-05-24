@@ -167,7 +167,7 @@
 		 * Guardar estado del Trimestre
 		 * @since 17/04/2022
 		 */
-		public function guardarTrimestre($banderaActividad, $estadoActividad, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
+		public function guardarTrimestre($banderaActividad, $estadoActividad, $numeroActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
 		{	
 				$data = array(
 					'trimestre_' . $numeroTrimestre => $cumplimientoTrimestre,
@@ -178,7 +178,7 @@
 				//revisar si es para adicionar o editar
 				if ($banderaActividad) 
 				{
-					$this->db->where('fk_id_actividad', $idActividad);
+					$this->db->where('fk_numero_actividad', $numeroActividad);
 					$query = $this->db->update('actividad_estado', $data);
 				} else {
 					$data['fk_id_actividad'] = $idActividad;
@@ -200,7 +200,7 @@
 			$idUser = $this->session->userdata("id");
 			
 			$data = array(
-				'fk_id_actividad' => $arrData["idActividad"],
+				'fk_numero_actividad' => $arrData["numeroActividad"],
 				'fk_id_usuario' => $idUser,
 				'numero_trimestre' => $arrData["numeroTrimestre"],
 				'fecha_cambio' => date("Y-m-d G:i:s"),

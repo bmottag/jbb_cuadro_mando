@@ -132,6 +132,7 @@ class Dashboard extends CI_Controller {
 			$data = array();
 			$idActividad = $this->input->post('hddId');
 			$data["idRecord"] = $this->input->post('hddIdCuadroBase');
+			$numeroActividad = $this->input->post('numero_actividad');
 		
 			$msj = "Se guardo la información!";
 
@@ -142,11 +143,11 @@ class Dashboard extends CI_Controller {
 					//generar REGISTRO DE ESTADO ACTIVIDAD
 					$banderaActividad = false;
 					$estadoActividad = 0;
-					$this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $nuevaActividad, '', 0, 1);
+					$this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $numeroActividad, '', 0, 1);
 					//guardar el historial de los 4 trimestres
 					for($i=1;$i<5;$i++) {
 						$arrParam = array(
-							"idActividad" => $nuevaActividad,
+							"numeroActividad" => $numeroActividad,
 							"numeroTrimestre" => $i,
 							"observacion" => 'Registro de la actividad',
 							"estado" => 0
@@ -321,43 +322,22 @@ class Dashboard extends CI_Controller {
      * @since 17/04/2022
      * @author BMOTTAG
      */
-    public function update_trimestre___ANTERIRO($idCuadroBase, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
-	{
-			if (empty($idCuadroBase) || empty($idActividad) || empty($numeroTrimestre) ) {
-				show_error('ERROR!!! - You are in the wrong place.');
-			}
-			$banderaActividad = true;
-			$estadoActividad = 2;
-			if ($this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre)) {
-				$this->session->set_flashdata('retornoExito', 'Se cerro el trimestre.');
-			} else {
-				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
-			}
-
-			redirect(base_url('dashboard/actividades/' . $idCuadroBase . '/' . $idActividad), 'refresh');
-    }
-
-    /**
-     * Datos de actividades por TRIMESTRE
-     * @since 17/04/2022
-     * @author BMOTTAG
-     */
 	public function update_trimestre()
 	{
 		header('Content-Type: application/json');
 
 		$data["idCuadroBase"] = $this->input->post('idCuadroBase');
-		$data["idActividad"] = $idActividad = $this->input->post('idActividad');
+		$data["numeroActividad"] = $numeroActividad = $this->input->post('numeroActividad');
 		$cumplimientoTrimestre = $this->input->post('cumplimientoTrimestre');
 		$avancePOA = $this->input->post('avancePOA');
 		$numeroTrimestre = $this->input->post('numeroTrimestre');
 
 		$banderaActividad = true;
 		$estadoActividad = 2;
-		if ($this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $idActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre)){
+		if ($this->dashboard_model->guardarTrimestre($banderaActividad, $estadoActividad, $numeroActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre)){
 
 			$arrParam = array(
-				"idActividad" => $idActividad,
+				"numeroActividad" => $numeroActividad,
 				"numeroTrimestre" => $numeroTrimestre,
 				"observacion" => 'Se cerro el trimestre por parte del supervisor.',
 				"estado" => 2

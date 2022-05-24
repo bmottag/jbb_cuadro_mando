@@ -193,6 +193,7 @@
 											<form name="form" id="form" role="form" method="post" >
 												<input type="hidden" id="idCuadroBase" name="idCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
 												<input type="hidden" id="idActividad" name="idActividad" value="<?php echo $lista["id_actividad"]; ?>"/>
+												<input type="hidden" id="numeroActividad" name="numeroActividad" value="<?php echo $lista["numero_actividad"]; ?>"/>
 												<input type="hidden" id="cumplimiento1" name="cumplimiento1" value="<?php echo $cumplimiento1; ?>"/>
 												<input type="hidden" id="cumplimiento2" name="cumplimiento2" value="<?php echo $cumplimiento2; ?>"/>
 												<input type="hidden" id="cumplimiento3" name="cumplimiento3" value="<?php echo $cumplimiento3; ?>"/>
