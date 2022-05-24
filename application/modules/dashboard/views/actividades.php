@@ -61,7 +61,7 @@ $(function(){
 						<div class="btn-group">
 							<?php
 								$userRol = $this->session->userdata("role");
-								if($idActividad != 'x' ){
+								if($numeroActividad != 'x' ){
 							?>
 									<a class="btn btn-primary btn-xs" href=" <?php echo base_url('dashboard/actividades/' . $idCuadroBase); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Regresar</a> 
 							<?php
@@ -166,7 +166,7 @@ $(function(){
 										<span class="fa fa-pencil" aria-hidden="true">
 									</button>
 						<?php
-							if($idActividad != 'x') {
+							if($numeroActividad != 'x') {
 						?>
 									<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEjecucion" id="<?php echo $lista['id_actividad']; ?>" title="Adicionar Fecha a la Actividad">
 											<i class="fa fa-signal"></i>
@@ -179,15 +179,15 @@ $(function(){
 								}
 							}
 
-							if($idActividad == 'x') {
+							if($numeroActividad == 'x') {
 								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "' title='Ver Detalle Actividad'> <span class='fa fa-eye' aria-hidden='true'></a>";
 							}
 								echo "</td>";
 								echo "</tr>";
 
-								$arrParam = array("idActividad" => $lista["id_actividad"]);
+								$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
-
+$estadoActividad = false;
 								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
 								$arrParam['numeroTrimestre'] = 1;
@@ -251,11 +251,14 @@ $(function(){
 											<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?></p>
 											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
 										</th>
+
 										<th class="column-title small">
+											<?php if($estadoActividad){ ?>
 											<p class="<?php echo $estadoActividad[0]['primer_clase']; ?>"><strong><?php echo $estadoActividad[0]['primer_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['segundo_clase']; ?>"><strong><?php echo $estadoActividad[0]['segundo_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['tercer_clase']; ?>"><strong><?php echo $estadoActividad[0]['tercer_estado']; ?></strong></p>
 											<p class="<?php echo $estadoActividad[0]['cuarta_clase']; ?>"><strong><?php echo $estadoActividad[0]['cuarta_estado']; ?></strong></p>
+											<?php } ?>
 										</th>
 										<th class="column-title">
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' title="Seguimiento I">
@@ -386,7 +389,7 @@ $(function(){
 					<div class="table-responsive">
 						<form  name="ejecucion" id="ejecucion" method="post" action="<?php echo base_url("dashboard/update_programacion"); ?>">
 
-							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $idActividad; ?>"/>
+							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $numeroActividad; ?>"/>
 							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>		
 
 							<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
@@ -427,7 +430,7 @@ $(function(){
 										echo "<tr>";
 										echo "<td >$data[mes]</td>";							
 										$idRecord = $data['id_ejecucion_actividad'];
-										$idActividad = $data['fk_id_actividad'];
+										$idActividad = $data['fk_numero_actividad'];
 								?>		
 										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
 										<td>

@@ -403,12 +403,16 @@ class General_model extends CI_Model {
 				$userRol = $this->session->userdata("role");
 				$idUser = $this->session->userdata("id");
 			
-				$this->db->select('A.*, P.mes mes_inicial, X.mes mes_final');
+				$this->db->select('A.*, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
+				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
 				//$this->db->join('param_proceso_calidad Z', 'Z.id_proceso_calidad = A.fk_id_proceso_calidad', 'LEFT');
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
+				}
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}
 				if($userRol == ID_ROL_SUPERVISOR){
 					$this->db->where('A.fk_id_responsable', $idUser);
@@ -432,8 +436,8 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select();
 				$this->db->join('param_meses P', 'P.id_mes = E.fk_id_mes', 'INNER');
-				if (array_key_exists("idActividad", $arrData)) {
-					$this->db->where('E.fk_id_actividad', $arrData["idActividad"]);
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('E.fk_numero_actividad', $arrData["numeroActividad"]);
 				}
 				if (array_key_exists("idMes", $arrData)) {
 					$this->db->where('E.fk_id_mes', $arrData["idMes"]);
@@ -484,7 +488,7 @@ class General_model extends CI_Model {
 		{
 				$this->db->select_sum('programado');
 				$this->db->join('param_meses P', 'P.id_mes = E.fk_id_mes', 'INNER');
-				$this->db->where('E.fk_id_actividad', $arrData["idActividad"]);
+				$this->db->where('E.fk_numero_actividad', $arrData["numeroActividad"]);
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('P.numero_trimestre', $arrData["numeroTrimestre"]);
 				}
@@ -505,7 +509,7 @@ class General_model extends CI_Model {
 		{
 				$this->db->select_sum('ejecutado');
 				$this->db->join('param_meses P', 'P.id_mes = E.fk_id_mes', 'INNER');
-				$this->db->where('E.fk_id_actividad', $arrData["idActividad"]);
+				$this->db->where('E.fk_numero_actividad', $arrData["numeroActividad"]);
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('P.numero_trimestre', $arrData["numeroTrimestre"]);
 				}
@@ -577,10 +581,10 @@ class General_model extends CI_Model {
 				$this->db->join('param_estados X', 'X.valor = E.estado_trimestre_2', 'INNER');
 				$this->db->join('param_estados Y', 'Y.valor = E.estado_trimestre_3', 'INNER');
 				$this->db->join('param_estados Z', 'Z.valor = E.estado_trimestre_4', 'INNER');
-				if (array_key_exists("idActividad", $arrData)) {
-					$this->db->where('E.fk_id_actividad', $arrData["idActividad"]);
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('E.fk_numero_actividad', $arrData["numeroActividad"]);
 				}
-				$this->db->order_by('E.fk_id_actividad', 'asc');
+				$this->db->order_by('E.fk_numero_actividad', 'asc');
 				$query = $this->db->get('actividad_estado E');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
@@ -596,7 +600,7 @@ class General_model extends CI_Model {
 		public function get_actividades_full($arrData) 
 		{		
 				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");
-				$this->db->join('actividad_estado E', 'E.fk_id_actividad  = A.id_actividad', 'LEFT');
+				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INER');

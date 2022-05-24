@@ -40,9 +40,9 @@ class Dashboard extends CI_Controller {
 	 * ACTIVIDADES
 	 * @since 15/04/2022
 	 */
-	public function actividades($idCuadroBase, $idActividad = 'x', $numeroTrimestre = 'x')
+	public function actividades($idCuadroBase, $numeroActividad = 'x', $numeroTrimestre = 'x')
 	{				
-			$data['idActividad'] = $idActividad;
+			$data['numeroActividad'] = $numeroActividad;
 			$data['idCuadroBase'] = $idCuadroBase;
 			$data['numeroTrimestre'] = false;
 			$data['infoEjecucion'] = false;
@@ -53,8 +53,8 @@ class Dashboard extends CI_Controller {
 			$arrParam = array("numeroEstrategia" => $data['infoCuadroBase'][0]['fk_numero_estrategia']);
 			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
 
-			if($idActividad != 'x') {
-				$arrParam = array("idActividad" => $idActividad);
+			if($numeroActividad != 'x') {
+				$arrParam = array("numeroActividad" => $numeroActividad);
 				$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
 				if($numeroTrimestre != 'x') {
 					$data['numeroTrimestre'] = $numeroTrimestre;

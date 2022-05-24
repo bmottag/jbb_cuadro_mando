@@ -271,7 +271,7 @@
 		public function sumAvance($arrData) 
 		{		
 			$this->db->select_sum('avance_poa');
-			$this->db->join('actividades A', 'A.id_actividad = E.fk_id_actividad', 'INNER');
+			$this->db->join('actividades A', 'A.numero_actividad = E.fk_numero_actividad', 'INNER');
 			$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 			$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
 			if (array_key_exists("idDependencia", $arrData)) {

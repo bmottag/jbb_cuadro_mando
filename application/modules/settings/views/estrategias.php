@@ -69,7 +69,7 @@ $(function(){
 				<?php
 					if($info){
 				?>				
-					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
+					<table width="100%" class="table table-striped table-bordered table-hover small" id="dataTables">
 						<thead>
 							<tr>
 								<th class="text-center">Estrategia</th>
