@@ -180,7 +180,7 @@ $(function(){
 							}
 
 							if($numeroActividad == 'x') {
-								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["id_actividad"]) . "' title='Ver Detalle Actividad'> <span class='fa fa-eye' aria-hidden='true'></a>";
+								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "' title='Ver Detalle Actividad'> <span class='fa fa-eye' aria-hidden='true'></a>";
 							}
 								echo "</td>";
 								echo "</tr>";
@@ -236,7 +236,7 @@ $estadoActividad = false;
 								<thead>
 									<tr class="headings">
 										<th class="column-title" colspan="2">
-											<p>Programado Año: <?php echo $sumaProgramado['programado']; ?></p>
+											<p>Programado Año: <?php echo number_format($sumaProgramado['programado'],2); ?></p>
 											<p>Acance POA: <?php echo $avancePOA . '%'; ?></p>
 										</th>
 										<th class="column-title" colspan="2">

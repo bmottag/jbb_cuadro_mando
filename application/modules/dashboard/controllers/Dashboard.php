@@ -263,7 +263,7 @@ class Dashboard extends CI_Controller {
 	 */
 	public function update_ejecucion()
 	{					
-			$idActividad = $this->input->post('hddIdActividad');
+			$numeroActividad = $this->input->post('hddnumeroActividad');
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
 			$mes = $this->input->post('hddMes');
 
@@ -271,7 +271,7 @@ class Dashboard extends CI_Controller {
 			{
 				//actualizo el estado del trimestre de la actividad
 				$arrParam = array(
-					"idActividad" => $idActividad,
+					"numeroActividad" => $numeroActividad,
 					"numeroTrimestre" => $this->input->post('hddNumeroTrimestre'),
 					"observacion" => 'Se realizó registro de información para el mes de ' . $mes . '.',
 					"estado" => 1
@@ -288,7 +288,7 @@ class Dashboard extends CI_Controller {
 				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
 			}
 
-			redirect(base_url('dashboard/actividades/' . $idCuadroBase . '/' . $idActividad), 'refresh');
+			redirect(base_url('dashboard/actividades/' . $idCuadroBase . '/' . $numeroActividad), 'refresh');
     }
 
     /**

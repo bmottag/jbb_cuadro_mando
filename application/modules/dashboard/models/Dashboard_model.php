@@ -227,7 +227,7 @@
 			$data = array(
 				$columna => $arrData["estado"]
 			);			
-			$this->db->where('fk_id_actividad', $arrData["idActividad"]);
+			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
 			$query = $this->db->update('actividad_estado', $data);
 
 			if ($query) {

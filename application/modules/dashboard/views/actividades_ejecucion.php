@@ -111,7 +111,7 @@
 
 								$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
-$estadoActividad = false;
+
 								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
 								$arrParam['numeroTrimestre'] = 1;
@@ -159,7 +159,7 @@ $estadoActividad = false;
 								<thead>
 									<tr class="headings">
 										<th class="column-title" colspan="2">
-											<p>Programado Año: <?php echo $sumaProgramado['programado']; ?></p>
+											<p>Programado Año: <?php echo number_format($sumaProgramado['programado'],2); ?></p>
 											<p>Acance POA: <?php echo $avancePOA . '%'; ?></p>
 										</th>
 										<th class="column-title" colspan="2">
@@ -193,7 +193,7 @@ $estadoActividad = false;
 												<input type="hidden" id="cumplimiento3" name="cumplimiento3" value="<?php echo $cumplimiento3; ?>"/>
 												<input type="hidden" id="cumplimiento4" name="cumplimiento4" value="<?php echo $cumplimiento4; ?>"/>
 												<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
-
+<?php if($estadoActividad){ ?>
 												<p>
 													<?php if($cumplimiento1 > 0 && $estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
 														<button type="button" id="1" class='btn btn-danger btn-xs' title="Cerrar Trimestre I">
@@ -224,6 +224,7 @@ $estadoActividad = false;
 														</button>
 													<?php } ?>
 												</p>
+<?php } ?>
 											</form>
 										</th>
 										<th class="column-title" colspan="2">
