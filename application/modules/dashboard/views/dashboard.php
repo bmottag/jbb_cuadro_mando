@@ -164,7 +164,7 @@ if ($retornoError) {
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bell fa-fw"></i> Avances Estrategias <b><?php echo date("Y"); ?></b>
+                    <i class="fa fa-bell fa-fw"></i> Avance Estrategias <b><?php echo date("Y"); ?></b>
                 </div>
                 <div class="panel-body small">
 
