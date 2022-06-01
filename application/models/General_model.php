@@ -652,8 +652,12 @@ class General_model extends CI_Model {
 		public function get_meta_proyecto($arrData) 
 		{		
 				$this->db->select();
+				$this->db->join('proyecto_inversion P', 'P.numero_proyecto_inversion = M.fk_numero_proyecto', 'LEFT');
 				if (array_key_exists("idMetaProyecto", $arrData)) {
 					$this->db->where('M.id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
+				}
+				if (array_key_exists("vigencia", $arrData)) {
+					$this->db->where('M.vigencia_meta_proyecto', $arrData["vigencia"]);
 				}
 				$this->db->order_by('numero_meta_proyecto', 'asc');
 				$query = $this->db->get('meta_proyecto_inversion M');

@@ -3,6 +3,9 @@
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	<h4 class="modal-title" id="exampleModalLabel">Formulario Meta Proyectos Inversión
 	<br><small>Adicionar/Editar Meta Proyectos Inversión.</small>
+	<?php if($information){
+		echo "<br><small>Número Único: ". $information[0]["nu_meta_proyecto"] . "</small>";
+	} ?>
 	</h4>
 </div>
 
@@ -36,6 +39,20 @@
 							}
 							?>><?php echo $i; ?></option>
 						<?php } ?>									
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">		
+				<div class="form-group text-left">
+					<label class="control-label" for="numeroProyecto">Proyecto de Inversión: </label>
+					<select name="numeroProyecto" id="numeroProyecto" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($listaProyectos); $i++) { ?>
+							<option value="<?php echo $listaProyectos[$i]["numero_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_numero_proyecto"] == $listaProyectos[$i]["numero_proyecto_inversion"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto_inversion"] . ' ' . $listaProyectos[$i]["nombre_proyecto_inversion"]; ?></option>	
+						<?php } ?>
 					</select>
 				</div>
 			</div>

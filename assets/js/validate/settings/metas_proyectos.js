@@ -8,6 +8,7 @@ $( document ).ready( function () {
 		rules: {
 			numero_meta_proyecto:		{ required: true, minlength: 1, maxlength: 4 },
 			vigencia:					{ required: true },
+			numeroProyecto:				{ required: true },
 			meta_proyecto:				{ required: true },
 			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 15 },
 			valor_meta:					{ required: true, minlength: 1, maxlength:10 },

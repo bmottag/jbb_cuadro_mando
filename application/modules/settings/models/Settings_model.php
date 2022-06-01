@@ -304,12 +304,18 @@
 		public function saveMetasProyectos() 
 		{
 				$idMetaProyecto= $this->input->post('hddId');
+				$vigencia= $this->input->post('vigencia');
+				$numeroProyecto= $this->input->post('numeroProyecto');
+				$numero_meta_proyecto= $this->input->post('numero_meta_proyecto');
+				$nu_meta_proyecto = $vigencia . "-" . $numeroProyecto . "-" . $numero_meta_proyecto;
 				
 				$data = array(
-					'numero_meta_proyecto' => $this->input->post('numero_meta_proyecto'),
+					'numero_meta_proyecto' => $numero_meta_proyecto,
+					'nu_meta_proyecto' => $nu_meta_proyecto,
+					'fk_numero_proyecto' => $numeroProyecto,
 					'meta_proyecto' => $this->input->post('meta_proyecto'),
 					'presupuesto_meta' => $this->input->post('presupuesto_meta'),
-					'vigencia_meta_proyecto' => $this->input->post('vigencia'),
+					'vigencia_meta_proyecto' => $vigencia,
 					'valor_meta_proyecto' => $this->input->post('valor_meta'),
 					'unidad_meta_proyecto' => $this->input->post('unidad_meta')
 				);

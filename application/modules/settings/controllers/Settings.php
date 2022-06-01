@@ -725,9 +725,10 @@ class Settings extends CI_Controller {
      * @since 16/04/2022
      * @author BMOTTAG
 	 */
-	public function metas_proyectos()
+	public function metas_proyectos($vigencia=2022)
 	{
-			$arrParam = array();
+			$data['vigencia']  = $vigencia;
+			$arrParam = array('vigencia'=>$vigencia);
 			$data['info'] = $this->general_model->get_meta_proyecto($arrParam);
 			
 			$data["view"] = 'meta_proyectos';
@@ -744,6 +745,13 @@ class Settings extends CI_Controller {
 			
 			$data['information'] = FALSE;
 			$data["idMetaProyecto"] = $this->input->post("idMetaProyecto");	
+
+			$arrParam = array(
+				"table" => "proyecto_inversion",
+				"order" => "id_proyecto_inversion",
+				"id" => "x"
+			);
+			$data['listaProyectos'] = $this->general_model->get_basic_search($arrParam);
 			
 			if ($data["idMetaProyecto"] != 'x') {
 				$arrParam = array(

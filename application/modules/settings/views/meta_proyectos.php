@@ -67,7 +67,18 @@ $(function(){
 <?php
 	}
 ?> 
-
+				<ul class="nav nav-pills">
+					<li <?php if($vigencia == 2020){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2020"); ?>">2020</a>
+					</li>
+					<li <?php if($vigencia == 2021){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2021"); ?>">2021</a>
+					</li>
+					<li <?php if($vigencia == 2022){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2022"); ?>">2022</a>
+					</li>
+					<li <?php if($vigencia == 2023){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2023"); ?>">2023</a>
+					</li>
+					<li <?php if($vigencia == 2024){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2024"); ?>">2024</a>
+					</li>
+				</ul>
 				<?php
 					if($info){
 				?>				
@@ -75,6 +86,7 @@ $(function(){
 						<thead>
 							<tr>
 								<th class="text-center">No.</th>
+								<th class="text-center">Proyecto Inversión</th>
 								<th class="text-center">Vigencia</th>
 								<th class="text-center">Meta Proyecto Inversión</th>
 								<th class="text-center">Presupuesto Meta</th>
@@ -88,6 +100,7 @@ $(function(){
 							foreach ($info as $lista):
 									echo "<tr>";
 									echo "<td class='text-center'>" . $lista['numero_meta_proyecto'] . "</td>";
+									echo "<td class='text-center'>" . $lista['numero_proyecto_inversion'] . " " . $lista['nombre_proyecto_inversion']  . "</td>";
 									echo "<td class='text-center'>" . $lista['vigencia_meta_proyecto'] . "</td>";
 									echo "<td>" . $lista['meta_proyecto'] . "</td>";
 									echo "<td class='text-right'>$ " . number_format($lista['presupuesto_meta']) . "</td>";
