@@ -38,7 +38,8 @@
 					'movil' => $this->input->post('movilNumber'),
 					'email' => $this->input->post('email'),
 					'fk_id_user_role' => $this->input->post('id_role'),
-					'fk_id_dependencia_u' => $this->input->post('idDependencia')
+					'fk_id_dependencia_u' => $this->input->post('idDependencia'),
+					'fk_id_area_responsable' => $this->input->post('idAreaResponsable')
 				);	
 
 				//revisar si es para adicionar o editar

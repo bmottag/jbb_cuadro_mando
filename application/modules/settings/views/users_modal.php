@@ -91,6 +91,20 @@
 	<?php } ?>
 		
 		</div>
+
+		<div class="row">
+			<div class="col-sm-6">		
+				<div class="form-group text-left">
+					<label class="control-label" for="idAreaResponsable">Área Responsable: </label>
+					<select name="idAreaResponsable" id="idAreaResponsable" class="form-control" >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($lista_area_responsable); $i++) { ?>
+							<option value="<?php echo $lista_area_responsable[$i]["id_area_responsable"]; ?>" <?php if($information && $information[0]["fk_id_area_responsable"] == $lista_area_responsable[$i]["id_area_responsable"]) { echo "selected"; }  ?>><?php echo $lista_area_responsable[$i]["area_responsable"]; ?></option>	
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+		</div>
 		
 		<div class="form-group">
 			<div id="div_load" style="display:none">		

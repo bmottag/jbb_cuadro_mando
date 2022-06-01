@@ -52,6 +52,13 @@ class Settings extends CI_Controller {
 			);
 			$data['dependencias'] = $this->general_model->get_basic_search($arrParam);
 
+			$arrParam = array(
+				"table" => "param_area_responsable",
+				"order" => "area_responsable",
+				"id" => "x"
+			);
+			$data['lista_area_responsable'] = $this->general_model->get_basic_search($arrParam);
+
 			if ($data["idEmployee"] != 'x') {
 				$arrParam = array(
 					"table" => "usuarios",
