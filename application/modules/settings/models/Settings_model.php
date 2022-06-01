@@ -390,6 +390,32 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add/Edit AREA RESPINSABLE
+		 * @since 1/06/2022
+		 */
+		public function saveAreaResponsable() 
+		{
+				$idAreaResponsable = $this->input->post('hddId');
+				
+				$data = array(
+					'area_responsable' => $this->input->post('area_responsable')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idAreaResponsable == '') {
+					$query = $this->db->insert('param_area_responsable', $data);		
+				} else {
+					$this->db->where('id_area_responsable', $idAreaResponsable);
+					$query = $this->db->update('param_area_responsable', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		

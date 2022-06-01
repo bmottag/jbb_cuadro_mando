@@ -1411,6 +1411,76 @@ class Settings extends CI_Controller {
 			
 			echo json_encode($data);
     }
+
+	/**
+	 * Lista de propositos
+     * @since 1/06/2022
+     * @author BMOTTAG
+	 */
+	public function area_responsable()
+	{
+			$arrParam = array(
+				"table" => "param_area_responsable",
+				"order" => "area_responsable ",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'area_responsable';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario propositos
+     * @since 1/06/2022
+     */
+    public function cargarModalAreaResponsable() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idAreaResponsable"] = $this->input->post("idAreaResponsable");	
+			
+			if ($data["idAreaResponsable"] != 'x') {
+				$arrParam = array(
+					"table" => "param_area_responsable",
+					"order" => "area_responsable",
+					"column" => "id_area_responsable",
+					"id" => $data["idAreaResponsable"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("area_responsable_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar propositos
+     * @since 1/06/2022
+     * @author BMOTTAG
+	 */
+	public function save_area_responsable()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idAreaResponsable = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Área Responsable!";
+			if ($idAreaResponsable != '') {
+				$msj = "Se actualizó el Área Responsable!";
+			}
+
+			if ($idAreaResponsable = $this->settings_model->saveAreaResponsable()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 
 	
