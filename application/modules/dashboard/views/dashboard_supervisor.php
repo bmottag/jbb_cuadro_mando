@@ -164,7 +164,7 @@ if ($retornoError) {
                                                     <th><small>Logro</small></th>
                                                     <th><small>Propósito</small></th>
                                                     <th><small>ODS</small></th>
-                                                    <th><small>Responsable</small></th>
+                                                    <th><small>Dependencia</small></th>
                                                 </tr>
                                             </thead>
 
