@@ -23,7 +23,7 @@ $(function(){
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h4 class="list-group-item-heading">
-					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - ÁREA RESPONSABLE
+					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - RESPONSABLES
 					</h4>
 				</div>
 			</div>
@@ -36,11 +36,11 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA ÁREA RESPONSABLES
+					<i class="fa fa-building"></i> LISTA RESPONSABLES
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Área Responsable
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Responsables
 							</button>
 						</div>
 					</div>
@@ -75,7 +75,7 @@ $(function(){
 						<thead>
 							<tr>
 								<th class="text-center">ID</th>
-								<th class="text-center">Área Responsable</th>
+								<th class="text-center">Responsables</th>
 								<th class="text-center">Editar</th>
 							</tr>
 						</thead>

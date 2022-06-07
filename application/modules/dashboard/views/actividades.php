@@ -438,20 +438,16 @@ $estadoActividad = false;
 										</td>
 										<td>
 											<?php
-												if($data['ejecutado'] && $data['ejecutado'] > 0){
-													echo $data['ejecutado']; 
-												}
+												echo $data['ejecutado']; 
 											?>
 										</td>
 										<td>
 											<?php
-												if($data['ejecutado'] && $data['ejecutado'] > 0){
-													if($data['descripcion_actividades'] != ''){
-														echo "<b>Descripción:</b></br>" . $data['descripcion_actividades'];
-													}
-													if($data['evidencias'] != ''){
-														echo "<br><b>Evidencias:</b></br>" . $data['evidencias'];
-													}
+												if($data['descripcion_actividades'] != ''){
+													echo "<b>Descripción:</b></br>" . $data['descripcion_actividades'];
+												}
+												if($data['evidencias'] != ''){
+													echo "<br><b>Evidencias:</b></br>" . $data['evidencias'];
 												}
 											?>
 										</td>

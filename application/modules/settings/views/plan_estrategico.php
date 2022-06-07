@@ -206,7 +206,7 @@ if ($retornoError) {
                                                     <th><small>Meta Proyecto Inversión</small></th>
                                                     <th><small>Proyecto Inversión</small></th>
                                                     <th><small>Meta PDD</small></th>
-                                                    <th><small>Programa Estretégico</small></th>
+                                                    <th><small>Programa Estratégico</small></th>
                                                     <th><small>Logro</small></th>
                                                     <th><small>Propósito</small></th>
                                                     <th><small>ODS</small></th>

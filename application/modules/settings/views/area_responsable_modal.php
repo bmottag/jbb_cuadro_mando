@@ -1,8 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/area_responsable.js"); ?>"></script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="exampleModalLabel">Formulario Área Responsable
-	<br><small>Adicionar/Editar Área Responsable.</small>
+	<h4 class="modal-title" id="exampleModalLabel">Formulario ResponsableS
+	<br><small>Adicionar/Editar Responsables.</small>
 	</h4>
 </div>
 

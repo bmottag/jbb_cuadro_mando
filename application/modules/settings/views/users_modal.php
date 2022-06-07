@@ -95,7 +95,7 @@
 		<div class="row">
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
-					<label class="control-label" for="idAreaResponsable">Área Responsable: </label>
+					<label class="control-label" for="idAreaResponsable">Responsabilidad: </label>
 					<select name="idAreaResponsable" id="idAreaResponsable" class="form-control" >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($lista_area_responsable); $i++) { ?>
