@@ -656,6 +656,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("idMetaProyecto", $arrData)) {
 					$this->db->where('M.id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
 				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$this->db->where('M.fk_numero_proyecto', $arrData["numeroProyecto"]);
+				}
 				if (array_key_exists("vigencia", $arrData)) {
 					$this->db->where('M.vigencia_meta_proyecto', $arrData["vigencia"]);
 				}

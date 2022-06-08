@@ -1496,6 +1496,30 @@ class Settings extends CI_Controller {
 
 			echo json_encode($data);	
     }
+
+	/**
+	 * Lista Meta Proyecto filtrada por Proyecto de Inversión
+     * @since 08/06/2022
+     * @author BMOTTAG
+	 */
+    public function metaProyectoList() {
+        header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+		$numeroProyecto = $this->input->post('numeroProyecto');
+
+		$arrParam = array(
+			"numeroProyecto" => $numeroProyecto,
+			"vigencia" => date('Y')
+		);
+		$lista= $this->general_model->get_meta_proyecto($arrParam);
+
+		echo "<option value=''>Seleccione...</option>";
+		if ($lista) {
+			foreach ($lista as $fila) {
+				echo "<option value='" . $fila["nu_meta_proyecto"] . "' >" . $fila["vigencia"] . '-' . $fila["numero_meta_proyecto"] . ' ' . $fila["meta_proyecto"] . "</option>";
+			}
+		}			
+
+    }
 	
 
 	
