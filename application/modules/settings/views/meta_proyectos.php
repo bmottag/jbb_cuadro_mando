@@ -67,18 +67,19 @@ $(function(){
 <?php
 	}
 ?> 
-				<ul class="nav nav-pills">
-					<li <?php if($vigencia == 2020){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2020"); ?>">2020</a>
+				<ul class="nav nav-tabs">
+					<li <?php if($vigencia == 2020){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2020"); ?>"><b>2020</b></a>
 					</li>
-					<li <?php if($vigencia == 2021){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2021"); ?>">2021</a>
+					<li <?php if($vigencia == 2021){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2021"); ?>"><b>2021</b></a>
 					</li>
-					<li <?php if($vigencia == 2022){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2022"); ?>">2022</a>
+					<li <?php if($vigencia == 2022){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2022"); ?>"><b>2022</b></a>
 					</li>
-					<li <?php if($vigencia == 2023){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2023"); ?>">2023</a>
+					<li <?php if($vigencia == 2023){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2023"); ?>"><b>2023</b></a>
 					</li>
-					<li <?php if($vigencia == 2024){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2024"); ?>">2024</a>
+					<li <?php if($vigencia == 2024){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/metas_proyectos/2024"); ?>"><b>2024</b></a>
 					</li>
 				</ul>
+				<br>
 				<?php
 					if($info){
 				?>				
@@ -142,7 +143,8 @@ $(function(){
 $(document).ready(function() {
 	$('#dataTables').DataTable({
 		responsive: true,
-		"pageLength": 100
+		"pageLength": 100,
+		paging: false
 	});
 });
 </script>
