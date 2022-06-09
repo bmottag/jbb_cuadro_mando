@@ -10,8 +10,7 @@ $( document ).ready( function () {
 			id_logros:							{ required: true },
 			id_programa_estrategico:			{ required: true },
 			id_meta_pdd:						{ required: true },
-			id_ods:								{ required: true },
-			id_dependencia:						{ required: true }, 
+			id_ods:								{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {

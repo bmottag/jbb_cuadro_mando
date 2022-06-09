@@ -110,17 +110,6 @@
 				</div>
 			</div>
 
-			<div class="col-sm-6">
-				<div class="form-group text-left">
-					<label class="control-label" for="id_dependencia">Dependencia: *</label>
-					<select name="id_dependencia" id="id_dependencia" class="form-control" required >
-						<option value="">Seleccione...</option>
-						<?php for ($i = 0; $i < count($listaDependencia); $i++) { ?>
-							<option value="<?php echo $listaDependencia[$i]["id_dependencia"]; ?>" <?php if($information && $information[0]["fk_id_dependencia"] == $listaDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaDependencia[$i]["dependencia"]; ?></option>		
-						<?php } ?>
-					</select>
-				</div>
-			</div>
 		</div>
 								
 		<div class="form-group">

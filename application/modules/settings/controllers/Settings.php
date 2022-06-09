@@ -1266,13 +1266,6 @@ class Settings extends CI_Controller {
 			);
 			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
 
-			$arrParam = array(
-				"table" => "param_dependencias",
-				"order" => "dependencia",
-				"id" => "x"
-			);
-			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
-
 			$data["view"] = "plan_estrategico";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -1347,13 +1340,6 @@ class Settings extends CI_Controller {
 				"id" => "x"
 			);
 			$data['listaODS'] = $this->general_model->get_basic_search($arrParam);
-
-			$arrParam = array(
-				"table" => "param_dependencias",
-				"order" => "dependencia",
-				"id" => "x"
-			);
-			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
 						
 			$this->load->view("plan_estrategico_modal", $data);
     }

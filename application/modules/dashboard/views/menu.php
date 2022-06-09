@@ -13,7 +13,14 @@
 			<strong>Logro: </strong><br><?php echo $infoCuadroBase[0]['logro']; ?><br>
 			<strong>Propósito: </strong><br><?php echo $infoCuadroBase[0]['proposito']; ?><br>
 			<strong>ODS: </strong><br><?php echo $infoCuadroBase[0]['ods']; ?><br>
-			<strong>Dependencia: </strong><br><?php echo $infoCuadroBase[0]['dependencia']; ?>
+			<strong>Dependencia: </strong>
+<?php 
+            $x=0;
+            foreach ($infoDependencias as $datos):
+                $x++;
+                echo "<p class='text-primary'>" . $x . " " . $datos["dependencia"] . "</p>";
+            endforeach;
+?>
 		</div>
 
 		<?php

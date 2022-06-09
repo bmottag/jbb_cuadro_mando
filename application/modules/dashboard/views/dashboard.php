@@ -443,6 +443,11 @@ if ($retornoError) {
 
                                             <?php
                                             foreach ($actividades as $lista):
+
+                                                //buscar las dependencias relacionadas
+                                                $arrParam = array('idCuadroBase' => $lista['fk_id_cuadro_base']);
+                                                $dependencias = $this->general_model->get_dependencias($arrParam);
+
                                                 echo "<tr>";
                                                 echo "<td class='text-center'><small>" . $lista['numero_actividad'] . "</small>";
                                                 echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
@@ -451,8 +456,7 @@ if ($retornoError) {
                                                 echo "<td class='text-right'><small>" . $lista['meta_plan_operativo_anual'] . "</small></td>";
                                                 echo "<td class='text-center'><small>";
                                                 if($lista["avance_poa"]){
-                                               
-                                                echo $lista["avance_poa"] . "%";
+                                                    echo $lista["avance_poa"] . "%";
                                                 }else{
                                                     echo 0;
                                                 }
@@ -466,7 +470,13 @@ if ($retornoError) {
                                                 echo "<td><small>" . $lista["logro"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
-                                                echo "<td><small>" . $lista["dependencia"] . "</small></td>";
+                                                echo "<td><small>";
+                                                $x=0;
+                                                foreach ($dependencias as $datos):
+                                                    $x++;
+                                                    echo "<p class='text-primary'>" . $x . " " . $datos["dependencia"] . "</p>";
+                                                endforeach;
+                                                echo "</small></td>";
                                                 echo "</tr>";
                                             endforeach
                                             ?>

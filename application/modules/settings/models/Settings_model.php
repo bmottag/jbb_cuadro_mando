@@ -377,8 +377,7 @@
 					'fk_numero_logro' => $this->input->post('id_logros'),
 					'fk_numero_programa_estrategico' => $this->input->post('id_programa_estrategico'),
 					'fk_numero_meta_pdd' => $this->input->post('id_meta_pdd'),
-					'fk_numero_ods' => $this->input->post('id_ods'),
-					'fk_id_dependencia ' => $this->input->post('id_dependencia')
+					'fk_numero_ods' => $this->input->post('id_ods')
 				);
 
 				//revisar si es para adicionar o editar

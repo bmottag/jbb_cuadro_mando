@@ -217,6 +217,10 @@ if ($retornoError) {
 
                                             <?php
                                             foreach ($cuadroBase as $lista):
+                                                //buscar las dependencias relacionadas
+                                                $arrParam = array('idCuadroBase' => $lista['id_cuadro_base']);
+                                                $dependencias = $this->general_model->get_dependencias($arrParam);
+
                                                 echo "<tr>";
                                                 echo "<td><small>" . $lista["meta_proyecto"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
@@ -225,7 +229,13 @@ if ($retornoError) {
                                                 echo "<td><small>" . $lista["logro"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
-                                                echo "<td><small>" . $lista["dependencia"] . "</small></td>";
+                                                echo "<td><small>";
+                                                $x=0;
+                                                foreach ($dependencias as $datos):
+                                                    $x++;
+                                                    echo "<p class='text-primary'>" . $x . " " . $datos["dependencia"] . "</p>";
+                                                endforeach;
+                                                echo "</small></td>";
                                                 echo "<td>";
                                                 echo "<a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a>";
 ?>

@@ -292,7 +292,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_lista_cuadro_mando($arrData) 
 		{		
-				$this->db->select("C.*, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, id_meta_proyecto_inversion, CONCAT(numero_meta_proyecto, ' ', meta_proyecto) meta_proyecto, presupuesto_meta, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");				
+				$this->db->select("C.*, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, id_meta_proyecto_inversion, CONCAT(numero_meta_proyecto, ' ', meta_proyecto) meta_proyecto, presupuesto_meta, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");				
 				$this->db->join('proyecto_inversion P', 'P.numero_proyecto_inversion = C.fk_numero_proyecto_inversion', 'INER');
 				$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INER');
 				$this->db->join('propositos X', 'X.numero_proposito = C.fk_numero_proposito', 'INER');
@@ -300,7 +300,6 @@ class General_model extends CI_Model {
 				$this->db->join('programa_estrategico Y', 'Y.numero_programa_estrategico = C.fk_numero_programa_estrategico', 'INER');
 				$this->db->join('meta_pdd Z', 'Z.numero_meta_pdd = C.fk_numero_meta_pdd', 'INER');
 				$this->db->join('ods O', 'O.numero_ods = C.fk_numero_ods', 'INER');
-				$this->db->join('param_dependencias D', 'D.id_dependencia = C.fk_id_dependencia', 'INER');
 				if (array_key_exists("idCuadroBase", $arrData)) {
 					$this->db->where('C.id_cuadro_base', $arrData["idCuadroBase"]);
 				}
@@ -409,7 +408,7 @@ class General_model extends CI_Model {
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				//$this->db->join('param_proceso_calidad Z', 'Z.id_proceso_calidad = A.fk_id_proceso_calidad', 'LEFT');
+
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
 				}
@@ -610,7 +609,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full($arrData) 
 		{		
-				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, D.dependencia");
+				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
 				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
@@ -622,7 +621,6 @@ class General_model extends CI_Model {
 				$this->db->join('programa_estrategico Y', 'Y.numero_programa_estrategico = C.fk_numero_programa_estrategico', 'INER');
 				$this->db->join('meta_pdd Z', 'Z.numero_meta_pdd = C.fk_numero_meta_pdd', 'INER');
 				$this->db->join('ods O', 'O.numero_ods = C.fk_numero_ods', 'INER');
-				$this->db->join('param_dependencias D', 'D.id_dependencia = C.fk_id_dependencia', 'INER');
 
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
@@ -688,6 +686,26 @@ class General_model extends CI_Model {
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->row_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta lista de dependencias para cuadro base
+		 * @since 8/06/2022
+		 */
+		public function get_dependencias($arrData) 
+		{		
+				$this->db->select('dependencia');
+				$this->db->join('param_dependencias D', 'D.id_dependencia = C.fk_id_dependencia', 'INNER');
+				if (array_key_exists("idCuadroBase", $arrData)) {
+					$this->db->where('C.fk_id_cuadro_base', $arrData["idCuadroBase"]);
+				}
+				$this->db->order_by('dependencia', 'asc');
+				$query = $this->db->get('cuadro_base_dependencias C');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
 				} else {
 					return false;
 				}
