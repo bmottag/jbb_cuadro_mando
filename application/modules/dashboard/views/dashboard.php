@@ -3,7 +3,6 @@
 		<div class="col-md-12">
             <p class="text-primary"><strong>Bienvenido(a): </strong><?php echo $this->session->firstname; ?></p>
 		</div>
-		<!-- /.col-lg-12 -->
     </div>
 								
 <?php

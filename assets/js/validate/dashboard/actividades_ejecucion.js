@@ -2,7 +2,7 @@ $( document ).ready( function () {
 
 	$(".btn-danger").click(function () {				
 			//Activa icono guardando
-			if(window.confirm('Por favor confirmar que desea cerrar el Trimestre para realizar el seguimiento.'))
+			if(window.confirm('Por favor confirmar que desea cerrar el Trimestre, \n se notificará al Supervisor para que realice la revisión del Trimestre.'))
 			{
 					$(".btn-danger").attr('disabled','-1');
 					var numeroTrimestre = $(this).attr("id");

@@ -105,7 +105,11 @@
 								echo "</td>";
 								echo "<td>" . $lista['responsable'] . "</td>";
 								echo "<td class='text-center'>";
-								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
+								if(!$infoEjecucion){
+									echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
+								}else{
+									echo "---";
+								}
 								echo "</td>";
 								echo "</tr>";
 
@@ -157,7 +161,7 @@
 								}
 ?>
 								<thead>
-									<tr class="headings">
+									<tr class="headings info">
 										<th class="column-title" colspan="2">
 											<p>Programado Año: <?php echo number_format($sumaProgramado['programado'],2); ?></p>
 											<p>Acance POA: <?php echo $avancePOA . '%'; ?></p>

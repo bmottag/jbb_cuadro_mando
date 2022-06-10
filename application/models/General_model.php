@@ -415,9 +415,6 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroActividad", $arrData)) {
 					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}
-				if($userRol == ID_ROL_SUPERVISOR){
-					$this->db->where('C.fk_id_dependencia', $idDependencia);
-				}
 				if (array_key_exists("idCuadroBase", $arrData)) {
 					$this->db->where('A.fk_id_cuadro_base', $arrData["idCuadroBase"]);
 				}
@@ -527,18 +524,11 @@ class General_model extends CI_Model {
 		 * @since 23/04/2022
 		 */
 		public function get_estrategias_by_dependencia($arrData) 
-		{		
-				$userRol = $this->session->userdata("role");
-				$idUser = $this->session->userdata("id");
-				$idDependencia = $this->session->userdata("dependencia");
-				
+		{					
 				$this->db->select('id_estrategia');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				$this->db->join('cuadro_base_dependencias T', 'T.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
 				$this->db->join('estrategias E', 'E.numero_estrategia = C.fk_numero_estrategia', 'INNER');
-				if($userRol == ID_ROL_SUPERVISOR){
-					$this->db->where('C.fk_id_dependencia', $idDependencia);
-				}
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('T.fk_id_dependencia', $arrData["idDependencia"]);
 				}

@@ -69,8 +69,10 @@ class Dashboard extends CI_Controller {
 
 			$userRol = $this->session->userdata("role");
 			$data["view"] = "actividades";				
-			if($userRol == ID_ROL_SUPERVISOR){
-				$data["view"] = "actividades_ejecucion";
+			if($userRol == ID_ROL_ENLACE){
+				$data["view"] = "actividades_enlace";
+			}elseif($userRol == ID_ROL_SUPERVISOR){
+				$data["view"] = "actividades_supervisor";
 			}
 			$this->load->view("layout_calendar", $data);
 	}	
@@ -345,6 +347,8 @@ class Dashboard extends CI_Controller {
 			);
 			$this->dashboard_model->addHistorialActividad($arrParam);
 
+			//SE BUSCA EL SUPERVISOR DE LA DEPENDENCIA Y SE ENVIA CORREO
+
 			$data["result"] = true;
 			$data["msj"] = "Se cerro el trimestre.";
 		} else {
@@ -359,8 +363,19 @@ class Dashboard extends CI_Controller {
 	 */
 	public function supervisor()
 	{				
-			$arrParam = array();
-			$filtroEstrategias = $this->general_model->get_estrategias_by_responsable($arrParam);
+			$userRol = $this->session->userdata("role");
+			$idUser = $this->session->userdata("id");
+			$idDependencia = $this->session->userdata("dependencia");
+
+			$arrParam = array(
+				"idDependencia" => $idDependencia,
+				"vigencia" => date("Y")
+			);
+			$filtroEstrategias = $this->general_model->get_estrategias_by_dependencia($arrParam);
+
+			$data['nroActividades'] = $this->dashboard_model->countActividades($arrParam);
+			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
+
 			$valor = '';
 
 			if($filtroEstrategias){
@@ -378,7 +393,15 @@ class Dashboard extends CI_Controller {
 				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
 			}
 
-			$data["view"] = "dashboard_supervisor";	
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"column" => "id_dependencia",
+				"id" => $idDependencia
+			);
+			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			$data["view"] = "info_dependencias_ejecucion";
 			$this->load->view("layout_calendar", $data);
 	}
 
@@ -420,6 +443,7 @@ class Dashboard extends CI_Controller {
 			$data["idCuadroBase"] = $this->input->post('hddIdCuadroBase');
 			$data["idActividad"] = $this->input->post('hddIdActividad');
 			$data["numeroTrimestre"] = $this->input->post('hddNumeroTrimestre');
+			$idEstado = $this->input->post('estado');
 			$data["record"] = $data["idCuadroBase"] . '/' . $data["idActividad"] . '/' . $data["numeroTrimestre"];
 			$msj = "Se cambio el estado del trimestre de la actividad.";
 			
@@ -427,13 +451,20 @@ class Dashboard extends CI_Controller {
 				"idActividad" => $data["idActividad"],
 				"numeroTrimestre" => $data["numeroTrimestre"],
 				"observacion" => $this->input->post('observacion'),
-				"estado" => $this->input->post('estado')
+				"estado" => $idEstado
 			);
 
-			if ($this->dashboard_model->addHistorialActividad($arrParam)) 
+			if($this->dashboard_model->addHistorialActividad($arrParam)) 
 			{
 				//actualizo el estado del trimestre de la actividad
-				$this->dashboard_model->updateEstadoActividad($arrParam);
+				if($this->dashboard_model->updateEstadoActividad($arrParam)){
+					//envio correos a los usuarios
+					if($idEstado == 3){
+						$mensaje = "Se reviso la información registrada para el Trimestre " . $data["numeroTrimestre"] . ", fue aprobada y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
+					}elseif($idEstado == 4){
+						$mensaje = "Se reviso la información registrada para el Trimestre " . $data["numeroTrimestre"] . ", fue RECHAZADA. Por favor ingresar y realizar los ajustes respectivos.";
+					}
+				}
 				
 				$data["result"] = true;
 				$data["mensaje"] = $msj;
@@ -530,17 +561,6 @@ class Dashboard extends CI_Controller {
 				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
 			}
 
-
-
-
-
-
-
-
-
-
-
-
 			$arrParam = array(
 				"table" => "param_dependencias",
 				"order" => "dependencia",
@@ -550,6 +570,54 @@ class Dashboard extends CI_Controller {
 			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
 
 			$data["view"] = "info_dependencias";
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * EJECUCION DASHBOARD
+	 * @since 9/06/2022
+	 */
+	public function enlace()
+	{		
+			$userRol = $this->session->userdata("role");
+			$idUser = $this->session->userdata("id");
+			$idDependencia = $this->session->userdata("dependencia");
+
+			$arrParam = array(
+				"idDependencia" => $idDependencia,
+				"vigencia" => date("Y")
+			);
+			$filtroEstrategias = $this->general_model->get_estrategias_by_dependencia($arrParam);
+
+			$data['nroActividades'] = $this->dashboard_model->countActividades($arrParam);
+			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
+
+			$valor = '';
+
+			if($filtroEstrategias){
+				$tot = count($filtroEstrategias);
+				for ($i = 0; $i < $tot; $i++) {
+					$valor = $valor . $filtroEstrategias[$i]['id_estrategia'];
+					if($i != ($tot-1)){
+						$valor .= ",";
+					}
+				}
+			}
+			$data['listaEstrategias'] = false;
+			if($valor){
+				$arrParam = array("filtroEstrategias" => $valor);
+				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+			}
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"column" => "id_dependencia",
+				"id" => $idDependencia
+			);
+			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			$data["view"] = "info_dependencias_ejecucion";
 			$this->load->view("layout_calendar", $data);
 	}
 
