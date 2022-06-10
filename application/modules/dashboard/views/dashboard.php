@@ -100,7 +100,9 @@ if ($retornoError) {
                                 }
                             }
                             echo "<tr>";
-                            echo "<td style='width: 40%'><small>" . $lista["dependencia"] . "</small></td>";
+                            echo "<td style='width: 40%'><small>";
+                            echo "<a class='btn btn-info btn-xs' href='" . base_url('dashboard/dependencias/' . $lista["id_dependencia"]) . "' >" . $lista["dependencia"] . "</a>";
+                            echo "</small></td>";
                             echo "<td class='text-center'>";
                             echo "<b>" . $avancePOA ."%</b>";
                             echo '<div class="progress progress-striped">

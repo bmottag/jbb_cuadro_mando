@@ -497,6 +497,62 @@ class Dashboard extends CI_Controller {
 		echo json_encode($data);
     }
 
+	/**
+	 * INFO DEPENDENCIAS
+	 * @since 09/06/2022
+	 */
+	public function dependencias($idDependencia)
+	{				
+			$arrParam = array(
+				"idDependencia" => $idDependencia,
+				"vigencia" => date("Y")
+			);
+			$filtroEstrategias = $this->general_model->get_estrategias_by_dependencia($arrParam);
+
+
+			$data['nroActividades'] = $this->dashboard_model->countActividades($arrParam);
+			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
+
+			$valor = '';
+
+			if($filtroEstrategias){
+				$tot = count($filtroEstrategias);
+				for ($i = 0; $i < $tot; $i++) {
+					$valor = $valor . $filtroEstrategias[$i]['id_estrategia'];
+					if($i != ($tot-1)){
+						$valor .= ",";
+					}
+				}
+			}
+			$data['listaEstrategias'] = false;
+			if($valor){
+				$arrParam = array("filtroEstrategias" => $valor);
+				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"column" => "id_dependencia",
+				"id" => $idDependencia
+			);
+			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			$data["view"] = "info_dependencias";
+			$this->load->view("layout_calendar", $data);
+	}
+
 
 
 
