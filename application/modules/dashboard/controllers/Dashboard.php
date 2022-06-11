@@ -584,12 +584,27 @@ class Dashboard extends CI_Controller {
 			$idDependencia = $this->session->userdata("dependencia");
 
 			$arrParam = array(
+				"table" => "objetivos_estrategicos",
+				"order" => "objetivo_estrategico",
+				"id" => "x"
+			);
+			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"id" => "x"
+			);
+			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
 				"idDependencia" => $idDependencia,
 				"vigencia" => date("Y")
 			);
 			$filtroEstrategias = $this->general_model->get_estrategias_by_dependencia($arrParam);
 
-			$data['nroActividades'] = $this->dashboard_model->countActividades($arrParam);
+			$data['nroActividadesDependencia'] = $this->dashboard_model->countActividades($arrParam);
+
 			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
 
 			$valor = '';
@@ -617,7 +632,7 @@ class Dashboard extends CI_Controller {
 			);
 			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
 
-			$data["view"] = "info_dependencias_ejecucion";
+			$data["view"] = "dashboard_enlace";
 			$this->load->view("layout_calendar", $data);
 	}
 

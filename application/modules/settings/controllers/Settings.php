@@ -803,7 +803,7 @@ class Settings extends CI_Controller {
 			$to = $infoUsuario[0]['email'];
 
 			//reiniciar primero la contraseña del usuario a Jardin2021 y estado colocarlo en cero
-			$arrParam['passwd'] = 'Jardin2021';
+			$arrParam['passwd'] = 'Jardin2022';
 			$resetPassword = $this->settings_model->resetEmployeePassword($arrParam);
 
 			//busco datos parametricos de configuracion para envio de correo
@@ -822,7 +822,7 @@ class Settings extends CI_Controller {
 			$paramAPPName = $parametric[5]["parametro_valor"];
 
 			//mensaje del correo
-			$msj = '<p>Sr.(a) ' . $infoUsuario[0]['first_name'] . ' se activo su ingreso a la plataforma de Gestión y mantenimiento de bienes del ' . $paramCompanyName . ',';
+			$msj = '<p>Sr.(a) ' . $infoUsuario[0]['first_name'] . ' se activo su ingreso a la plataforma de Programa Institucional - Cuadro de Mando del ' . $paramCompanyName . ',';
 			$msj .= ' siga el enlace con las credenciales para acceder.</p>';
 			$msj .= '<p>Recuerde cambiar su contraseña para activar su cuenta.</p>';
 			$msj .= '<p><strong>Enlace: </strong>' . base_url();
