@@ -206,7 +206,7 @@ class Settings extends CI_Controller {
 			
 			$passwd = str_replace(array("<",">","[","]","*","^","-","'","="),"",$newPassword); 
 			
-			$data['linkBack'] = "settings/employee/" . $userState;
+			$data['linkBack'] = "settings/users/" . $userState;
 			$data['titulo'] = "<i class='fa fa-unlock fa-fw'></i>CAMBIAR CONTRASEÑA";
 			
 			if($newPassword == $confirm)

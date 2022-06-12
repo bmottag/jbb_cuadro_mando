@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/actividades_ejecucion.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/actividades_enlace.js"); ?>"></script>
 <div id="page-wrapper">
 	<br>
 	
@@ -199,7 +199,7 @@
 												<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
 <?php if($estadoActividad){ ?>
 												<p>
-													<?php if($cumplimiento1 > 0 && $estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
 														<button type="button" id="1" class='btn btn-danger btn-xs' title="Cerrar Trimestre I">
 																Cerrar Trimestre I  <i class="fa fa-arrow-right"></i>
 														</button>
@@ -207,7 +207,7 @@
 												</p>
 
 												<p>
-													<?php if($cumplimiento2 > 0 && $estadoActividad[0]['estado_trimestre_2'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_2'] == 1){ ?>
 														<button type="button" id="2" class='btn btn-danger btn-xs' title="Cerrar Trimestre II">
 																Cerrar Trimestre II  <i class="fa fa-arrow-right"></i>
 														</button>
@@ -215,14 +215,14 @@
 												</p>
 
 												<p>
-													<?php if($cumplimiento3 > 0 && $estadoActividad[0]['estado_trimestre_3'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_3'] == 1){ ?>
 														<button type="button" id="3" class='btn btn-danger btn-xs' title="Cerrar Trimestre III">
 																Cerrar Trimestre III  <i class="fa fa-arrow-right"></i>
 														</button>
 													<?php } ?>
 												</p>
 												<p>
-													<?php if($cumplimiento4 > 0 && $estadoActividad[0]['estado_trimestre_4'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_4'] == 1){ ?>
 														<button type="button" id="4" class='btn btn-danger btn-xs' title="Cerrar Trimestre IV">
 																Cerrar Trimestre IV  <i class="fa fa-arrow-right"></i>
 														</button>

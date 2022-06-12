@@ -342,12 +342,28 @@ class Dashboard extends CI_Controller {
 			$arrParam = array(
 				"numeroActividad" => $numeroActividad,
 				"numeroTrimestre" => $numeroTrimestre,
-				"observacion" => 'Se cerro el trimestre por parte del supervisor.',
+				"observacion" => 'Se cerro el trimestre por parte del ENLACE.',
 				"estado" => 2
 			);
 			$this->dashboard_model->addHistorialActividad($arrParam);
 
+			//INICIO
 			//SE BUSCA EL SUPERVISOR DE LA DEPENDENCIA Y SE ENVIA CORREO
+            $arrParam2 = array(
+                "numeroActividad" => $numeroActividad
+            );
+            $listaSupervisores = $this->general_model->get_supervisores_by_actividad($arrParam2);
+
+            if($listaSupervisores){
+            	foreach ($listaSupervisores as $infoSupervisor):
+					$arrParam = array(
+						"mensaje" => 'la actividad No. ' . $numeroActividad . ' fue cerrada por el ENLACE para el Trimeste '. $numeroTrimestre .', por favor ingresar a la plataforma y revisar la información.',
+						"idSupervisor" => $infoSupervisor["id_user"]
+					);
+					$this->send_email($arrParam);
+				endforeach;
+            }
+            //FIN
 
 			$data["result"] = true;
 			$data["msj"] = "Se cerro el trimestre.";
@@ -634,6 +650,63 @@ class Dashboard extends CI_Controller {
 
 			$data["view"] = "dashboard_enlace";
 			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * Evio de correo
+     * @since 11/6/2022
+     * @author BMOTTAG
+	 */
+	public function send_email($arrData)
+	{
+			$arrParam = array('idUser' => $arrData["idSupervisor"]);
+			$infoUsuario = $this->general_model->get_user($arrParam);
+			$to = $infoUsuario[0]['email'];
+
+			//busco datos parametricos de configuracion para envio de correo
+			$arrParam2 = array(
+				"table" => "parametros",
+				"order" => "id_parametro",
+				"id" => "x"
+			);
+			$parametric = $this->general_model->get_basic_search($arrParam2);
+
+			$paramHost = $parametric[0]["parametro_valor"];
+			$paramUsername = $parametric[1]["parametro_valor"];
+			$paramPassword = $parametric[2]["parametro_valor"];
+			$paramFromName = $parametric[3]["parametro_valor"];
+			$paramCompanyName = $parametric[4]["parametro_valor"];
+			$paramAPPName = $parametric[5]["parametro_valor"];
+
+			//mensaje del correo
+			$msj = 'Sr.(a) ' . $infoUsuario[0]['first_name'] . ', ';
+			$msj .= $arrData["mensaje"] . '</br>';
+			$msj .= '<strong>Enlace: </strong>' . base_url();
+									
+			$mensaje = "<p>$msj</p>
+						<p>Cordialmente,</p>
+						<p><strong>$paramCompanyName</strong></p>";		
+
+			require_once(APPPATH.'libraries/PHPMailer/class.phpmailer.php');
+            $mail = new PHPMailer(true);
+
+            $mail->IsSMTP(); // set mailer to use SMTP
+            $mail->Host = $paramHost; // specif smtp server
+            $mail->SMTPSecure= "tls"; // Used instead of TLS when only POP mail is selected
+            $mail->Port = 587; // Used instead of 587 when only POP mail is selected
+            $mail->SMTPAuth = true;
+			$mail->Username = $paramUsername; // SMTP username
+            $mail->Password = $paramPassword; // SMTP password
+            $mail->FromName = $paramFromName;
+            $mail->From = $paramUsername;
+            $mail->AddAddress($to, 'Usuario JBB Bienes');
+            $mail->WordWrap = 50;
+            $mail->CharSet = 'UTF-8';
+            $mail->IsHTML(true); // set email format to HTML
+            $mail->Subject = $paramCompanyName . ' - ' . $paramAPPName;
+            $mail->Body = nl2br ($mensaje,false);
+            $mail->Send();
+			return true;
 	}
 
 

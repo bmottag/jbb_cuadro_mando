@@ -735,5 +735,27 @@ class General_model extends CI_Model {
 				}
 		}
 
+		/**
+		 * Consulta lista de SUPERVISORES para una actividad
+		 * @since 11/06/2022
+		 */
+		public function get_supervisores_by_actividad($arrData) 
+		{					
+				$this->db->select('id_user');
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				$this->db->join('cuadro_base_dependencias T', 'T.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
+				$this->db->join('usuarios U', 'U.fk_id_dependencia_u = T.fk_id_dependencia', 'INNER');
+				$this->db->where('U.fk_id_user_role', ID_ROL_SUPERVISOR);
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
+				}
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }
