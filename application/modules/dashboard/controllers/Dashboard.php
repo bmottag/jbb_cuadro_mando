@@ -350,9 +350,10 @@ class Dashboard extends CI_Controller {
 			//INICIO
 			//SE BUSCA EL SUPERVISOR DE LA DEPENDENCIA Y SE ENVIA CORREO
             $arrParam2 = array(
-                "numeroActividad" => $numeroActividad
+                "numeroActividad" => $numeroActividad,
+                "idRol" => ID_ROL_SUPERVISOR
             );
-            $listaSupervisores = $this->general_model->get_supervisores_by_actividad($arrParam2);
+            $listaSupervisores = $this->general_model->get_user_encargado_by_actividad($arrParam2);
 
             if($listaSupervisores){
             	foreach ($listaSupervisores as $infoSupervisor):
@@ -360,7 +361,7 @@ class Dashboard extends CI_Controller {
 						"mensaje" => 'la actividad No. ' . $numeroActividad . ' fue cerrada por el ENLACE para el Trimeste '. $numeroTrimestre .', por favor ingresar a la plataforma y revisar la información.',
 						"idSupervisor" => $infoSupervisor["id_user"]
 					);
-					$this->send_email($arrParam);
+					//$this->send_email($arrParam);
 				endforeach;
             }
             //FIN
@@ -384,12 +385,26 @@ class Dashboard extends CI_Controller {
 			$idDependencia = $this->session->userdata("dependencia");
 
 			$arrParam = array(
+				"table" => "objetivos_estrategicos",
+				"order" => "objetivo_estrategico",
+				"id" => "x"
+			);
+			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"id" => "x"
+			);
+			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
 				"idDependencia" => $idDependencia,
 				"vigencia" => date("Y")
 			);
 			$filtroEstrategias = $this->general_model->get_estrategias_by_dependencia($arrParam);
 
-			$data['nroActividades'] = $this->dashboard_model->countActividades($arrParam);
+			$data['nroActividadesDependencia'] = $this->dashboard_model->countActividades($arrParam);
 			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
 
 			$valor = '';
@@ -417,7 +432,7 @@ class Dashboard extends CI_Controller {
 			);
 			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
 
-			$data["view"] = "info_dependencias_ejecucion";
+			$data["view"] = "dashboard_enlace";
 			$this->load->view("layout_calendar", $data);
 	}
 
@@ -457,16 +472,17 @@ class Dashboard extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$data["idCuadroBase"] = $this->input->post('hddIdCuadroBase');
-			$data["idActividad"] = $this->input->post('hddIdActividad');
+			$data["numeroActividad"] = $numeroActividad = $this->input->post('hddNumeroActividad');
 			$data["numeroTrimestre"] = $this->input->post('hddNumeroTrimestre');
+			$observacion = $this->input->post('observacion');
 			$idEstado = $this->input->post('estado');
-			$data["record"] = $data["idCuadroBase"] . '/' . $data["idActividad"] . '/' . $data["numeroTrimestre"];
+			$data["record"] = $data["idCuadroBase"] . '/' . $data["numeroActividad"] . '/' . $data["numeroTrimestre"];
 			$msj = "Se cambio el estado del trimestre de la actividad.";
 			
 			$arrParam = array(
-				"idActividad" => $data["idActividad"],
+				"numeroActividad" => $data["numeroActividad"],
 				"numeroTrimestre" => $data["numeroTrimestre"],
-				"observacion" => $this->input->post('observacion'),
+				"observacion" => $observacion,
 				"estado" => $idEstado
 			);
 
@@ -476,10 +492,31 @@ class Dashboard extends CI_Controller {
 				if($this->dashboard_model->updateEstadoActividad($arrParam)){
 					//envio correos a los usuarios
 					if($idEstado == 3){
-						$mensaje = "Se reviso la información registrada para el Trimestre " . $data["numeroTrimestre"] . ", fue aprobada y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
+						$mensaje = "se revisó la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . ", fue APROBADA y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
 					}elseif($idEstado == 4){
-						$mensaje = "Se reviso la información registrada para el Trimestre " . $data["numeroTrimestre"] . ", fue RECHAZADA. Por favor ingresar y realizar los ajustes respectivos.";
+						$mensaje = "se revisó la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . ", fue RECHAZADA. Por favor ingresar y realizar los ajustes respectivos.";
 					}
+
+					$mensaje .= "<br><b>Observación: </b>" . $observacion;
+
+					//INICIO
+					//SE BUSCA EL ENLACE DE LA DEPENDENCIA Y SE ENVIA CORREO
+		            $arrParam2 = array(
+		                "numeroActividad" => $numeroActividad,
+		                "idRol" => ID_ROL_ENLACE
+		            );
+		            $listaUsuarios = $this->general_model->get_user_encargado_by_actividad($arrParam2);
+
+		            if($listaUsuarios){
+		            	foreach ($listaUsuarios as $infoUsuario):
+							$arrParam = array(
+								"mensaje" => $mensaje,
+								"idUsuario" => $infoUsuario["id_user"]
+							);
+							//$this->send_email($arrParam);
+						endforeach;
+		            }
+		            //FIN
 				}
 				
 				$data["result"] = true;
@@ -659,7 +696,7 @@ class Dashboard extends CI_Controller {
 	 */
 	public function send_email($arrData)
 	{
-			$arrParam = array('idUser' => $arrData["idSupervisor"]);
+			$arrParam = array('idUser' => $arrData["idUsuario"]);
 			$infoUsuario = $this->general_model->get_user($arrParam);
 			$to = $infoUsuario[0]['email'];
 

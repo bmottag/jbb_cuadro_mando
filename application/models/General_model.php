@@ -461,8 +461,8 @@ class General_model extends CI_Model {
 				$this->db->select('H.*, U.first_name, P.estado, P.clase, P.icono');
 				$this->db->join('param_estados P', 'P.valor = H.fk_id_estado', 'INNER');
 				$this->db->join('usuarios U', 'U.id_user = H.fk_id_usuario', 'INNER');
-				if (array_key_exists("idActividad", $arrData)) {
-					$this->db->where('H.fk_id_actividad', $arrData["idActividad"]);
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('H.fk_numero_actividad', $arrData["numeroActividad"]);
 				}
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('H.numero_trimestre', $arrData["numeroTrimestre"]);
@@ -705,7 +705,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full_by_dependencia($arrData) 
 		{		
-				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, numero_estrategia, estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
+				$this->db->select("A.*, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, numero_estrategia, estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
 				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
@@ -739,13 +739,15 @@ class General_model extends CI_Model {
 		 * Consulta lista de SUPERVISORES para una actividad
 		 * @since 11/06/2022
 		 */
-		public function get_supervisores_by_actividad($arrData) 
+		public function get_user_encargado_by_actividad($arrData) 
 		{					
 				$this->db->select('id_user');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				$this->db->join('cuadro_base_dependencias T', 'T.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
 				$this->db->join('usuarios U', 'U.fk_id_dependencia_u = T.fk_id_dependencia', 'INNER');
-				$this->db->where('U.fk_id_user_role', ID_ROL_SUPERVISOR);
+				if (array_key_exists("idRol", $arrData)) {
+					$this->db->where('U.fk_id_user_role', $arrData["idRol"]);
+				}
 				if (array_key_exists("numeroActividad", $arrData)) {
 					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}

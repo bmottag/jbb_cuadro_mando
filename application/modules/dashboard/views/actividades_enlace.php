@@ -199,7 +199,7 @@
 												<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
 <?php if($estadoActividad){ ?>
 												<p>
-													<?php if($estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_1'] == 1 || $estadoActividad[0]['estado_trimestre_1'] == 4){ ?>
 														<button type="button" id="1" class='btn btn-danger btn-xs' title="Cerrar Trimestre I">
 																Cerrar Trimestre I  <i class="fa fa-arrow-right"></i>
 														</button>
@@ -207,7 +207,7 @@
 												</p>
 
 												<p>
-													<?php if($estadoActividad[0]['estado_trimestre_2'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_2'] == 1 || $estadoActividad[0]['estado_trimestre_2'] == 4){ ?>
 														<button type="button" id="2" class='btn btn-danger btn-xs' title="Cerrar Trimestre II">
 																Cerrar Trimestre II  <i class="fa fa-arrow-right"></i>
 														</button>
@@ -215,14 +215,14 @@
 												</p>
 
 												<p>
-													<?php if($estadoActividad[0]['estado_trimestre_3'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_3'] == 1 || $estadoActividad[0]['estado_trimestre_3'] == 4){ ?>
 														<button type="button" id="3" class='btn btn-danger btn-xs' title="Cerrar Trimestre III">
 																Cerrar Trimestre III  <i class="fa fa-arrow-right"></i>
 														</button>
 													<?php } ?>
 												</p>
 												<p>
-													<?php if($estadoActividad[0]['estado_trimestre_4'] == 1){ ?>
+													<?php if($estadoActividad[0]['estado_trimestre_4'] == 1 || $estadoActividad[0]['estado_trimestre_4'] == 4){ ?>
 														<button type="button" id="4" class='btn btn-danger btn-xs' title="Cerrar Trimestre IV">
 																Cerrar Trimestre IV  <i class="fa fa-arrow-right"></i>
 														</button>
@@ -297,7 +297,7 @@
 											case 4:
 												$valor = 'Devuelta';
 												$clase = "text-danger";
-												$deshabilidar = 'disabled';
+												$deshabilidar = '';
 												break;
 										}
 									}						

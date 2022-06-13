@@ -306,7 +306,7 @@ $(function(){
 					<div class="col-lg-12">	
 						<form name="formEstado" id="formEstado" class="form-horizontal" method="post">
 							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $lista['id_actividad']; ?>"/>
+							<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $lista['numero_actividad']; ?>"/>
 							<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>
 
 							<div class="form-group">

@@ -186,7 +186,6 @@
 
                                                 <?php
                                                 foreach ($listaActividades as $lista):
-
                                                     //buscar las dependencias relacionadas
                                                     $arrParam = array('idCuadroBase' => $lista['fk_id_cuadro_base']);
                                                     $dependencias = $this->general_model->get_dependencias($arrParam);
@@ -214,6 +213,48 @@
                                                     echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                                     echo "<td><small>" . $lista["ods"] . "</small></td>";
                                                     echo "</tr>";
+
+                                                    //revision de los estados
+                                                    $userRol = $this->session->userdata("role");
+                                                   
+                                                    if($lista['estado_trimestre_1'] == 4 || $lista['estado_trimestre_2'] == 4  || $lista['estado_trimestre_3'] == 4 || $lista['estado_trimestre_4'] == 4 ){
+                                                        echo "<tr class='text-danger danger'>";
+                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                            if($userRol == ID_ROL_ENLACE){
+                                                                echo "Debe revisar esta actividad porque se encuentra Rechazada.";
+                                                            }elseif($userRol == ID_ROL_SUPERVISOR){
+                                                                echo "Actividad Rechazada.";
+                                                            }
+                                                        echo "</b></small></td>";
+                                                        echo "</tr>";
+                                                    }
+
+
+                                                    if($lista['estado_trimestre_1'] == 2 || $lista['estado_trimestre_2'] == 2  || $lista['estado_trimestre_3'] == 2 || $lista['estado_trimestre_4'] == 2 ){
+                                                        echo "<tr class='text-warning warning'>";
+                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                            if($userRol == ID_ROL_ENLACE){
+                                                                echo "Actividad Cerrada.";
+                                                            }elseif($userRol == ID_ROL_SUPERVISOR){
+                                                                echo "Debe revisar esta actividad porque se encuentra Cerrada.";
+                                                            }
+                                                        echo "</b></small></td>";
+                                                        echo "</tr>";
+
+                                                    }
+
+                                                    $arrParam = array("numeroActividad" => $lista["numero_actividad"]);
+                                                    $estadoActividad = $this->general_model->get_estados_actividades($arrParam);
+                                                    if($estadoActividad){ 
+                                                    echo "<tr>";
+                                                    echo "<td colspan='11'>";
+                                                    echo "<p class=" . $estadoActividad[0]['primer_clase'] . "><strong>Trimestre I: " . $estadoActividad[0]['primer_estado'] . "</strong></p>";
+                                                    echo "<p class=" . $estadoActividad[0]['segundo_clase'] . "><strong>Trimestre II: " . $estadoActividad[0]['segundo_estado'] . "</strong></p>";
+                                                    echo "<p class=" . $estadoActividad[0]['tercer_clase'] . "><strong>Trimestre III: " . $estadoActividad[0]['tercer_estado'] . "</strong></p>";
+                                                    echo "<p class=" . $estadoActividad[0]['cuarta_clase'] . "><strong>Trimestre IV: " . $estadoActividad[0]['cuarta_estado'] . "</strong></p>";
+                                                    echo "</td>";
+                                                    echo "</tr>";
+                                                    }
                                                 endforeach
                                                 ?>
                                             </table>
