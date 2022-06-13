@@ -187,7 +187,7 @@ $(function(){
 
 								$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
-$estadoActividad = false;
+
 								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
 								$arrParam['numeroTrimestre'] = 1;
@@ -300,13 +300,13 @@ $estadoActividad = false;
 		<div class="col-lg-6">				
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					SEGUIMIENTO TRIMESTRE <?php echo $numeroTrimestre; ?>
+					SEGUIMIENTO EJECUCIÓN TRIMESTRE <?php echo $numeroTrimestre; ?>
 				</div>
 				<div class="panel-body">
 					<div class="col-lg-12">	
 						<form name="formEstado" id="formEstado" class="form-horizontal" method="post">
 							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $lista['id_actividad']; ?>"/>
+							<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $lista['numero_actividad']; ?>"/>
 							<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>
 
 							<div class="form-group">
@@ -314,8 +314,8 @@ $estadoActividad = false;
 								<div class="col-sm-8">
 									<select name="estado" id="estado" class="form-control" required >
 										<option value="">Seleccione...</option>
-										<option value=3 >Aprobada</option>
-										<option value=4 >Rechazada</option>
+										<option value=5 >Aprobada</option>
+										<option value=6 >Rechazada</option>
 									</select>
 								</div>
 							</div>
@@ -339,45 +339,6 @@ $estadoActividad = false;
 							</div>							
 						</form>
 					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="col-lg-6">	
-			<div class="chat-panel panel panel-primary">
-				<div class="panel-heading">
-					<i class="fa fa-comments fa-fw"></i> Historial
-				</div>
-				<div class="panel-body">
-					<ul class="chat">
-<?php 
-	if($listaHistorial)
-	{
-		foreach ($listaHistorial as $data):		
-?>
-			<li class="right clearfix">
-				<span class="chat-img pull-right">
-					<small class="pull-right text-muted">
-						<i class="fa fa-clock-o fa-fw"></i> <?php echo $data['fecha_cambio']; ?>
-					</small>
-				</span>
-				<div class="chat-body clearfix">
-					<div class="header">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-						<strong class="primary-font"><?php echo $data['first_name']; ?></strong>
-					</div>
-					<p>
-						<?php echo $data['observacion']; ?>
-					</p>
-					<?php echo '<p class="' . $data['clase'] . '"><strong><i class="fa ' . $data['icono']  . ' fa-fw"></i>' . $data['estado'] . '</strong></p>'; ?>
-				</div>
-			</li>
-<?php
-		endforeach;
-	}
-?>
-					</ul>
-					
 				</div>
 			</div>
 		</div>		

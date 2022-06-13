@@ -88,6 +88,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
  */
 defined('ID_ROL_SUPER_ADMIN')   OR define('ID_ROL_SUPER_ADMIN', 99);
 defined('ID_ROL_ADMINISTRADOR')   OR define('ID_ROL_ADMINISTRADOR', 1);
-defined('ID_ROL_PLANEACION')   OR define('ID_ROL_PLANEACION', 2);
+defined('ID_ROL_CONTROL_INTERNO')   OR define('ID_ROL_CONTROL_INTERNO', 2);
+defined('ID_ROL_PLANEACION')   OR define('ID_ROL_PLANEACION', 3);
 defined('ID_ROL_ENLACE')   OR define('ID_ROL_ENLACE', 4);
 defined('ID_ROL_SUPERVISOR')   OR define('ID_ROL_SUPERVISOR', 5);

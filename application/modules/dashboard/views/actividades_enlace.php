@@ -273,32 +273,10 @@
 									$variable = 'estado_trimestre_' . $data['numero_trimestre'];
 									$deshabilidar = '';
 									if($estadoActividad){
-										switch ($estadoActividad[0][$variable]) {
-											case 0:
-												$valor = 'No Iniciada';
-												$clase = "text-primary";
-												$deshabilidar = '';
-												break;
-											case 1:
-												$valor = 'En Proceso';
-												$clase = "text-warning";
-												$deshabilidar = '';
-												break;
-											case 2:
-												$valor = 'Cerrada';
-												$clase = "text-warning";
-												$deshabilidar = 'disabled';
-												break;
-											case 3:
-												$valor = 'Aprobada';
-												$clase = "text-success";
-												$deshabilidar = 'disabled';
-												break;
-											case 4:
-												$valor = 'Devuelta';
-												$clase = "text-danger";
-												$deshabilidar = '';
-												break;
+										$estado = $estadoActividad[0][$variable];
+										//si esta cerrado o aprobaldo por el supervisor o aprobado por planeacion, debe bolquear la edicion
+										if($estado == 2 || $estado == 3 || $estado == 5 ){
+											$deshabilidar = 'disabled';
 										}
 									}						
 									$idRecord = $data['id_ejecucion_actividad'];

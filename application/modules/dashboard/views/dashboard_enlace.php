@@ -3,7 +3,14 @@
         <div class="col-md-12">
             <p class="text-primary">
                 <strong>Bienvenido(a) </strong><?php echo $this->session->firstname; ?></br>
+                <?php 
+                    $userRol = $this->session->userdata("role");
+                    if($userRol != ID_ROL_PLANEACION){
+                ?>
                 <strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?>
+                <?php 
+                    }
+                ?>
             </p>
         </div>
     </div>
@@ -48,7 +55,11 @@
                             }
                             echo "<tr>";
                             echo "<td style='width: 40%'><small>";
-                            echo $lista["dependencia"];
+                            if($userRol == ID_ROL_PLANEACION){
+                                echo "<a class='btn btn-info btn-xs' href='" . base_url('dashboard/dependencias/' . $lista["id_dependencia"]) . "' >" . $lista["dependencia"] . "</a>";
+                            }else{
+                                echo $lista["dependencia"];
+                            }
                             echo "</small></td>";
                             echo "<td class='text-center'>";
                             echo "<b>" . $avancePOA ."%</b>";
@@ -129,12 +140,21 @@
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3>ACTIVIDADES A CARGO</h3>
-                    <h5>
-                        <strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?></br>
-                        <strong>No. Actividades: </strong><?php echo $nroActividadesDependencia; ?></br>
-                        <strong>Avance Dependencia: </strong><?php echo number_format($avance["avance_poa"],2); ?>
-                    </h5>
+                    <?php 
+                        if($userRol == ID_ROL_PLANEACION){
+                    ?>
+                            <i class="fa fa-thumb-tack fa-fw"></i> <b>PLAN ESTRATÉGICO - <?php echo date("Y"); ?></b>
+                    <?php
+                        }else{
+                    ?>
+                            <i class="fa fa-thumb-tack fa-fw"></i> <b>ACTIVIDADES A CARGO</b>
+                            <br><br>
+                            <strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?></br>
+                            <strong>No. Actividades: </strong><?php echo $nroActividadesDependencia; ?></br>
+                            <strong>Avance Dependencia: </strong><?php echo number_format($avance["avance_poa"],2); ?>
+                    <?php
+                        }
+                    ?>
                 </div>
                 <div class="panel-body">
                     <?php         
@@ -147,10 +167,16 @@
                     }else{
                         foreach ($listaEstrategias as $infoEstrategia):
 
-                            $arrParam = array(
-                                "numeroEstrategia" => $infoEstrategia["numero_estrategia"],
-                                "idDependencia" => $infoDependencia[0]['id_dependencia']
-                            );
+                            if($userRol == ID_ROL_PLANEACION){
+                                $arrParam = array(
+                                    "numeroEstrategia" => $infoEstrategia["numero_estrategia"]
+                                );
+                            }else{
+                                 $arrParam = array(
+                                    "numeroEstrategia" => $infoEstrategia["numero_estrategia"],
+                                    "idDependencia" => $infoDependencia[0]['id_dependencia']
+                                );                               
+                            }
                             $listaActividades = $this->general_model->get_actividades_full_by_dependencia($arrParam);
 
                             echo '<div class="row">';
@@ -214,33 +240,48 @@
                                                     echo "<td><small>" . $lista["ods"] . "</small></td>";
                                                     echo "</tr>";
 
-                                                    //revision de los estados
-                                                    $userRol = $this->session->userdata("role");
+                                                    if($lista['estado_trimestre_1'] == 6 || $lista['estado_trimestre_2'] == 6  || $lista['estado_trimestre_3'] == 6 || $lista['estado_trimestre_4'] == 6 ){
+                                                        echo "<tr class='text-danger danger'>";
+                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                            if($userRol == ID_ROL_ENLACE){
+                                                                echo "Debe revisar esta actividad porque se encuentra Rechazada.";
+                                                            }else{
+                                                                echo "Actividad Rechazada por Planeación.";
+                                                            }
+                                                        echo "</b></small></td>";
+                                                        echo "</tr>";
+                                                    }
                                                    
                                                     if($lista['estado_trimestre_1'] == 4 || $lista['estado_trimestre_2'] == 4  || $lista['estado_trimestre_3'] == 4 || $lista['estado_trimestre_4'] == 4 ){
                                                         echo "<tr class='text-danger danger'>";
                                                         echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
                                                             if($userRol == ID_ROL_ENLACE){
                                                                 echo "Debe revisar esta actividad porque se encuentra Rechazada.";
-                                                            }elseif($userRol == ID_ROL_SUPERVISOR){
-                                                                echo "Actividad Rechazada.";
+                                                            }else{
+                                                                echo "Actividad Rechazada por el Supervisor.";
                                                             }
                                                         echo "</b></small></td>";
                                                         echo "</tr>";
                                                     }
 
+                                                    if($lista['estado_trimestre_1'] == 3 || $lista['estado_trimestre_2'] == 3  || $lista['estado_trimestre_3'] == 3 || $lista['estado_trimestre_4'] == 3 ){
+                                                        echo "<tr class='text-success success'>";
+                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                        echo "Actividad Aprobada por el Supervidor.";
+                                                        echo "</b></small></td>";
+                                                        echo "</tr>";
+                                                    }
 
                                                     if($lista['estado_trimestre_1'] == 2 || $lista['estado_trimestre_2'] == 2  || $lista['estado_trimestre_3'] == 2 || $lista['estado_trimestre_4'] == 2 ){
                                                         echo "<tr class='text-warning warning'>";
                                                         echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
-                                                            if($userRol == ID_ROL_ENLACE){
-                                                                echo "Actividad Cerrada.";
-                                                            }elseif($userRol == ID_ROL_SUPERVISOR){
+                                                            if($userRol == ID_ROL_SUPERVISOR){
                                                                 echo "Debe revisar esta actividad porque se encuentra Cerrada.";
+                                                            }else{
+                                                                echo "Actividad Cerrada.";
                                                             }
                                                         echo "</b></small></td>";
                                                         echo "</tr>";
-
                                                     }
 
                                                     $arrParam = array("numeroActividad" => $lista["numero_actividad"]);

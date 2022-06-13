@@ -50,6 +50,7 @@ class Dashboard extends CI_Controller {
 			$data['infoCuadroBase'] = $this->general_model->get_lista_cuadro_mando($arrParam);
 			$data['infoDependencias'] = $this->general_model->get_dependencias($arrParam);
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
+			$data['listaHistorial'] = false;
 
 			$arrParam = array("numeroEstrategia" => $data['infoCuadroBase'][0]['fk_numero_estrategia']);
 			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
@@ -495,6 +496,10 @@ class Dashboard extends CI_Controller {
 						$mensaje = "se revisó la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . ", fue APROBADA y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
 					}elseif($idEstado == 4){
 						$mensaje = "se revisó la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . ", fue RECHAZADA. Por favor ingresar y realizar los ajustes respectivos.";
+					}elseif($idEstado == 5){
+						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . "y fue APROBADA por Planeación.";
+					}elseif($idEstado == 6){
+						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . "y fue RECHAZADA por Planeación. Por favor ingresar y realizar los ajustes respectivos.";
 					}
 
 					$mensaje .= "<br><b>Observación: </b>" . $observacion;
@@ -685,6 +690,50 @@ class Dashboard extends CI_Controller {
 			);
 			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
 
+			$data["view"] = "dashboard_enlace";
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * PLANEACION DASHBOARD
+	 * @since 23/04/2022
+	 */
+	public function planeacion()
+	{				
+			$arrParam = array(
+				"table" => "objetivos_estrategicos",
+				"order" => "objetivo_estrategico",
+				"id" => "x"
+			);
+			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dependencias",
+				"order" => "dependencia",
+				"id" => "x"
+			);
+			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"vigencia" => date("Y")
+			);
+			$filtroEstrategias = $this->general_model->get_estrategias_by_dependencia($arrParam);
+
+			$valor = '';
+			if($filtroEstrategias){
+				$tot = count($filtroEstrategias);
+				for ($i = 0; $i < $tot; $i++) {
+					$valor = $valor . $filtroEstrategias[$i]['id_estrategia'];
+					if($i != ($tot-1)){
+						$valor .= ",";
+					}
+				}
+			}
+			$data['listaEstrategias'] = false;
+			if($valor){
+				$arrParam = array("filtroEstrategias" => $valor);
+				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+			}
 			$data["view"] = "dashboard_enlace";
 			$this->load->view("layout_calendar", $data);
 	}
