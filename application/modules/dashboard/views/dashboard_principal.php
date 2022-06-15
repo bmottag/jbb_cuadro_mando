@@ -165,6 +165,46 @@
                             </div>';
                         echo '</div>';
                     }else{
+                            $arrParam2 = array();
+                            if($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
+                                $arrParam2 = array(
+                                    "idDependencia" => $infoDependencia[0]['id_dependencia']
+                                );  
+                            }
+                            $listaTodasActividades = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam2);
+                    ?>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form name="formCheckin" id="formCheckin" method="post">
+                                    <div class="panel panel-default">
+                                        <div class="panel-footer">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="form-group input-group-sm"> 
+                                                        <label class="control-label" for="numero_actividad">No. Actividad: *</label>                             
+                                                        <select name="numero_actividad" id="numero_actividad" class="form-control" required >
+                                                            <option value="">Seleccione...</option>
+                                                            <?php for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
+                                                                <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["idTipoEquipoSearch"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group"><br>
+                                                        <button type="submit" id="btnSearch" name="btnSearch" class="btn btn-primary btn-sm" >
+                                                            Buscar <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                        </button> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    <?php
                         foreach ($listaEstrategias as $infoEstrategia):
 
                             if($userRol == ID_ROL_PLANEACION){
@@ -175,13 +215,15 @@
                                  $arrParam = array(
                                     "numeroEstrategia" => $infoEstrategia["numero_estrategia"],
                                     "idDependencia" => $infoDependencia[0]['id_dependencia']
-                                );                               
+                                ); 
                             }
                             $listaActividades = $this->general_model->get_actividades_full_by_dependencia($arrParam);
 
                             echo '<div class="row">';
                     ?>
+
                             <div class="col-lg-12">
+
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
                                             <strong>Estrategia: </strong><?php echo $infoEstrategia['objetivo_estrategico']; ?></br>
@@ -207,6 +249,7 @@
                                                         <th><small>Logro</small></th>
                                                         <th><small>Propósito</small></th>
                                                         <th><small>ODS</small></th>
+                                                        <th><small>Dependencia</small></th>
                                                     </tr>
                                                 </thead>
 
@@ -238,6 +281,17 @@
                                                     echo "<td><small>" . $lista["logro"] . "</small></td>";
                                                     echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                                     echo "<td><small>" . $lista["ods"] . "</small></td>";
+                                                    echo "<td><small>";
+                                                    if($dependencias){
+                                           
+                                                        foreach ($dependencias as $datos):
+                                                            echo "<li class='text-primary'>" . $datos["dependencia"] . "</li>";
+                                                        endforeach;
+                                         
+                                                    echo "</small></td>";                                                      
+                                                    }
+
+
                                                     echo "</tr>";
 
                                                     if($lista['estado_trimestre_1'] == 6 || $lista['estado_trimestre_2'] == 6  || $lista['estado_trimestre_3'] == 6 || $lista['estado_trimestre_4'] == 6 ){
