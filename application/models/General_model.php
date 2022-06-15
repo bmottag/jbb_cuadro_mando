@@ -759,5 +759,28 @@ class General_model extends CI_Model {
 				}
 		}
 
+	/**
+	 * Lista de las dependencias del sistema
+	 * @since 15/06/2022
+	 */
+	public function get_app_dependencias($arrData) 
+	{		
+		if (array_key_exists("idDependencia", $arrData)) {
+			$this->db->where('id_dependencia', $arrData["idDependencia"]);
+		}
+		if (array_key_exists("filtro", $arrData)) {
+			$values = array('1', '2', '3');
+			$this->db->where_not_in('id_dependencia', $values);
+		}
+		$this->db->order_by('dependencia', 'asc');
+		$query = $this->db->get('param_dependencias');
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+	}
+
 
 }

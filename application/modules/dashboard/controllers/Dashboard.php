@@ -26,11 +26,9 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
-				"table" => "param_dependencias",
-				"order" => "dependencia",
-				"id" => "x"
+				"filtro" => true
 			);
-			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
 
 			$data["view"] = "dashboard";
 			$this->load->view("layout_calendar", $data);
@@ -393,11 +391,9 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
-				"table" => "param_dependencias",
-				"order" => "dependencia",
-				"id" => "x"
+				"filtro" => true
 			);
-			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
 
 			$arrParam = array(
 				"idDependencia" => $idDependencia,
@@ -454,11 +450,9 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
-				"table" => "param_dependencias",
-				"order" => "dependencia",
-				"id" => "x"
+				"filtro" => true
 			);
-			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
 			$data["view"] = "dashboard";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -599,7 +593,7 @@ class Dashboard extends CI_Controller {
 			$filtroEstrategias = $this->general_model->get_estrategias_by_dependencia($arrParam);
 
 
-			$data['nroActividades'] = $this->dashboard_model->countActividades($arrParam);
+			$data['nroActividadesDependencia'] = $this->dashboard_model->countActividades($arrParam);
 			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
 
 			$valor = '';
@@ -649,11 +643,9 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
-				"table" => "param_dependencias",
-				"order" => "dependencia",
-				"id" => "x"
+				"filtro" => true
 			);
-			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
 
 			$arrParam = array(
 				"idDependencia" => $idDependencia,
@@ -708,11 +700,9 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
-				"table" => "param_dependencias",
-				"order" => "dependencia",
-				"id" => "x"
+				"filtro" => true
 			);
-			$data['listaDependencia'] = $this->general_model->get_basic_search($arrParam);
+			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
 
 			$arrParam = array(
 				"vigencia" => date("Y")
