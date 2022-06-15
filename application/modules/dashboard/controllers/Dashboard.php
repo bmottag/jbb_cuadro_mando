@@ -30,7 +30,8 @@ class Dashboard extends CI_Controller {
 			);
 			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
 
-			$data["view"] = "dashboard";
+			//$data["view"] = "dashboard";
+			$data["view"] = "dashboard_principal";
 			$this->load->view("layout_calendar", $data);
 	}
 

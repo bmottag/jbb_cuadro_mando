@@ -5,9 +5,9 @@
                 <strong>Bienvenido(a) </strong><?php echo $this->session->firstname; ?></br>
                 <?php 
                     $userRol = $this->session->userdata("role");
-                    if($userRol != ID_ROL_PLANEACION){
+                    if($userRol == ID_ROL_ENLACE ||  $userRol == ID_ROL_SUPERVISOR){
                 ?>
-                <strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?>
+                        <strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?>
                 <?php 
                     }
                 ?>
@@ -143,7 +143,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <?php 
-                        if($userRol == ID_ROL_PLANEACION){
+                        if($userRol == ID_ROL_PLANEACION || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_SUPER_ADMIN){
                     ?>
                             <i class="fa fa-thumb-tack fa-fw"></i> <b>PLAN ESTRATÉGICO - <?php echo date("Y"); ?></b>
                     <?php
@@ -209,11 +209,16 @@
                     <?php
                         foreach ($listaEstrategias as $infoEstrategia):
 
-                            if($userRol == ID_ROL_PLANEACION){
-                                $arrParam = array(
-                                    "numeroEstrategia" => $infoEstrategia["numero_estrategia"]
-                                );
-                            }else{
+                            $idEstrategia = $infoEstrategia['id_estrategia'];
+                            $arrParam = array('idEstrategia' => $idEstrategia);
+                            $metas = $this->general_model->get_lista_metas($arrParam);
+                            $indicadores = $this->general_model->get_lista_indicadores($arrParam);
+                            $resultados = $this->general_model->get_lista_resultados($arrParam);
+
+                            $arrParam = array(
+                                "numeroEstrategia" => $infoEstrategia["numero_estrategia"]
+                            );
+                            if($userRol == ID_ROL_ENLACE ||  $userRol == ID_ROL_SUPERVISOR){
                                  $arrParam = array(
                                     "numeroEstrategia" => $infoEstrategia["numero_estrategia"],
                                     "idDependencia" => $infoDependencia[0]['id_dependencia']
@@ -238,6 +243,63 @@
                                             <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_estrategia'] . ' ' . $infoEstrategia['estrategia']; ?>
                                     </div>
                                     <div class="panel-body small">
+                                    <?php
+                                        if($metas){
+                                    ?>
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-signal"></i> <strong><small>Meta</small></strong>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                    <?php
+                                                    foreach ($metas as $lista):
+                                                        echo "<small>" . $lista["meta"] . "</small><br>";
+                                                    endforeach
+                                                    ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <?php
+                                    }
+                                        if($indicadores){
+                                    ?>
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-tasks"></i> <strong><small>Indicador</small></strong>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                    <?php
+                                                    foreach ($indicadores as $lista):
+                                                        echo "<small>" . $lista["indicador"] . "</small><br>";
+                                                    endforeach
+                                                    ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <?php
+                                    }
+                                        if($resultados){
+                                    ?>
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-info">
+                                                    <div class="panel-heading">
+                                                        <i class="fa fa-check"></i> <strong><small>Resultado</small></strong>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                    <?php
+                                                    foreach ($resultados as $lista):
+                                                        echo "<small>" . $lista["resultado"] . "</small><br>";
+                                                    endforeach
+                                                    ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <?php
+                                        }
+                                    ?>
+
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
