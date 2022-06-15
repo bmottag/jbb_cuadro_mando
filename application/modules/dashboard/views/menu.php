@@ -15,11 +15,13 @@
 			<strong>ODS: </strong><br><?php echo $infoCuadroBase[0]['ods']; ?><br>
 			<strong>Dependencia: </strong>
 <?php 
-            $x=0;
-            foreach ($infoDependencias as $datos):
-                $x++;
-                echo "<p class='text-primary'>" . $x . " " . $datos["dependencia"] . "</p>";
-            endforeach;
+			if($infoDependencias){
+				echo "<ul>";
+	            foreach ($infoDependencias as $datos):
+	                echo "<li class='text-primary'>" . $datos["dependencia"] . "</li>";
+	            endforeach;
+	            echo "</ul>";
+	        }
 ?>
 		</div>
 

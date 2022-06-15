@@ -691,7 +691,7 @@ class Dashboard extends CI_Controller {
 	 * @since 23/04/2022
 	 */
 	public function planeacion()
-	{				
+	{
 			$arrParam = array(
 				"table" => "objetivos_estrategicos",
 				"order" => "objetivo_estrategico",

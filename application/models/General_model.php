@@ -726,6 +726,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroEstrategia", $arrData)) {
 					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
 				}
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
+				}
 				$this->db->group_by("A.numero_actividad");
 				$this->db->order_by("A.numero_actividad", "ASC");
 				$query = $this->db->get('actividades A');
