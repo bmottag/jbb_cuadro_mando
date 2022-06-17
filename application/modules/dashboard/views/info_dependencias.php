@@ -1,5 +1,7 @@
 <div id="page-wrapper">
-
+<?php 
+    $userRol = $this->session->userdata("role");
+?>
     <div class="row"><br>
         <div class="col-lg-12">
             <div class="panel panel-primary">

@@ -705,12 +705,12 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full_by_dependencia($arrData) 
 		{		
-				$this->db->select("A.*, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, numero_estrategia, estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
+				$this->db->select("A.*, D.dependencia, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, numero_estrategia, estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
 				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
+				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('cuadro_base_dependencias T', 'T.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
 				$this->db->join('proyecto_inversion P', 'P.numero_proyecto_inversion = C.fk_numero_proyecto_inversion', 'INNER');
 				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
 				$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
@@ -721,7 +721,7 @@ class General_model extends CI_Model {
 				$this->db->join('ods O', 'O.numero_ods = C.fk_numero_ods', 'INNER');
 
 				if (array_key_exists("idDependencia", $arrData)) {
-					$this->db->where('T.fk_id_dependencia', $arrData["idDependencia"]);
+					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
 				if (array_key_exists("numeroEstrategia", $arrData)) {
 					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
@@ -729,7 +729,6 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroActividad", $arrData)) {
 					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}
-				$this->db->group_by("A.numero_actividad");
 				$this->db->order_by("A.numero_actividad", "ASC");
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
@@ -773,7 +772,7 @@ class General_model extends CI_Model {
 			$this->db->where('id_dependencia', $arrData["idDependencia"]);
 		}
 		if (array_key_exists("filtro", $arrData)) {
-			$values = array('1', '2', '3');
+			$values = array('1', '3');
 			$this->db->where_not_in('id_dependencia', $values);
 		}
 		$this->db->order_by('dependencia', 'asc');
@@ -794,13 +793,11 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select("A.numero_actividad, numero_estrategia, estrategia");
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('cuadro_base_dependencias T', 'T.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
 				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
 
 				if (array_key_exists("idDependencia", $arrData)) {
-					$this->db->where('T.fk_id_dependencia', $arrData["idDependencia"]);
+					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
-				$this->db->group_by("A.numero_actividad");
 				$this->db->order_by("A.numero_actividad", "ASC");
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {

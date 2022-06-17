@@ -56,7 +56,7 @@
                             }
                             echo "<tr>";
                             echo "<td style='width: 40%'><small>";
-                            if($userRol == ID_ROL_PLANEACION){
+                            if($userRol == ID_ROL_PLANEACION || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_SUPER_ADMIN){
                                 echo "<a class='btn btn-info btn-xs' href='" . base_url('dashboard/dependencias/' . $lista["id_dependencia"]) . "' >" . $lista["dependencia"] . "</a>";
                             }else{
                                 echo $lista["dependencia"];
@@ -320,10 +320,6 @@
 
                                             <?php
                                             foreach ($listaActividades as $lista):
-                                                //buscar las dependencias relacionadas
-                                                $arrParam = array('idCuadroBase' => $lista['fk_id_cuadro_base']);
-                                                $dependencias = $this->general_model->get_dependencias($arrParam);
-
                                                 echo "<tr>";
                                                 echo "<td class='text-center'>";
                                                 echo "<a class='btn btn-primary btn-xs' title='Ver Detalle Actividad No. " . $lista["numero_actividad"] . "' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'>". $lista['numero_actividad'] . " <span class='fa fa-eye' aria-hidden='true'></span></a>";
@@ -346,13 +342,7 @@
                                                 echo "<td><small>" . $lista["logro"] . "</small></td>";
                                                 echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                                 echo "<td><small>" . $lista["ods"] . "</small></td>";
-                                                echo "<td><small>";
-                                                if($dependencias){
-                                                    foreach ($dependencias as $datos):
-                                                        echo "<li class='text-primary'>" . $datos["dependencia"] . "</li>";
-                                                    endforeach;
-                                                }
-                                                echo "</small></td>";                                                      
+                                                echo "<td><small class='text-primary'>" . $lista["dependencia"] . "</small></td>";
                                                 echo "</tr>";
 
                                                 if($lista['estado_trimestre_1'] == 6 || $lista['estado_trimestre_2'] == 6  || $lista['estado_trimestre_3'] == 6 || $lista['estado_trimestre_4'] == 6 ){
