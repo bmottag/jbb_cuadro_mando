@@ -24,7 +24,8 @@
 					'fecha_inicial' => $this->input->post('fecha_inicial'),
 					'fecha_final' => $this->input->post('fecha_final'),
 					'fk_id_proceso_calidad' => $this->input->post('proceso_calidad'),
-					'fk_id_area_responsable' => $this->input->post('id_responsable')
+					'fk_id_area_responsable' => $this->input->post('id_responsable'),
+					'fk_id_dependencia' => $this->input->post('id_dependencia')
 				);	
 
 				//revisar si es para adicionar o editar

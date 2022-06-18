@@ -103,6 +103,11 @@ class Dashboard extends CI_Controller {
 			$data['proceso_calidad'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
+				"filtro" => true
+			);
+			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
+
+			$arrParam = array(
 				"table" => "param_meses",
 				"order" => "id_mes",
 				"id" => "x"

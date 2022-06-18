@@ -14,7 +14,8 @@ $( document ).ready( function () {
 			id_responsable: 			{ required: true },
 			fecha_inicial: 				{ required: true },
 			fecha_final: 				{ required: true },
-			proceso_calidad:			{ required: true }
+			proceso_calidad:			{ required: true },
+			id_dependencia:				{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {
