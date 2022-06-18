@@ -707,6 +707,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroEstrategia", $arrData)) {
 					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
 				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$this->db->where('P.numero_proyecto_inversion', $arrData["numeroProyecto"]);
+				}
 				if (array_key_exists("numeroActividad", $arrData)) {
 					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}
@@ -779,7 +782,41 @@ class General_model extends CI_Model {
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
+				if (array_key_exists("numeroEstrategia", $arrData)) {
+					$this->db->where('ES.numero_estrategia like', $arrData["numeroEstrategia"]);
+				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
+				}
 				$this->db->order_by("A.numero_actividad", "ASC");
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta lista de NUMEROS actividades para una dependencia
+		 * @since 15/06/2022
+		 */
+		public function get_numero_proyectos_full_by_dependencia($arrData) 
+		{		
+				$this->db->select("distinct(fk_numero_proyecto_inversion) numero_proyecto");
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+
+				if (array_key_exists("idDependencia", $arrData)) {
+					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
+				}
+				if (array_key_exists("numeroEstrategia", $arrData)) {
+					$this->db->where('ES.numero_estrategia like', $arrData["numeroEstrategia"]);
+				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
+				}
+				$this->db->order_by("fk_numero_proyecto_inversion", "ASC");
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();

@@ -16,7 +16,21 @@ class Dashboard extends CI_Controller {
 	public function admin()
 	{				
 			$arrParam = array();
+            if($_POST && $_POST["numero_objetivo"] != ""){
+                $arrParam["numeroEstrategia"] = $this->input->post('numero_objetivo');
+            }
 			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+			$arrParam = array();
+			$data['listaNumeroEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+	        $arrParam = array();
+	        if($_POST && $_POST["numero_objetivo"] != ""){
+	            $arrParam = array(
+	                "numeroEstrategia" => $_POST["numero_objetivo"]
+	            );  
+	        }
+	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
 
 			$arrParam = array(
 				"table" => "objetivos_estrategicos",
@@ -790,6 +804,74 @@ class Dashboard extends CI_Controller {
 			return true;
 	}
 
+	/**
+	 * Lista Numero de Proyectos filtrada por objetivos estrategicos
+     * @since 17/06/2022
+     * @author BMOTTAG
+	 */
+    public function numeroProyectosList() {
+        header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+		$numeroEstrategia = $this->input->post('numero_objetivo');
+
+		$userRol = $this->session->userdata("role");
+		$idDependencia = $this->session->userdata("dependencia");
+
+        $arrParam = array();
+        if($numeroEstrategia != ""){
+            $arrParam = array(
+                "numeroEstrategia" => $numeroEstrategia
+            );  
+        }
+        if($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
+            $arrParam["idDependencia"] = $idDependencia;  
+        }
+        $listaNumeroProyectos = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
+
+		echo "<option value=''>Todas...</option>";
+		if ($listaNumeroProyectos) {
+			foreach ($listaNumeroProyectos as $fila) {
+				echo "<option value='" . $fila["numero_proyecto"] . "' >" . $fila["numero_proyecto"] . "</option>";
+			}
+		}
+    }
+
+	/**
+	 * Lista Numero de Actividaes filtrada por objetivos estrategicos
+     * @since 17/06/2022
+     * @author BMOTTAG
+	 */
+    public function numeroActividadesList() {
+        header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+
+		$userRol = $this->session->userdata("role");
+		$idDependencia = $this->session->userdata("dependencia");
+
+
+		$arrParam = array();
+        if($_POST["numero_objetivo"]){
+			$numeroEstrategia = $this->input->post('numero_objetivo');
+	        if($numeroEstrategia != ""){
+	            $arrParam["numeroEstrategia"] = $numeroEstrategia; 
+	        }
+	    }
+        if($_POST["numero_proyecto"]){
+			$numeroProyecto = $this->input->post('numero_proyecto');
+	        if($numeroProyecto != ""){
+	            $arrParam["numeroProyecto"] = $numeroProyecto; 
+	        }
+	    }
+        if($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
+            $arrParam["idDependencia"] = $idDependencia;  
+        }
+        $listaTodasActividades = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam);
+
+		echo "<option value=''>Todas...</option>";
+		if ($listaTodasActividades) {
+			foreach ($listaTodasActividades as $fila) {
+				echo "<option value='" . $fila["numero_actividad"] . "' >" . $fila["numero_actividad"] . "</option>";
+			}
+		}			
+    }
 
 
 

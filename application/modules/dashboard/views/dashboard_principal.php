@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/ajaxSearch.js"); ?>"></script>
+
 <div id="page-wrapper">
     <div class="row"><br>
         <div class="col-md-12">
@@ -168,10 +170,14 @@
                         echo '</div>';
                     }else{
                             $arrParam2 = array();
+                            if($_POST && $_POST["numero_objetivo"] != ""){
+                                $arrParam2["numeroEstrategia"] = $_POST["numero_objetivo"];
+                            }
+                            if($_POST && $_POST["numero_proyecto"] != ""){
+                                $arrParam2["numeroProyecto"] = $_POST["numero_proyecto"];
+                            }
                             if($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
-                                $arrParam2 = array(
-                                    "idDependencia" => $infoDependencia[0]['id_dependencia']
-                                );  
+                                $arrParam2["idDependencia"] = $idDependencia;  
                             }
                             $listaTodasActividades = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam2);
                     ?>
@@ -183,9 +189,33 @@
                                             <div class="row">
                                                 <div class="col-lg-2">
                                                     <div class="form-group input-group-sm"> 
-                                                        <label class="control-label" for="numero_actividad">No. Actividad: *</label>                             
+                                                        <label class="control-label" for="numero_objetivo">No. Objetivo Estratégico: *</label>             
+                                                        <select name="numero_objetivo" id="numero_objetivo" class="form-control" >
+                                                            <option value="">Todas...</option>
+                                                            <?php for ($i = 0; $i < count($listaNumeroEstrategias); $i++) { ?>
+                                                                <option value="<?php echo $listaNumeroEstrategias[$i]["numero_estrategia"]; ?>" <?php if($_POST && $_POST["numero_objetivo"] == $listaNumeroEstrategias[$i]["numero_estrategia"]) { echo "selected"; }  ?>><?php echo $listaNumeroEstrategias[$i]["numero_estrategia"]; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2">
+                                                    <div class="form-group input-group-sm"> 
+                                                        <label class="control-label" for="numero_proyecto">No. Proyecto Inversión: *</label>             
+                                                        <select name="numero_proyecto" id="numero_proyecto" class="form-control" >
+                                                            <option value="">Todas...</option>
+                                                            <?php for ($i = 0; $i < count($listaProyectos); $i++) { ?>
+                                                                <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_POST && $_POST["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2">
+                                                    <div class="form-group input-group-sm"> 
+                                                        <label class="control-label" for="numero_actividad">No. Actividad: *</label>                        
                                                         <select name="numero_actividad" id="numero_actividad" class="form-control" >
-                                                            <option value="">Seleccione...</option>
+                                                            <option value="">Todas...</option>
                                                             <?php for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
                                                                 <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
                                                             <?php } ?>
@@ -224,8 +254,13 @@
                                     "idDependencia" => $infoDependencia[0]['id_dependencia']
                                 ); 
                             }
-                            if($_POST && $_POST["numero_actividad"] != ""){
-                                $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
+                            if($_POST){
+                                if($_POST && $_POST["numero_actividad"] != ""){
+                                    $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
+                                }
+                                if($_POST && $_POST["numero_proyecto"] != ""){
+                                    $arrParam["numeroProyecto"] = $this->input->post('numero_proyecto');
+                                }
                             }
                             $listaActividades = $this->general_model->get_actividades_full_by_dependencia($arrParam);
 
