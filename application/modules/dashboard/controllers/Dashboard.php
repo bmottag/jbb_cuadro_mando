@@ -44,6 +44,19 @@ class Dashboard extends CI_Controller {
 			);
 			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
 
+			$arrParam = array(
+				"filtro" => true
+			);
+	        if($_POST && $_POST["numero_objetivo"] != ""){
+	            $arrParam = array(
+	                "numeroEstrategia" => $_POST["numero_objetivo"]
+	            );  
+	        }
+            if($_POST && $_POST["numero_proyecto"] != ""){
+                $arrParam["numeroProyecto"] = $_POST["numero_proyecto"];
+            }
+			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
+
 			//$data["view"] = "dashboard";
 			$data["view"] = "dashboard_principal";
 			$this->load->view("layout_calendar", $data);
@@ -836,16 +849,15 @@ class Dashboard extends CI_Controller {
     }
 
 	/**
-	 * Lista Numero de Actividaes filtrada por objetivos estrategicos
-     * @since 17/06/2022
+	 * Lista Dependencia filtrada por objetivos estrategicos
+     * @since 18/06/2022
      * @author BMOTTAG
 	 */
-    public function numeroActividadesList() {
+    public function dependenciaList() {
         header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 
 		$userRol = $this->session->userdata("role");
 		$idDependencia = $this->session->userdata("dependencia");
-
 
 		$arrParam = array();
         if($_POST["numero_objetivo"]){
@@ -861,6 +873,48 @@ class Dashboard extends CI_Controller {
 	        }
 	    }
         if($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
+            $arrParam["idDependencia"] = $idDependencia;  
+        }
+        $lista = $this->general_model->get_dependencia_full_by_filtro($arrParam);
+
+		echo "<option value=''>Todas...</option>";
+		if ($lista) {
+			foreach ($lista as $fila) {
+				echo "<option value='" . $fila["id_dependencia"] . "' >" . $fila["dependencia"] . "</option>";
+			}
+		}
+    }
+
+	/**
+	 * Lista Numero de Actividaes filtrada por objetivos estrategicos
+     * @since 17/06/2022
+     * @author BMOTTAG
+	 */
+    public function numeroActividadesList() {
+        header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+
+		$userRol = $this->session->userdata("role");
+		$idDependencia = $this->session->userdata("dependencia");
+
+		$arrParam = array();
+        if($_POST["numero_objetivo"]){
+			$numeroEstrategia = $this->input->post('numero_objetivo');
+	        if($numeroEstrategia != ""){
+	            $arrParam["numeroEstrategia"] = $numeroEstrategia; 
+	        }
+	    }
+        if($_POST["numero_proyecto"]){
+			$numeroProyecto = $this->input->post('numero_proyecto');
+	        if($numeroProyecto != ""){
+	            $arrParam["numeroProyecto"] = $numeroProyecto; 
+	        }
+	    }
+        if($_POST["id_dependencia"]){
+			$idDependencia = $this->input->post('id_dependencia');
+	        if($idDependencia != ""){
+	            $arrParam["idDependencia"] = $idDependencia; 
+	        }
+	    }elseif($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
             $arrParam["idDependencia"] = $idDependencia;  
         }
         $listaTodasActividades = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam);

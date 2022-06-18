@@ -22,6 +22,17 @@ $(document).ready(function () {
 
 			$.ajax ({
 				type: 'POST',
+				url: base_url + 'dashboard/dependenciaList',
+				data: {'numero_objetivo': numero_objetivo},
+				cache: false,
+				success: function (data)
+				{
+					$('#id_dependencia').html(data);
+				}
+			});
+
+			$.ajax ({
+				type: 'POST',
 				url: base_url + 'dashboard/numeroActividadesList',
 				data: {'numero_objetivo': numero_objetivo},
 				cache: false,
@@ -37,10 +48,40 @@ $(document).ready(function () {
         $('#numero_proyecto option:selected').each(function () {
 			var numero_proyecto = $('#numero_proyecto').val();
 			var numero_objetivo = $('#numero_objetivo').val();
+			
+			$.ajax ({
+				type: 'POST',
+				url: base_url + 'dashboard/dependenciaList',
+				data: {'numero_objetivo': numero_objetivo, 'numero_proyecto': numero_proyecto},
+				cache: false,
+				success: function (data)
+				{
+					$('#id_dependencia').html(data);
+				}
+			});
+
 			$.ajax ({
 				type: 'POST',
 				url: base_url + 'dashboard/numeroActividadesList',
 				data: {'numero_objetivo': numero_objetivo, 'numero_proyecto': numero_proyecto},
+				cache: false,
+				success: function (data)
+				{
+					$('#numero_actividad').html(data);
+				}
+			});
+        });
+    });
+
+    $('#id_dependencia').change(function () {
+        $('#id_dependencia option:selected').each(function () {
+			var id_dependencia = $('#id_dependencia').val();
+			var numero_proyecto = $('#numero_proyecto').val();
+			var numero_objetivo = $('#numero_objetivo').val();
+			$.ajax ({
+				type: 'POST',
+				url: base_url + 'dashboard/numeroActividadesList',
+				data: {'numero_objetivo': numero_objetivo, 'numero_proyecto': numero_proyecto, 'id_dependencia': id_dependencia},
 				cache: false,
 				success: function (data)
 				{

@@ -826,6 +826,39 @@ class General_model extends CI_Model {
 		}
 
 		/**
+		 * Consulta lista de dependencias
+		 * @since 18/06/2022
+		 */
+		public function get_dependencia_full_by_filtro($arrData) 
+		{		
+				$this->db->select("distinct(id_dependencia), dependencia");
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
+
+				if (array_key_exists("idDependencia", $arrData)) {
+					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
+				}
+				if (array_key_exists("numeroEstrategia", $arrData)) {
+					$this->db->where('ES.numero_estrategia like', $arrData["numeroEstrategia"]);
+				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
+				}
+				if (array_key_exists("filtro", $arrData)) {
+					$values = array('1', '3');
+					$this->db->where_not_in('D.id_dependencia', $values);
+				}
+				$this->db->order_by("dependencia", "ASC");
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
 		 * Consulta lista de dependencias para cuadro base
 		 * @since 8/06/2022
 		 */

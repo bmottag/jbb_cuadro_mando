@@ -176,7 +176,9 @@
                             if($_POST && $_POST["numero_proyecto"] != ""){
                                 $arrParam2["numeroProyecto"] = $_POST["numero_proyecto"];
                             }
-                            if($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
+                            if($_POST && $_POST["id_dependencia"] != ""){
+                                $arrParam2["idDependencia"] = $_POST["id_dependencia"];
+                            }elseif($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
                                 $arrParam2["idDependencia"] = $idDependencia;  
                             }
                             $listaTodasActividades = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam2);
@@ -189,7 +191,7 @@
                                             <div class="row">
                                                 <div class="col-lg-2">
                                                     <div class="form-group input-group-sm"> 
-                                                        <label class="control-label" for="numero_objetivo">No. Objetivo Estratégico: *</label>             
+                                                        <label class="control-label" for="numero_objetivo">No. Objetivo Estratégico:</label>             
                                                         <select name="numero_objetivo" id="numero_objetivo" class="form-control" >
                                                             <option value="">Todas...</option>
                                                             <?php for ($i = 0; $i < count($listaNumeroEstrategias); $i++) { ?>
@@ -201,7 +203,7 @@
 
                                                 <div class="col-lg-2">
                                                     <div class="form-group input-group-sm"> 
-                                                        <label class="control-label" for="numero_proyecto">No. Proyecto Inversión: *</label>             
+                                                        <label class="control-label" for="numero_proyecto">No. Proyecto Inversión:</label>             
                                                         <select name="numero_proyecto" id="numero_proyecto" class="form-control" >
                                                             <option value="">Todas...</option>
                                                             <?php for ($i = 0; $i < count($listaProyectos); $i++) { ?>
@@ -213,7 +215,19 @@
 
                                                 <div class="col-lg-2">
                                                     <div class="form-group input-group-sm"> 
-                                                        <label class="control-label" for="numero_actividad">No. Actividad: *</label>                        
+                                                        <label class="control-label" for="id_dependencia">Dependencia:</label>                        
+                                                        <select name="id_dependencia" id="id_dependencia" class="form-control" >
+                                                            <option value="">Todas...</option>
+                                                            <?php for ($i = 0; $i < count($listaNumeroDependencia); $i++) { ?>
+                                                                <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_POST && $_POST["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2">
+                                                    <div class="form-group input-group-sm"> 
+                                                        <label class="control-label" for="numero_actividad">No. Actividad:</label>                        
                                                         <select name="numero_actividad" id="numero_actividad" class="form-control" >
                                                             <option value="">Todas...</option>
                                                             <?php for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
@@ -260,6 +274,9 @@
                                 }
                                 if($_POST && $_POST["numero_proyecto"] != ""){
                                     $arrParam["numeroProyecto"] = $this->input->post('numero_proyecto');
+                                }
+                                if($_POST && $_POST["id_dependencia"] != ""){
+                                    $arrParam["idDependencia"] = $this->input->post('id_dependencia');
                                 }
                             }
                             $listaActividades = $this->general_model->get_actividades_full_by_dependencia($arrParam);
@@ -382,7 +399,7 @@
 
                                                 if($lista['estado_trimestre_1'] == 6 || $lista['estado_trimestre_2'] == 6  || $lista['estado_trimestre_3'] == 6 || $lista['estado_trimestre_4'] == 6 ){
                                                     echo "<tr class='text-danger danger'>";
-                                                    echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                    echo "<td colspan='12'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
                                                         if($userRol == ID_ROL_ENLACE){
                                                             echo "Debe revisar esta actividad porque se encuentra Rechazada.";
                                                         }else{
@@ -394,7 +411,7 @@
                                                
                                                 if($lista['estado_trimestre_1'] == 4 || $lista['estado_trimestre_2'] == 4  || $lista['estado_trimestre_3'] == 4 || $lista['estado_trimestre_4'] == 4 ){
                                                     echo "<tr class='text-danger danger'>";
-                                                    echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                    echo "<td colspan='12'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
                                                         if($userRol == ID_ROL_ENLACE){
                                                             echo "Debe revisar esta actividad porque se encuentra Rechazada.";
                                                         }else{
@@ -406,7 +423,7 @@
 
                                                 if($lista['estado_trimestre_1'] == 3 || $lista['estado_trimestre_2'] == 3  || $lista['estado_trimestre_3'] == 3 || $lista['estado_trimestre_4'] == 3 ){
                                                     echo "<tr class='text-success success'>";
-                                                    echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                    echo "<td colspan='12'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
                                                     echo "Actividad Aprobada por el Supervidor.";
                                                     echo "</b></small></td>";
                                                     echo "</tr>";
@@ -414,7 +431,7 @@
 
                                                 if($lista['estado_trimestre_1'] == 2 || $lista['estado_trimestre_2'] == 2  || $lista['estado_trimestre_3'] == 2 || $lista['estado_trimestre_4'] == 2 ){
                                                     echo "<tr class='text-warning warning'>";
-                                                    echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
+                                                    echo "<td colspan='12'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
                                                         if($userRol == ID_ROL_SUPERVISOR){
                                                             echo "Debe revisar esta actividad porque se encuentra Cerrada.";
                                                         }else{
@@ -428,7 +445,7 @@
                                                 $estadoActividad = $this->general_model->get_estados_actividades($arrParam);
                                                 if($estadoActividad){ 
                                                 echo "<tr>";
-                                                echo "<td colspan='11'>";
+                                                echo "<td colspan='12'>";
                                                 echo "<p class=" . $estadoActividad[0]['primer_clase'] . "><strong>Trimestre I: " . $estadoActividad[0]['primer_estado'] . "</strong></p>";
                                                 echo "<p class=" . $estadoActividad[0]['segundo_clase'] . "><strong>Trimestre II: " . $estadoActividad[0]['segundo_estado'] . "</strong></p>";
                                                 echo "<p class=" . $estadoActividad[0]['tercer_clase'] . "><strong>Trimestre III: " . $estadoActividad[0]['tercer_estado'] . "</strong></p>";
