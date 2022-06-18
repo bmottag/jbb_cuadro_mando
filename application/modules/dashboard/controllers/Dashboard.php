@@ -453,6 +453,22 @@ class Dashboard extends CI_Controller {
 				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
 			}
 
+			//INICIO LISTAS PARA FILTROS
+			$arrParam = array("filtroEstrategias" => $valor);
+			$data['listaNumeroEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+	        $arrParam = array();
+	        if($_POST && $_POST["numero_objetivo"] != ""){
+	            $arrParam = array(
+	                "numeroEstrategia" => $_POST["numero_objetivo"]
+	            );  
+	        }
+	        $arrParam["idDependencia"] = $idDependencia;
+	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
+
+			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
+	        //FIN LISTAS PARA FILTROS
+
 			$arrParam = array(
 				"table" => "param_dependencias",
 				"order" => "dependencia",
@@ -705,6 +721,23 @@ class Dashboard extends CI_Controller {
 				$arrParam = array("filtroEstrategias" => $valor);
 				$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
 			}
+
+
+			//INICIO LISTAS PARA FILTROS
+			$arrParam = array("filtroEstrategias" => $valor);
+			$data['listaNumeroEstrategias'] = $this->general_model->get_estrategias($arrParam);
+
+	        $arrParam = array();
+	        if($_POST && $_POST["numero_objetivo"] != ""){
+	            $arrParam = array(
+	                "numeroEstrategia" => $_POST["numero_objetivo"]
+	            );  
+	        }
+	        $arrParam["idDependencia"] = $idDependencia;
+	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
+
+			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
+	        //FIN LISTAS PARA FILTROS
 
 			$arrParam = array(
 				"table" => "param_dependencias",

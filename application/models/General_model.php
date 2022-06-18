@@ -528,10 +528,9 @@ class General_model extends CI_Model {
 		{					
 				$this->db->select('id_estrategia');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('cuadro_base_dependencias T', 'T.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
 				$this->db->join('estrategias E', 'E.numero_estrategia = C.fk_numero_estrategia', 'INNER');
 				if (array_key_exists("idDependencia", $arrData)) {
-					$this->db->where('T.fk_id_dependencia', $arrData["idDependencia"]);
+					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
 				$this->db->group_by("E.id_estrategia");
 				$query = $this->db->get('actividades A');

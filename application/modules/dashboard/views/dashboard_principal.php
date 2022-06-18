@@ -179,7 +179,7 @@
                             if($_POST && $_POST["id_dependencia"] != ""){
                                 $arrParam2["idDependencia"] = $_POST["id_dependencia"];
                             }elseif($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
-                                $arrParam2["idDependencia"] = $idDependencia;  
+                                $arrParam2["idDependencia"] = $infoDependencia[0]['id_dependencia'];  
                             }
                             $listaTodasActividades = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam2);
                     ?>
