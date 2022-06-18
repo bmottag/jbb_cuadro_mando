@@ -239,8 +239,8 @@
 
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
-                                            <strong>Estrategia: </strong><?php echo $infoEstrategia['objetivo_estrategico']; ?></br>
-                                            <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_estrategia'] . ' ' . $infoEstrategia['estrategia']; ?>
+                                        <strong>Estrategia: </strong><?php echo $infoEstrategia['objetivo_estrategico']; ?></br>
+                                        <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_estrategia'] . ' ' . $infoEstrategia['estrategia']; ?>
                                     </div>
                                     <div class="panel-body small">
                                     <?php

@@ -424,14 +424,17 @@ $(function(){
 											?>
 										</th>
 									<?php
+										$deshabilidarCampos = false;
 										if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
 									?>
 										<th class="column-title" >
-											<button type="submit" class="btn btn-primary btn-xs" id="btnSubmit2" name="btnSubmit2" >
+											<button type="submit" class="btn btn-primary" id="btnSubmit2" name="btnSubmit2" >
 												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
 											</button>
 										</th>
 									<?php
+										}else{
+											$deshabilidarCampos = "disabled";
 										}
 									?>
 									</tr>
@@ -455,7 +458,7 @@ $(function(){
 								?>		
 										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
 										<td>
-											<input type="number" step="any" min="0" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" max="50000" required >
+											<input type="number" step="any" min="0" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" max="50000" required <?php echo $deshabilidarCampos; ?> >
 										</td>
 										<td>
 											<?php

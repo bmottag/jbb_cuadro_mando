@@ -788,5 +788,25 @@ class General_model extends CI_Model {
 				}
 		}
 
+		/**
+		 * Consulta lista de dependencias para cuadro base
+		 * @since 8/06/2022
+		 */
+		public function get_dependencias($arrData) 
+		{		
+				$this->db->select('distinct(id_dependencia), dependencia');
+				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
+				if (array_key_exists("idCuadroBase", $arrData)) {
+					$this->db->where('A.fk_id_cuadro_base', $arrData["idCuadroBase"]);
+				}
+				$this->db->order_by('dependencia', 'asc');
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }
