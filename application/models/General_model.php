@@ -403,11 +403,12 @@ class General_model extends CI_Model {
 				$idUser = $this->session->userdata("id");
 				$idDependencia = $this->session->userdata("dependencia");
 							
-				$this->db->select('A.*, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable');
+				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
 
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
@@ -674,26 +675,6 @@ class General_model extends CI_Model {
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->row_array();
-				} else {
-					return false;
-				}
-		}
-
-		/**
-		 * Consulta lista de dependencias para cuadro base
-		 * @since 8/06/2022
-		 */
-		public function get_dependencias($arrData) 
-		{		
-				$this->db->select('dependencia');
-				$this->db->join('param_dependencias D', 'D.id_dependencia = C.fk_id_dependencia', 'INNER');
-				if (array_key_exists("idCuadroBase", $arrData)) {
-					$this->db->where('C.fk_id_cuadro_base', $arrData["idCuadroBase"]);
-				}
-				$this->db->order_by('dependencia', 'asc');
-				$query = $this->db->get('cuadro_base_dependencias C');
-				if ($query->num_rows() > 0) {
-					return $query->result_array();
 				} else {
 					return false;
 				}

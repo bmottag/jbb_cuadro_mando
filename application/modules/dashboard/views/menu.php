@@ -13,22 +13,21 @@
 			<strong>Logro: </strong><br><?php echo $infoCuadroBase[0]['logro']; ?><br>
 			<strong>Propósito: </strong><br><?php echo $infoCuadroBase[0]['proposito']; ?><br>
 			<strong>ODS: </strong><br><?php echo $infoCuadroBase[0]['ods']; ?><br>
-			<strong>Dependencia: </strong>
-<?php 
-			if($infoDependencias){
-				echo "<ul>";
-	            foreach ($infoDependencias as $datos):
-	                echo "<li class='text-primary'>" . $datos["dependencia"] . "</li>";
-	            endforeach;
-	            echo "</ul>";
-	        }
-?>
-		</div>
 
 		<?php
-			$classInactivo = "btn btn-outline btn-default btn-block";
-			$classActivo = "btn btn-info btn-block";
+			$userRol = $this->session->userdata("role");
+			if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
 		?>
+			<br>
+			<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#modal" id="<?php echo $infoCuadroBase[0]['id_cuadro_base']; ?>">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Actividad
+			</button>
+		<?php
+			}
+		?>
+		</div>
+
+
 	</div>
 
 <?php 

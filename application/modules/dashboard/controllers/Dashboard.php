@@ -47,7 +47,6 @@ class Dashboard extends CI_Controller {
 			$data['infoEjecucion'] = false;
 			$arrParam = array("idCuadroBase" => $idCuadroBase);
 			$data['infoCuadroBase'] = $this->general_model->get_lista_cuadro_mando($arrParam);
-			$data['infoDependencias'] = $this->general_model->get_dependencias($arrParam);
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
 			$data['listaHistorial'] = false;
 
