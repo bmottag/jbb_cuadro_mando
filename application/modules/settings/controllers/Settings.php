@@ -1508,11 +1508,11 @@ class Settings extends CI_Controller {
     }
 
 	/**
-	 * mestas_objetivos_estrategicos
+	 * metas_objetivos_estrategicos
      * @since 20/06/2022
      * @author BMOTTAG
 	 */
-	public function mestas_objetivos_estrategicos()
+	public function metas_objetivos_estrategicos()
 	{			
 			$arrParam = array();
 			$data['info'] = $this->general_model->get_lista_metas($arrParam);
@@ -1522,7 +1522,7 @@ class Settings extends CI_Controller {
 	}
 	
     /**
-     * Cargo modal - formulario mestas_objetivos_estrategicos
+     * Cargo modal - formulario metas_objetivos_estrategicos
      * @since 20/06/2022
      */
     public function cargarModalMetasObjetivosEstrategicos() 
@@ -1539,7 +1539,7 @@ class Settings extends CI_Controller {
 				$arrParam = array(
 					"idMetaObjetivoEstrategico" => $data["idMetaObjetivoEstrategico"]
 				);
-				$data['information'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+				$data['information'] = $this->general_model->get_lista_metas($arrParam);
 			}			
 			$this->load->view("metas_objetivos_estrategicos_modal", $data);
     }
@@ -1751,7 +1751,136 @@ class Settings extends CI_Controller {
 
 			$success = 'El archivo se cargó correctamente.';
 			$this->subir_archivo($vista,'', $success);
+    }
+
+	/**
+	 * Indicadores_objetivos_estrategicos
+     * @since 20/06/2022
+     * @author BMOTTAG
+	 */
+	public function indicadores_objetivos_estrategicos()
+	{			
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_lista_indicadores($arrParam);
 			
+			$data["view"] = 'indicadores_objetivos_estrategicos';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario Indicadores_objetivos_estrategicos
+     * @since 20/06/2022
+     */
+    public function cargarModalIndicadoresObjetivosEstrategicos() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idIndicadorObjetivoEstrategico"] = $this->input->post("idIndicadorObjetivoEstrategico");	
+	
+			$arrParam = array();
+			$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+
+			if ($data["idIndicadorObjetivoEstrategico"] != 'x') {
+				$arrParam = array(
+					"idIndicadorObjetivoEstrategico" => $data["idIndicadorObjetivoEstrategico"]
+				);
+				$data['information'] = $this->general_model->get_lista_indicadores($arrParam);
+			}			
+			$this->load->view("indicadores_objetivos_estrategicos_modal", $data);
+    }
+	
+	/**
+	 * Update indicadores_objetivos_estrategicos
+     * @since 20/04/2022
+     * @author BMOTTAG
+	 */
+	public function save_indicadores_objetivos_estrategicos()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idIndicadorObjetivoEstrategico = $this->input->post('hddId');
+
+			$msj = "Se adicionó el Indicador del Objetivo Estratégico!";
+			if ($idIndicadorObjetivoEstrategico != '') {
+				$msj = "Se actualizó el Indicador del Objetivo Estratégico!";
+			}			
+
+			if ($idIndicadorObjetivoEstrategico = $this->settings_model->saveIndicadorObjetivo()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
+
+	/**
+	 * resultados_objetivos_estrategicos
+     * @since 20/06/2022
+     * @author BMOTTAG
+	 */
+	public function resultados_objetivos_estrategicos()
+	{			
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_lista_resultados($arrParam);
+			
+			$data["view"] = 'resultados_objetivos_estrategicos';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario resultados_objetivos_estrategicos
+     * @since 20/06/2022
+     */
+    public function cargarModalResultadosObjetivosEstrategicos() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idResultadoObjetivoEstrategico"] = $this->input->post("idResultadoObjetivoEstrategico");	
+	
+			$arrParam = array();
+			$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+
+			if ($data["idResultadoObjetivoEstrategico"] != 'x') {
+				$arrParam = array(
+					"idResultadoObjetivoEstrategico" => $data["idResultadoObjetivoEstrategico"]
+				);
+				$data['information'] = $this->general_model->get_lista_resultados($arrParam);
+			}			
+			$this->load->view("resultados_objetivos_estrategicos_modal", $data);
+    }
+	
+	/**
+	 * Update resultados_objetivos_estrategicos
+     * @since 20/04/2022
+     * @author BMOTTAG
+	 */
+	public function save_resultados_objetivos_estrategicos()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idResultadoObjetivoEstrategico = $this->input->post('hddId');
+
+			$msj = "Se adicionó el Resultado del Objetivo Estratégico!";
+			if ($idResultadoObjetivoEstrategico != '') {
+				$msj = "Se actualizó el Resultado del Objetivo Estratégico!";
+			}			
+
+			if ($idResultadoObjetivoEstrategico = $this->settings_model->saveResultadoObjetivo()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
     }
 	
 

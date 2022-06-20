@@ -4,8 +4,8 @@ $(function(){
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
-				url: base_url + 'settings/cargarModalMetasObjetivosEstrategicos',
-                data: {'idMetaObjetivoEstrategico': oID},
+				url: base_url + 'settings/cargarModalResultadosObjetivosEstrategicos',
+                data: {'idResultadoObjetivoEstrategico': oID},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatos').html(data);
@@ -22,7 +22,7 @@ $(function(){
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h4 class="list-group-item-heading">
-					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - METAS OBJETIVOS ESTRATÉGICOS
+					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - RESULTADOS OBJETIVOS ESTRATÉGICOS
 					</h4>
 				</div>
 			</div>
@@ -34,11 +34,11 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA METAS OBJETIVOS ESTRATÉGICOS
+					<i class="fa fa-building"></i> LISTA RESULTADOS OBJETIVOS ESTRATÉGICOS
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Meta Objetivos Estratégicos
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Resultados Objetivos Estratégicos
 							</button>
 						</div>
 					</div>
@@ -73,7 +73,7 @@ $(function(){
 						<thead>
 							<tr>
 								<th width="45%" class="text-center">Objetivo Estratégico</th>
-								<th width="45%" class="text-center">Meta</th>
+								<th width="45%" class="text-center">Resultado</th>
 								<th width="10%" class="text-center">Editar</th>
 							</tr>
 						</thead>
@@ -82,10 +82,10 @@ $(function(){
 							foreach ($info as $lista):
 									echo "<tr>";
 									echo "<td>" . $lista['numero_objetivo_estrategico'] . ' ' . $lista['objetivo_estrategico'] .  "</td>";
-									echo "<td>" . $lista['meta'] . "</td>";
+									echo "<td>" . $lista['resultado'] . "</td>";
 									echo "<td class='text-center'>";
 						?>
-									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_meta']; ?>" >
+									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_resultado']; ?>" >
 										Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
 									</button>
 						<?php

@@ -1,12 +1,9 @@
 $( document ).ready( function () {
-
-	$("#numero_estrategia").bloquearTexto().maxlength(4);
-	
 	
 	$( "#form" ).validate( {
 		rules: {
 			numeroObjetivoEstrategico:			{ required: true },
-			meta:								{ required: true }
+			resultado:							{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {
@@ -39,7 +36,7 @@ $( document ).ready( function () {
 			
 				$.ajax({
 					type: "POST",	
-					url: base_url + "settings/save_metas_objetivos_estrategicos",	
+					url: base_url + "settings/save_resultados_objetivos_estrategicos",	
 					data: $("#form").serialize(),
 					dataType: "json",
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -59,7 +56,7 @@ $( document ).ready( function () {
 							$("#div_load").css("display", "none");
 							$('#btnSubmit').removeAttr('disabled');
 
-							var url = base_url + "settings/metas_objetivos_estrategicos";
+							var url = base_url + "settings/resultados_objetivos_estrategicos";
 							$(location).attr("href", url);
 						}
 						else

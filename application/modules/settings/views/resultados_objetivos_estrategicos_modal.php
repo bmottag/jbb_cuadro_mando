@@ -1,15 +1,15 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/meta_objetivos_estrategicos.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/resultado_objetivos_estrategicos.js"); ?>"></script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="exampleModalLabel">Formulario Meta Objetivos Estratégicos
-	<br><small>Adicionar/Editar Meta Objetivos Estratégicos</small>
+	<h4 class="modal-title" id="exampleModalLabel">Formulario Resultado Objetivos Estratégicos
+	<br><small>Adicionar/Editar Resultado Objetivos Estratégicos</small>
 	</h4>
 </div>
 
 <div class="modal-body">
 	<p class="text-danger text-left">Los campos con * son obligatorios.</p>
 	<form name="form" id="form" role="form" method="post" >
-		<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_meta"]:""; ?>"/>
+		<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_resultado"]:""; ?>"/>
 			
 		<div class="row">
 			<div class="col-sm-12">		
@@ -28,8 +28,8 @@
 		<div class="row">				
 			<div class="col-sm-12">		
 				<div class="form-group text-left">
-					<label class="control-label" for="meta">Meta: *</label>
-					<textarea id="meta" name="meta" placeholder="Meta" class="form-control" rows="3" required><?php echo $information?$information[0]["meta"]:""; ?></textarea>
+					<label class="control-label" for="resultado">Resultado: *</label>
+					<textarea id="resultado" name="resultado" placeholder="Resultado" class="form-control" rows="3" required><?php echo $information?$information[0]["resultado"]:""; ?></textarea>
 				</div>
 			</div>
 		</div>
