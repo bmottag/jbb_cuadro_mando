@@ -1,75 +1,22 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/form_estado_actividad.js"); ?>"></script>
 
-<script>
-$(function(){ 
-	$(".btn-info").click(function () {	
-			var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-				url: base_url + 'dashboard/cargarModalActividad',
-				data: {'idCuadrobase': oID, 'idActividad': 'x'},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatos').html(data);
-                }
-            });
-	});	
-
-	$(".btn-success").click(function () {	
-			var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-				url: base_url + 'dashboard/cargarModalActividad',
-				data: {'idCuadrobase': '', 'idActividad': oID},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatos').html(data);
-                }
-            });
-	});
-
-	$(".btn-warning").click(function () {	
-			var oID = $(this).attr("id");
-            $.ajax ({
-                type: 'POST',
-				url: base_url + 'dashboard/cargarModalProgramarActividad',
-				data: {'idActividad': oID},
-                cache: false,
-                success: function (data) {
-                    $('#tablaDatosEjecucion').html(data);
-                }
-            });
-	});	
-});
-</script>
-
 <div id="page-wrapper">
 	<br>
 	
-	<!-- /.row -->
 	<div class="row">
-		<!-- Start of menu -->
 		<?php
 			$this->load->view('menu');
 		?>
-		<!-- End of menu -->
 		<div class="col-lg-9">
-			<div class="panel panel-info small">
+			<div class="panel panel-primary small">
 				<div class="panel-heading">
-					<i class="fa fa-thumb-tack"></i> <strong>ACTIVIDADES </strong>
+					<i class="fa fa-thumb-tack"></i> <strong>ACTIVIDADES <?php 	if($infoEjecucion){ echo ' - REGISTRO EJECUCIÓN'; } ?></strong>
 					<div class="pull-right">
 						<div class="btn-group">
 							<?php
-								$userRol = $this->session->userdata("role");
-								if($numeroActividad != 'x' ){
+								if($numeroActividad != 'x'){
 							?>
 									<a class="btn btn-primary btn-xs" href=" <?php echo base_url('dashboard/actividades/' . $idCuadroBase); ?> "><span class="glyphicon glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Regresar</a> 
-							<?php
-								}elseif($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
-							?>
-									<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $infoCuadroBase[0]['id_cuadro_base']; ?>">
-											<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Actividades
-									</button>
 							<?php
 								}
 							?>
@@ -105,12 +52,26 @@ $(function(){
 				<p class="text-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No hay actividades en el sistema.</p>
 			</div>';
 	}else{
+		foreach ($listaActividades as $lista):
 ?>
+					<div class="alert alert-info ">
+						<div class="row">
+							<div class="col-lg-8">
+								<h4><b>No. Actividad: <?php echo $lista['numero_actividad']; ?></b></h4>
+							</div>
+							<div class="col-lg-4">
+								<div class="pull-right">
+									<h4><b><?php echo $lista['dependencia']; ?></b></h4>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<b>Actividad:</b><br> <?php echo $lista['descripcion_actividad']; ?>	
+							</div>
+						</div>
+					</div>
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="text-center">No.</th>
-								<th>Actividad</th>
 								<th>Meta Plan Operativo Anual</th>
 								<th class="text-center">Unidad Medida</th>
 								<th>Nombre Indicador</th>
@@ -123,7 +84,6 @@ $(function(){
 						</thead>
 						<tbody>							
 						<?php
-							foreach ($listaActividades as $lista):
 								$unidadMedida = $lista['unidad_medida'];
 								$clase = "text-danger";
 
@@ -143,8 +103,6 @@ $(function(){
 								}
 								$ponderacion = $lista['ponderacion'];
 								echo "<tr>";
-								echo "<td class='text-center'>" . $lista['numero_actividad'] . "</td>";
-								echo "<td>" . $lista['descripcion_actividad'] . "</td>";
 								echo "<td>" . $lista['meta_plan_operativo_anual'] . "</td>";
 								echo "<td class='text-center'>";
 								echo '<p class="' . $clase . '"><strong>' . $unidadMedida . '</strong></p>';
@@ -159,31 +117,14 @@ $(function(){
 								echo "</td>";
 								echo "<td>" . $lista['responsable'] . "</td>";
 								echo "<td class='text-center'>";
-        
-    							if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
-						?>
-									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_actividad']; ?>" title="Editar Actividad">
-										<span class="fa fa-pencil" aria-hidden="true">
-									</button>
-						<?php
-							if($numeroActividad != 'x') {
-						?>
-									<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEjecucion" id="<?php echo $lista['id_actividad']; ?>" title="Adicionar Fecha a la Actividad">
-											<i class="fa fa-signal"></i>
-									</button>
-
-									<button type="button" id="<?php echo $lista["id_actividad"]; ?>" class='btn btn-danger btn-xs' title="Eliminar Actividad">
-											<span class="fa fa-trash-o" aria-hidden="true"> </span>
-									</button>
-						<?php
+								if(!$infoEjecucion){
+									echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
+								}else{
+									echo "---";
 								}
-							}
-
-							if($numeroActividad == 'x') {
-								echo "<a class='btn btn-primary btn-xs' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "' title='Ver Detalle Actividad'> <span class='fa fa-eye' aria-hidden='true'></a>";
-							}
 								echo "</td>";
 								echo "</tr>";
+								echo "</tbody></table>";
 
 								$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
@@ -231,176 +172,255 @@ $(function(){
 									$cumplimiento4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * 100,2);
 									$avancePOA4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * $ponderacion, 2) . '%';
 								}
-
 ?>
-								<thead>
-									<tr class="headings info">
-										<th class="column-title" colspan="2">
-											<p>Programado Año: <?php echo number_format($sumaProgramado['programado'],2); ?></p>
-											<p>Acance POA: <?php echo $avancePOA . '%'; ?></p>
-										</th>
-										<th class="column-title" colspan="2">
-											<p>Programado Trimestre I: <?php echo number_format($sumaProgramadoTrimestre1['programado'],2); ?></p>
-											<p>Programado Trimestre II: <?php echo number_format($sumaProgramadoTrimestre2['programado'],2); ?></p>
-											<p>Programado Trimestre III: <?php echo number_format($sumaProgramadoTrimestre3['programado'],2); ?></p>
-											<p>Programado Trimestre IV: <?php echo number_format($sumaProgramadoTrimestre4['programado'],2); ?></p>
-										</th>
-										<th class="column-title" colspan="2">
-											<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '%'; ?></p>
-											<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '%'; ?></p>
-											<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?></p>
-											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
-										</th>
+					<table class='table table-hover'>
+						<thead>
+							<tr class="text-primary">
+								<td>
+									<h2>Programado Año: <?php echo number_format($sumaProgramado['programado'],2); ?></h2>
+									<small>(Suma Programado)</small>
+								</td>
+								<td class="text-right">
+									<h2>Acance POA: <?php echo $avancePOA . '%'; ?></h2>
+									<small>(Suma Ejecutado /Suma Programado * Ponderación)</small>
+								</tr>
+							</tr>
+						</thead>
+					</table>
 
-										<th class="column-title small">
-											<?php if($estadoActividad){ ?>
-											<p class="<?php echo $estadoActividad[0]['primer_clase']; ?>"><strong><?php echo $estadoActividad[0]['primer_estado']; ?></strong></p>
-											<p class="<?php echo $estadoActividad[0]['segundo_clase']; ?>"><strong><?php echo $estadoActividad[0]['segundo_estado']; ?></strong></p>
-											<p class="<?php echo $estadoActividad[0]['tercer_clase']; ?>"><strong><?php echo $estadoActividad[0]['tercer_estado']; ?></strong></p>
-											<p class="<?php echo $estadoActividad[0]['cuarta_clase']; ?>"><strong><?php echo $estadoActividad[0]['cuarta_estado']; ?></strong></p>
-											<?php } ?>
-										</th>
-										<th class="column-title">
-											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' title="Seguimiento I">
+					<form name="form" id="form" role="form" method="post" >
+						<input type="hidden" id="idCuadroBase" name="idCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
+						<input type="hidden" id="idActividad" name="idActividad" value="<?php echo $lista["id_actividad"]; ?>"/>
+						<input type="hidden" id="numeroActividad" name="numeroActividad" value="<?php echo $lista["numero_actividad"]; ?>"/>
+						<input type="hidden" id="cumplimiento1" name="cumplimiento1" value="<?php echo $cumplimiento1; ?>"/>
+						<input type="hidden" id="cumplimiento2" name="cumplimiento2" value="<?php echo $cumplimiento2; ?>"/>
+						<input type="hidden" id="cumplimiento3" name="cumplimiento3" value="<?php echo $cumplimiento3; ?>"/>
+						<input type="hidden" id="cumplimiento4" name="cumplimiento4" value="<?php echo $cumplimiento4; ?>"/>
+						<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
+
+						<table class='table table-hover info'>
+							<thead>
+
+								<!-- INFO TRIMESTRE I -->
+
+								<tr class="headings default">
+									<th class="column-title">
+										<p>Programado Trimestre I: <?php echo number_format($sumaProgramadoTrimestre1['programado'],2); ?></p>
+									</th>
+									<th class="column-title">
+										<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '%'; ?></p>
+									</th>
+
+									<th class="column-title small text-center">
+										<?php if($estadoActividad){ ?>
+										<p class="<?php echo $estadoActividad[0]['primer_clase']; ?>"><strong><?php echo $estadoActividad[0]['primer_estado']; ?></strong></p>
+										<?php } ?>
+									</th>
+									<th class="column-title text-center">
+<?php if($estadoActividad){ ?>
+										<!-- si esta CERRADO muestre el boton -->
+										<?php if($estadoActividad[0]['estado_trimestre_1'] == 2){ ?>
+											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' title="Revisión I">
 													Revisión I <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>
-											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/2') ?>' title="Seguimiento II">
+										<?php } ?>
+<?php } ?>										
+									</th>					
+									<th class="column-title text-right">
+										<p>Avance POA I: <?php echo $avancePOA1; ?></p>
+									</th>
+								</tr>
+
+								<!-- INFO TRIMESTRE II -->
+
+								<tr class="headings">
+									<th class="column-title">
+										<p>Programado Trimestre II: <?php echo number_format($sumaProgramadoTrimestre2['programado'],2); ?></p>
+									</th>
+									<th class="column-title">
+										<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '%'; ?></p>
+									</th>
+
+									<th class="column-title small text-center">
+										<?php if($estadoActividad){ ?>
+										<p class="<?php echo $estadoActividad[0]['segundo_clase']; ?>"><strong><?php echo $estadoActividad[0]['segundo_estado']; ?></strong></p>
+										<?php } ?>
+									</th>
+									<th class="column-title text-center">
+<?php if($estadoActividad){ ?>
+										<!-- si esta CERRADO muestre el boton -->
+										<?php if($estadoActividad[0]['estado_trimestre_2'] == 2){ ?>
+											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/2') ?>' title="Revisión II">
 													Revisión II <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>
-											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/3') ?>' title="Seguimiento III">
+										<?php } ?>
+<?php } ?>										
+									</th>					
+									<th class="column-title text-right">
+										<p>Avance POA II: <?php echo $avancePOA2; ?></p>
+									</th>
+								</tr>
+
+								<!-- INFO TRIMESTRE III -->
+
+								<tr class="headings">
+									<th class="column-title">
+										<p>Programado Trimestre III: <?php echo number_format($sumaProgramadoTrimestre3['programado'],2); ?></p>
+									</th>
+									<th class="column-title">
+										<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?></p>
+									</th>
+									<th class="column-title small text-center">
+										<?php if($estadoActividad){ ?>
+										<p class="<?php echo $estadoActividad[0]['tercer_clase']; ?>"><strong><?php echo $estadoActividad[0]['tercer_estado']; ?></strong></p>
+										<?php } ?>
+									</th>
+									<th class="column-title text-center">
+<?php if($estadoActividad){ ?>
+										<!-- si esta CERRADO muestre el boton -->
+										<?php if($estadoActividad[0]['estado_trimestre_3'] == 2){ ?>
+											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/3') ?>' title="Revisión III">
 													Revisión III <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>
-											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/4') ?>' title="Seguimiento IV">
-													Revisión IV <span class="fa fa-tag" aria-hidden="true"> </span>
-											</a></p>											
-										</th>					
-										<th class="column-title" colspan="2">
-											<p>Avance POA I: <?php echo $avancePOA1; ?></p>
-											<p>Avance POA II: <?php echo $avancePOA2; ?></p>
-											<p>Avance POA III: <?php echo $avancePOA3; ?></p>
-											<p>Avance POA IV: <?php echo $avancePOA4; ?></p>
-										</th>
-									</tr>
-								</thead>
+										<?php } ?>
+<?php } ?>											
+									</th>					
+									<th class="column-title text-right">
+										<p>Avance POA III: <?php echo $avancePOA3; ?></p>
+									</th>
+								</tr>
 
-<?php
+								<!-- INFO TRIMESTRE IV -->
+
+								<tr class="headings">
+									<th class="column-title">
+										<p>Programado Trimestre IV: <?php echo number_format($sumaProgramadoTrimestre4['programado'],2); ?></p>
+									</th>
+									<th class="column-title">
+										<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
+									</th>
+
+									<th class="column-title small text-center">
+										<?php if($estadoActividad){ ?>
+										<p class="<?php echo $estadoActividad[0]['cuarta_clase']; ?>"><strong><?php echo $estadoActividad[0]['cuarta_estado']; ?></strong></p>
+										<?php } ?>
+									</th>
+									<th class="column-title text-center">
+<?php if($estadoActividad){ ?>
+										<!-- si esta CERRADO muestre el boton -->
+										<?php if($estadoActividad[0]['estado_trimestre_4'] == 2){ ?>
+											<p><a class='btn btn-warning btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/4') ?>' title="Revisión IV">
+													Revisión IV <span class="fa fa-tag" aria-hidden="true"> </span>
+											</a></p>
+										<?php } ?>
+<?php } ?>										
+									</th>					
+									<th class="column-title text-right">
+										<p>Avance POA IV: <?php echo $avancePOA4; ?></p>
+									</th>
+								</tr>
+								<tr class="headings default">
+									<td width="23%"><small>Suma Programado Trimestre</small></td>
+									<td width="24%"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * 100</small></td>
+									<td width="15%"></td>
+									<td width="15%"></td>
+									<td width="23%" class="text-right"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * Ponderación</small></td>
+								</tr>
+
+							</thead>				
+						</table>
+					</form>
+						<?php
 							endforeach;
 						?>
-						</tbody>
-					</table>
 				<?php } ?>
 
 <!-- INICIO HISTORICO -->
 		<?php
 			if($infoEjecucion){
-				if($numeroTrimestre){
-		?>
-<!--INICIO ADDITIONAL INFORMATION -->
-	<div class="row">
-		<div class="col-lg-6">				
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					REVISIÓN EJECUCIÓN TRIMESTRE <?php echo $numeroTrimestre; ?>
-				</div>
-				<div class="panel-body">
-					<div class="col-lg-12">	
-						<form name="formEstado" id="formEstado" class="form-horizontal" method="post">
-							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-							<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $lista['numero_actividad']; ?>"/>
-							<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="estado">Estado:</label>
-								<div class="col-sm-8">
-									<select name="estado" id="estado" class="form-control" required >
-										<option value="">Seleccione...</option>
-										<option value=3 >Aprobada (Escalar a planeación)</option>
-										<option value=4 >Rechazada (Devolver al enlace)</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="information">Observación:</label>
-								<div class="col-sm-8">
-								<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required ></textarea>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="row" align="center">
-									<div style="width:100%;" align="center">
-										<button type="button" id="btnEstado" name="btnEstado" class="btn btn-primary" >
-											Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
-										</button> 
-										
-									</div>
-								</div>
-							</div>							
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-			
-	</div>
-<!--FIN ADDITIONAL INFORMATION -->
-		<?php
-				}
 		?>
 					<div class="table-responsive">
-						<form  name="ejecucion" id="ejecucion" method="post" action="<?php echo base_url("dashboard/update_programacion"); ?>">
+						<h2 class="text-warning">-- Ejecución Actividad --</h2>
 
-							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $numeroActividad; ?>"/>
-							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>		
+						<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
+							<thead>
+						<?php
+							$deshabilidar = '';
+							if($numeroTrimestre){
+								$variable = 'estado_trimestre_' . $numeroTrimestre;
+								
+								if($estadoActividad){
+									$estado = $estadoActividad[0][$variable];
+									//si esta cerrado debe bloquear la edicion
+									if($estado != 2 ){
+										$deshabilidar = 'disabled';
+									}
+								}
+						?>
+								<tr class="text-warning">
+									<th colspan="4">
+										<h4><b>Revisión ejecución TRIMESTRE <?php echo $numeroTrimestre; ?></b></h4>
+									</th>
+								</tr>
+							<form name="formEstado" id="formEstado" class="form-horizontal" method="post">
+								<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
+								<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $lista['numero_actividad']; ?>"/>
+								<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>
 
-							<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
-								<thead>
-									<tr class="headings">
-										<th class="column-title" colspan="4">-- EJECUCIÓN ACTIVIDAD --
-											<?php
-												if($numeroTrimestre){
-													echo '<p class="text-primary">Trimestre ' . $numeroTrimestre. '</p>'; 
-												}
-											?>
-										</th>
-									<?php
-										if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
-									?>
-										<th class="column-title" >
-											<button type="submit" class="btn btn-primary btn-xs" id="btnSubmit2" name="btnSubmit2" >
-												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-											</button>
-										</th>
-									<?php
-										}
-									?>
-									</tr>
+								<tr class="warning text-warning">
+									<th class="column-title" colspan="3">
+										<label >Estado:</label>
+										<select name="estado" id="estado" class="form-control" required >
+											<option value="">Seleccione...</option>
+											<option value=3 >Aprobada (Escalar a planeación)</option>
+											<option value=4 >Rechazada (Devolver al enlace)</option>
+										</select>
+									</th>
+									<th class="column-title text-right">
+										<textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Observación" required ></textarea>
+									</th>
+								</tr>
+								<tr class="warning">
+									<th class="column-title text-right" colspan="4">
+										<button type="submit" class="btn btn-warning" id="btnEstado" name="btnEstado" <?php echo $deshabilidar; ?> >
+											Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+										</button>
+									</th>
+								</tr>
+							</form>
+						<?php
+							}else{
+								$deshabilidar = 'disabled';
+							}
+						?>	
+								<tr class="headings">
+									<th class="column-title" style="width: 10%">Mes</th>
+									<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
+									<th class="column-title" style="width: 15%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
+									<th class="column-title" style="width: 65%">Descripción / Evidencias</th>
+								</tr>
+							</thead>
+
+							<tbody>
+							<?php
+								foreach ($infoEjecucion as $data):
+									$variable = 'estado_trimestre_' . $data['numero_trimestre'];
 									
-									<tr class="headings">
-										<th class="column-title" style="width: 7%">Mes</th>
-										<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
-										<th class="column-title" style="width: 13%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
-										<th class="column-title" style="width: 50%">Descripción / Evidencias</th>
-										<th class="column-title text-center" style="width: 10%">Enlaces</th>
-									</tr>
-								</thead>
-
-								<tbody>
-								<?php
-									foreach ($infoEjecucion as $data):
-										echo "<tr>";
-										echo "<td >$data[mes]</td>";							
-										$idRecord = $data['id_ejecucion_actividad'];
-										$idActividad = $data['fk_numero_actividad'];
-								?>		
-										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
-										<td ><?php echo $data['programado']; ?></td>
-										<td>
-											<?php
-												echo $data['ejecutado']; 
-											?>
-										</td>
+									if($estadoActividad){
+										$estado = $estadoActividad[0][$variable];
+										//si esta cerrado o aprobado por el supervisor o aprobado por planeacion, debe bloquear la edicion
+										if($estado == 2 || $estado == 3 || $estado == 5 ){
+											$deshabilidar = 'disabled';
+										}
+									}						
+									$idRecord = $data['id_ejecucion_actividad'];
+									$numeroActividad = $data['fk_numero_actividad'];
+							?>		
+									<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
+									<tr>
+										<td><?php echo $data['mes']; ?></td>
+										<td><?php echo $data['programado']; ?></td>
+										<td><?php echo $data['ejecutado']; ?></td>
 										<td>
 											<?php
 												if($data['descripcion_actividades'] != ''){
@@ -411,24 +431,13 @@ $(function(){
 												}
 											?>
 										</td>
-										<td class='text-center'>
-									<?php
-										if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
-									?>
-											<a class='btn btn-violeta btn-xs' href='<?php echo base_url('dashboard/deleteEjecucion/' . $idCuadroBase . '/' . $idActividad . '/' . $idRecord) ?>' id="btn-delete" title="Eliminar Fecha" >
-													<span class="fa fa-trash-o" aria-hidden="true"> </span>
-											</a>
-									<?php
-										}
-									?>
-										</td>
-								<?php
-										echo "</tr>";
-									endforeach;
-								?>
-								</tbody>
-							</table>
-						</form>
+									</tr>
+
+							<?php
+								endforeach;
+							?>
+							</tbody>
+						</table>
 					</div>	
 		<?php
 			}
@@ -440,26 +449,6 @@ $(function(){
 	</div>
 </div>
 		
-<!--INICIO Modal -->
-<div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" id="tablaDatos">
-
-		</div>
-	</div>
-</div>                       
-<!--FIN Modal -->
-
-<!--INICIO Modal -->
-<div class="modal fade text-center" id="modalEjecucion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
-	<div class="modal-dialog" role="document">
-		<div class="modal-content" id="tablaDatosEjecucion">
-
-		</div>
-	</div>
-</div>                       
-<!--FIN Modal -->
-
 <!-- Tables -->
 <script>
 $(document).ready(function() {

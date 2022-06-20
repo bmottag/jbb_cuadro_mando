@@ -375,28 +375,24 @@
 
 							<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $numeroActividad; ?>"/>
 							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>	
+							<h2 class="text-primary">-- Ejecución Actividad --</h2>
 
 							<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
 								<thead>
+							<?php
+								$deshabilidar = '';
+								if($numeroTrimestre){
+									$variable = 'estado_trimestre_' . $numeroTrimestre;
+									
+									if($estadoActividad){
+										$estado = $estadoActividad[0][$variable];
+										//si esta cerrado o aprobado por el supervisor o aprobado por planeacion, debe bloquear la edicion
+										if($estado == 2 || $estado == 3 || $estado == 5 ){
+											$deshabilidar = 'disabled';
+										}
+									}
+							?>
 									<tr class="text-primary">
-										<th colspan="4">
-											<h2>-- Ejecución Actividad --</h2>
-										</th>
-									</tr>
-									<?php
-										$deshabilidar = '';
-										if($numeroTrimestre){
-											$variable = 'estado_trimestre_' . $numeroTrimestre;
-											
-											if($estadoActividad){
-												$estado = $estadoActividad[0][$variable];
-												//si esta cerrado o aprobado por el supervisor o aprobado por planeacion, debe bloquear la edicion
-												if($estado == 2 || $estado == 3 || $estado == 5 ){
-													$deshabilidar = 'disabled';
-												}
-											}
-									?>
-									<tr class="info text-primary">
 										<th colspan="4">
 											<h4>Registrar la informacion para el <b>TRIMESTRE <?php echo $numeroTrimestre; ?></b></h4>
 										</th>
@@ -406,15 +402,15 @@
 										<th class="column-title text-right" colspan="4">
 											<textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Observación" required ></textarea><br>
 											<button type="submit" class="btn btn-primary" id="btnSubmit2" name="btnSubmit2" <?php echo $deshabilidar; ?> >
-												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
 											</button>
 										</th>
 									</tr>
-									<?php
-										}else{
-											$deshabilidar = 'disabled';
-										}
-									?>									
+							<?php
+								}else{
+									$deshabilidar = 'disabled';
+								}
+							?>	
 									<tr class="headings">
 										<th class="column-title" style="width: 10%">Mes</th>
 										<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
