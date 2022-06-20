@@ -45,7 +45,7 @@
 					<label class="control-label" for="order">Orden: *</label>
 					<select name="order" id="order" class="form-control" required>
 						<option value='' >Seleccione...</option>
-						<?php for ($i = 1; $i <= 25; $i++) { ?>
+						<?php for ($i = 1; $i <= 50; $i++) { ?>
 							<option value='<?php echo $i; ?>' <?php if ($information && $i == $information[0]["order"]) { echo 'selected="selected"'; } ?> ><?php echo $i; ?></option>
 						<?php } ?>									
 					</select>

@@ -36,7 +36,7 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA METAS PDD
+					<i class="fa fa-thumb-tack"></i> LISTA METAS PDD
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">

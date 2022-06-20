@@ -36,7 +36,7 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA METAS PROYECTOS INVERSIÓN
+					<i class="fa fa-thumb-tack"></i> LISTA METAS PROYECTOS INVERSIÓN
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
@@ -86,14 +86,14 @@ $(function(){
 					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
 						<thead>
 							<tr>
-								<th class="text-center">No.</th>
-								<th class="text-center">Proyecto Inversión</th>
-								<th class="text-center">Vigencia</th>
-								<th class="text-center">Meta Proyecto Inversión</th>
-								<th class="text-center">Presupuesto Meta</th>
-								<th class="text-center">Valor</th>
-								<th class="text-center">Unidad</th>
-								<th class="text-center">Editar</th>
+								<th width="5%" class="text-center">No.</th>
+								<th width="24%" class="text-center">Proyecto Inversión</th>
+								<th width="5%" class="text-center">Vigencia</th>
+								<th width="30%" class="text-center">Meta Proyecto Inversión</th>
+								<th width="10%" class="text-center">Presupuesto Meta</th>
+								<th width="8%" class="text-center">Valor</th>
+								<th width="8%" class="text-center">Unidad</th>
+								<th width="10%" class="text-center">Editar</th>
 							</tr>
 						</thead>
 						<tbody>							
@@ -101,11 +101,11 @@ $(function(){
 							foreach ($info as $lista):
 									echo "<tr>";
 									echo "<td class='text-center'>" . $lista['numero_meta_proyecto'] . "</td>";
-									echo "<td class='text-center'>" . $lista['numero_proyecto_inversion'] . " " . $lista['nombre_proyecto_inversion']  . "</td>";
+									echo "<td>" . $lista['numero_proyecto_inversion'] . " " . $lista['nombre_proyecto_inversion']  . "</td>";
 									echo "<td class='text-center'>" . $lista['vigencia_meta_proyecto'] . "</td>";
 									echo "<td>" . $lista['meta_proyecto'] . "</td>";
 									echo "<td class='text-right'>$ " . number_format($lista['presupuesto_meta']) . "</td>";
-									echo "<td>" . $lista['valor_meta_proyecto'] . "</td>";
+									echo "<td class='text-right'>" . $lista['valor_meta_proyecto'] . "</td>";
 									echo "<td>" . $lista['unidad_meta_proyecto'] . "</td>";
 									echo "<td class='text-center'>";
 						?>

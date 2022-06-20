@@ -1279,7 +1279,7 @@ class Settings extends CI_Controller {
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data['information'] = FALSE;
-			$data["numeroEstrategia"] = $this->input->post("numeroEstrategia");
+			$data["numeroObjetivoEstrategico"] = $this->input->post("numeroObjetivoEstrategico");
 			$data["idCuadroBase"] = $this->input->post("idCuadroBase");
 
 			if ($data["idCuadroBase"] != 'x') {
@@ -1289,8 +1289,8 @@ class Settings extends CI_Controller {
 				$data["numeroObjetivoEstrategico"] = $data['information'][0]['fk_numero_objetivo_estrategico'];
 			}
 
-			$arrParam = array("numeroEstrategia" => $data["numeroEstrategia"]);
-			$data['infoEstrategia'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+			$arrParam = array("numeroObjetivoEstrategico" => $data["numeroObjetivoEstrategico"]);
+			$data['infoObjetivoEstrategico'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
 			$arrParam = array(
 				"table" => "proyecto_inversion",

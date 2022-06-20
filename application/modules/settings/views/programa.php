@@ -36,7 +36,7 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA PROGRAMAS ESTRATÉGICOS
+					<i class="fa fa-thumb-tack"></i> LISTA PROGRAMAS ESTRATÉGICOS
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
@@ -45,7 +45,7 @@ $(function(){
 						</div>
 					</div>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body small">
 
 <?php
 	$retornoExito = $this->session->flashdata('retornoExito');

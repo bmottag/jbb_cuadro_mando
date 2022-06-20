@@ -6,7 +6,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'settings/cargarModalCuadroBase',
-                data: {'numeroEstrategia': oID, 'idCuadroBase': 'x'},
+                data: {'numeroObjetivoEstrategico': oID, 'idCuadroBase': 'x'},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatos').html(data);
@@ -19,7 +19,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'settings/cargarModalCuadroBase',
-                data: {'numeroEstrategia': '', 'idCuadroBase': oID},
+                data: {'numeroObjetivoEstrategico': '', 'idCuadroBase': oID},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatos').html(data);
@@ -66,11 +66,11 @@ if ($retornoError) {
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <i class="fa fa-thumb-tack fa-fw"></i> <b>PLAN ESTRATÉGICO</b>
+                    <i class="fa fa-cogs fa-fw"></i> <b>PLAN ESTRATÉGICO</b>
                 </div>
                 <div class="panel-body">
                     <?php 
-                        foreach ($listaEstrategias as $lista):
+                        foreach ($listaObjetivosEstrategicos as $lista):
                     ?>
                 <div class="row">
                     <div class="col-lg-12">
@@ -80,8 +80,8 @@ if ($retornoError) {
                                     <div class="col-lg-9">
                                         <h4 class="panel-title">
                                             <small>
-                                            <strong>Estrategia: </strong><br><?php echo $lista['objetivo_estrategico'] . ' ' . $lista['descripcion_objetivo_estrategico']; ?></br>
-                                            <strong>Objetivo Estratégico: </strong><br><?php echo $lista['numero_estrategia'] . ' ' . $lista['estrategia']; ?>
+                                            <strong>Estrategia: </strong><br><?php echo $lista['estrategia'] . ' ' . $lista['descripcion_estrategia']; ?></br>
+                                            <strong>Objetivo Estratégico: </strong><br><?php echo $lista['numero_objetivo_estrategico'] . ' ' . $lista['objetivo_estrategico']; ?>
                                             </small>
                                         </h4>
                                     </div>
@@ -93,7 +93,7 @@ if ($retornoError) {
 ?>
                                         <div class="pull-right">
                                             <div class="btn-group">                                                                             
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['numero_estrategia']; ?>">
+                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['numero_objetivo_estrategico']; ?>">
                                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Plan de Desarrollo Distrital
                                                 </button>
                                             </div>
@@ -110,7 +110,7 @@ if ($retornoError) {
                                     $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                     $resultados = $this->general_model->get_lista_resultados($arrParam);
 
-                                    $arrParam = array('numeroEstrategia' => $lista['numero_estrategia']);
+                                    $arrParam = array('numeroObjetivoEstrategico' => $lista['numero_objetivo_estrategico']);
                                     $cuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
 
                                     if($metas){

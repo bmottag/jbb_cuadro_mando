@@ -36,7 +36,7 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA LOGROS
+					<i class="fa fa-thumb-tack"></i> LISTA LOGROS
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
@@ -74,9 +74,9 @@ $(function(){
 					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
 						<thead>
 							<tr>
-								<th class="text-center">No.</th>
-								<th class="text-center">Logro</th>
-								<th class="text-center">Editar</th>
+								<th width="5%" class="text-center">No.</th>
+								<th width="80%" class="text-center">Logro</th>
+								<th width="15%" class="text-center">Editar</th>
 							</tr>
 						</thead>
 						<tbody>							
