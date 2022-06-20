@@ -130,9 +130,11 @@ class General_model extends CI_Model {
 		if (array_key_exists("filtroState", $arrData)) {
 			$this->db->where('U.state !=', 2);
 		}
-		
 		if (array_key_exists("idUser", $arrData)) {
 			$this->db->where('U.id_user', $arrData["idUser"]);
+		}
+		if (array_key_exists("idDependencia", $arrData)) {
+			$this->db->where('U.fk_id_dependencia_u', $arrData["idDependencia"]);
 		}
 		if (array_key_exists("idRole", $arrData)) {
 			$this->db->where('U.fk_id_user_role', $arrData["idRole"]);

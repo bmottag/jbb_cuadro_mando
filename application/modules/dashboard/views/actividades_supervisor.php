@@ -53,19 +53,43 @@
 			</div>';
 	}else{
 		foreach ($listaActividades as $lista):
+            //buscar SUPERVISORES
+			$arrParam = array(
+				"idDependencia" => $lista['fk_id_dependencia'],
+				"idRole" => ID_ROL_SUPERVISOR,
+				"filtroState" => TRUE
+			);
+            $supervisores = $this->general_model->get_user($arrParam);
+            //buscar ENLACES
+            $arrParam["idRole"] =  ID_ROL_ENLACE;
+            $enlaces = $this->general_model->get_user($arrParam);
 ?>
 					<div class="alert alert-info ">
 						<div class="row">
 							<div class="col-lg-8">
 								<h4><b>No. Actividad: <?php echo $lista['numero_actividad']; ?></b></h4>
+								<b>Actividad:</b><br> <?php echo $lista['descripcion_actividad']; ?>	
 							</div>
 							<div class="col-lg-4">
 								<div class="pull-right">
 									<h4><b><?php echo $lista['dependencia']; ?></b></h4>
+									<b>Supervisor:</b><br> 
+									<?php
+										if($supervisores){
+	                                        foreach ($supervisores as $datos):
+	                                            echo "<li>" . $datos["first_name"] . " " . $datos["last_name"] . "</li>";
+	                                        endforeach;										
+										} 
+                                    ?>
+									<br><b>Enlace:</b><br>
+									<?php
+										if($enlaces){
+	                                        foreach ($enlaces as $datos):
+	                                            echo "<li>" . $datos["first_name"] . " " . $datos["last_name"] . "</li>";
+	                                        endforeach;
+	                                    }
+                                    ?>
 								</div>
-							</div>
-							<div class="col-lg-12">
-								<b>Actividad:</b><br> <?php echo $lista['descripcion_actividad']; ?>	
 							</div>
 						</div>
 					</div>

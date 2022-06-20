@@ -1740,9 +1740,14 @@ class Settings extends CI_Controller {
 						$registros[] = $registro;
 					}
 					fclose($fichero);
-				
+
 					foreach ($registros as $lista) {
 						$idUsuario = $this->settings_model->$model($lista);
+
+						if($model == "cargar_actividades"){
+							//cargo registros en la tabla de estado actividad
+							$this->settings_model->cargar_actividades_estados($lista);
+						}
 					}
 				}
             }

@@ -586,6 +586,29 @@
 		public function cargar_actividades($lista) 
 		{
 				$query = $this->db->insert('actividades', $lista);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Cargar informacion 
+		 * @since 14/8/2017
+		 */
+		public function cargar_actividades_estados($lista) 
+		{
+				$data = array(
+					'fk_numero_actividad' => $lista["numero_actividad"],
+					'estado_trimestre_1' => 0,
+					'estado_trimestre_2' => 0,
+					'estado_trimestre_3' => 0,
+					'estado_trimestre_4' => 0
+				);
+
+				$query = $this->db->insert('actividad_estado', $data);
 				if ($query) {
 					return true;
 				} else {

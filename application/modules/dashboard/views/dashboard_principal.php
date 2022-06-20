@@ -206,9 +206,14 @@
                                                         <label class="control-label" for="numero_proyecto">No. Proyecto Inversión:</label>             
                                                         <select name="numero_proyecto" id="numero_proyecto" class="form-control" >
                                                             <option value="">Todas...</option>
-                                                            <?php for ($i = 0; $i < count($listaProyectos); $i++) { ?>
-                                                                <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_POST && $_POST["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
-                                                            <?php } ?>
+                                                            <?php 
+                                                            if($listaProyectos){
+                                                                for ($i = 0; $i < count($listaProyectos); $i++) { ?>
+                                                                    <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_POST && $_POST["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
+                                                            <?php 
+                                                                } 
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -218,9 +223,14 @@
                                                         <label class="control-label" for="id_dependencia">Dependencia:</label>                        
                                                         <select name="id_dependencia" id="id_dependencia" class="form-control" >
                                                             <option value="">Todas...</option>
-                                                            <?php for ($i = 0; $i < count($listaNumeroDependencia); $i++) { ?>
-                                                                <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_POST && $_POST["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
-                                                            <?php } ?>
+                                                            <?php
+                                                            if($listaNumeroDependencia){
+                                                                for ($i = 0; $i < count($listaNumeroDependencia); $i++) { ?>
+                                                                    <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_POST && $_POST["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
+                                                            <?php 
+                                                                } 
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -230,9 +240,14 @@
                                                         <label class="control-label" for="numero_actividad">No. Actividad:</label>                        
                                                         <select name="numero_actividad" id="numero_actividad" class="form-control" >
                                                             <option value="">Todas...</option>
-                                                            <?php for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
-                                                                <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
-                                                            <?php } ?>
+                                                            <?php 
+                                                            if($listaNumeroDependencia){
+                                                                for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
+                                                                    <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
+                                                            <?php 
+                                                                } 
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
