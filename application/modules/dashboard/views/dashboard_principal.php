@@ -304,11 +304,13 @@
                                                         <i class="fa fa-signal"></i> <strong><small>Meta</small></strong>
                                                     </div>
                                                     <div class="panel-body">
-                                                    <?php
-                                                    foreach ($metas as $lista):
-                                                        echo "<small>" . $lista["meta"] . "</small><br>";
-                                                    endforeach
-                                                    ?>
+                                                        <ul>
+                                                        <?php
+                                                        foreach ($metas as $lista):
+                                                            echo "<li><small>" . $lista["meta"] . "</small></li>";
+                                                        endforeach
+                                                        ?>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>

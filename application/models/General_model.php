@@ -345,9 +345,10 @@ class General_model extends CI_Model {
 		 */
 		public function get_lista_metas($arrData) 
 		{		
-				$this->db->select();				
+				$this->db->select();
+				$this->db->join('objetivos_estrategicos O', 'O.numero_objetivo_estrategico = E.fk_numero_objetivo_estrategico', 'INNER');			
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
-					$this->db->where('E.fk_numero_objetivo_estrategico', $arrData["numeroObjetivoEstrategico"]);
+					$this->db->where('E.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				$query = $this->db->get('objetivos_estrategicos_metas E');
 				if ($query->num_rows() > 0) {
@@ -365,7 +366,7 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select();				
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
-					$this->db->where('E.fk_numero_objetivo_estrategico', $arrData["numeroObjetivoEstrategico"]);
+					$this->db->where('E.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				$query = $this->db->get('objetivos_estrategicos_indicadores E');
 				if ($query->num_rows() > 0) {
@@ -383,7 +384,7 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select();				
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
-					$this->db->where('E.fk_numero_objetivo_estrategico', $arrData["numeroObjetivoEstrategico"]);
+					$this->db->where('E.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				$query = $this->db->get('objetivos_estrategicos_resultados E');
 				if ($query->num_rows() > 0) {

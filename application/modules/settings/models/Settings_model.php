@@ -421,6 +421,165 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add/Edit META objetivos_estrategicos
+		 * @since 20/06/2022
+		 */
+		public function saveMetaObjetivo() 
+		{
+				$idMetaObjetivoEstrategico = $this->input->post('hddId');
+				
+				$data = array(
+					'fk_numero_objetivo_estrategico' => $this->input->post('numeroObjetivoEstrategico'),
+					'meta' => $this->input->post('meta')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idMetaObjetivoEstrategico == '') {
+					$query = $this->db->insert('objetivos_estrategicos_metas', $data);		
+				} else {
+					$this->db->where('id_meta', $idMetaObjetivoEstrategico);
+					$query = $this->db->update('objetivos_estrategicos_metas', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Eliminar registros de la tabla actividad_historial,actividad_estado, actividad_ejecucion, actividades
+		 * @since  20/06/2022
+		 */
+		public function eliminarRegistrosActividades()
+		{
+				$sql = "TRUNCATE actividad_historial;";
+				$query = $this->db->query($sql);
+			
+				$sql = "TRUNCATE actividad_estado";
+				$query = $this->db->query($sql);
+
+				$sql = "TRUNCATE actividad_ejecucion";
+				$query = $this->db->query($sql);
+
+				$sql = "DELETE FROM actividades";
+				$query = $this->db->query($sql);
+				
+				$sql = "ALTER TABLE actividades AUTO_INCREMENT=1";
+				$query = $this->db->query($sql);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Eliminar registros de la tabla objetivos_estrategicos_metas
+		 * @since  20/06/2022
+		 */
+		public function eliminarMetasObjetivos()
+		{
+				$sql = "TRUNCATE objetivos_estrategicos_metas";
+				$query = $this->db->query($sql);
+				
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Eliminar registros de la tabla eliminarIndicadoresObjetivos
+		 * @since  20/06/2022
+		 */
+		public function eliminarIndicadoresObjetivos()
+		{
+				$sql = "TRUNCATE objetivos_estrategicos_indicadores";
+				$query = $this->db->query($sql);
+				
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Eliminar registros de la tabla objetivos_estrategicos_resultados
+		 * @since  20/06/2022
+		 */
+		public function eliminarResultadosObjetivos()
+		{
+				$sql = "TRUNCATE objetivos_estrategicos_resultados";
+				$query = $this->db->query($sql);
+				
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Cargar informacion 
+		 * @since 14/8/2017
+		 */
+		public function cargar_actividades($lista) 
+		{
+				$query = $this->db->insert('actividades', $lista);
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Cargar informacion 
+		 * @since 14/8/2017
+		 */
+		public function cargar_metas_objetivos_estrategicos($lista) 
+		{
+				$query = $this->db->insert('objetivos_estrategicos_metas', $lista);
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Cargar informacion 
+		 * @since 14/8/2017
+		 */
+		public function cargar_indicadores_objetivos_estrategicos($lista) 
+		{
+				$query = $this->db->insert('objetivos_estrategicos_indicadores', $lista);
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Cargar informacion 
+		 * @since 14/8/2017
+		 */
+		public function cargar_resultados_objetivos_estrategicos($lista) 
+		{
+				$query = $this->db->insert('objetivos_estrategicos_resultados', $lista);
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		

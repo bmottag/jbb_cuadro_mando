@@ -1506,6 +1506,253 @@ class Settings extends CI_Controller {
 		}			
 
     }
+
+	/**
+	 * mestas_objetivos_estrategicos
+     * @since 20/06/2022
+     * @author BMOTTAG
+	 */
+	public function mestas_objetivos_estrategicos()
+	{			
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_lista_metas($arrParam);
+			
+			$data["view"] = 'metas_objetivos_estrategicos';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario mestas_objetivos_estrategicos
+     * @since 20/06/2022
+     */
+    public function cargarModalMetasObjetivosEstrategicos() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idMetaObjetivoEstrategico"] = $this->input->post("idMetaObjetivoEstrategico");	
+	
+			$arrParam = array();
+			$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+
+			if ($data["idMetaObjetivoEstrategico"] != 'x') {
+				$arrParam = array(
+					"idMetaObjetivoEstrategico" => $data["idMetaObjetivoEstrategico"]
+				);
+				$data['information'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+			}			
+			$this->load->view("metas_objetivos_estrategicos_modal", $data);
+    }
+	
+	/**
+	 * Update mestas_objetivos_estrategicos
+     * @since 20/04/2022
+     * @author BMOTTAG
+	 */
+	public function save_metas_objetivos_estrategicos()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idMetaObjetivoEstrategico = $this->input->post('hddId');
+
+			$msj = "Se adicionó la Meta del Objetivo Estratégico!";
+			if ($idMetaObjetivoEstrategico != '') {
+				$msj = "Se actualizó la Meta del Objetivo Estratégico!";
+			}			
+
+			if ($idMetaObjetivoEstrategico = $this->settings_model->saveMetaObjetivo()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
+    }
+
+	/**
+	 * Formulario para eliminar registros de la base de datos
+     * @since 20/06/2022
+	 */
+	public function atencion_eliminar()
+	{
+			$userRol = $this->session->role;
+			if ($userRol != 99 ) { 
+				show_error('ERROR!!! - You are in the wrong place.');	
+			}
+		
+			$data["view"] = 'eliminar_db';
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * Eliminar registros de la base de datos
+	 * @since 20/06/2022
+	 */
+	public function eliminar_db()
+	{
+			header('Content-Type: application/json');
+			$data = array();
+
+			if ($this->settings_model->eliminarRegistrosActividades()) {
+				
+				$data["msj"] = "las tablas actividades, actividad_historial, actividad_estado, actividad_ejecucion, actividades";
+				
+				$data["result"] = true;
+				$data["mensaje"] = "Se eliminaron los registros.";
+				$this->session->set_flashdata('retornoExito', 'Se eliminó los registros de ' . $data["msj"]);
+			}else{
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Contactarse con el Administrador.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Contactarse con el Administrador');
+			}
+
+			echo json_encode($data);
+	}
+
+	/**
+	 * Eliminar metas objetivos estrategicos
+	 * @since 20/06/2022
+	 */
+	public function eliminar_metas_objetivos_db()
+	{
+			header('Content-Type: application/json');
+			$data = array();
+
+			if ($this->settings_model->eliminarMetasObjetivos()) {
+				
+				$data["msj"] = " la tabla objetivos_estrategicos_metas.";
+
+				$data["result"] = true;
+				$data["mensaje"] = "Se eliminaron los registros.";
+				$this->session->set_flashdata('retornoExito', 'Se eliminó los registros de ' . $data["msj"]);
+			}else{
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Contactarse con el Administrador.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Contactarse con el Administrador');
+			}
+
+			echo json_encode($data);
+	}
+
+	/**
+	 * Eliminar INDICADORES objetivos estrategicos
+	 * @since 20/06/2022
+	 */
+	public function eliminar_indicadores_objetivos_db()
+	{
+			header('Content-Type: application/json');
+			$data = array();
+
+			if ($this->settings_model->eliminarIndicadoresObjetivos()) {
+				
+				$data["msj"] = " la tabla objetivos_estrategicos_indicadores.";
+
+				$data["result"] = true;
+				$data["mensaje"] = "Se eliminaron los registros.";
+				$this->session->set_flashdata('retornoExito', 'Se eliminó los registros de ' . $data["msj"]);
+			}else{
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Contactarse con el Administrador.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Contactarse con el Administrador');
+			}
+
+			echo json_encode($data);
+	}
+
+	/**
+	 * Eliminar RESULTADOS objetivos estrategicos
+	 * @since 20/06/2022
+	 */
+	public function eliminar_resultados_objetivos_db()
+	{
+			header('Content-Type: application/json');
+			$data = array();
+
+			if ($this->settings_model->eliminarResultadosObjetivos()) {
+				
+				$data["msj"] = " la tabla objetivos_estrategicos_resultados.";
+
+				$data["result"] = true;
+				$data["mensaje"] = "Se eliminaron los registros.";
+				$this->session->set_flashdata('retornoExito', 'Se eliminó los registros de ' . $data["msj"]);
+			}else{
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Contactarse con el Administrador.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Contactarse con el Administrador');
+			}
+
+			echo json_encode($data);
+	}
+
+	/**
+	 * Cargar la informacion
+     * @since 20/06/2022
+	 */
+	public function subir_archivo($model, $error="", $success="")
+	{		
+			$data["error"] = $error;
+			$data["success"] = $success;
+			$data["view"] = "cargar_informacion";
+			$data["model"] = $model;
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 *Cargue de archivo
+     * @since 20/06/2022
+	 */
+	public function do_upload($model)
+	{		
+            $config['upload_path'] = './tmp/';
+            $config['overwrite'] = true;
+            $config['allowed_types'] = 'csv';
+            $config['max_size'] = '5000';
+            $config['file_name'] = $model . '.csv';
+
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload()) {
+                $error = $this->upload->display_errors();
+                $msgError = html_escape(substr($error, 3, -4));
+                $this->subir_archivo($msgError);
+            }else {				
+                $file_info = $this->upload->data();
+                $data = array('upload_data' => $this->upload->data());
+
+                $archivo = $file_info['file_name'];
+
+				$registros = array();
+				if (($fichero = fopen(FCPATH . 'tmp/' . $archivo, "a+")) !== FALSE) {
+					// Lee los nombres de los campos
+					$nombres_campos = fgetcsv($fichero, 0, ";");
+					$num_campos = count($nombres_campos);
+					// Lee los registros
+
+					while (($datos = fgetcsv($fichero, 0, ";")) !== FALSE) {
+						// Crea un array asociativo con los nombres y valores de los campos
+						for ($icampo = 0; $icampo < $num_campos; $icampo++) {
+							$registro[$nombres_campos[$icampo]] = utf8_encode($datos[$icampo]);
+						}
+						// Añade el registro leido al array de registros
+						$registros[] = $registro;
+					}
+					fclose($fichero);
+				
+					foreach ($registros as $lista) {
+						$idUsuario = $this->settings_model->$model($lista);
+					}
+				}
+            }
+			
+			$vista = $model;
+
+			$success = 'El archivo se cargó correctamente.';
+			$this->subir_archivo($vista,'', $success);
+			
+    }
 	
 
 	
