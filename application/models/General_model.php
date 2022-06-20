@@ -728,9 +728,7 @@ class General_model extends CI_Model {
 		public function get_user_encargado_by_actividad($arrData) 
 		{					
 				$this->db->select('id_user');
-				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('cuadro_base_dependencias T', 'T.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
-				$this->db->join('usuarios U', 'U.fk_id_dependencia_u = T.fk_id_dependencia', 'INNER');
+				$this->db->join('usuarios U', 'U.fk_id_dependencia_u = A.fk_id_dependencia', 'INNER');
 				if (array_key_exists("idRol", $arrData)) {
 					$this->db->where('U.fk_id_user_role', $arrData["idRol"]);
 				}

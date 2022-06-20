@@ -102,10 +102,19 @@ $(function(){
 		foreach ($listaActividades as $lista):
 ?>
 					<div class="alert alert-info ">
-						<h4><b>No. Actividad:</b> <?php echo $lista['numero_actividad']; ?></h4>
-						<br><b>Actividad:</b><br> <?php echo $lista['descripcion_actividad']; ?>
-						<br><br><b>Dependencia: <?php echo $lista['dependencia']; ?></b>
-						
+						<div class="row">
+							<div class="col-lg-8">
+								<h4><b>No. Actividad: <?php echo $lista['numero_actividad']; ?></b></h4>
+							</div>
+							<div class="col-lg-4">
+								<div class="pull-right">
+									<h4><b><?php echo $lista['dependencia']; ?></b></h4>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<b>Actividad:</b><br> <?php echo $lista['descripcion_actividad']; ?>	
+							</div>
+						</div>
 					</div>
 					<table class="table table-hover">
 						<thead>

@@ -292,28 +292,29 @@ class Dashboard extends CI_Controller {
 
 	/**
 	 * Actualizar ejecucion
-     * @since 17/04/2022
+     * @since 18/06/2022
      * @author BMOTTAG
 	 */
 	public function update_ejecucion()
 	{					
-			$numeroActividad = $this->input->post('hddnumeroActividad');
+			$numeroActividad = $this->input->post('hddNumeroActividad');
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
-			$mes = $this->input->post('hddMes');
+			
+			if ($this->dashboard_model->guardarEjecucion()) {
 
-			if ($this->dashboard_model->guardarEjecucion())
-			{
 				//actualizo el estado del trimestre de la actividad
 				$arrParam = array(
 					"numeroActividad" => $numeroActividad,
 					"numeroTrimestre" => $this->input->post('hddNumeroTrimestre'),
-					"observacion" => 'Se realizó registro de información para el mes de ' . $mes . '.',
+					"observacion" => $this->input->post('observacion'),
 					"estado" => 1
 				);
 				$this->dashboard_model->addHistorialActividad($arrParam);
 
 				//actualizo el estado del trimestre de la actividad
 				$this->dashboard_model->updateEstadoActividad($arrParam);
+
+
 
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', "Se actualizó la información!!");

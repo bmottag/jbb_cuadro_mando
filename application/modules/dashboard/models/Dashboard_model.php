@@ -140,26 +140,34 @@
 
 		/**
 		 * Guardar Ejecucion Actividades
-		 * @since 17/04/2022
+		 * @since 18/06/2022
 		 */
 		public function guardarEjecucion() 
 		{
-				$idEjecucion = $this->input->post('hddId');
+				//update states
+				$query = 1;
 				$idUser = $this->session->userdata("id");
-		
-				$data = array(
-					'fk_id_responsable' => $idUser,
-					'ejecutado' => $this->input->post('ejecutado'),
-					'descripcion_actividades' => $this->input->post('descripcion'),
-					'evidencias' => $this->input->post('evidencia'),
-					'fecha_actualizacion' => date("Y-m-d G:i:s")
-				);	
-				$this->db->where('id_ejecucion_actividad ', $idEjecucion);
-				$query = $this->db->update(' actividad_ejecucion ', $data);
-
-				if ($query) {
+				
+				$datos = $this->input->post('form');
+				if($datos) {
+					$tot = count($datos['id']);
+					for ($i = 0; $i < $tot; $i++) 
+					{					
+						$data = array(
+							'fk_id_responsable' => $idUser,
+							'ejecutado' => $datos['ejecutado'][$i],
+							'descripcion_actividades' => $datos['descripcion'][$i],
+							'evidencias' => $datos['evidencia'][$i],
+							'fecha_actualizacion' => date("Y-m-d G:i:s")
+						);
+						$this->db->where('id_ejecucion_actividad', $datos['id'][$i]);
+						$query = $this->db->update('actividad_ejecucion', $data);
+					}
+				}
+				
+				if ($query){
 					return true;
-				} else {
+				} else{
 					return false;
 				}
 		}
