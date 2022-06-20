@@ -138,21 +138,21 @@
 		 * Add/Edit OBJETIVO ESTRATEGICO
 		 * @since 15/04/2022
 		 */
-		public function saveObjetivo() 
+		public function saveEstrategia() 
 		{
 				$idObjetivo= $this->input->post('hddId');
 				
 				$data = array(
-					'objetivo_estrategico' => $this->input->post('objetivo_estrategico'),
-					'descripcion_objetivo_estrategico' => $this->input->post('descripcion')
+					'estrategia' => $this->input->post('estrategia'),
+					'descripcion_estrategia' => $this->input->post('descripcion')
 				);
 				
 				//revisar si es para adicionar o editar
 				if ($idObjetivo == '') {
-					$query = $this->db->insert('objetivos_estrategicos', $data);		
+					$query = $this->db->insert('estrategias', $data);		
 				} else {
-					$this->db->where('id_objetivo_estrategico', $idObjetivo);
-					$query = $this->db->update('objetivos_estrategicos ', $data);
+					$this->db->where('id_estrategia', $idObjetivo);
+					$query = $this->db->update('estrategias', $data);
 				}
 				if ($query) {
 					return true;
@@ -334,25 +334,25 @@
 		}
 
 		/**
-		 * Add/Edit ESTRATEGIA
+		 * Add/Edit objetivos_estrategicos
 		 * @since 26/04/2022
 		 */
-		public function saveEstrategia() 
+		public function saveObjetivo() 
 		{
-				$idEstrategia = $this->input->post('hddId');
+				$idObjetivoEstrategico = $this->input->post('hddId');
 				
 				$data = array(
-					'fk_id_objetivo_estrategico' => $this->input->post('idObjetivo'),
-					'numero_estrategia' => $this->input->post('numero_estrategia'),
-					'estrategia' => $this->input->post('estrategia')
+					'fk_id_estrategia' => $this->input->post('idEstrategia'),
+					'numero_objetivo_estrategico' => $this->input->post('numero_objetivo_estrategico'),
+					'objetivo_estrategico' => $this->input->post('objetivo_estrategico')
 				);
 				
 				//revisar si es para adicionar o editar
-				if ($idEstrategia == '') {
-					$query = $this->db->insert('estrategias', $data);		
+				if ($idObjetivoEstrategico == '') {
+					$query = $this->db->insert('objetivos_estrategicos', $data);		
 				} else {
-					$this->db->where('id_estrategia', $idEstrategia);
-					$query = $this->db->update('estrategias', $data);
+					$this->db->where('id_objetivo_estrategico', $idObjetivoEstrategico);
+					$query = $this->db->update('objetivos_estrategicos', $data);
 				}
 				if ($query) {
 					return true;
@@ -367,7 +367,7 @@
 		 */
 		public function savePlanEstrategico() 
 		{
-				$numeroEstrategia = $this->input->post('hddNumeroEstrategia');
+				$numeroObjetivoEstrategico = $this->input->post('hddObjetivoEstrategico');
 				$idCuadroBase = $this->input->post('hddIdCuadroBase');
 		
 				$data = array(
@@ -382,7 +382,7 @@
 
 				//revisar si es para adicionar o editar
 				if ($idCuadroBase == 'x') {
-					$data['fk_numero_estrategia'] = $numeroEstrategia;
+					$data['fk_numero_objetivo_estrategico'] = $numeroObjetivoEstrategico;
 					$query = $this->db->insert('cuadro_base', $data);
 				} else {
 					$this->db->where('id_cuadro_base', $idCuadroBase);

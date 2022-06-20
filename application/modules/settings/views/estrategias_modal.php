@@ -1,8 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/estrategias.js"); ?>"></script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="exampleModalLabel">Formulario Objetivos Estratégicos
-	<br><small>Adicionar/Editar Objetivos Estratégicos</small>
+	<h4 class="modal-title" id="exampleModalLabel">Formulario Estrategias
+	<br><small>Adicionar/Editar Estrategias.</small>
 	</h4>
 </div>
 
@@ -10,26 +10,12 @@
 	<p class="text-danger text-left">Los campos con * son obligatorios.</p>
 	<form name="form" id="form" role="form" method="post" >
 		<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_estrategia"]:""; ?>"/>
-			
+		
 		<div class="row">
-			<div class="col-sm-12">		
+			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="idObjetivo">Estrategia: *</label>
-					<select name="idObjetivo" id="idObjetivo" class="form-control" required >
-						<option value="">Seleccione...</option>
-						<?php for ($i = 0; $i < count($objetivos); $i++) { ?>
-							<option value="<?php echo $objetivos[$i]["id_objetivo_estrategico"]; ?>" <?php if($information && $information[0]["fk_id_objetivo_estrategico"] == $objetivos[$i]["id_objetivo_estrategico"]) { echo "selected"; }  ?>><?php echo $objetivos[$i]["objetivo_estrategico"]; ?></option>	
-						<?php } ?>
-					</select>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-6">
-				<div class="form-group text-left">
-					<label class="control-label" for="numero_estrategia">No. Objetivo Estratégico: *</label>
-					<input type="number" min="1" max="9999" step="any" id="numero_estrategia" name="numero_estrategia" class="form-control" value="<?php echo $information?$information[0]["numero_estrategia"]:""; ?>" placeholder="No. Objetivo Estratégico" required >
+					<label class="control-label" for="estrategia">Estrategia: *</label>
+					<input type="text" id="estrategia" name="estrategia" class="form-control" value="<?php echo $information?$information[0]["estrategia"]:""; ?>" placeholder="Estrategia" required >
 				</div>
 			</div>
 		</div>
@@ -37,8 +23,8 @@
 		<div class="row">				
 			<div class="col-sm-12">		
 				<div class="form-group text-left">
-					<label class="control-label" for="estrategia">Objetivo Estratégico: *</label>
-					<textarea id="estrategia" name="estrategia" placeholder="Objetivo Estratégico" class="form-control" rows="3" required><?php echo $information?$information[0]["estrategia"]:""; ?></textarea>
+					<label class="control-label" for="descripcion">Descripción: *</label>
+					<textarea id="descripcion" name="descripcion" placeholder="Descripción" class="form-control" rows="3" required><?php echo $information?$information[0]["descripcion_estrategia"]:""; ?></textarea>
 				</div>
 			</div>
 		</div>
@@ -65,5 +51,6 @@
 				</div>
 			</div>
 		</div>
+			
 	</form>
 </div>

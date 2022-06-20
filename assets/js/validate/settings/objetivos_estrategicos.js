@@ -1,9 +1,13 @@
 $( document ).ready( function () {
+
+	$("#numero_estrategia").bloquearTexto().maxlength(4);
+	
 	
 	$( "#form" ).validate( {
 		rules: {
-			objetivo_estrategico:		{ required: true, maxlength:50 },
-			descripcion:				{ required: true }
+			idEstrategia:						{ required: true },
+			numero_objetivo_estrategico:		{ required: true, minlength: 1, maxlength:4 },
+			objetivo_estrategico:				{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {

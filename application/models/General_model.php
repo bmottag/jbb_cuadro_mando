@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -260,25 +260,25 @@ class General_model extends CI_Model {
 	}
 	
 		/**
-		 * Consulta lista de estrategias
+		 * Consulta lista de objetivos estrategicos
 		 * @since 15/04/2022
 		 */
-		public function get_estrategias($arrData) 
+		public function get_objetivos_estrategicos($arrData) 
 		{		
 				$this->db->select();
-				$this->db->join('objetivos_estrategicos O', 'O.id_objetivo_estrategico = E.fk_id_objetivo_estrategico', 'INNER');
-				if (array_key_exists("idEstrategia", $arrData)) {
-					$this->db->where('E.id_estrategia', $arrData["idEstrategia"]);
+				$this->db->join('estrategias O', 'O.id_estrategia = E.fk_id_estrategia', 'INNER');
+				if (array_key_exists("idObjetivoEstrategico", $arrData)) {
+					$this->db->where('E.id_objetivo_estrategico', $arrData["idObjetivoEstrategico"]);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('E.numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('E.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				if (array_key_exists("filtroEstrategias", $arrData)) {
-					$where = "E.id_estrategia IN (" . $arrData["filtroEstrategias"] . ")";
+					$where = "E.id_objetivo_estrategico IN (" . $arrData["filtroEstrategias"] . ")";
 					$this->db->where($where);
 				}
-				$this->db->order_by('numero_estrategia', 'asc');
-				$query = $this->db->get('estrategias E');
+				$this->db->order_by('numero_objetivo_estrategico', 'asc');
+				$query = $this->db->get('objetivos_estrategicos E');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {
@@ -307,11 +307,11 @@ class General_model extends CI_Model {
 					$where = "C.id_cuadro_base IN (" . $arrData["filtroCuadroBase"] . ")";
 					$this->db->where($where);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('C.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				if (array_key_exists("idEstrategia", $arrData)) {
-					$this->db->where('C.fk_id_estrategia', $arrData["idEstrategia"]);
+					$this->db->where('C.fk_id_objetivo_estrategico', $arrData["idEstrategia"]);
 				}
 				if (array_key_exists("idMetaProyecto", $arrData)) {
 					$this->db->where('C.fk_id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
@@ -346,10 +346,10 @@ class General_model extends CI_Model {
 		public function get_lista_metas($arrData) 
 		{		
 				$this->db->select();				
-				if (array_key_exists("idEstrategia", $arrData)) {
-					$this->db->where('E.fk_id_estrategia', $arrData["idEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('E.fk_numero_objetivo_estrategico', $arrData["numeroObjetivoEstrategico"]);
 				}
-				$query = $this->db->get('estrategias_metas E');
+				$query = $this->db->get('objetivos_estrategicos_metas E');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {
@@ -364,10 +364,10 @@ class General_model extends CI_Model {
 		public function get_lista_indicadores($arrData) 
 		{		
 				$this->db->select();				
-				if (array_key_exists("idEstrategia", $arrData)) {
-					$this->db->where('E.fk_id_estrategia', $arrData["idEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('E.fk_numero_objetivo_estrategico', $arrData["numeroObjetivoEstrategico"]);
 				}
-				$query = $this->db->get('estrategias_indicadores E');
+				$query = $this->db->get('objetivos_estrategicos_indicadores E');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {
@@ -382,10 +382,10 @@ class General_model extends CI_Model {
 		public function get_lista_resultados($arrData) 
 		{		
 				$this->db->select();				
-				if (array_key_exists("idEstrategia", $arrData)) {
-					$this->db->where('E.fk_id_estrategia', $arrData["idEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('E.fk_numero_objetivo_estrategico', $arrData["numeroObjetivoEstrategico"]);
 				}
-				$query = $this->db->get('estrategias_resultados E');
+				$query = $this->db->get('objetivos_estrategicos_resultados E');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {
@@ -524,15 +524,15 @@ class General_model extends CI_Model {
 		 * Consulta lista de estratgias
 		 * @since 23/04/2022
 		 */
-		public function get_estrategias_by_dependencia($arrData) 
+		public function get_objetivos_estrategicos_by_dependencia($arrData) 
 		{					
-				$this->db->select('id_estrategia');
+				$this->db->select('id_objetivo_estrategico');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('estrategias E', 'E.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+				$this->db->join('objetivos_estrategicos E', 'E.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
-				$this->db->group_by("E.id_estrategia");
+				$this->db->group_by("E.id_objetivo_estrategico");
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
@@ -556,8 +556,8 @@ class General_model extends CI_Model {
 				if($userRol == ID_ROL_SUPERVISOR){
 					$this->db->where('C.fk_id_dependencia', $idDependencia);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('C.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				$this->db->group_by("A.fk_id_cuadro_base");
 				$query = $this->db->get('actividades A');
@@ -597,7 +597,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full($arrData) 
 		{		
-				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
+				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_objetivo_estrategico, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
 				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
@@ -616,8 +616,8 @@ class General_model extends CI_Model {
 				if (array_key_exists("idCuadroBase", $arrData)) {
 					$this->db->where('A.fk_id_cuadro_base', $arrData["idCuadroBase"]);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('C.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				if (array_key_exists("filtroCuadroBase", $arrData)) {
 					$where = "C.id_cuadro_base IN (" . $arrData["filtroCuadroBase"] . ")";
@@ -685,14 +685,14 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full_by_dependencia($arrData) 
 		{		
-				$this->db->select("A.*, D.dependencia, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, numero_estrategia, estrategia, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
+				$this->db->select("A.*, D.dependencia, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, numero_objetivo_estrategico, objetivo_estrategico, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
 				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
 				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				$this->db->join('proyecto_inversion P', 'P.numero_proyecto_inversion = C.fk_numero_proyecto_inversion', 'INNER');
-				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+				$this->db->join('objetivos_estrategicos ES', 'ES.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
 				$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
 				$this->db->join('propositos X', 'X.numero_proposito = C.fk_numero_proposito', 'INNER');
 				$this->db->join('logros L', 'L.numero_logro  = C.fk_numero_logro', 'INNER');
@@ -703,8 +703,8 @@ class General_model extends CI_Model {
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('C.fk_numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('C.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				if (array_key_exists("numeroProyecto", $arrData)) {
 					$this->db->where('P.numero_proyecto_inversion', $arrData["numeroProyecto"]);
@@ -772,15 +772,15 @@ class General_model extends CI_Model {
 		 */
 		public function get_numero_actividades_full_by_dependencia($arrData) 
 		{		
-				$this->db->select("A.numero_actividad, numero_estrategia, estrategia");
+				$this->db->select("A.numero_actividad, numero_objetivo_estrategico, objetivo_estrategico");
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+				$this->db->join('objetivos_estrategicos ES', 'ES.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
 
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('ES.numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('ES.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				if (array_key_exists("numeroProyecto", $arrData)) {
 					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
@@ -802,13 +802,13 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select("distinct(fk_numero_proyecto_inversion) numero_proyecto");
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+				$this->db->join('objetivos_estrategicos ES', 'ES.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
 
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('ES.numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('ES.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				if (array_key_exists("numeroProyecto", $arrData)) {
 					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
@@ -830,14 +830,14 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select("distinct(id_dependencia), dependencia");
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-				$this->db->join('estrategias ES', 'ES.numero_estrategia = C.fk_numero_estrategia', 'INNER');
+				$this->db->join('objetivos_estrategicos ES', 'ES.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
 				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
 
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
-				if (array_key_exists("numeroEstrategia", $arrData)) {
-					$this->db->where('ES.numero_estrategia like', $arrData["numeroEstrategia"]);
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('ES.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				if (array_key_exists("numeroProyecto", $arrData)) {
 					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);

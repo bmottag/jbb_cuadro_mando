@@ -14,16 +14,16 @@
                 </div>
                 <div class="panel-body">
                     <?php         
-                    if(!$listaEstrategias){ 
+                    if(!$listaObjetivosEstrategicos){ 
                         echo '<div class="row">';
                         echo '<div class="col-lg-12">
                                 <p class="text-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No le han asignado actividades.</p>
                             </div>';
                         echo '</div>';
                     }else{
-                        foreach ($listaEstrategias as $infoEstrategia):
+                        foreach ($listaObjetivosEstrategicos as $infoEstrategia):
                              $arrParam = array(
-                                "numeroEstrategia" => $infoEstrategia["numero_estrategia"],
+                                "numeroEstrategia" => $infoEstrategia["numero_objetivo_estrategico"],
                                 "idDependencia" => $infoDependencia[0]['id_dependencia']
                             );                               
                             $listaActividades = $this->general_model->get_actividades_full_by_dependencia($arrParam);
@@ -33,8 +33,8 @@
                             <div class="col-lg-12">
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
-                                            <strong>Estrategia: </strong><?php echo $infoEstrategia['objetivo_estrategico']; ?></br>
-                                            <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_estrategia'] . ' ' . $infoEstrategia['estrategia']; ?>
+                                            <strong>Estrategia: </strong><?php echo $infoEstrategia['estrategia']; ?></br>
+                                            <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_objetivo_estrategico'] . ' ' . $infoEstrategia['objetivo_estrategico']; ?>
                                     </div>
                                     <div class="panel-body small">
                                     <?php

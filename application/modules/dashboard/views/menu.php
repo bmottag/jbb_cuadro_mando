@@ -3,7 +3,7 @@
 		<div class="panel-heading small">
 			<i class="fa fa-thumb-tack"></i> 
 				<strong>Objetivos Estratégicos: </strong>
-				<br><?php echo $listaEstrategias[0]['numero_estrategia'] . ' ' . $listaEstrategias[0]['estrategia']; ?>
+				<br><?php echo $listaObjetivosEstrategicos[0]['numero_objetivo_estrategico'] . ' ' . $listaObjetivosEstrategicos[0]['objetivo_estrategico']; ?>
 		</div>
 		<div class="panel-body small">
 			<strong>Meta Proyecto Inversión: </strong><br><?php echo $infoCuadroBase[0]['meta_proyecto']; ?><br>

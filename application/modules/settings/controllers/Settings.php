@@ -301,65 +301,65 @@ class Settings extends CI_Controller {
     }
 
 	/**
-	 * Lista de objetivos_estrategicos
+	 * Lista de estrategias
      * @since 15/04/2022
      * @author BMOTTAG
 	 */
-	public function objetivos_estrategicos()
+	public function estrategias()
 	{
 			$arrParam = array(
-				"table" => "objetivos_estrategicos",
-				"order" => "id_objetivo_estrategico",
+				"table" => "estrategias",
+				"order" => "id_estrategia",
 				"id" => "x"
 			);
 			$data['info'] = $this->general_model->get_basic_search($arrParam);
 			
-			$data["view"] = 'objetivos_estrategicos';
+			$data["view"] = 'estrategias';
 			$this->load->view("layout_calendar", $data);
 	}
 	
     /**
-     * Cargo modal - formulario objetivos_estrategicos
+     * Cargo modal - formulario estrategias
      * @since 15/04/2022
      */
-    public function cargarModalObjetivosEstrategicos() 
+    public function cargarModalEstrategias() 
 	{
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data['information'] = FALSE;
-			$data["idObjetivo"] = $this->input->post("idObjetivo");	
+			$data["idEstrategia"] = $this->input->post("idEstrategia");	
 			
-			if ($data["idObjetivo"] != 'x') {
+			if ($data["idEstrategia"] != 'x') {
 				$arrParam = array(
-					"table" => "objetivos_estrategicos",
-					"order" => "objetivo_estrategico",
-					"column" => "id_objetivo_estrategico",
-					"id" => $data["idObjetivo"]
+					"table" => "estrategias",
+					"order" => "estrategia",
+					"column" => "id_estrategia",
+					"id" => $data["idEstrategia"]
 				);
 				$data['information'] = $this->general_model->get_basic_search($arrParam);
 			}
 			
-			$this->load->view("objetivos_estrategicos_modal", $data);
+			$this->load->view("estrategias_modal", $data);
     }
 	
 	/**
-	 * Ingresar/Actualizar objetivos_estrategicos
+	 * Ingresar/Actualizar estrategias
      * @since 15/04/2022
      * @author BMOTTAG
 	 */
-	public function save_objetivos_estrategicos()
+	public function save_estrategias()
 	{			
 			header('Content-Type: application/json');
 			$data = array();
 			
-			$idObjetivo = $this->input->post('hddId');
+			$idEstrategia = $this->input->post('hddId');
 			
-			$msj = "Se adicionó el Objetivo Estratégico!";
-			if ($idObjetivo != '') {
-				$msj = "Se actualizó el Objetivo Estratégico!";
+			$msj = "Se adicionó la Estrategia!";
+			if ($idEstrategia != '') {
+				$msj = "Se actualizó la Estrategia!";
 			}
 
-			if ($idObjetivo = $this->settings_model->saveObjetivo()) {
+			if ($idEstrategia = $this->settings_model->saveEstrategia()) {
 				$data["result"] = true;				
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
 			} else {
@@ -936,64 +936,64 @@ class Settings extends CI_Controller {
 	}
 
 	/**
-	 * Estrategias
+	 * objetivos_estrategicos
      * @since 26/04/2022
      * @author BMOTTAG
 	 */
-	public function estrategias()
+	public function objetivos_estrategicos()
 	{			
 			$arrParam = array();
-			$data['info'] = $this->general_model->get_estrategias($arrParam);
+			$data['info'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			
-			$data["view"] = 'estrategias';
+			$data["view"] = 'objetivos_estrategicos';
 			$this->load->view("layout_calendar", $data);
 	}
 	
     /**
-     * Cargo modal - formulario estrategias
+     * Cargo modal - formulario objetivos_estrategicos
      * @since 26/04/2022
      */
-    public function cargarModalEstrategias() 
+    public function cargarModalObjetivosEstrategicos() 
 	{
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data['information'] = FALSE;
-			$data["idEstrategia"] = $this->input->post("idEstrategia");	
+			$data["idObjetivoEstrategico"] = $this->input->post("idObjetivoEstrategico");	
 	
 			$arrParam = array(
-				"table" => "objetivos_estrategicos",
-				"order" => "id_objetivo_estrategico",
+				"table" => "estrategias",
+				"order" => "id_estrategia",
 				"id" => "x"
 			);
-			$data['objetivos'] = $this->general_model->get_basic_search($arrParam);
+			$data['estrategias'] = $this->general_model->get_basic_search($arrParam);
 
-			if ($data["idEstrategia"] != 'x') {
+			if ($data["idObjetivoEstrategico"] != 'x') {
 				$arrParam = array(
-					"idEstrategia" => $data["idEstrategia"]
+					"idObjetivoEstrategico" => $data["idObjetivoEstrategico"]
 				);
-				$data['information'] = $this->general_model->get_estrategias($arrParam);
+				$data['information'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			}			
-			$this->load->view("estrategias_modal", $data);
+			$this->load->view("objetivos_estrategicos_modal", $data);
     }
 	
 	/**
-	 * Update estrategias
+	 * Update objetivos_estrategicos
      * @since 26/04/2022
      * @author BMOTTAG
 	 */
-	public function save_estrategias()
+	public function save_objetivos_estrategicos()
 	{			
 			header('Content-Type: application/json');
 			$data = array();
 			
-			$idEstrategia = $this->input->post('hddId');
+			$idObjetivoEstrategico = $this->input->post('hddId');
 
-			$msj = "Se adicionó la Estretegia!";
-			if ($idEstrategia != '') {
-				$msj = "Se actualizó la Estrategia!";
+			$msj = "Se adicionó el Objetivo Estratégico!";
+			if ($idObjetivoEstrategico != '') {
+				$msj = "Se actualizó el Objetivo Estratégico!";
 			}			
 
-			if ($idEstrategia = $this->settings_model->saveEstrategia()) {
+			if ($idObjetivoEstrategico = $this->settings_model->saveObjetivo()) {
 				$data["result"] = true;				
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
 			} else {
@@ -1257,14 +1257,14 @@ class Settings extends CI_Controller {
 	public function plan_estrategico()
 	{				
 			$arrParam = array();
-			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
+			$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
 			$arrParam = array(
-				"table" => "objetivos_estrategicos",
-				"order" => "objetivo_estrategico",
+				"table" => "estrategias",
+				"order" => "estrategia",
 				"id" => "x"
 			);
-			$data['listaObjetivos'] = $this->general_model->get_basic_search($arrParam);
+			$data['listaEstrategias'] = $this->general_model->get_basic_search($arrParam);
 
 			$data["view"] = "plan_estrategico";
 			$this->load->view("layout_calendar", $data);
@@ -1286,11 +1286,11 @@ class Settings extends CI_Controller {
 				$arrParam = array("idCuadroBase" => $data["idCuadroBase"]);
 				$data['information'] = $this->general_model->get_lista_cuadro_mando($arrParam);//info bloques
 				
-				$data["numeroEstrategia"] = $data['information'][0]['fk_numero_estrategia'];
+				$data["numeroObjetivoEstrategico"] = $data['information'][0]['fk_numero_objetivo_estrategico'];
 			}
 
 			$arrParam = array("numeroEstrategia" => $data["numeroEstrategia"]);
-			$data['infoEstrategia'] = $this->general_model->get_estrategias($arrParam);
+			$data['infoEstrategia'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
 			$arrParam = array(
 				"table" => "proyecto_inversion",

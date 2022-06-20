@@ -1,13 +1,9 @@
 $( document ).ready( function () {
-
-	$("#numero_estrategia").bloquearTexto().maxlength(4);
-	
 	
 	$( "#form" ).validate( {
 		rules: {
-			idObjetivo:				{ required: true },
-			numero_estrategia:		{ required: true, minlength: 1, maxlength:4 },
-			estrategia:				{ required: true }
+			estrategia:		{ required: true, maxlength:50 },
+			descripcion:				{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {

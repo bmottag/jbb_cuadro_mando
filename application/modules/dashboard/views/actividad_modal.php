@@ -129,7 +129,7 @@
 
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
-					<label class="control-label" for="id_dependencia">Proceso Calidad: *</label>
+					<label class="control-label" for="id_dependencia">Dependencia: *</label>
 					<select name="id_dependencia" id="id_dependencia" class="form-control" required >
 						<option value="">Seleccione...</option>
 						<?php for ($i = 0; $i < count($listaDependencia); $i++) { ?>

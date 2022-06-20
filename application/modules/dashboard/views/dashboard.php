@@ -179,7 +179,7 @@ if ($retornoError) {
                         </thead>
                         <?php
                         $i=0;
-                        foreach ($listaObjetivos as $lista):
+                        foreach ($listaObjetivosEstrategicos as $lista):
                             $arrParam = array(
                                 "idObjetivo" => $lista["id_objetivo_estrategico"],
                                 "vigencia" => date("Y")
@@ -345,8 +345,8 @@ if ($retornoError) {
                                     <small>
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $lista['id_estrategia']; ?>">
                                     <?php 
-                                        echo '<strong>Estrategia: </strong><br>' . $lista['objetivo_estrategico'] . ' ' . $lista['descripcion_objetivo_estrategico'];
-                                        echo '<br><br><strong>Objetivo Estratégico: </strong><br>' . $lista['numero_estrategia'] . ' ' . $lista['estrategia']; 
+                                        echo '<strong>Estrategia: </strong><br>' . $lista['estrategia'] . ' ' . $lista['descripcion_estrategia'];
+                                        echo '<br><br><strong>Objetivo Estratégico: </strong><br>' . $lista['numero_objetivo_estrategico'] . ' ' . $lista['objetivo_estrategico']; 
                                     ?>
                                     </a>
                                     </small>
@@ -362,7 +362,7 @@ if ($retornoError) {
                                         $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                         $resultados = $this->general_model->get_lista_resultados($arrParam);
 
-                                        $arrParam = array('numeroEstrategia' => $lista['numero_estrategia']);
+                                        $arrParam = array('numeroEstrategia' => $lista['numero_objetivo_estrategico']);
                                         $actividades = $this->general_model->get_actividades_full($arrParam);
 
                                         if($metas){

@@ -46,12 +46,12 @@ if ($retornoError) {
                 <div class="panel-body">
                     <div class="panel-group" id="accordion">
                     <?php         
-                    if(!$listaEstrategias){ 
+                    if(!$listaObjetivosEstrategicos){ 
                         echo '<div class="col-lg-12">
                                 <p class="text-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No le han asignado actividades.</p>
                             </div>';
                     }else{
-                        foreach ($listaEstrategias as $lista):
+                        foreach ($listaObjetivosEstrategicos as $lista):
                     ?>
                         <div class="panel panel-info">
                             <div class="panel-heading">

@@ -22,11 +22,12 @@ $(function(){
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h4 class="list-group-item-heading">
-					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - OBJETIVOS ESTRATÉGICOS
+					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - ESTRATEGIAS
 					</h4>
 				</div>
 			</div>
-		</div>			
+		</div>
+		<!-- /.col-lg-12 -->				
 	</div>
 	
 	<!-- /.row -->
@@ -34,16 +35,16 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-building"></i> LISTA OBJETIVOS ESTRATÉGICOS
+					<i class="fa fa-building"></i> LISTA ESTRATEGIAS
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Objetivos Estratégicos
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Estrategias
 							</button>
 						</div>
 					</div>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body small">
 
 <?php
 	$retornoExito = $this->session->flashdata('retornoExito');
@@ -69,11 +70,11 @@ $(function(){
 				<?php
 					if($info){
 				?>				
-					<table width="100%" class="table table-striped table-bordered table-hover small" id="dataTables">
+					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
 						<thead>
 							<tr>
-								<th class="text-center">Estrategia</th>
-								<th class="text-center">Objetivo Estratégico</th>
+								<th>Estrategia</th>
+								<th>Descripción</th>
 								<th class="text-center">Editar</th>
 							</tr>
 						</thead>
@@ -81,8 +82,8 @@ $(function(){
 						<?php
 							foreach ($info as $lista):
 									echo "<tr>";
-									echo "<td>" . $lista['objetivo_estrategico'] . "</td>";
-									echo "<td>" . $lista['numero_estrategia'] . ' ' . $lista['estrategia'] .  "</td>";
+									echo "<td>" . $lista['estrategia'] . "</td>";
+									echo "<td>" . $lista['descripcion_estrategia'] . "</td>";
 									echo "<td class='text-center'>";
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_estrategia']; ?>" >
@@ -100,7 +101,9 @@ $(function(){
 		</div>
 	</div>
 </div>
-	
+
+		
+				
 <!--INICIO Modal -->
 <div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
 	<div class="modal-dialog" role="document">
@@ -116,7 +119,6 @@ $(function(){
 $(document).ready(function() {
 	$('#dataTables').DataTable({
 		responsive: true,
-		"order": [[ 1, "asc" ]],
 		"pageLength": 100
 	});
 });

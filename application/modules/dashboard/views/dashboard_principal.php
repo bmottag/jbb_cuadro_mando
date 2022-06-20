@@ -96,9 +96,9 @@
                         </thead>
                         <?php
                         $i=0;
-                        foreach ($listaObjetivos as $lista):
+                        foreach ($listaEstretegias as $lista):
                             $arrParam = array(
-                                "idObjetivo" => $lista["id_objetivo_estrategico"],
+                                "idEstrategia" => $lista["id_estrategia"],
                                 "vigencia" => date("Y")
                             );
                             $nroActividades = $this->dashboard_model->countActividades($arrParam);
@@ -122,7 +122,7 @@
                             }
 
                             echo "<tr>";
-                            echo "<td style='width: 50%'><small>" . $lista["objetivo_estrategico"] . "</small></td>";
+                            echo "<td style='width: 50%'><small>" . $lista["estrategia"] . "</small></td>";
                             echo "<td class='text-center'>";
                             echo "<b>" . $promedio ."%</b>";
                             echo '<div class="progress progress-striped">
@@ -162,7 +162,7 @@
                 </div>
                 <div class="panel-body">
                     <?php         
-                    if(!$listaEstrategias){ 
+                    if(!$listaObjetivosEstrategicos){ 
                         echo '<div class="row">';
                         echo '<div class="col-lg-12">
                                 <p class="text-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No le han asignado actividades.</p>
@@ -194,8 +194,8 @@
                                                         <label class="control-label" for="numero_objetivo">No. Objetivo Estratégico:</label>             
                                                         <select name="numero_objetivo" id="numero_objetivo" class="form-control" >
                                                             <option value="">Todas...</option>
-                                                            <?php for ($i = 0; $i < count($listaNumeroEstrategias); $i++) { ?>
-                                                                <option value="<?php echo $listaNumeroEstrategias[$i]["numero_estrategia"]; ?>" <?php if($_POST && $_POST["numero_objetivo"] == $listaNumeroEstrategias[$i]["numero_estrategia"]) { echo "selected"; }  ?>><?php echo $listaNumeroEstrategias[$i]["numero_estrategia"]; ?></option>
+                                                            <?php for ($i = 0; $i < count($listaNumeroObjetivoEstrategicos); $i++) { ?>
+                                                                <option value="<?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?>" <?php if($_POST && $_POST["numero_objetivo"] == $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]) { echo "selected"; }  ?>><?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -251,20 +251,20 @@
                             </div>
                         </div>
                     <?php
-                        foreach ($listaEstrategias as $infoEstrategia):
+                        foreach ($listaObjetivosEstrategicos as $infoEstrategia):
 
-                            $idEstrategia = $infoEstrategia['id_estrategia'];
-                            $arrParam = array('idEstrategia' => $idEstrategia);
+                            $numeroObjetivoEstrategico = $infoEstrategia['numero_objetivo_estrategico'];
+                            $arrParam = array('numeroObjetivoEstrategico' => $numeroObjetivoEstrategico);
                             $metas = $this->general_model->get_lista_metas($arrParam);
                             $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                             $resultados = $this->general_model->get_lista_resultados($arrParam);
 
                             $arrParam = array(
-                                "numeroEstrategia" => $infoEstrategia["numero_estrategia"]
+                                "numeroEstrategia" => $infoEstrategia["numero_objetivo_estrategico"]
                             );
                             if($userRol == ID_ROL_ENLACE ||  $userRol == ID_ROL_SUPERVISOR){
                                  $arrParam = array(
-                                    "numeroEstrategia" => $infoEstrategia["numero_estrategia"],
+                                    "numeroEstrategia" => $infoEstrategia["numero_objetivo_estrategico"],
                                     "idDependencia" => $infoDependencia[0]['id_dependencia']
                                 ); 
                             }
@@ -292,7 +292,7 @@
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
                                         <strong>Estrategia: </strong><?php echo $infoEstrategia['objetivo_estrategico']; ?></br>
-                                        <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_estrategia'] . ' ' . $infoEstrategia['estrategia']; ?>
+                                        <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_objetivo_estrategico'] . ' ' . $infoEstrategia['estrategia']; ?>
                                     </div>
                                     <div class="panel-body small">
                                     <?php
