@@ -620,6 +620,21 @@
 		 * Cargar informacion 
 		 * @since 14/8/2017
 		 */
+		public function cargar_actividades_ejecucion($lista) 
+		{
+				$query = $this->db->insert('actividad_ejecucion', $lista);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Cargar informacion 
+		 * @since 14/8/2017
+		 */
 		public function cargar_metas_objetivos_estrategicos($lista) 
 		{
 				$query = $this->db->insert('objetivos_estrategicos_metas', $lista);

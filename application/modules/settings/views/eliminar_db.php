@@ -292,6 +292,12 @@ if ($retornoError) {
 								<br><br>
 <a class="btn btn-success btn-xs" href=" <?php echo base_url(). 'settings/subir_archivo/cargar_actividades'; ?> ">
 Subir Actividades <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> 
+								
+								<br><br>
+								Subir registros a la tabla <strong>Actividades Ejecución</strong>.
+								<br><br>
+<a class="btn btn-success btn-xs" href=" <?php echo base_url(). 'settings/subir_archivo/cargar_actividades_ejecucion'; ?> ">
+Subir Actividades Ejecución <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> 
 						
 							</div>
 						</div>

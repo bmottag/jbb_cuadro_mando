@@ -1741,12 +1741,19 @@ class Settings extends CI_Controller {
 					}
 					fclose($fichero);
 
+					$x=0;
+					$errores = array();
+					$bandera = false;
 					foreach ($registros as $lista) {
-						$idUsuario = $this->settings_model->$model($lista);
-
-						if($model == "cargar_actividades"){
-							//cargo registros en la tabla de estado actividad
-							$this->settings_model->cargar_actividades_estados($lista);
+						$x++;
+						if ($this->settings_model->$model($lista)) {
+							if($model == "cargar_actividades"){
+								//cargo registros en la tabla de estado actividad
+								$this->settings_model->cargar_actividades_estados($lista);
+							}
+						}else{
+							$errores["numero_registro"] = $x;
+							$bandera = true;
 						}
 					}
 				}
@@ -1755,6 +1762,11 @@ class Settings extends CI_Controller {
 			$vista = $model;
 
 			$success = 'El archivo se cargó correctamente.';
+
+			if($bandera){
+				$registros = implode(",", $errores["numero_registro"]);
+				$success = 'El archivo se cargó pero hay errores en los siguientes registros:::' . $registros;
+			}
 			$this->subir_archivo($vista,'', $success);
     }
 
