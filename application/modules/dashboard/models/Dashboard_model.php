@@ -124,6 +124,9 @@
 					{					
 						$data = array(
 							'programado' => $datos['programado'][$i],
+							'ejecutado' => $datos['ejecutado'][$i],
+							'descripcion_actividades' => $datos['descripcion'][$i],
+							'evidencias' => $datos['evidencia'][$i],
 							'fecha_actualizacion' => date("Y-m-d G:i:s")
 						);
 						$this->db->where('id_ejecucion_actividad', $datos['id'][$i]);

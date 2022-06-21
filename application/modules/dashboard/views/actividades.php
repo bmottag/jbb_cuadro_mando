@@ -499,19 +499,12 @@ $(function(){
 											<input type="number" step="any" min="0" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" max="50000" required <?php echo $deshabilidarCampos; ?> >
 										</td>
 										<td>
-											<?php
-												echo $data['ejecutado']; 
-											?>
+											<input type="number" step="any" min="0" max="50000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidarCampos; ?> >
 										</td>
 										<td>
-											<?php
-												if($data['descripcion_actividades'] != ''){
-													echo "<b>Descripción:</b></br>" . $data['descripcion_actividades'];
-												}
-												if($data['evidencias'] != ''){
-													echo "<br><b>Evidencias:</b></br>" . $data['evidencias'];
-												}
-											?>
+											<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="2" <?php echo $deshabilidarCampos; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
+												<br>
+											<textarea name="form[evidencia][]" placeholder="Evidencia" class="form-control" rows="2" <?php echo $deshabilidarCampos; ?>><?php echo $data['evidencias']; ?></textarea>
 										</td>
 										<td class='text-center'>
 									<?php
