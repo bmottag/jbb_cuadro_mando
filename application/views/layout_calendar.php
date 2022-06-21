@@ -20,8 +20,8 @@
     <link href="<?php echo base_url("assets/bootstrap/vendor/bootstrap-social/bootstrap-social.css"); ?>" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="<?php echo base_url("assets/bootstrap/dist/css/sb-admin-2_calendar.css"); ?>" rel="stylesheet">
-    <!-- Morris Charts CSS -->
-    <link href="<?php echo base_url("assets/bootstrap/vendor/morrisjs/morris.css"); ?>" rel="stylesheet">
+    <!-- Morris Charts CSS 
+    <link href="<?php echo base_url("assets/bootstrap/vendor/morrisjs/morris.css"); ?>" rel="stylesheet">-->
     <!-- Custom Fonts -->
     <link href="<?php echo base_url("assets/bootstrap/vendor/font-awesome/css/font-awesome.min.css"); ?>" rel="stylesheet" type="text/css">
     <!-- DataTables CSS -->
@@ -144,10 +144,10 @@
     <script src="<?php echo base_url("assets/bootstrap/vendor/bootstrap/js/bootstrap.min.js"); ?>"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="<?php echo base_url("assets/bootstrap/vendor/metisMenu/metisMenu.min.js"); ?>"></script>
-    <!-- Morris Charts JavaScript -->
+    <!-- Morris Charts JavaScript 
     <script src="<?php echo base_url("assets/bootstrap/vendor/raphael/raphael.min.js"); ?>"></script>
     <script src="<?php echo base_url("assets/bootstrap/vendor/morrisjs/morris.min.js"); ?>"></script>
-    <script src="<?php echo base_url("assets/bootstrap/data/morris-data.js"); ?>"></script>
+    <script src="<?php echo base_url("assets/bootstrap/data/morris-data.js"); ?>"></script>-->
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url("assets/bootstrap/dist/js/sb-admin-2.js"); ?>"></script>
     <!-- DataTables JavaScript -->

@@ -271,7 +271,7 @@ $(function(){
 											<small>(Suma Programado)</small>
 										</td>
 										<td class="text-right">
-											<h2>Acance POA: <?php echo $avancePOA . '%'; ?></h2>
+											<h2>Avance POA: <?php echo $avancePOA . '%'; ?></h2>
 											<small>(Suma Ejecutado /Suma Programado * Ponderación)</small>
 										</tr>
 									</tr>

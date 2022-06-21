@@ -485,30 +485,6 @@ class Dashboard extends CI_Controller {
 	}
 
 	/**
-	 * PLANEACION DASHBOARD
-	 * @since 23/04/2022
-	 */
-	public function seguimiento()
-	{				
-			$arrParam = array();
-			$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
-
-			$arrParam = array(
-				"table" => "estrategias",
-				"order" => "estrategia",
-				"id" => "x"
-			);
-			$data['listaEstretegias'] = $this->general_model->get_basic_search($arrParam);
-
-			$arrParam = array(
-				"filtro" => true
-			);
-			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
-			$data["view"] = "dashboard";
-			$this->load->view("layout_calendar", $data);
-	}
-
-	/**
 	 * Save estado de la actividad
      * @since 24/04/2022
      * @author BMOTTAG
