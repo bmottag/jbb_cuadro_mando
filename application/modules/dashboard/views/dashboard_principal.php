@@ -266,20 +266,20 @@
                             </div>
                         </div>
                     <?php
-                        foreach ($listaObjetivosEstrategicos as $infoEstrategia):
+                        foreach ($listaObjetivosEstrategicos as $infoObjetivoEstrategico):
 
-                            $numeroObjetivoEstrategico = $infoEstrategia['numero_objetivo_estrategico'];
+                            $numeroObjetivoEstrategico = $infoObjetivoEstrategico['numero_objetivo_estrategico'];
                             $arrParam = array('numeroObjetivoEstrategico' => $numeroObjetivoEstrategico);
                             $metas = $this->general_model->get_lista_metas($arrParam);
                             $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                             $resultados = $this->general_model->get_lista_resultados($arrParam);
 
                             $arrParam = array(
-                                "numeroEstrategia" => $infoEstrategia["numero_objetivo_estrategico"]
+                                "numeroObjetivoEstrategico" => $infoObjetivoEstrategico["numero_objetivo_estrategico"]
                             );
                             if($userRol == ID_ROL_ENLACE ||  $userRol == ID_ROL_SUPERVISOR){
                                  $arrParam = array(
-                                    "numeroEstrategia" => $infoEstrategia["numero_objetivo_estrategico"],
+                                    "numeroEstrategia" => $infoObjetivoEstrategico["numero_objetivo_estrategico"],
                                     "idDependencia" => $infoDependencia[0]['id_dependencia']
                                 ); 
                             }
@@ -306,8 +306,8 @@
 
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
-                                        <strong>Estrategia: </strong><?php echo $infoEstrategia['objetivo_estrategico']; ?></br>
-                                        <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_objetivo_estrategico'] . ' ' . $infoEstrategia['estrategia']; ?>
+                                        <strong>Estrategia: </strong><?php echo $infoObjetivoEstrategico['estrategia']; ?></br>
+                                        <strong>Objetivo Estratégico: </strong><?php echo $infoObjetivoEstrategico['numero_objetivo_estrategico'] . ' ' . $infoObjetivoEstrategico['objetivo_estrategico']; ?>
                                     </div>
                                     <div class="panel-body small">
                                     <?php
