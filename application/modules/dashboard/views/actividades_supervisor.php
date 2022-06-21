@@ -212,16 +212,6 @@
 						</thead>
 					</table>
 
-					<form name="form" id="form" role="form" method="post" >
-						<input type="hidden" id="idCuadroBase" name="idCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-						<input type="hidden" id="idActividad" name="idActividad" value="<?php echo $lista["id_actividad"]; ?>"/>
-						<input type="hidden" id="numeroActividad" name="numeroActividad" value="<?php echo $lista["numero_actividad"]; ?>"/>
-						<input type="hidden" id="cumplimiento1" name="cumplimiento1" value="<?php echo $cumplimiento1; ?>"/>
-						<input type="hidden" id="cumplimiento2" name="cumplimiento2" value="<?php echo $cumplimiento2; ?>"/>
-						<input type="hidden" id="cumplimiento3" name="cumplimiento3" value="<?php echo $cumplimiento3; ?>"/>
-						<input type="hidden" id="cumplimiento4" name="cumplimiento4" value="<?php echo $cumplimiento4; ?>"/>
-						<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
-
 						<table class='table table-hover info'>
 							<thead>
 
@@ -353,7 +343,6 @@
 
 							</thead>				
 						</table>
-					</form>
 						<?php
 							endforeach;
 						?>
@@ -362,61 +351,83 @@
 <!-- INICIO HISTORICO -->
 		<?php
 			if($infoEjecucion){
+				$deshabilidar = '';
+				if($numeroTrimestre){
+
+					$variable = 'estado_trimestre_' . $numeroTrimestre;
+					
+					if($estadoActividad){
+						$estado = $estadoActividad[0][$variable];
+						//si esta cerrado debe bloquear la edicion
+						if($estado != 2 ){
+							$deshabilidar = 'disabled';
+						}
+					}
+		?>
+<!--INICIO ADDITIONAL INFORMATION -->
+	<div class="row">
+		<div class="col-lg-6">				
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					REVISIÓN EJECUCIÓN TRIMESTRE <?php echo $numeroTrimestre; ?>
+				</div>
+				<div class="panel-body">
+					<div class="col-lg-12">	
+						<form name="formEstado" id="formEstado" class="form-horizontal" method="post">
+							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
+							<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $lista['numero_actividad']; ?>"/>
+							<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>
+							<input type="hidden" id="cumplimiento1" name="cumplimiento1" value="<?php echo $cumplimiento1; ?>"/>
+							<input type="hidden" id="cumplimiento2" name="cumplimiento2" value="<?php echo $cumplimiento2; ?>"/>
+							<input type="hidden" id="cumplimiento3" name="cumplimiento3" value="<?php echo $cumplimiento3; ?>"/>
+							<input type="hidden" id="cumplimiento4" name="cumplimiento4" value="<?php echo $cumplimiento4; ?>"/>
+							<input type="hidden" id="avancePOA" name="avancePOA" value="<?php echo $avancePOA; ?>"/>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="estado">Estado:</label>
+								<div class="col-sm-8">
+									<select name="estado" id="estado" class="form-control" required >
+										<option value="">Seleccione...</option>
+										<option value=3 >Aprobada (Escalar a planeación)</option>
+										<option value=4 >Rechazada (Devolver al enlace)</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="information">Observación:</label>
+								<div class="col-sm-8">
+								<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required ></textarea>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="row" align="center">
+									<div style="width:100%;" align="center">
+										<button type="button" id="btnEstado" name="btnEstado" class="btn btn-primary" <?php echo $deshabilidar; ?> >
+											Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
+										</button> 
+										
+									</div>
+								</div>
+							</div>							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+<!--FIN ADDITIONAL INFORMATION -->
+		<?php
+				}else{
+					$deshabilidar = 'disabled';
+				}
 		?>
 					<div class="table-responsive">
 						<h2 class="text-warning">-- Ejecución Actividad --</h2>
 
 						<table id="dataTablesWorker" class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
-							<thead>
-						<?php
-							$deshabilidar = '';
-							if($numeroTrimestre){
-								$variable = 'estado_trimestre_' . $numeroTrimestre;
-								
-								if($estadoActividad){
-									$estado = $estadoActividad[0][$variable];
-									//si esta cerrado debe bloquear la edicion
-									if($estado != 2 ){
-										$deshabilidar = 'disabled';
-									}
-								}
-						?>
-								<tr class="text-warning">
-									<th colspan="4">
-										<h4><b>Revisión ejecución TRIMESTRE <?php echo $numeroTrimestre; ?></b></h4>
-									</th>
-								</tr>
-							<form name="formEstado" id="formEstado" class="form-horizontal" method="post">
-								<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-								<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $lista['numero_actividad']; ?>"/>
-								<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>
-
-								<tr class="warning text-warning">
-									<th class="column-title" colspan="3">
-										<label >Estado:</label>
-										<select name="estado" id="estado" class="form-control" required >
-											<option value="">Seleccione...</option>
-											<option value=3 >Aprobada (Escalar a planeación)</option>
-											<option value=4 >Rechazada (Devolver al enlace)</option>
-										</select>
-									</th>
-									<th class="column-title text-right">
-										<textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Observación" required ></textarea>
-									</th>
-								</tr>
-								<tr class="warning">
-									<th class="column-title text-right" colspan="4">
-										<button type="submit" class="btn btn-warning" id="btnEstado" name="btnEstado" <?php echo $deshabilidar; ?> >
-											Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-										</button>
-									</th>
-								</tr>
-							</form>
-						<?php
-							}else{
-								$deshabilidar = 'disabled';
-							}
-						?>	
+							<thead>	
 								<tr class="headings">
 									<th class="column-title" style="width: 10%">Mes</th>
 									<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>

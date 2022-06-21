@@ -529,7 +529,12 @@ class Dashboard extends CI_Controller {
 				"numeroActividad" => $data["numeroActividad"],
 				"numeroTrimestre" => $data["numeroTrimestre"],
 				"observacion" => $observacion,
-				"estado" => $idEstado
+				"estado" => $idEstado,
+				"cumplimiento1" => $this->input->post('cumplimiento1'),
+				"cumplimiento2" => $this->input->post('cumplimiento2'),
+				"cumplimiento3" => $this->input->post('cumplimiento3'),
+				"cumplimiento4" => $this->input->post('cumplimiento4'),
+				"avancePOA" => $this->input->post('avancePOA')
 			);
 
 			if($this->dashboard_model->addHistorialActividad($arrParam)) 

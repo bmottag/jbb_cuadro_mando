@@ -179,9 +179,7 @@
 		public function guardarTrimestre($banderaActividad, $estadoActividad, $numeroActividad, $cumplimientoTrimestre, $avancePOA, $numeroTrimestre) 
 		{	
 				$data = array(
-					'trimestre_' . $numeroTrimestre => $cumplimientoTrimestre,
 					'estado_trimestre_' . $numeroTrimestre => $estadoActividad,
-					'avance_poa' => $avancePOA
 				);	
 
 				//revisar si es para adicionar o editar
@@ -232,10 +230,18 @@
 		 */
 		public function updateEstadoActividad($arrData)
 		{			
-			$columna = 'estado_trimestre_' . $arrData["numeroTrimestre"];
 			$data = array(
-				$columna => $arrData["estado"]
-			);			
+				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"]
+			);	
+			//si esta aprobado por planeacion, debo guardar los calculos
+			if($arrData["estado"] == 5){
+				$valorCumplimiento = "cumplimiento" . $arrData["numeroTrimestre"];
+				$data = array(
+					'trimestre_' . $arrData["numeroTrimestre"] => $arrData[$valorCumplimiento],
+					'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
+					'avance_poa' => $arrData["avancePOA"]
+				);	
+			}
 			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
 			$query = $this->db->update('actividad_estado', $data);
 
