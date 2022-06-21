@@ -171,7 +171,7 @@
                     }else{
                             $arrParam2 = array();
                             if($_POST && $_POST["numero_objetivo"] != ""){
-                                $arrParam2["numeroEstrategia"] = $_POST["numero_objetivo"];
+                                $arrParam2["numeroObjetivoEstrategico"] = $_POST["numero_objetivo"];
                             }
                             if($_POST && $_POST["numero_proyecto"] != ""){
                                 $arrParam2["numeroProyecto"] = $_POST["numero_proyecto"];
@@ -241,7 +241,7 @@
                                                         <select name="numero_actividad" id="numero_actividad" class="form-control" >
                                                             <option value="">Todas...</option>
                                                             <?php 
-                                                            if($listaNumeroDependencia){
+                                                            if($listaTodasActividades){
                                                                 for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
                                                                     <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
                                                             <?php 
@@ -278,10 +278,7 @@
                                 "numeroObjetivoEstrategico" => $infoObjetivoEstrategico["numero_objetivo_estrategico"]
                             );
                             if($userRol == ID_ROL_ENLACE ||  $userRol == ID_ROL_SUPERVISOR){
-                                 $arrParam = array(
-                                    "numeroEstrategia" => $infoObjetivoEstrategico["numero_objetivo_estrategico"],
-                                    "idDependencia" => $infoDependencia[0]['id_dependencia']
-                                ); 
+                                $arrParam["idDependencia"] = $infoDependencia[0]['id_dependencia'];
                             }
                             if($_POST){
                                 if($_POST && $_POST["numero_actividad"] != ""){

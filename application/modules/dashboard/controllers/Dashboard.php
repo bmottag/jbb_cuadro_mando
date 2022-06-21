@@ -451,6 +451,11 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivosEstrategicos'] = false;
 			if($valor){
 				$arrParam = array("filtroEstrategias" => $valor);
+		        if($_POST && $_POST["numero_objetivo"] != ""){
+		            $arrParam = array(
+		                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+		            );  
+		        }
 				$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			}
 
@@ -703,9 +708,13 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivosEstrategicos'] = false;
 			if($valor){
 				$arrParam = array("filtroEstrategias" => $valor);
+		        if($_POST && $_POST["numero_objetivo"] != ""){
+		            $arrParam = array(
+		                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+		            );  
+		        }
 				$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			}
-
 
 			//INICIO LISTAS PARA FILTROS
 			$arrParam = array("filtroEstrategias" => $valor);
@@ -773,6 +782,11 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivosEstrategicos'] = false;
 			if($valor){
 				$arrParam = array("filtroEstrategias" => $valor);
+		        if($_POST && $_POST["numero_objetivo"] != ""){
+		            $arrParam = array(
+		                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+		            );  
+		        }
 				$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			}
 
