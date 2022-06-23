@@ -81,7 +81,7 @@
 		 */
 		public function guardarProgramado() 
 		{
-				$idActividad = $this->input->post('hddIdActividad');
+				$numeroActividad = $this->input->post('hddNumeroActividad');
 				$idEjecucion = $this->input->post('hddId');
 				$idUser = $this->session->userdata("id");
 		
@@ -93,13 +93,13 @@
 				//revisar si es para adicionar o editar
 				if ($idEjecucion == '') 
 				{
-					$data['fk_id_mes'] = $this->input->post('mes');
-					$data['fk_id_actividad'] = $idActividad;
+					$data['fk_numero_actividad'] = $numeroActividad;
 					$data['fk_id_user'] = $idUser;
+					$data['fk_id_mes'] = $this->input->post('mes');
 					$query = $this->db->insert('actividad_ejecucion', $data);
 				} else {
 					$this->db->where('id_ejecucion_actividad', $idEjecucion);
-					$query = $this->db->update(' actividad_ejecucion ', $data);
+					$query = $this->db->update(' actividad_ejecucion', $data);
 				}
 				if ($query) {
 					return true;

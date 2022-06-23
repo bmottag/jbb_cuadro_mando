@@ -11,7 +11,7 @@
 <div class="modal-body">
 	<form name="form" id="form" role="form" method="post" >
 		<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadrobase; ?>"/>
-		<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $information?$information[0]["id_actividad"]:""; ?>"/>
+		<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $information?$information[0]["numero_actividad"]:""; ?>"/>
 		<input type="hidden" id="hddId" name="hddId" value=""/>
 
 		<div class="row">	

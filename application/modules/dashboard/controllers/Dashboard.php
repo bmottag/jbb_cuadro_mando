@@ -236,9 +236,9 @@ class Dashboard extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
-			$idActividad = $this->input->post('hddIdActividad');
+			$numeroActividad = $this->input->post('hddNumeroActividad');
 			
-			$data["idRecord"] = $idCuadroBase . "/" . $idActividad ;
+			$data["idRecord"] = $idCuadroBase . "/" . $numeroActividad ;
 		
 			$msj = "Se guardo la información!";
 
@@ -246,7 +246,7 @@ class Dashboard extends CI_Controller {
 			$validarMes = false;
 
 			$arrParam = array(
-				'idActividad' => $idActividad,
+				'numeroActividad' => $numeroActividad,
 				'idMes' => $this->input->post('mes')
 			);
 			$validarMes = $this->general_model->get_ejecucion_actividades($arrParam);
