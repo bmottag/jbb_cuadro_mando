@@ -202,9 +202,11 @@ if ($retornoError) {
                                             echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                             echo "<td><small>" . $lista["ods"] . "</small></td>";
                                             echo "<td><small>";
-                                            foreach ($dependencias as $datos):
-                                                echo "<li class='text-primary'>" . $datos["dependencia"] . "</li>";
-                                            endforeach;
+                                            if($dependencias){
+                                                foreach ($dependencias as $datos):
+                                                    echo "<li class='text-primary'>" . $datos["dependencia"] . "</li>";
+                                                endforeach;
+                                            }
                                             echo "</small></td>";
                                             echo "<td>";
                                             echo "<a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a>";

@@ -57,7 +57,7 @@
 						<p>
 							<?php echo $data['observacion']; ?>
 						</p>
-						<?php echo '<p class="' . $data['clase'] . '"><strong><i class="fa ' . $data['icono']  . ' fa-fw"></i>' . $data['estado'] . '</strong></p>'; ?>
+						<?php echo '<p class="text-' . $data['clase'] . '"><strong><i class="fa ' . $data['icono']  . ' fa-fw"></i>' . $data['estado'] . '</strong><br><small>Trimestre ' . $data['numero_trimestre'] . '</small></p>'; ?>
 					</div>
 				</li>
 			<?php

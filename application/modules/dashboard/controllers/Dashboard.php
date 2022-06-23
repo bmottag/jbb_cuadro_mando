@@ -86,8 +86,8 @@ class Dashboard extends CI_Controller {
 				if($numeroTrimestre != 'x') {
 					$data['numeroTrimestre'] = $numeroTrimestre;
 					$arrParam['numeroTrimestre'] = $numeroTrimestre;
-					$data['listaHistorial'] = $this->general_model->get_historial_actividad($arrParam);
 				}
+				$data['listaHistorial'] = $this->general_model->get_historial_actividad($arrParam);
 				$data['infoEjecucion'] = $this->general_model->get_ejecucion_actividades($arrParam);
 			}
 
