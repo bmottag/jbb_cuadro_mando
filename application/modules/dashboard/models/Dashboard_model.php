@@ -50,7 +50,7 @@
 	     * @since 23/04/2022
 	     * @author BMOTTAG
 		 */
-		public function save_programa_actividad($idActividad) 
+		public function save_programa_actividad($numeroActividad) 
 		{
 			//add the new record
 			$query = 1;
@@ -61,7 +61,7 @@
 			for ($i = $mesInicial; $i <= $mesFinal; $i++) {
 					$data = array(
 						'fk_id_mes' => $i,
-						'fk_id_actividad' => $idActividad,
+						'fk_numero_actividad' => $numeroActividad,
 						'fk_id_user' => $idUser,
 						'fecha_creacion' => date("Y-m-d G:i:s")
 					);	
@@ -191,7 +191,7 @@
 					$this->db->where('fk_numero_actividad', $numeroActividad);
 					$query = $this->db->update('actividad_estado', $data);
 				} else {
-					$data['fk_id_actividad'] = $idActividad;
+					$data['fk_numero_actividad'] = $numeroActividad;
 					$query = $this->db->insert('actividad_estado', $data);
 				}
 				if ($query) {

@@ -170,10 +170,10 @@ class Dashboard extends CI_Controller {
 		
 			$msj = "Se guardo la información!";
 
-			if ($nuevaActividad = $this->dashboard_model->guardarActividad()) 
+			if ($this->dashboard_model->guardarActividad()) 
 			{	
 				if ($idActividad == ''){
-					$this->dashboard_model->save_programa_actividad($nuevaActividad);//generar los programas
+					$this->dashboard_model->save_programa_actividad($numeroActividad);//generar los programas
 					//generar REGISTRO DE ESTADO ACTIVIDAD
 					$banderaActividad = false;
 					$estadoActividad = 0;

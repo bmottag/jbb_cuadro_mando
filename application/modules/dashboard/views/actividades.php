@@ -198,7 +198,7 @@ $(function(){
 										if($numeroActividad != 'x') {
 									?>
 											<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEjecucion" id="<?php echo $lista['id_actividad']; ?>" title="Adicionar Fecha a la Actividad">
-													<i class="fa fa-signal"></i>
+													<i class="fa fa-plus"></i>
 											</button>
 
 											<button type="button" id="<?php echo $lista["id_actividad"]; ?>" class='btn btn-danger btn-xs' title="Eliminar Actividad">
