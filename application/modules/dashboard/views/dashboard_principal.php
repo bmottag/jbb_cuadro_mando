@@ -460,10 +460,10 @@
                                                 if($estadoActividad){ 
                                                 echo "<tr>";
                                                 echo "<td colspan='12'>";
-                                                echo "<p class=" . $estadoActividad[0]['primer_clase'] . "><strong>Trimestre I: " . $estadoActividad[0]['primer_estado'] . "</strong></p>";
-                                                echo "<p class=" . $estadoActividad[0]['segundo_clase'] . "><strong>Trimestre II: " . $estadoActividad[0]['segundo_estado'] . "</strong></p>";
-                                                echo "<p class=" . $estadoActividad[0]['tercer_clase'] . "><strong>Trimestre III: " . $estadoActividad[0]['tercer_estado'] . "</strong></p>";
-                                                echo "<p class=" . $estadoActividad[0]['cuarta_clase'] . "><strong>Trimestre IV: " . $estadoActividad[0]['cuarta_estado'] . "</strong></p>";
+                                                echo "<p class='text-" . $estadoActividad[0]['primer_clase'] . "'><strong>Trimestre I: " . $estadoActividad[0]['primer_estado'] . "</strong></p>";
+                                                echo "<p class='text-" . $estadoActividad[0]['segundo_clase'] . "'><strong>Trimestre II: " . $estadoActividad[0]['segundo_estado'] . "</strong></p>";
+                                                echo "<p class='text-" . $estadoActividad[0]['tercer_clase'] . "'><strong>Trimestre III: " . $estadoActividad[0]['tercer_estado'] . "</strong></p>";
+                                                echo "<p class='text-" . $estadoActividad[0]['cuarta_clase'] . "'><strong>Trimestre IV: " . $estadoActividad[0]['cuarta_estado'] . "</strong></p>";
                                                 echo "</td>";
                                                 echo "</tr>";
                                                 }

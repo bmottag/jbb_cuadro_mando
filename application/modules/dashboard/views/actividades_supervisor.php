@@ -224,10 +224,9 @@
 									<th class="column-title">
 										<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '%'; ?></p>
 									</th>
-
-									<th class="column-title small text-center">
+									<th class="column-title small text-center <?php if($estadoActividad){ echo $estadoActividad[0]['primer_clase']; } ?>">
 										<?php if($estadoActividad){ ?>
-										<p class="<?php echo $estadoActividad[0]['primer_clase']; ?>"><strong><?php echo $estadoActividad[0]['primer_estado']; ?></strong></p>
+										<p class="<?php echo 'text-' . $estadoActividad[0]['primer_clase']; ?>"><b><?php echo $estadoActividad[0]['primer_estado']; ?></b></p>
 										<?php } ?>
 									</th>
 									<th class="column-title text-center">
@@ -254,10 +253,9 @@
 									<th class="column-title">
 										<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '%'; ?></p>
 									</th>
-
-									<th class="column-title small text-center">
+									<th class="column-title small text-center <?php if($estadoActividad){ echo $estadoActividad[0]['segundo_clase']; } ?>">
 										<?php if($estadoActividad){ ?>
-										<p class="<?php echo $estadoActividad[0]['segundo_clase']; ?>"><strong><?php echo $estadoActividad[0]['segundo_estado']; ?></strong></p>
+										<p class="<?php echo 'text-' . $estadoActividad[0]['segundo_clase']; ?>"><b><?php echo $estadoActividad[0]['segundo_estado']; ?></b></p>
 										<?php } ?>
 									</th>
 									<th class="column-title text-center">
@@ -284,9 +282,9 @@
 									<th class="column-title">
 										<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?></p>
 									</th>
-									<th class="column-title small text-center">
+									<th class="column-title small text-center <?php if($estadoActividad){ echo $estadoActividad[0]['tercer_clase']; } ?>">
 										<?php if($estadoActividad){ ?>
-										<p class="<?php echo $estadoActividad[0]['tercer_clase']; ?>"><strong><?php echo $estadoActividad[0]['tercer_estado']; ?></strong></p>
+										<p class="<?php echo 'text-' . $estadoActividad[0]['tercer_clase']; ?>"><b><?php echo $estadoActividad[0]['tercer_estado']; ?></b></p>
 										<?php } ?>
 									</th>
 									<th class="column-title text-center">
@@ -313,10 +311,9 @@
 									<th class="column-title">
 										<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
 									</th>
-
-									<th class="column-title small text-center">
+									<th class="column-title small text-center <?php if($estadoActividad){ echo $estadoActividad[0]['cuarta_clase']; } ?>">
 										<?php if($estadoActividad){ ?>
-										<p class="<?php echo $estadoActividad[0]['cuarta_clase']; ?>"><strong><?php echo $estadoActividad[0]['cuarta_estado']; ?></strong></p>
+										<p class="<?php echo 'text-' . $estadoActividad[0]['cuarta_clase']; ?>"><b><?php echo $estadoActividad[0]['cuarta_estado']; ?></b></p>
 										<?php } ?>
 									</th>
 									<th class="column-title text-center">
@@ -337,8 +334,8 @@
 									<td width="23%"><small>Suma Programado Trimestre</small></td>
 									<td width="24%"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * 100</small></td>
 									<td width="15%"></td>
-									<td width="15%"></td>
-									<td width="23%" class="text-right"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * Ponderación</small></td>
+									<td width="18%"></td>
+									<td width="20%" class="text-right"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * Ponderación</small></td>
 								</tr>
 
 							</thead>				
