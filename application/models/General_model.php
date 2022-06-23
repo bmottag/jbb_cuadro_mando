@@ -316,22 +316,22 @@ class General_model extends CI_Model {
 					$this->db->where('C.fk_id_objetivo_estrategico', $arrData["idEstrategia"]);
 				}
 				if (array_key_exists("idMetaProyecto", $arrData)) {
-					$this->db->where('C.fk_id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
+					$this->db->where('M.id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
 				}
 				if (array_key_exists("idProposito", $arrData)) {
-					$this->db->where('C.fk_id_proposito', $arrData["idProposito"]);
+					$this->db->where('X.id_proposito', $arrData["idProposito"]);
 				}
 				if (array_key_exists("idLogro", $arrData)) {
-					$this->db->where('C.fk_id_logro', $arrData["idLogro"]);
+					$this->db->where('L.id_logros', $arrData["idLogro"]);
 				}
 				if (array_key_exists("idPrograma", $arrData)) {
-					$this->db->where('C.fk_id_programa_estrategico', $arrData["idPrograma"]);
+					$this->db->where('Y.id_programa_estrategico', $arrData["idPrograma"]);
 				}
 				if (array_key_exists("idMetaPDD", $arrData)) {
-					$this->db->where('C.fk_id_meta_pdd', $arrData["idMetaPDD"]);
+					$this->db->where('Z.id_meta_pdd', $arrData["idMetaPDD"]);
 				}
 				if (array_key_exists("idODS", $arrData)) {
-					$this->db->where('C.fk_id_ods', $arrData["idODS"]);
+					$this->db->where('O.id_ods', $arrData["idODS"]);
 				}
 				$query = $this->db->get('cuadro_base C');
 				if ($query->num_rows() > 0) {
