@@ -581,25 +581,26 @@ class Dashboard extends CI_Controller {
 		$arrParam = array("idActividad" => $data["idActividad"]);
 		$infoActividad = $this->general_model->get_actividades($arrParam);
 		$data["idCuadrobase"] = $infoActividad[0]['fk_id_cuadro_base'];
+		$numeroActividad = $infoActividad[0]['numero_actividad'];
 
 		$arrParam = array(
 			"table" => "actividad_ejecucion",
-			"primaryKey" => "fk_id_actividad",
-			"id" => $data["idActividad"]
+			"primaryKey" => "fk_numero_actividad",
+			"id" => $numeroActividad
 		);
 		$this->general_model->deleteRecord($arrParam);
 
 		$arrParam = array(
 			"table" => "actividad_estado",
-			"primaryKey" => "fk_id_actividad",
-			"id" => $data["idActividad"]
+			"primaryKey" => "fk_numero_actividad",
+			"id" => $numeroActividad
 		);
 		$this->general_model->deleteRecord($arrParam);
 
 		$arrParam = array(
 			"table" => " actividad_historial",
-			"primaryKey" => "fk_id_actividad",
-			"id" => $data["idActividad"]
+			"primaryKey" => "fk_numero_actividad",
+			"id" => $numeroActividad
 		);
 		$this->general_model->deleteRecord($arrParam);
 
@@ -610,7 +611,7 @@ class Dashboard extends CI_Controller {
 		);
 		if ($this->general_model->deleteRecord($arrParam)) {
 			$data["result"] = true;
-			$data["msj"] = "Se eliminó la actividad.";
+			$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó la actividad');
 		} else {
 			$data["result"] = true;
 		}

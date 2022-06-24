@@ -1943,6 +1943,9 @@ class Settings extends CI_Controller {
 			$msj = "Se importó la Actividad al Plan Estratégico!";
 
 			if ($this->settings_model->saveImportarActividad()) {
+				/*
+FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA 
+				*/
 				$data["result"] = true;				
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
 			} else {
