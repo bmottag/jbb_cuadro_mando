@@ -26,6 +26,19 @@ $(function(){
                 }
             });
     });
+
+    $(".btn-violeta").click(function () {  
+            var oID = $(this).attr("id");
+            $.ajax ({
+                type: 'POST',
+                url: base_url + 'settings/cargarModalImportarActividad',
+                data: {'idCuadroBase': oID},
+                cache: false,
+                success: function (data) {
+                    $('#tablaDatos').html(data);
+                }
+            });
+    });
 });
 </script>
 
@@ -208,16 +221,24 @@ if ($retornoError) {
                                                 endforeach;
                                             }
                                             echo "</small></td>";
-                                            echo "<td>";
-                                            echo "<a class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Actividades <span class='glyphicon glyphicon-edit' aria-hidden='true'></a>";
+                                            echo "<td class='text-center'>";
+                                            echo "<p><a title='Ver Actividades' class='btn btn-success btn-xs' href='" . base_url('dashboard/actividades/' . $lista["id_cuadro_base"]) . "'> Ver Actividades <span class='glyphicon glyphicon-eye-open' aria-hidden='true'></a></p>";
 ?>
-                                            <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_cuadro_base']; ?>" >
-                                                Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
+                                            <p>
+                                            <button title="Editar Plan Estratégico" type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_cuadro_base']; ?>" >
+                                                Editar Plan <span class="glyphicon glyphicon-edit" aria-hidden="true">
                                             </button>
-
-                                            <button type="button" id="<?php echo $lista['id_cuadro_base']; ?>" class='btn btn-danger btn-xs' title="Eliminar">
-                                                    <i class="fa fa-trash-o"></i>
+                                            </p>
+                                            <p>
+                                            <button title="Importar Actividad" type="button" class="btn btn-violeta btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_cuadro_base']; ?>" >
+                                                Importar Actividad <span class="glyphicon glyphicon-plus" aria-hidden="true">
                                             </button>
+                                            </p>
+                                            <button title="Eliminar Plan Estratégico" type="button" id="<?php echo $lista['id_cuadro_base']; ?>" class='btn btn-danger btn-xs' title="Eliminar">
+                                              <i class="fa fa-trash-o"></i>
+                                            </button>
+                                            
+                                            
 <?php
                                             echo "</td>";
                                             echo "</tr>";

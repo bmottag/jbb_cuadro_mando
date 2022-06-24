@@ -424,15 +424,19 @@ class General_model extends CI_Model {
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
 
-				if (array_key_exists("idActividad", $arrData)) {
+				if(array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
 				}
-				if (array_key_exists("numeroActividad", $arrData)) {
+				if(array_key_exists("numeroActividad", $arrData)) {
 					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}
-				if (array_key_exists("idCuadroBase", $arrData)) {
+				if(array_key_exists("idCuadroBase", $arrData)) {
 					$this->db->where('A.fk_id_cuadro_base', $arrData["idCuadroBase"]);
 				}
+				if(array_key_exists("NOTidCuadroBase", $arrData)) {
+					$this->db->where('A.fk_id_cuadro_base !=', $arrData["NOTidCuadroBase"]);
+				}
+				$this->db->order_by('A.numero_actividad', 'asc');
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();

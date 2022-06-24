@@ -1900,6 +1900,57 @@ class Settings extends CI_Controller {
 			echo json_encode($data);
     }
 	
+    /**
+     * Cargo modal - formulario para importar una actividad de otro cuadro base
+     * @since 23/06/2022
+     */
+    public function cargarModalImportarActividad() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["numeroObjetivoEstrategico"] = $this->input->post("numeroObjetivoEstrategico");
+			$data["idCuadroBase"] = $this->input->post("idCuadroBase");
 
+			if ($data["idCuadroBase"] != 'x') {
+				$arrParam = array("idCuadroBase" => $data["idCuadroBase"]);
+				$data['information'] = $this->general_model->get_lista_cuadro_mando($arrParam);//info bloques
+				
+				$data["numeroObjetivoEstrategico"] = $data['information'][0]['fk_numero_objetivo_estrategico'];
+			}
+
+			$arrParam = array("numeroObjetivoEstrategico" => $data["numeroObjetivoEstrategico"]);
+			$data['infoObjetivoEstrategico'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+
+			$arrParam = array(
+				"NOTidCuadroBase" => $data["idCuadroBase"]
+			);
+			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
+
+			$this->load->view("importar_actividdades_modal", $data);
+    }
+
+	/**
+	 * Importar Actividad
+     * @since 24/06/2022
+     * @author BMOTTAG
+	 */
+	public function save_importar_actividad()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$msj = "Se importó la Actividad al Plan Estratégico!";
+
+			if ($this->settings_model->saveImportarActividad()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 }

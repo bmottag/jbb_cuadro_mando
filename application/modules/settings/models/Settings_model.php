@@ -672,6 +672,26 @@
 					return false;
 				}
 		}
+
+		/**
+		 * IMPORTAR ACTIVIDAD
+		 * @since 24/06/2022
+		 */
+		public function saveImportarActividad() 
+		{
+				$idActividad = $this->input->post('id_actividad');
+				$data = array(
+					'fk_id_cuadro_base' => $this->input->post('hddIdCuadroBase')
+				);
+				$this->db->where('id_actividad', $idActividad);
+				$query = $this->db->update('actividades', $data);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		
