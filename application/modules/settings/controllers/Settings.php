@@ -1579,7 +1579,7 @@ class Settings extends CI_Controller {
 	public function atencion_eliminar()
 	{
 			$userRol = $this->session->role;
-			if ($userRol != 99 ) { 
+			if ($userRol != 99 &&  $userRol != 1) { 
 				show_error('ERROR!!! - You are in the wrong place.');	
 			}
 		
