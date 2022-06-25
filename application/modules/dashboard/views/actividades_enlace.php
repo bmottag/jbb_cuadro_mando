@@ -247,7 +247,7 @@
 											</a></p>
 										<?php } ?>
 
-										<?php if($estadoActividad[0]['estado_trimestre_1'] == 1 || $estadoActividad[0]['estado_trimestre_1'] == 4){ ?>
+										<?php if($estadoActividad[0]['estado_trimestre_1'] == 1){ ?>
 											<p>
 												<button type="button" id="1" class='btn btn-danger btn-xs' title="Cerrar Trimestre I">
 														Cerrar Trimestre I  <i class="fa fa-arrow-right"></i>

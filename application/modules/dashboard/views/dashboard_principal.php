@@ -40,7 +40,7 @@
                                 "idDependencia" => $lista["id_dependencia"],
                                 "vigencia" => date("Y")
                             );
-                            $nroActividades = $this->dashboard_model->countActividades($arrParam);
+                            $nroActividades = $this->general_model->countActividades($arrParam);
                             $avance = $this->dashboard_model->sumAvance($arrParam);
                             $avancePOA = number_format($avance["avance_poa"],2);
              
@@ -101,7 +101,7 @@
                                 "idEstrategia" => $lista["id_estrategia"],
                                 "vigencia" => date("Y")
                             );
-                            $nroActividades = $this->dashboard_model->countActividades($arrParam);
+                            $nroActividades = $this->general_model->countActividades($arrParam);
                             $avance = $this->dashboard_model->sumAvance($arrParam);
                             $promedio = 0;
                             if($nroActividades){

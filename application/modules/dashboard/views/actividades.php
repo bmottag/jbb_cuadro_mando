@@ -406,7 +406,7 @@ $(function(){
 							<div class="form-group">
 								<label class="col-sm-4 control-label" for="estado">Estado:</label>
 								<div class="col-sm-8">
-									<select name="estado" id="estado" class="form-control" required >
+									<select name="estado" id="estado" class="form-control" >
 										<option value="">Seleccione...</option>
 										<option value=5 >Aprobada</option>
 										<option value=6 >Rechazada</option>
@@ -417,7 +417,7 @@ $(function(){
 							<div class="form-group">
 								<label class="col-sm-4 control-label" for="information">Observación:</label>
 								<div class="col-sm-8">
-								<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required ></textarea>
+								<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" ></textarea>
 								</div>
 							</div>
 							

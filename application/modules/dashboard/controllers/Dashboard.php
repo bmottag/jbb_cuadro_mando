@@ -188,7 +188,7 @@ class Dashboard extends CI_Controller {
 						);
 
 						//actualizo el estado del trimestre de la actividad
-						$this->dashboard_model->addHistorialActividad($arrParam);
+						$this->general_model->addHistorialActividad($arrParam);
 					}
 				}
 				$data["result"] = true;		
@@ -309,12 +309,10 @@ class Dashboard extends CI_Controller {
 					"observacion" => $this->input->post('observacion'),
 					"estado" => 1
 				);
-				$this->dashboard_model->addHistorialActividad($arrParam);
+				$this->general_model->addHistorialActividad($arrParam);
 
 				//actualizo el estado del trimestre de la actividad
-				$this->dashboard_model->updateEstadoActividad($arrParam);
-
-
+				$this->general_model->updateEstadoActividad($arrParam);
 
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', "Se actualizó la información!!");
@@ -377,7 +375,7 @@ class Dashboard extends CI_Controller {
 				"observacion" => 'Se cerro el trimestre por parte del ENLACE.',
 				"estado" => 2
 			);
-			$this->dashboard_model->addHistorialActividad($arrParam);
+			$this->general_model->addHistorialActividad($arrParam);
 
 			//INICIO
 			//SE BUSCA EL SUPERVISOR DE LA DEPENDENCIA Y SE ENVIA CORREO
@@ -434,7 +432,7 @@ class Dashboard extends CI_Controller {
 			);
 			$filtroObjetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_dependencia($arrParam);
 
-			$data['nroActividadesDependencia'] = $this->dashboard_model->countActividades($arrParam);
+			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
 			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
 
 			$valor = '';
@@ -518,10 +516,10 @@ class Dashboard extends CI_Controller {
 				"avancePOA" => $this->input->post('avancePOA')
 			);
 
-			if($this->dashboard_model->addHistorialActividad($arrParam)) 
+			if($this->general_model->addHistorialActividad($arrParam)) 
 			{
 				//actualizo el estado del trimestre de la actividad
-				if($this->dashboard_model->updateEstadoActividad($arrParam)){
+				if($this->general_model->updateEstadoActividad($arrParam)){
 					//envio correos a los usuarios
 					if($idEstado == 3){
 						$mensaje = "se revisó la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . ", fue APROBADA y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
@@ -631,7 +629,7 @@ class Dashboard extends CI_Controller {
 			$filtroObjetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_dependencia($arrParam);
 
 
-			$data['nroActividadesDependencia'] = $this->dashboard_model->countActividades($arrParam);
+			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
 			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
 
 			$valor = '';
@@ -691,7 +689,7 @@ class Dashboard extends CI_Controller {
 			);
 			$filtroObjetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_dependencia($arrParam);
 
-			$data['nroActividadesDependencia'] = $this->dashboard_model->countActividades($arrParam);
+			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
 
 			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
 

@@ -1,49 +1,8 @@
 $( document ).ready( function () {
-
-	$(".btn-danger").click(function () {				
-			//Activa icono guardando
-			if(window.confirm('Esta seguro de eliminar la actividad? Se borrará toda la información relacionada con la actividad.'))
-			{
-					$(".btn-danger").attr('disabled','-1');
-					var idActividad = $(this).attr("id");
-					$.ajax ({
-						type: 'POST',
-						url: base_url + 'dashboard/delete_actividad',
-						data: {'idActividad': idActividad},
-						cache: false,
-						success: function(data){
-												
-							if( data.result == "error" )
-							{
-								alert(data.mensaje);
-								$(".btn-danger").removeAttr('disabled');							
-								return false;
-							} 
-											
-							if( data.result )//true
-							{	                                                        
-								$(".btn-danger").removeAttr('disabled');
-								var url = base_url + "dashboard/actividades/" + data.idCuadrobase;
-								$(location).attr("href", url);
-							}
-							else
-							{
-								alert('Error. Reload the web page.');
-								$(".btn-danger").removeAttr('disabled');
-							}	
-						},
-						error: function(result) {
-							alert('Error. Reload the web page.');
-							$(".btn-danger").removeAttr('disabled');
-						}
-
-					});
-			}
-	});
-			
+		
 	$( "#formEstado" ).validate( {
 		rules: {
-			estado:					{ required: true },
+			valorEstado:			{ required: true },
 			observacion:			{ required: true }
 		},
 		errorElement: "em",
@@ -73,7 +32,7 @@ $( document ).ready( function () {
 			
 				$.ajax({
 					type: "POST",	
-					url: base_url + "dashboard/save_estado_actividad",	
+					url: base_url + "resumen/save_estado_actividad",	
 					data: $("#formEstado").serialize(),
 					dataType: "json",
 					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -99,7 +58,7 @@ $( document ).ready( function () {
 							$("#div_guardado").css("display", "inline");
 							$('#btnEstado').removeAttr('disabled');
 
-							var url = base_url + "dashboard/actividades/" + data.record;
+							var url = base_url + "resumen";
 							$(location).attr("href", url);
 						}
 						else
