@@ -497,38 +497,86 @@ class Dashboard extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$data["idCuadroBase"] = $this->input->post('hddIdCuadroBase');
-			$data["numeroActividad"] = $numeroActividad = $this->input->post('hddNumeroActividad');
-			$data["numeroTrimestre"] = $this->input->post('hddNumeroTrimestre');
+			$numeroActividad = $this->input->post('hddNumeroActividad');
+			$numeroTrimestre = $this->input->post('hddNumeroTrimestre');
 			$observacion = $this->input->post('observacion');
 			$idEstado = $this->input->post('estado');
-			$data["record"] = $data["idCuadroBase"] . '/' . $data["numeroActividad"] . '/' . $data["numeroTrimestre"];
-			$msj = "Se cambio el estado del trimestre de la actividad.";
+			$data["record"] = $data["idCuadroBase"] . '/' . $numeroActividad . '/' . $numeroTrimestre;
+			$msj = "Se cambio el estado de la actividad para el <b>Trimestre " . $numeroTrimestre .  "</b>.";
 			
+			$arrParam = array("numeroActividad" => $numeroActividad);
+			$listadoActividades = $this->general_model->get_actividades($arrParam);
+
+			$cumplimientoX = 0;
+			$avancePOA = 0;
+			$ponderacion = $listadoActividades[0]['ponderacion'];
+			//INICIO --- DEBO TENER EN CUENTA EL TRIMESTRE DE LOS DEMAS QUE ESTAN EN 5
+			$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
+
+			$estadoTrimestre1 = $estadoActividad[0]["estado_trimestre_1"];
+			$estadoTrimestre2 = $estadoActividad[0]["estado_trimestre_2"];
+			$estadoTrimestre3 = $estadoActividad[0]["estado_trimestre_3"];
+			$estadoTrimestre4 = $estadoActividad[0]["estado_trimestre_4"];
+
+			$incluirTrimestre = 0;
+			if(($numeroTrimestre != 1 && $estadoTrimestre1 == 5) || ($numeroTrimestre == 1 && $idEstado == 5) ){
+				$incluirTrimestre = $incluirTrimestre . "," . 1;
+			}
+			if(($numeroTrimestre != 2 && $estadoTrimestre2 == 5) || ($numeroTrimestre == 2 && $idEstado == 5) ){
+				$incluirTrimestre = $incluirTrimestre . "," . 2;
+			}
+			if(($numeroTrimestre != 3 && $estadoTrimestre3 == 5) || ($numeroTrimestre == 3 && $idEstado == 5) ){
+				$incluirTrimestre = $incluirTrimestre . "," . 3;
+			}
+			if(($numeroTrimestre != 4 && $estadoTrimestre4 == 5) || ($numeroTrimestre == 4 && $idEstado == 5) ){
+				$incluirTrimestre = $incluirTrimestre . "," . 4;
+			}
 			$arrParam = array(
-				"numeroActividad" => $data["numeroActividad"],
-				"numeroTrimestre" => $data["numeroTrimestre"],
+				"numeroActividad" => $numeroActividad,
+				"filtroTrimestre" => $incluirTrimestre
+			);
+			$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);	
+			//FIN --- DEBO TENER EN CUENTA EL TRIMESTRE DE LOS DEMAS QUE ESTAN EN 5
+
+			$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
+			if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
+				$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
+			}
+
+			if($idEstado == 5){
+				$arrParam = array(
+					"numeroActividad" => $numeroActividad,
+					"numeroTrimestre" => $numeroTrimestre
+				);
+				$sumaProgramadoTrimestreX = $this->general_model->sumarProgramado($arrParam);
+				$sumaEjecutadoTrimestreX = $this->general_model->sumarEjecutado($arrParam);
+
+				if($sumaProgramadoTrimestreX['programado'] > 0){
+					$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100, 2);
+				}
+			}
+
+			$arrParam = array(
+				"numeroActividad" => $numeroActividad,
+				"numeroTrimestre" => $numeroTrimestre,
 				"observacion" => $observacion,
 				"estado" => $idEstado,
-				"cumplimiento1" => $this->input->post('cumplimiento1'),
-				"cumplimiento2" => $this->input->post('cumplimiento2'),
-				"cumplimiento3" => $this->input->post('cumplimiento3'),
-				"cumplimiento4" => $this->input->post('cumplimiento4'),
-				"avancePOA" => $this->input->post('avancePOA')
+				"cumplimientoX" => $cumplimientoX,
+				"avancePOA" => $avancePOA
 			);
-
 			if($this->general_model->addHistorialActividad($arrParam)) 
 			{
 				//actualizo el estado del trimestre de la actividad
-				if($this->general_model->updateEstadoActividad($arrParam)){
+				if($this->general_model->updateEstadoActividadTotales($arrParam)){
 					//envio correos a los usuarios
 					if($idEstado == 3){
-						$mensaje = "se revisó la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . ", fue APROBADA y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
+						$mensaje = "se revisó la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre . ", fue APROBADA y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
 					}elseif($idEstado == 4){
-						$mensaje = "se revisó la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . ", fue RECHAZADA. Por favor ingresar y realizar los ajustes respectivos.";
+						$mensaje = "se revisó la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre . ", fue RECHAZADA. Por favor ingresar y realizar los ajustes respectivos.";
 					}elseif($idEstado == 5){
-						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . "y fue APROBADA por Planeación.";
+						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre. "y fue APROBADA por Planeación.";
 					}elseif($idEstado == 6){
-						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $data["numeroActividad"]  . ", para el Trimestre " . $data["numeroTrimestre"] . "y fue RECHAZADA por Planeación. Por favor ingresar y realizar los ajustes respectivos.";
+						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre . "y fue RECHAZADA por Planeación. Por favor ingresar y realizar los ajustes respectivos.";
 					}
 
 					$mensaje .= "<br><b>Observación: </b>" . $observacion;
