@@ -1,165 +1,159 @@
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/resumen/form_estado_actividad.js"); ?>"></script>
+
 <div id="page-wrapper">
-<?php 
-    $userRol = $this->session->userdata("role");
-?>
-    <div class="row"><br>
+    <br>
+    <h2><strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?></h2>
+    <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <i class="fa fa-thumb-tack fa-fw"></i> <b>PLAN ESTRATÉGICO - <?php echo date("Y"); ?></b>
-                    <br><br>
-                    <strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?></br>
+                    <i class="fa fa-bell fa-fw"></i>
                     <strong>No. Actividades: </strong><?php echo $nroActividadesDependencia; ?></br>
                     <strong>Avance Dependencia: </strong><?php echo number_format($avance["avance_poa"],2); ?>
                 </div>
-                <div class="panel-body">
-                    <?php         
-                    if(!$listaObjetivosEstrategicos){ 
-                        echo '<div class="row">';
-                        echo '<div class="col-lg-12">
-                                <p class="text-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> No le han asignado actividades.</p>
-                            </div>';
-                        echo '</div>';
+                <div class="panel-body small">
+
+                    <?php 
+                        $avancePOA = number_format($avance["avance_poa"],2);
+
+                    if(!$avancePOA){
+                        $avancePOA = 0;
+                        $estilos = "bg-warning";
                     }else{
-                        foreach ($listaObjetivosEstrategicos as $infoEstrategia):
-                             $arrParam = array(
-                                "numeroEstrategia" => $infoEstrategia["numero_objetivo_estrategico"],
-                                "idDependencia" => $infoDependencia[0]['id_dependencia']
-                            );                               
-                            $listaActividades = $this->general_model->get_actividades_full_by_dependencia($arrParam);
-
-                            echo '<div class="row">';
-                    ?>
-                            <div class="col-lg-12">
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                            <strong>Estrategia: </strong><?php echo $infoEstrategia['estrategia']; ?></br>
-                                            <strong>Objetivo Estratégico: </strong><?php echo $infoEstrategia['numero_objetivo_estrategico'] . ' ' . $infoEstrategia['objetivo_estrategico']; ?>
-                                    </div>
-                                    <div class="panel-body small">
-                                    <?php
-                                        if(!$listaActividades){
-                                            echo "<small>No hay actividades.</small>";
-                                        }else{
-                                    ?>
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center"><small>No.</small></th>
-                                                        <th><small>Actividad</small></th>
-                                                        <th><small>Meta Plan Operativo Anual</small></th>
-                                                        <th><small>Avance</small></th>
-                                                        <th><small>Meta Proyecto Inversión</small></th>
-                                                        <th><small>Proyecto Inversión</small></th>
-                                                        <th><small>Meta PDD</small></th>
-                                                        <th><small>Programa Estratégico</small></th>
-                                                        <th><small>Logro</small></th>
-                                                        <th><small>Propósito</small></th>
-                                                        <th><small>ODS</small></th>
-                                                    </tr>
-                                                </thead>
-
-                                                <?php
-                                                foreach ($listaActividades as $lista):
-                                                    //buscar las dependencias relacionadas
-                                                    $arrParam = array('idCuadroBase' => $lista['fk_id_cuadro_base']);
-                                                    $dependencias = $this->general_model->get_dependencias($arrParam);
-
-                                                    echo "<tr>";
-                                                    echo "<td class='text-center'><small>" . $lista['numero_actividad'] . "</small>";
-                                                    echo "<a class='btn btn-primary btn-xs' title='Ver Detalle' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'> <span class='fa fa-eye' aria-hidden='true'></a>";
-                                                    echo "</td>";
-                                                    echo "<td><small>" . $lista['descripcion_actividad'] . "</small></td>";
-                                                    echo "<td class='text-right'><small>" . $lista['meta_plan_operativo_anual'] . "</small></td>";
-                                                    echo "<td class='text-center'><small>";
-                                                    if($lista["avance_poa"]){
-                                                        echo $lista["avance_poa"] . "%";
-                                                    }else{
-                                                        echo 0;
-                                                    }
-                                                    echo "</small></td>";
-                                                    echo "<td><small>";
-                                                    echo $lista["meta_proyecto"] . "<br><b>Vigencia: " . $lista["vigencia_meta_proyecto"] . "</b>";  
-                                                    echo "</small></td>";
-                                                    echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
-                                                    echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
-                                                    echo "<td><small>" . $lista["programa"] . "</small></td>";
-                                                    echo "<td><small>" . $lista["logro"] . "</small></td>";
-                                                    echo "<td><small>" . $lista["proposito"] . "</small></td>";
-                                                    echo "<td><small>" . $lista["ods"] . "</small></td>";
-                                                    echo "</tr>";
-
-                                                    if($lista['estado_trimestre_1'] == 6 || $lista['estado_trimestre_2'] == 6  || $lista['estado_trimestre_3'] == 6 || $lista['estado_trimestre_4'] == 6 ){
-                                                        echo "<tr class='text-danger danger'>";
-                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
-                                                            if($userRol == ID_ROL_ENLACE){
-                                                                echo "Debe revisar esta actividad porque se encuentra Rechazada.";
-                                                            }else{
-                                                                echo "Actividad Rechazada por Planeación.";
-                                                            }
-                                                        echo "</b></small></td>";
-                                                        echo "</tr>";
-                                                    }
-                                                   
-                                                    if($lista['estado_trimestre_1'] == 4 || $lista['estado_trimestre_2'] == 4  || $lista['estado_trimestre_3'] == 4 || $lista['estado_trimestre_4'] == 4 ){
-                                                        echo "<tr class='text-danger danger'>";
-                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
-                                                            if($userRol == ID_ROL_ENLACE){
-                                                                echo "Debe revisar esta actividad porque se encuentra Rechazada.";
-                                                            }else{
-                                                                echo "Actividad Rechazada por el Supervisor.";
-                                                            }
-                                                        echo "</b></small></td>";
-                                                        echo "</tr>";
-                                                    }
-
-                                                    if($lista['estado_trimestre_1'] == 3 || $lista['estado_trimestre_2'] == 3  || $lista['estado_trimestre_3'] == 3 || $lista['estado_trimestre_4'] == 3 ){
-                                                        echo "<tr class='text-success success'>";
-                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
-                                                        echo "Actividad Aprobada por el Supervidor.";
-                                                        echo "</b></small></td>";
-                                                        echo "</tr>";
-                                                    }
-
-                                                    if($lista['estado_trimestre_1'] == 2 || $lista['estado_trimestre_2'] == 2  || $lista['estado_trimestre_3'] == 2 || $lista['estado_trimestre_4'] == 2 ){
-                                                        echo "<tr class='text-warning warning'>";
-                                                        echo "<td colspan='11'><small><b><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> ";
-                                                            if($userRol == ID_ROL_SUPERVISOR){
-                                                                echo "Debe revisar esta actividad porque se encuentra Cerrada.";
-                                                            }else{
-                                                                echo "Actividad Cerrada.";
-                                                            }
-                                                        echo "</b></small></td>";
-                                                        echo "</tr>";
-                                                    }
-
-                                                    $arrParam = array("numeroActividad" => $lista["numero_actividad"]);
-                                                    $estadoActividad = $this->general_model->get_estados_actividades($arrParam);
-                                                    if($estadoActividad){ 
-                                                    echo "<tr>";
-                                                    echo "<td colspan='11'>";
-                                                    echo "<p class=" . $estadoActividad[0]['primer_clase'] . "><strong>Trimestre I: " . $estadoActividad[0]['primer_estado'] . "</strong></p>";
-                                                    echo "<p class=" . $estadoActividad[0]['segundo_clase'] . "><strong>Trimestre II: " . $estadoActividad[0]['segundo_estado'] . "</strong></p>";
-                                                    echo "<p class=" . $estadoActividad[0]['tercer_clase'] . "><strong>Trimestre III: " . $estadoActividad[0]['tercer_estado'] . "</strong></p>";
-                                                    echo "<p class=" . $estadoActividad[0]['cuarta_clase'] . "><strong>Trimestre IV: " . $estadoActividad[0]['cuarta_estado'] . "</strong></p>";
-                                                    echo "</td>";
-                                                    echo "</tr>";
-                                                    }
-                                                endforeach
-                                                ?>
-                                            </table>
-                                    <?php 
-                                        }
-                                    ?>
-                                    </div>
-                                </div>
-                            </div>            
-
-                    <?php
-                            echo '</div>';
-                        endforeach;
+                        if($avancePOA > 70){
+                            $estilos = "progress-bar-success";
+                        }elseif($avancePOA > 40 && $avancePOA <= 70){
+                            $estilos = "progress-bar-warning";
+                        }else{
+                            $estilos = "progress-bar-danger";
+                        }
                     }
+                    echo "<b>Avance: " . $avancePOA ."%</b>";
+                    echo '<div class="progress progress-striped">
+                              <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $avancePOA .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $avancePOA . '%</div>
+                            </div>';
                     ?>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Trimestre</th>
+                                <th class="text-right">No Iniciada</th>
+                                <th class="text-right">En Proceso</th>
+                                <th class="text-right">Cerrada</th>
+                                <th class="text-right">Aprobada Supervisor</th>
+                                <th class="text-right">Rechazada Supervisor</th>
+                                <th class="text-right">Aprobada Planeación</th>
+                                <th class="text-right">Rechazada Planeación</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <th>Trimestre I</th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreNoIniciada; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreEnProceso; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreCerrado; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreAprobadoSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreRechazadaSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreAprobadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreRechazadaPlaneacion; ?></th>
+                        </tr>
+                        <tr>
+                            <th>Trimestre II</th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreNoIniciada; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreEnProceso; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreCerrado; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreAprobadoSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreRechazadaSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreAprobadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreRechazadaPlaneacion; ?></th>
+                        </tr>
+                        <tr>
+                            <th>Trimestre III</th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreNoIniciada; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreEnProceso; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreCerrado; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreAprobadoSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreRechazadaSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreAprobadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreRechazadaPlaneacion; ?></th>
+                        </tr>
+                        <tr>
+                            <th>Trimestre IV</th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreNoIniciada; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreEnProceso; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreCerrado; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreAprobadoSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreRechazadaSupervisor; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreAprobadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreRechazadaPlaneacion; ?></th>
+                        </tr>
+                    </table>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-crosshairs"></i>
+                    <strong>Objetivos Estratégicos </strong>
+                </div>
+                <div class="panel-body small">
+                <?php
+                    if($listaObjetivosEstrategicos){
+                ?>              
+
+                    <table width="100%" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th width='45%'>Objetivo Estratégico</th>
+                                <th width='10%' class="text-center">No. Actividades</th>
+                                <th width='45%' class="text-center">% Avance</th>
+                            </tr>
+                        </thead>
+                        <tbody>                         
+                        <?php
+                            foreach ($listaObjetivosEstrategicos as $lista):
+                                $arrParam = array(
+                                    "idDependencia" => $infoDependencia[0]['id_dependencia'],
+                                    "numeroObjetivoEstrategico" => $lista["numero_objetivo_estrategico"],
+                                    "vigencia" => date("Y")
+                                );
+                                $nroActividades = $this->general_model->countActividades($arrParam);
+
+                                $avance = $this->general_model->sumAvance($arrParam);
+                                $avancePOA = number_format($avance["avance_poa"],2);
+                 
+                                if(!$avancePOA){
+                                    $avancePOA = 0;
+                                    $estilos = "bg-warning";
+                                }else{
+                                    if($avancePOA > 70){
+                                        $estilos = "progress-bar-success";
+                                    }elseif($avancePOA > 40 && $avancePOA <= 70){
+                                        $estilos = "progress-bar-warning";
+                                    }else{
+                                        $estilos = "progress-bar-danger";
+                                    }
+                                }
+                                echo "<tr>";
+                                echo "<td>" . $lista['numero_objetivo_estrategico'] . ' ' . $lista['objetivo_estrategico'] .  "</td>";
+                                echo "<td class='text-center'>" . $nroActividades . "</td>";
+                                echo "<td class='text-center'>";
+                                echo "<b>" . $avancePOA ."%</b>";
+                                echo '<div class="progress progress-striped">
+                                          <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $avancePOA .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $avancePOA . '%</div>
+                                        </div>';
+                                echo "</td>";
+                                echo "</tr>";
+                            endforeach;
+                        ?>
+                        </tbody>
+                    </table>
+                <?php } ?>
+                    
                 </div>
             </div>
         </div>

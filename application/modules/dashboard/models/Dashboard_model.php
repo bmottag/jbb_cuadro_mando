@@ -201,36 +201,7 @@
 				}
 		}
 
-		/**
-		 * Sumatoria avance POA
-		 * @since 17/5/2022
-		 */
-		public function sumAvance($arrData) 
-		{		
-			$this->db->select_sum('avance_poa');
-			$this->db->join('actividades A', 'A.numero_actividad = E.fk_numero_actividad', 'INNER');
-			$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
-			$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
-			$this->db->join('objetivos_estrategicos X', 'X.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
 
-			if (array_key_exists("idDependencia", $arrData)) {
-				$this->db->where('fk_id_dependencia', $arrData["idDependencia"]);
-			}
-			if (array_key_exists("idObjetivo", $arrData)) {
-				$this->db->where('fk_id_objetivo_estrategico', $arrData["idObjetivo"]);
-			}
-			if (array_key_exists("vigencia", $arrData)) {
-				$this->db->where('vigencia_meta_proyecto', $arrData["vigencia"]);
-			}
-			
-			$query = $this->db->get('actividad_estado E');
-
-			if ($query->num_rows() > 0) {
-				return $query->row_array();
-			} else {
-				return false;
-			}
-		}
 		
 		
 		

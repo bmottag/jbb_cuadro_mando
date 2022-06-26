@@ -433,7 +433,7 @@ class Dashboard extends CI_Controller {
 			$filtroObjetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_dependencia($arrParam);
 
 			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
-			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
+			$data['avance'] = $this->general_model->sumAvance($arrParam);
 
 			$valor = '';
 
@@ -675,11 +675,9 @@ class Dashboard extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$filtroObjetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_dependencia($arrParam);
-
-
 			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
-			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
-
+			$data['avance'] = $this->general_model->sumAvance($arrParam);
+			
 			$valor = '';
 
 			if($filtroObjetivosEstrategicos){
@@ -697,6 +695,8 @@ class Dashboard extends CI_Controller {
 				$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			}
 
+
+
 			$arrParam = array(
 				"table" => "param_dependencias",
 				"order" => "dependencia",
@@ -704,6 +704,118 @@ class Dashboard extends CI_Controller {
 				"id" => $idDependencia
 			);
 			$data['infoDependencia'] = $this->general_model->get_basic_search($arrParam);
+
+			//NO INICIADA
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 0,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			//EN PROCESO
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 1,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			//CERRADA
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 2,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			//APROBADA SUPERVISOR
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 3,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			//RECHAZADA SUPERVISOR
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 4,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			//APROBADA PLANEACION
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 5,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			//RECHAZADA PLANEACIOON
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 6,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 
 			$data["view"] = "info_dependencias";
 			$this->load->view("layout_calendar", $data);
@@ -739,7 +851,7 @@ class Dashboard extends CI_Controller {
 
 			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
 
-			$data['avance'] = $this->dashboard_model->sumAvance($arrParam);
+			$data['avance'] = $this->general_model->sumAvance($arrParam);
 
 			$valor = '';
 

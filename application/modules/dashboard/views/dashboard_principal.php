@@ -41,7 +41,7 @@
                                 "vigencia" => date("Y")
                             );
                             $nroActividades = $this->general_model->countActividades($arrParam);
-                            $avance = $this->dashboard_model->sumAvance($arrParam);
+                            $avance = $this->general_model->sumAvance($arrParam);
                             $avancePOA = number_format($avance["avance_poa"],2);
              
                             if(!$avancePOA){
@@ -102,7 +102,7 @@
                                 "vigencia" => date("Y")
                             );
                             $nroActividades = $this->general_model->countActividades($arrParam);
-                            $avance = $this->dashboard_model->sumAvance($arrParam);
+                            $avance = $this->general_model->sumAvance($arrParam);
                             $promedio = 0;
                             if($nroActividades){
                                 $promedio = number_format($avance["avance_poa"]/$nroActividades,2);

@@ -133,7 +133,6 @@ class Resumen extends CI_Controller {
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 
-
 			$data["view"] = "resumen_general";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -226,4 +225,18 @@ class Resumen extends CI_Controller {
 			$this->session->set_flashdata('retornoExito', $msj);
 			echo json_encode($data);
     }
+
+	/**
+	 * objetivos_estrategicos
+     * @since 26/06/2022
+     * @author BMOTTAG
+	 */
+	public function objetivos_estrategicos()
+	{			
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+			
+			$data["view"] = 'objetivos_estrategicos';
+			$this->load->view("layout_calendar", $data);
+	}
 }
