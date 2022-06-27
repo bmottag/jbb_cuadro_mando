@@ -196,6 +196,55 @@
 									$avancePOA4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * $ponderacion, 2) . '%';
 								}
 ?>
+							<table class='table table-hover'>
+								<thead>
+									<tr>
+										<th>
+											Plan Institucional
+										</th>
+									</tr>
+								</thead>
+									<tr>
+										<td>
+											<?php if($lista['plan_archivos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Institucional de Archivos de la Entidad <br>
+											<?php } ?>
+											<?php if($lista['plan_adquisiciones'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Anual de Adquisiciones <br>
+											<?php } ?>
+											<?php if($lista['plan_vacantes'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Anual de Vacantes <br>
+											<?php } ?>
+											<?php if($lista['plan_recursos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Previsión de Recursos Humanos <br>
+											<?php } ?>
+											<?php if($lista['plan_talento'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Estretégico de Talento Humano <br>
+											<?php } ?>
+											<?php if($lista['plan_capacticion'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Institucional de Capacitación <br>
+											<?php } ?>
+											<?php if($lista['plan_incentivos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Incentivos Institucionales <br>
+											<?php } ?>
+											<?php if($lista['plan_trabajo'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Trabajo Anual en Seguridad y Salud en el Trabajo <br>
+											<?php } ?>
+											<?php if($lista['plan_anticorrupcion'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Anticorrupción y de Atención al Ciudadano <br>
+											<?php } ?>
+											<?php if($lista['plan_tecnologia'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan estrategico de Tecnologías de la Información y las Comunicaciones <br>
+											<?php } ?>
+											<?php if($lista['plan_riesgos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Tratamiento de Riesgos de Seguridad y Privacidad de la Información <br>
+											<?php } ?>
+											<?php if($lista['plan_informacion'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Seguridad y Privacidad de la Información <br>
+											<?php } ?>
+										</tr>
+									</tr>
+							</table>
 					<table class='table table-hover'>
 						<thead>
 							<tr class="text-primary">
@@ -206,7 +255,7 @@
 								<td class="text-right">
 									<h2>Avance POA: <?php echo $avancePOA . '%'; ?></h2>
 									<small>(Suma Ejecutado /Suma Programado * Ponderación)</small>
-								</tr>
+								</td>
 							</tr>
 						</thead>
 					</table>

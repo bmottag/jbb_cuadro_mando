@@ -25,7 +25,19 @@
 					'fecha_final' => $this->input->post('fecha_final'),
 					'fk_id_proceso_calidad' => $this->input->post('proceso_calidad'),
 					'fk_id_area_responsable' => $this->input->post('id_responsable'),
-					'fk_id_dependencia' => $this->input->post('id_dependencia')
+					'fk_id_dependencia' => $this->input->post('id_dependencia'),
+					'plan_archivos' => $this->input->post('plan_archivos'),
+					'plan_adquisiciones' => $this->input->post('plan_adquisiciones'),
+					'plan_vacantes' => $this->input->post('plan_vacantes'),
+					'plan_recursos' => $this->input->post('plan_recursos'),
+					'plan_talento' => $this->input->post('plan_talento'),
+					'plan_capacitacion' => $this->input->post('plan_capacitacion'),
+					'plan_incentivos' => $this->input->post('plan_incentivos'),
+					'plan_trabajo' => $this->input->post('plan_trabajo'),
+					'plan_anticorrupcion' => $this->input->post('plan_anticorrupcion'),
+					'plan_tecnologia' => $this->input->post('plan_tecnologia'),
+					'plan_riesgos' => $this->input->post('plan_riesgos'),
+					'plan_informacion' => $this->input->post('plan_informacion')
 				);	
 
 				//revisar si es para adicionar o editar

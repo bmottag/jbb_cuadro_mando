@@ -91,7 +91,7 @@
                             <tr>
                                 <th width="45%">Estrategia</th>
                                 <th width="10%" class="text-center">No. Actividades</th>
-                                <th width="45%" class="text-center">Promedio Cumplimiento</th>
+                                <th width="45%" class="text-center">Promedio de Cumplimiento</th>
                             </tr>
                         </thead>
                         <?php

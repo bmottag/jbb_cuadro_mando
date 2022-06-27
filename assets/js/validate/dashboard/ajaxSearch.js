@@ -23,7 +23,7 @@ $(document).ready(function () {
 			$.ajax ({
 				type: 'POST',
 				url: base_url + 'dashboard/dependenciaList',
-				data: {'numero_objetivo': numero_objetivo},
+				data: {'numero_objetivo': numero_objetivo, 'numero_proyecto': ''},
 				cache: false,
 				success: function (data)
 				{
@@ -34,7 +34,7 @@ $(document).ready(function () {
 			$.ajax ({
 				type: 'POST',
 				url: base_url + 'dashboard/numeroActividadesList',
-				data: {'numero_objetivo': numero_objetivo},
+				data: {'numero_objetivo': numero_objetivo, 'numero_proyecto': '', 'id_dependencia': ''},
 				cache: false,
 				success: function (data)
 				{
@@ -63,7 +63,7 @@ $(document).ready(function () {
 			$.ajax ({
 				type: 'POST',
 				url: base_url + 'dashboard/numeroActividadesList',
-				data: {'numero_objetivo': numero_objetivo, 'numero_proyecto': numero_proyecto},
+				data: {'numero_objetivo': numero_objetivo, 'numero_proyecto': numero_proyecto, 'id_dependencia': ''},
 				cache: false,
 				success: function (data)
 				{

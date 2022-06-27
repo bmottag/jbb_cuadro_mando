@@ -15,7 +15,10 @@ class Resumen extends CI_Controller {
 	 * @since 24/06/2022
 	 */
 	public function index()
-	{				
+	{	
+			$arrParam = array();
+			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
+
 			$arrParam = array(
 				"vigencia" => date("Y")
 			);
@@ -246,16 +249,13 @@ class Resumen extends CI_Controller {
 	}
 
 	/**
-	 * plan operativo anual
-     * @since 26/06/2022
+	 * planes institucionaels
+     * @since 27/06/2022
      * @author BMOTTAG
 	 */
-	public function plan_operativo_anual()
-	{			
-			$arrParam = array();
-			$data['info'] = $this->general_model->get_objetivos_estrategicos($arrParam);
-			
-			$data["view"] = 'plan_operativo_anual';
+	public function planes_institucionales()
+	{				
+			$data["view"] = 'planes_institucionales';
 			$this->load->view("layout_calendar", $data);
 	}
 }

@@ -219,11 +219,8 @@ $(function(){
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
 
 								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
-								if($unidadMedida == "Porcentaje"){
-									echo $unidadMedida; exit; 
-									$sumaProgramado = $sumaProgramado/100;
-								}
 								$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
+
 								$arrParam['numeroTrimestre'] = 1;
 								$sumaProgramadoTrimestre1 = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutadoTrimestre1 = $this->general_model->sumarEjecutado($arrParam);
@@ -236,6 +233,20 @@ $(function(){
 								$arrParam['numeroTrimestre'] = 4;
 								$sumaProgramadoTrimestre4 = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutadoTrimestre4 = $this->general_model->sumarEjecutado($arrParam);
+
+								if(strtolower(trim($unidadMedida)) == "porcentaje"){
+									$valorProgramadoTotal = $sumaProgramado['programado']/100;
+									$valorProgramadoTrimestre1 = $sumaProgramadoTrimestre1['programado']/100;
+									$valorProgramadoTrimestre2 = $sumaProgramadoTrimestre2['programado']/100;
+									$valorProgramadoTrimestre3 = $sumaProgramadoTrimestre3['programado']/100;
+									$valorProgramadoTrimestre4 = $sumaProgramadoTrimestre4['programado']/100;
+								}else{
+									$valorProgramadoTotal = $sumaProgramado['programado'];
+									$valorProgramadoTrimestre1 = $sumaProgramadoTrimestre1['programado'];
+									$valorProgramadoTrimestre2 = $sumaProgramadoTrimestre2['programado'];
+									$valorProgramadoTrimestre3 = $sumaProgramadoTrimestre3['programado'];
+									$valorProgramadoTrimestre4 = $sumaProgramadoTrimestre4['programado'];
+								}
 
 								$cumplimiento1 = 0;
 								$cumplimiento2 = 0;
@@ -269,15 +280,65 @@ $(function(){
 ?>
 							<table class='table table-hover'>
 								<thead>
+									<tr>
+										<th>
+											Plan Institucional
+										</th>
+									</tr>
+								</thead>
+									<tr>
+										<td>
+											<?php if($lista['plan_archivos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Institucional de Archivos de la Entidad <br>
+											<?php } ?>
+											<?php if($lista['plan_adquisiciones'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Anual de Adquisiciones <br>
+											<?php } ?>
+											<?php if($lista['plan_vacantes'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Anual de Vacantes <br>
+											<?php } ?>
+											<?php if($lista['plan_recursos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Previsión de Recursos Humanos <br>
+											<?php } ?>
+											<?php if($lista['plan_talento'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Estretégico de Talento Humano <br>
+											<?php } ?>
+											<?php if($lista['plan_capacitacion'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Institucional de Capacitación <br>
+											<?php } ?>
+											<?php if($lista['plan_incentivos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Incentivos Institucionales <br>
+											<?php } ?>
+											<?php if($lista['plan_trabajo'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Trabajo Anual en Seguridad y Salud en el Trabajo <br>
+											<?php } ?>
+											<?php if($lista['plan_anticorrupcion'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan Anticorrupción y de Atención al Ciudadano <br>
+											<?php } ?>
+											<?php if($lista['plan_tecnologia'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan estrategico de Tecnologías de la Información y las Comunicaciones <br>
+											<?php } ?>
+											<?php if($lista['plan_riesgos'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Tratamiento de Riesgos de Seguridad y Privacidad de la Información <br>
+											<?php } ?>
+											<?php if($lista['plan_informacion'] == 1 ){ ?>
+											<span class="glyphicon glyphicon-ok"></span> Plan de Seguridad y Privacidad de la Información <br>
+											<?php } ?>
+										</tr>
+									</tr>
+							</table>
+
+							<table class='table table-hover'>
+								<thead>
 									<tr class="text-primary">
 										<td>
-											<h2>Programado Año: <?php echo number_format($sumaProgramado['programado'],2); ?></h2>
+											<h2>Programado Año: <?php echo number_format($valorProgramadoTotal,2); ?></h2>
 											<small>(Suma Programado)</small>
 										</td>
 										<td class="text-right">
 											<h2>Avance POA: <?php echo $avancePOA . '%'; ?></h2>
 											<small>(Suma Ejecutado /Suma Programado * Ponderación)</small>
-										</tr>
+										</td>
 									</tr>
 								</thead>
 							</table>						
@@ -285,7 +346,7 @@ $(function(){
 								<thead>
 									<tr class="headings default">
 										<th class="column-title">
-											<p>Programado Trimestre I: <?php echo number_format($sumaProgramadoTrimestre1['programado'],2); ?></p>
+											<p>Programado Trimestre I: <?php echo number_format($valorProgramadoTrimestre1,2); ?></p>
 										</th>
 										<th class="column-title">
 											<p>Cumplimiento Trimestre I: <?php echo $cumplimiento1 . '%'; ?></p>
@@ -306,7 +367,7 @@ $(function(){
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
-											<p>Programado Trimestre II: <?php echo number_format($sumaProgramadoTrimestre2['programado'],2); ?></p>
+											<p>Programado Trimestre II: <?php echo number_format($valorProgramadoTrimestre2,2); ?></p>
 										</th>
 										<th class="column-title">
 											<p>Cumplimiento Trimestre II: <?php echo $cumplimiento2 . '%'; ?></p>
@@ -327,7 +388,7 @@ $(function(){
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
-											<p>Programado Trimestre III: <?php echo number_format($sumaProgramadoTrimestre3['programado'],2); ?></p>
+											<p>Programado Trimestre III: <?php echo number_format($valorProgramadoTrimestre3,2); ?></p>
 										</th>
 										<th class="column-title">
 											<p>Cumplimiento Trimestre III: <?php echo $cumplimiento3 . '%'; ?></p>
@@ -348,7 +409,7 @@ $(function(){
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
-											<p>Programado Trimestre IV: <?php echo number_format($sumaProgramadoTrimestre4['programado'],2); ?></p>
+											<p>Programado Trimestre IV: <?php echo number_format($valorProgramadoTrimestre4,2); ?></p>
 										</th>
 										<th class="column-title">
 											<p>Cumplimiento Trimestre IV: <?php echo $cumplimiento4 . '%'; ?></p>
@@ -533,7 +594,7 @@ $(function(){
 		
 <!--INICIO Modal -->
 <div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content" id="tablaDatos">
 
 		</div>

@@ -72,7 +72,70 @@
 
 <!--INICIO ADDITIONAL INFORMATION -->
     <div class="row">
-        <div class="col-lg-6">              
+        <div class="col-lg-8"> 
+             <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> No. Actividades: <b><?php echo $nroActividades; ?></b>
+                </div>
+                <div class="panel-body small">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">No. Actividad</th>
+                                <th>Actividad</th>
+                                <th class="text-center">Cumplimiento Trim. I</th>
+                                <th class="text-center">Cumplimiento Trim. II</th>
+                                <th class="text-center">Cumplimiento Trim. III</th>
+                                <th class="text-center">Cumplimiento Trim. IV</th>
+                                <th class="text-center">Avance POA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                            if($listaActividades){
+                                foreach ($listaActividades as $lista):
+                                    $trim1 = "0%";
+                                    $trim2 = "0%";
+                                    $trim3 = "0%";
+                                    $trim4 = "0%";
+                                    $avancePoa = "0%";
+                                    if($lista["trimestre_1"] != '' && $lista["trimestre_1"] > 0){
+                                        $trim1 = $lista["trimestre_1"] . "%";
+                                    }
+                                    if($lista["trimestre_2"] != '' && $lista["trimestre_2"] > 0){
+                                        $trim2 = $lista["trimestre_2"] . "%";
+                                    }
+                                    if($lista["trimestre_3"] != '' && $lista["trimestre_3"] > 0){
+                                        $trim3 = $lista["trimestre_3"] . "%";
+                                    }
+                                    if($lista["trimestre_4"] != '' && $lista["trimestre_4"] > 0){
+                                        $trim4 = $lista["trimestre_4"] . "%";
+                                    }
+                                    if($lista["avance_poa"] != '' && $lista["avance_poa"] > 0){
+                                        $avancePoa = $lista["avance_poa"] . "%";
+                                    }
+                                     
+                        ?>
+                                <tr>
+                                    <td class="text-center"><?php echo $lista["numero_actividad"] ?></td>
+                                    <td><?php echo $lista["descripcion_actividad"] ?></td>
+                                    <td class="text-right"><?php echo $trim1 ?></td>
+                                    <td class="text-right"><?php echo $trim2; ?></td>
+                                    <td class="text-right"><?php echo $trim3; ?></td>
+                                    <td class="text-right"><?php echo $trim4; ?></td>
+                                    <td class="text-right"><?php echo $avancePoa; ?></td>
+                                </tr>
+                        <?php
+                                endforeach;
+                            }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>           
+        </div>
+        <div class="col-lg-4">              
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     SEGUIMIENTO EJECUCIÓN POR TRIMESTRE
@@ -99,11 +162,11 @@
     }
 ?>
                     <div class="col-lg-12"> 
-                        <form name="formEstado" id="formEstado" class="form-horizontal" method="post">
+                        <form name="formEstado" id="formEstado" method="post">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label" for="trimestre">Trimestre:</label>
-                                <div class="col-sm-8">
-                                    <select name="trimestre" Iid="trimestre" class="form-control" >
+                                <label for="trimestre">Trimestre:</label>
+                                <div>
+                                    <select name="trimestre" Iid="trimestre" class="form-control" required >
                                         <option value="">Seleccione...</option>
                                         <option value=1 >Trimestre I</option>
                                         <option value=2 >Trimestre II</option>
@@ -113,8 +176,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label" for="estado">Estado:</label>
-                                <div class="col-sm-8">
+                                <label for="estado">Estado:</label>
+                                <div>
                                     <select name="valorEstado" id="valorEstado" class="form-control" required >
                                         <option value="">Seleccione...</option>
                                         <?php for ($i = 0; $i < count($listaEstados); $i++) { ?>
@@ -125,8 +188,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-4 control-label" for="information">Observación:</label>
-                                <div class="col-sm-8">
+                                <label for="information">Observación:</label>
+                                <div>
                                 <textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required ></textarea>
                                 </div>
                             </div>
@@ -137,7 +200,6 @@
                                         <button type="button" id="btnEstado" name="btnEstado" class="btn btn-primary" >
                                             Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
                                         </button> 
-                                        
                                     </div>
                                 </div>
                             </div>                          

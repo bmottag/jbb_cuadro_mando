@@ -18,13 +18,6 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-crosshairs"></i> RESUMEN OBJETIVOS ESTRATÉGICOS
-					<div class="pull-right">
-						<div class="btn-group">																				
-							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Objetivos Estratégicos
-							</button>
-						</div>
-					</div>
 				</div>
 				<div class="panel-body">
 
@@ -58,7 +51,7 @@
 							<tr>
 								<th width='45%'>Objetivo Estratégico</th>
 								<th width='10%' class="text-center">No. Actividades</th>
-								<th width='45%' class="text-center">Promedio Cumplimiento</th>
+								<th width='45%' class="text-center">Promedio de Cumplimiento</th>
 							</tr>
 						</thead>
 						<tbody>							

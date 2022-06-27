@@ -417,12 +417,13 @@ class General_model extends CI_Model {
 				$idUser = $this->session->userdata("id");
 				$idDependencia = $this->session->userdata("dependencia");
 							
-				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable');
+				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.avance_poa');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
+				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
 
 				if(array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
@@ -928,6 +929,42 @@ class General_model extends CI_Model {
 						$sql.= " AND M.vigencia_meta_proyecto = '". $arrData["vigencia"]. "'";
 					}
 				}
+				if (array_key_exists("planArchivos", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planAdquisiciones", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planVacantes", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planRecursos", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planTalento", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planCapacitacion", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planIncentivos", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planTrabajo", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planAnticorrupcion", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planTecnologia", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planRiesgos", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
+				if (array_key_exists("planInformacion", $arrData)) {
+					$sql.= " AND A.plan_archivos = 1";
+				}
 
 				$query = $this->db->query($sql);
 				$row = $query->row();
@@ -1095,7 +1132,43 @@ class General_model extends CI_Model {
 			if (array_key_exists("idDependencia", $arrData)) {
 				$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 			}
-			
+			if (array_key_exists("planArchivos", $arrData)) {
+				$this->db->where('A.plan_archivos', 1);
+			}
+			if (array_key_exists("planAdquisiciones", $arrData)) {
+				$this->db->where('A.plan_adquisiciones', 1);
+			}
+			if (array_key_exists("planVacantes", $arrData)) {
+				$this->db->where('A.plan_vacantes', 1);
+			}
+			if (array_key_exists("planRecursos", $arrData)) {
+				$this->db->where('A.plan_recursos', 1);
+			}
+			if (array_key_exists("planTalento", $arrData)) {
+				$this->db->where('A.plan_talento', 1);
+			}
+			if (array_key_exists("planCapacitacion", $arrData)) {
+				$this->db->where('A.plan_capacitacion', 1);
+			}
+			if (array_key_exists("planIncentivos", $arrData)) {
+				$this->db->where('A.plan_incentivos', 1);
+			}
+			if (array_key_exists("planTrabajo", $arrData)) {
+				$this->db->where('A.plan_trabajo', 1);
+			}
+			if (array_key_exists("planAnticorrupcion", $arrData)) {
+				$this->db->where('A.plan_anticorrupcion', 1);
+			}
+			if (array_key_exists("planTecnologia", $arrData)) {
+				$this->db->where('A.plan_tecnologia', 1);
+			}
+			if (array_key_exists("planRiesgos", $arrData)) {
+				$this->db->where('A.plan_riesgos', 1);
+			}
+			if (array_key_exists("planInformacion", $arrData)) {
+				$this->db->where('A.plan_informacion', 1);
+			}
+
 			$query = $this->db->get('actividad_estado E');
 
 			if ($query->num_rows() > 0) {
