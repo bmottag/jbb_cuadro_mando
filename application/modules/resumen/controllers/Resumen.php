@@ -156,6 +156,7 @@ class Resumen extends CI_Controller {
 			foreach ($listadoActividades as $lista):
 				$cumplimientoX = 0;
 				$avancePOA = 0;
+				$cumplimientoActual = 0;
 				$ponderacion = $lista['ponderacion'];
 				//INICIO --- DEBO TENER EN CUENTA EL TRIMESTRE DE LOS DEMAS QUE ESTAN EN 5
 				$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
@@ -190,6 +191,9 @@ class Resumen extends CI_Controller {
 				if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
 					$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
 				}
+				if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
+					$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,2);
+				}
 
 				if($idEstado == 5){
 					$arrParam = array(
@@ -210,7 +214,8 @@ class Resumen extends CI_Controller {
 					"observacion" => $observacion,
 					"estado" => $idEstado,
 					"cumplimientoX" => $cumplimientoX,
-					"avancePOA" => $avancePOA
+					"avancePOA" => $avancePOA,
+					"cumplimientoActual" => $cumplimientoActual
 				);
 				if($this->general_model->addHistorialActividad($arrParam)) 
 				{
@@ -237,6 +242,20 @@ class Resumen extends CI_Controller {
 			$data['info'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			
 			$data["view"] = 'objetivos_estrategicos';
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * plan operativo anual
+     * @since 26/06/2022
+     * @author BMOTTAG
+	 */
+	public function plan_operativo_anual()
+	{			
+			$arrParam = array();
+			$data['info'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+			
+			$data["view"] = 'plan_operativo_anual';
 			$this->load->view("layout_calendar", $data);
 	}
 }

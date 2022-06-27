@@ -509,6 +509,7 @@ class Dashboard extends CI_Controller {
 
 			$cumplimientoX = 0;
 			$avancePOA = 0;
+			$cumplimientoActual = 0;
 			$ponderacion = $listadoActividades[0]['ponderacion'];
 			//INICIO --- DEBO TENER EN CUENTA EL TRIMESTRE DE LOS DEMAS QUE ESTAN EN 5
 			$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
@@ -542,6 +543,9 @@ class Dashboard extends CI_Controller {
 			if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
 				$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
 			}
+			if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
+				$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,2);
+			}
 
 			if($idEstado == 5){
 				$arrParam = array(
@@ -562,7 +566,8 @@ class Dashboard extends CI_Controller {
 				"observacion" => $observacion,
 				"estado" => $idEstado,
 				"cumplimientoX" => $cumplimientoX,
-				"avancePOA" => $avancePOA
+				"avancePOA" => $avancePOA,
+				"cumplimientoActual" => $cumplimientoActual
 			);
 			if($this->general_model->addHistorialActividad($arrParam)) 
 			{
@@ -694,8 +699,6 @@ class Dashboard extends CI_Controller {
 				$arrParam = array("filtroEstrategias" => $valor);
 				$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 			}
-
-
 
 			$arrParam = array(
 				"table" => "param_dependencias",

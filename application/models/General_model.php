@@ -1027,7 +1027,8 @@ class General_model extends CI_Model {
 				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
 				'trimestre_' . $arrData["numeroTrimestre"] => $arrData["cumplimientoX"],
 				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
-				'avance_poa' => $arrData["avancePOA"]
+				'avance_poa' => $arrData["avancePOA"],
+				'cumplimiento' => $arrData["cumplimientoActual"]
 			);	
 			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
 			$query = $this->db->update('actividad_estado', $data);
@@ -1062,6 +1063,37 @@ class General_model extends CI_Model {
 			}
 			if (array_key_exists("vigencia", $arrData)) {
 				$this->db->where('vigencia_meta_proyecto', $arrData["vigencia"]);
+			}
+			
+			$query = $this->db->get('actividad_estado E');
+
+			if ($query->num_rows() > 0) {
+				return $query->row_array();
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Sumatoria de Cumplimiento
+		 * @since 27/6/2022
+		 */
+		public function sumCumplimiento($arrData) 
+		{		
+			$this->db->select_sum('cumplimiento');
+			$this->db->join('actividades A', 'A.numero_actividad = E.fk_numero_actividad', 'INNER');
+			$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+			$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
+			$this->db->join('objetivos_estrategicos X', 'X.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
+
+			if (array_key_exists("idEstrategia", $arrData)) {
+				$this->db->where('X.fk_id_estrategia', $arrData["idEstrategia"]);
+			}
+			if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+				$this->db->where('C.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
+			}
+			if (array_key_exists("idDependencia", $arrData)) {
+				$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 			}
 			
 			$query = $this->db->get('actividad_estado E');

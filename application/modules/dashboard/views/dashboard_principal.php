@@ -29,9 +29,9 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Dependencia</th>
-                                <th>Avance Plan Estratégico <b><?php echo date("Y"); ?></b></th>
-                                <th>No. Actividades</th>
+                                <th width="45%">Dependencia</th>
+                                <th width="10%" class="text-center">No. Actividades</th>
+                                <th width="45%" class="text-center">Avance Plan Estratégico</th>
                             </tr>
                         </thead>
                         <?php
@@ -57,20 +57,20 @@
                                 }
                             }
                             echo "<tr>";
-                            echo "<td style='width: 40%'><small>";
+                            echo "<td><small>";
                             if($userRol == ID_ROL_PLANEACION || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_SUPER_ADMIN){
                                 echo "<a class='btn btn-info btn-xs' href='" . base_url('dashboard/dependencias/' . $lista["id_dependencia"]) . "' >" . $lista["dependencia"] . "</a>";
                             }else{
                                 echo $lista["dependencia"];
                             }
                             echo "</small></td>";
+                            echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
                             echo "<td class='text-center'>";
                             echo "<b>" . $avancePOA ."%</b>";
                             echo '<div class="progress progress-striped">
                                       <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $avancePOA .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $avancePOA . '%</div>
                                     </div>';
                             echo "</td>";
-                            echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
                             echo "</tr>";
                         endforeach
                         ?>
@@ -89,9 +89,9 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Estrategia</th>
-                                <th>% Avance Vigencia <b><?php echo date("Y"); ?></b></th>
-                                <th>No. Actividades</th>
+                                <th width="45%">Estrategia</th>
+                                <th width="10%" class="text-center">No. Actividades</th>
+                                <th width="45%" class="text-center">Promedio Cumplimiento</th>
                             </tr>
                         </thead>
                         <?php
@@ -102,19 +102,19 @@
                                 "vigencia" => date("Y")
                             );
                             $nroActividades = $this->general_model->countActividades($arrParam);
-                            $avance = $this->general_model->sumAvance($arrParam);
-                            $promedio = 0;
+                            $cumplimiento = $this->general_model->sumCumplimiento($arrParam);
+                            $promedioCumplimiento = 0;
                             if($nroActividades){
-                                $promedio = number_format($avance["avance_poa"]/$nroActividades,2);
+                                $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
                             }
                                          
-                            if(!$promedio){
-                                $promedio = 0;
+                            if(!$promedioCumplimiento){
+                                $promedioCumplimiento = 0;
                                 $estilos = "bg-warning";
                             }else{
-                                if($promedio > 70){
+                                if($promedioCumplimiento > 70){
                                     $estilos = "progress-bar-success";
-                                }elseif($promedio > 40 && $promedio <= 70){
+                                }elseif($promedioCumplimiento > 40 && $promedioCumplimiento <= 70){
                                     $estilos = "progress-bar-warning";
                                 }else{
                                     $estilos = "progress-bar-danger";
@@ -122,14 +122,14 @@
                             }
 
                             echo "<tr>";
-                            echo "<td style='width: 50%'><small>" . $lista["estrategia"] . "</small></td>";
+                            echo "<td><small>" . $lista["estrategia"] . "</small></td>";
+                            echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
                             echo "<td class='text-center'>";
-                            echo "<b>" . $promedio ."%</b>";
+                            echo "<b>" . $promedioCumplimiento ."%</b>";
                             echo '<div class="progress progress-striped">
-                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $promedio .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $promedio . '%</div>
+                                      <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $promedioCumplimiento .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $promedioCumplimiento . '%</div>
                                     </div>';
                             echo "</td>";
-                            echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
                             echo "</tr>";
                         endforeach
                         ?>

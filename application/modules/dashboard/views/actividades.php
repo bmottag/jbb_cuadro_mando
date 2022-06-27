@@ -219,6 +219,10 @@ $(function(){
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
 
 								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
+								if($unidadMedida == "Porcentaje"){
+									echo $unidadMedida; exit; 
+									$sumaProgramado = $sumaProgramado/100;
+								}
 								$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
 								$arrParam['numeroTrimestre'] = 1;
 								$sumaProgramadoTrimestre1 = $this->general_model->sumarProgramado($arrParam);

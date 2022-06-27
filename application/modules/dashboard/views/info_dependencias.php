@@ -110,7 +110,7 @@
                             <tr>
                                 <th width='45%'>Objetivo Estratégico</th>
                                 <th width='10%' class="text-center">No. Actividades</th>
-                                <th width='45%' class="text-center">% Avance</th>
+                                <th width='45%' class="text-center">Promedio Cumplimiento</th>
                             </tr>
                         </thead>
                         <tbody>                         
@@ -122,17 +122,19 @@
                                     "vigencia" => date("Y")
                                 );
                                 $nroActividades = $this->general_model->countActividades($arrParam);
-
-                                $avance = $this->general_model->sumAvance($arrParam);
-                                $avancePOA = number_format($avance["avance_poa"],2);
-                 
-                                if(!$avancePOA){
-                                    $avancePOA = 0;
+                                $cumplimiento = $this->general_model->sumCumplimiento($arrParam);
+                                $promedioCumplimiento = 0;
+                                if($nroActividades){
+                                    $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+                                }
+                                             
+                                if(!$promedioCumplimiento){
+                                    $promedioCumplimiento = 0;
                                     $estilos = "bg-warning";
                                 }else{
-                                    if($avancePOA > 70){
+                                    if($promedioCumplimiento > 70){
                                         $estilos = "progress-bar-success";
-                                    }elseif($avancePOA > 40 && $avancePOA <= 70){
+                                    }elseif($promedioCumplimiento > 40 && $promedioCumplimiento <= 70){
                                         $estilos = "progress-bar-warning";
                                     }else{
                                         $estilos = "progress-bar-danger";
@@ -142,9 +144,9 @@
                                 echo "<td>" . $lista['numero_objetivo_estrategico'] . ' ' . $lista['objetivo_estrategico'] .  "</td>";
                                 echo "<td class='text-center'>" . $nroActividades . "</td>";
                                 echo "<td class='text-center'>";
-                                echo "<b>" . $avancePOA ."%</b>";
+                                echo "<b>" . $promedioCumplimiento ."%</b>";
                                 echo '<div class="progress progress-striped">
-                                          <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $avancePOA .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $avancePOA . '%</div>
+                                          <div class="progress-bar ' . $estilos . '" role="progressbar" style="width: '. $promedioCumplimiento .'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">' . $promedioCumplimiento . '%</div>
                                         </div>';
                                 echo "</td>";
                                 echo "</tr>";
