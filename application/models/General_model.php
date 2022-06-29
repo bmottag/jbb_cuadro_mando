@@ -933,37 +933,37 @@ class General_model extends CI_Model {
 					$sql.= " AND A.plan_archivos = 1";
 				}
 				if (array_key_exists("planAdquisiciones", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_adquisiciones = 1";
 				}
 				if (array_key_exists("planVacantes", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_vacantes = 1";
 				}
 				if (array_key_exists("planRecursos", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_recursos = 1";
 				}
 				if (array_key_exists("planTalento", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_talento = 1";
 				}
 				if (array_key_exists("planCapacitacion", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_capacitacion = 1";
 				}
 				if (array_key_exists("planIncentivos", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_incentivos = 1";
 				}
 				if (array_key_exists("planTrabajo", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_trabajo = 1";
 				}
 				if (array_key_exists("planAnticorrupcion", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_anticorrupcion = 1";
 				}
 				if (array_key_exists("planTecnologia", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_tecnologia = 1";
 				}
 				if (array_key_exists("planRiesgos", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_riesgos = 1";
 				}
 				if (array_key_exists("planInformacion", $arrData)) {
-					$sql.= " AND A.plan_archivos = 1";
+					$sql.= " AND A.plan_informacion = 1";
 				}
 
 				$query = $this->db->query($sql);
