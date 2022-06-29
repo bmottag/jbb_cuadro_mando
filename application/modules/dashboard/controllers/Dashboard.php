@@ -76,6 +76,10 @@ class Dashboard extends CI_Controller {
 			$data['infoCuadroBase'] = $this->general_model->get_lista_cuadro_mando($arrParam);
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
 			$data['listaHistorial'] = false;
+			$data['listaHistorial1'] = false;
+			$data['listaHistorial2'] = false;
+			$data['listaHistorial3'] = false;
+			$data['listaHistorial4'] = false;
 
 			$arrParam = array("numeroObjetivoEstrategico" => $data['infoCuadroBase'][0]['fk_numero_objetivo_estrategico']);
 			$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
@@ -83,11 +87,24 @@ class Dashboard extends CI_Controller {
 			if($numeroActividad != 'x') {
 				$arrParam = array("numeroActividad" => $numeroActividad);
 				$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
+
+				$arrParam['numeroTrimestre'] = 1;
+				$data['listaHistorial1'] = $this->general_model->get_historial_actividad($arrParam);
+				$arrParam['numeroTrimestre'] = 2;
+				$data['listaHistorial2'] = $this->general_model->get_historial_actividad($arrParam);
+				$arrParam['numeroTrimestre'] = 3;
+				$data['listaHistorial3'] = $this->general_model->get_historial_actividad($arrParam);
+				$arrParam['numeroTrimestre'] = 4;
+				$data['listaHistorial4'] = $this->general_model->get_historial_actividad($arrParam);
 				if($numeroTrimestre != 'x') {
 					$data['numeroTrimestre'] = $numeroTrimestre;
 					$arrParam['numeroTrimestre'] = $numeroTrimestre;
+					$data['listaHistorial'] = $this->general_model->get_historial_actividad($arrParam);
+					$data['listaHistorial1'] = false;
+					$data['listaHistorial2'] = false;
+					$data['listaHistorial3'] = false;
+					$data['listaHistorial4'] = false;
 				}
-				$data['listaHistorial'] = $this->general_model->get_historial_actividad($arrParam);
 				$data['infoEjecucion'] = $this->general_model->get_ejecucion_actividades($arrParam);
 			}
 
