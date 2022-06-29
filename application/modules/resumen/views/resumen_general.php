@@ -118,7 +118,11 @@
                                      
                         ?>
                                 <tr>
-                                    <td class="text-center"><?php echo $lista["numero_actividad"] ?></td>
+                                    <td class="text-center">
+                                    <?php
+                                        echo "<a class='btn btn-primary btn-xs' title='Ver Detalle Actividad No. " . $lista["numero_actividad"] . "' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'>". $lista['numero_actividad'] . " <span class='fa fa-eye' aria-hidden='true'></span></a>";
+                                     ?>
+                                    </td>
                                     <td><?php echo $lista["descripcion_actividad"] ?></td>
                                     <td class="text-right"><?php echo $trim1 ?></td>
                                     <td class="text-right"><?php echo $trim2; ?></td>
