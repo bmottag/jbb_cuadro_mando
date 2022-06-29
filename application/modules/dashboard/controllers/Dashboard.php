@@ -165,8 +165,8 @@ class Dashboard extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$idActividad = $this->input->post('hddId');
-			$data["idRecord"] = $this->input->post('hddIdCuadroBase');
 			$numeroActividad = $this->input->post('numero_actividad');
+			$data["idRecord"] = $this->input->post('hddIdCuadroBase') . "/" . $numeroActividad ;
 		
 			$msj = "Se guardo la información!";
 
