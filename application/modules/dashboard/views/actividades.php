@@ -252,29 +252,29 @@ $(function(){
 								$cumplimiento2 = 0;
 								$cumplimiento3 = 0;
 								$cumplimiento4 = 0;
-								$avancePOA1 = 0;
-								$avancePOA2 = 0;
-								$avancePOA3 = 0;
-								$avancePOA4 = 0;
+								//$avancePOA1 = 0;
+								//$avancePOA2 = 0;
+								//$avancePOA3 = 0;
+								//$avancePOA4 = 0;
 								$avancePOA = 0;
 								if($sumaProgramado['programado'] > 0){
 									$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
 								}
 								if($sumaProgramadoTrimestre1['programado'] > 0){
 									$cumplimiento1 = round($sumaEjecutadoTrimestre1['ejecutado'] / $sumaProgramadoTrimestre1['programado'] * 100, 2);
-									$avancePOA1 = round($sumaEjecutadoTrimestre1['ejecutado'] / $sumaProgramadoTrimestre1['programado'] * $ponderacion, 2) . '%';
+									//$avancePOA1 = round($sumaEjecutadoTrimestre1['ejecutado'] / $sumaProgramadoTrimestre1['programado'] * $ponderacion, 2) . '%';
 								}
 								if($sumaProgramadoTrimestre2['programado'] > 0){
 									$cumplimiento2 = round($sumaEjecutadoTrimestre2['ejecutado'] / $sumaProgramadoTrimestre2['programado'] * 100,2);
-									$avancePOA2 = round($sumaEjecutadoTrimestre2['ejecutado'] / $sumaProgramadoTrimestre2['programado'] * $ponderacion, 2) . '%';
+									//$avancePOA2 = round($sumaEjecutadoTrimestre2['ejecutado'] / $sumaProgramadoTrimestre2['programado'] * $ponderacion, 2) . '%';
 								}
 								if($sumaProgramadoTrimestre3['programado'] > 0){
 									$cumplimiento3 = round($sumaEjecutadoTrimestre3['ejecutado'] / $sumaProgramadoTrimestre3['programado'] * 100,2);
-									$avancePOA3 = round($sumaEjecutadoTrimestre3['ejecutado'] / $sumaProgramadoTrimestre3['programado'] * $ponderacion, 2) . '%';
+									//$avancePOA3 = round($sumaEjecutadoTrimestre3['ejecutado'] / $sumaProgramadoTrimestre3['programado'] * $ponderacion, 2) . '%';
 								}
 								if($sumaProgramadoTrimestre4['programado'] > 0){
 									$cumplimiento4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * 100,2);
-									$avancePOA4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * $ponderacion, 2) . '%';
+									//$avancePOA4 = round($sumaEjecutadoTrimestre4['ejecutado'] / $sumaProgramadoTrimestre4['programado'] * $ponderacion, 2) . '%';
 								}
 
 ?>
@@ -360,10 +360,12 @@ $(function(){
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' title="Seguimiento I">
 													Seguimiento I <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>											
-										</th>					
+										</th>
+<!--
 										<th class="column-title text-right">
 											<p>Avance POA I: <?php echo $avancePOA1; ?></p>
 										</th>
+-->
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
@@ -381,10 +383,12 @@ $(function(){
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/2') ?>' title="Seguimiento II">
 													Seguimiento II <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>										
-										</th>					
+										</th>	
+<!--
 										<th class="column-title text-right">
 											<p>Avance POA II: <?php echo $avancePOA2; ?></p>
 										</th>
+-->
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
@@ -402,10 +406,12 @@ $(function(){
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/3') ?>' title="Seguimiento III">
 													Seguimiento III <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>											
-										</th>					
+										</th>
+<!--
 										<th class="column-title text-right">
 											<p>Avance POA III: <?php echo $avancePOA3; ?></p>
 										</th>
+-->
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
@@ -423,19 +429,22 @@ $(function(){
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/4') ?>' title="Seguimiento IV">
 													Seguimiento IV <span class="fa fa-tag" aria-hidden="true"> </span>
 											</a></p>											
-										</th>					
+										</th>
+<!--
 										<th class="column-title text-right">
 											<p>Avance POA IV: <?php echo $avancePOA4; ?></p>
 										</th>
+-->
 									</tr>
 									<tr class="headings default">
-										<td width="23%"><small>Suma Programado Trimestre</small></td>
-										<td width="24%"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * 100</small></td>
-										<td width="15%"></td>
-										<td width="18%"></td>
+										<td width="28%"><small>Suma Programado Trimestre</small></td>
+										<td width="29%"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * 100</small></td>
+										<td width="20%"></td>
+										<td width="23%"></td>
+<!--
 										<td width="20%" class="text-right"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * Ponderación</small></td>
+-->
 									</tr>
-
 								</thead>
 				
 					</table>
