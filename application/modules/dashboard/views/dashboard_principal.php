@@ -155,7 +155,7 @@
                             <br><br>
                             <strong>Dependencia: </strong><?php echo $infoDependencia[0]['dependencia']; ?></br>
                             <strong>No. Actividades: </strong><?php echo $nroActividadesDependencia; ?></br>
-                            <strong>Avance Dependencia: </strong><?php echo number_format($avance["avance_poa"],2); ?>
+                            <strong>Avance Dependencia: </strong><?php echo number_format($avanceEspecifico["avance_poa"],2); ?>
                     <?php
                         }
                     ?>

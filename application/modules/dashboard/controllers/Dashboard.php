@@ -433,7 +433,7 @@ class Dashboard extends CI_Controller {
 			$filtroObjetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_dependencia($arrParam);
 
 			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
-			$data['avance'] = $this->general_model->sumAvance($arrParam);
+			$data['avanceEspecifico'] = $this->general_model->sumAvance($arrParam);
 
 			$valor = '';
 
@@ -854,7 +854,7 @@ class Dashboard extends CI_Controller {
 
 			$data['nroActividadesDependencia'] = $this->general_model->countActividades($arrParam);
 
-			$data['avance'] = $this->general_model->sumAvance($arrParam);
+			$data['avanceEspecifico']  = $this->general_model->sumAvance($arrParam);
 
 			$valor = '';
 
