@@ -16,20 +16,43 @@ class Resumen extends CI_Controller {
 	 */
 	public function index()
 	{	
-			$arrParam = array();
-			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
-
-			$arrParam = array(
-				"vigencia" => date("Y")
-			);
-			$data['nroActividades'] = $this->general_model->countActividades($arrParam);
-
 			$arrParam = array(
 				"table" => "param_estados",
 				"order" => "valor",
 				"id" => "x"
 			);
 			$data['listaEstados'] = $this->general_model->get_basic_search($arrParam);
+
+			//INICIO LISTAS PARA FILTROS
+			$arrParam = array();
+			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+
+	        $arrParam = array();
+	        if($_POST && $_POST["numero_objetivo"] != ""){
+	            $arrParam = array(
+	                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+	            );  
+	        }
+	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
+
+            if($_POST && $_POST["numero_proyecto"] != ""){
+                $arrParam["numeroProyecto"] = $_POST["numero_proyecto"];
+            }
+			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
+
+            if($_POST && $_POST["id_dependencia"] != ""){
+                $arrParam["idDependencia"] = $_POST["id_dependencia"];
+            }
+            $data['listaTodasActividades'] = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam);
+
+            if($_POST && $_POST["numero_actividad"] != ""){
+                $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
+            }
+			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
+
+			$arrParam["vigencia"] = date("Y");
+			$data['nroActividades'] = $this->general_model->countActividades($arrParam);          
+	        //FIN LISTAS PARA FILTROS
 
 			//NO INICIADA
 			$arrParam2 = array(

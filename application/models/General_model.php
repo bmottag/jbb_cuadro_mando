@@ -412,11 +412,7 @@ class General_model extends CI_Model {
 		 * @since 15/04/2022
 		 */
 		public function get_actividades($arrData) 
-		{		
-				$userRol = $this->session->userdata("role");
-				$idUser = $this->session->userdata("id");
-				$idDependencia = $this->session->userdata("dependencia");
-							
+		{									
 				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.avance_poa');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
@@ -437,6 +433,16 @@ class General_model extends CI_Model {
 				if(array_key_exists("NOTidCuadroBase", $arrData)) {
 					$this->db->where('A.fk_id_cuadro_base !=', $arrData["NOTidCuadroBase"]);
 				}
+				if (array_key_exists("idDependencia", $arrData)) {
+					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
+				}
+				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
+					$this->db->where('C.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
+				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
+				}
+
 				$this->db->order_by('A.numero_actividad', 'asc');
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
@@ -929,6 +935,13 @@ class General_model extends CI_Model {
 						$sql.= " AND M.vigencia_meta_proyecto = '". $arrData["vigencia"]. "'";
 					}
 				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$sql.= " AND C.fk_numero_proyecto_inversion = '". $arrData["numeroProyecto"]. "'";
+				}
+				if(array_key_exists("numeroActividad", $arrData)) {
+					$sql.= " AND A.numero_actividad = '". $arrData["numeroActividad"]. "'";
+				}
+
 				if (array_key_exists("planArchivos", $arrData)) {
 					$sql.= " AND A.plan_archivos = 1";
 				}

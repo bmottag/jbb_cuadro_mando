@@ -1,4 +1,5 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/resumen/form_estado_actividad.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/ajaxSearch.js"); ?>"></script>
 
 <div id="page-wrapper">
     <br>
@@ -79,16 +80,99 @@
                 </div>
                 <div class="panel-body small">
 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="formCheckin" id="formCheckin" method="post">
+                                <div class="panel panel-default">
+                                    <div class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group input-group-sm"> 
+                                                    <label class="control-label" for="numero_objetivo">No. Objetivo Estratégico:</label>             
+                                                    <select name="numero_objetivo" id="numero_objetivo" class="form-control" >
+                                                        <option value="">Todas...</option>
+                                                        <?php for ($i = 0; $i < count($listaNumeroObjetivoEstrategicos); $i++) { ?>
+                                                            <option value="<?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?>" <?php if($_POST && $_POST["numero_objetivo"] == $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]) { echo "selected"; }  ?>><?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group input-group-sm"> 
+                                                    <label class="control-label" for="numero_proyecto">No. Proyecto Inversión:</label>             
+                                                    <select name="numero_proyecto" id="numero_proyecto" class="form-control" >
+                                                        <option value="">Todas...</option>
+                                                        <?php 
+                                                        if($listaProyectos){
+                                                            for ($i = 0; $i < count($listaProyectos); $i++) { ?>
+                                                                <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_POST && $_POST["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
+                                                        <?php 
+                                                            } 
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <div class="form-group input-group-sm"> 
+                                                    <label class="control-label" for="id_dependencia">Dependencia:</label>                        
+                                                    <select name="id_dependencia" id="id_dependencia" class="form-control" >
+                                                        <option value="">Todas...</option>
+                                                        <?php
+                                                        if($listaNumeroDependencia){
+                                                            for ($i = 0; $i < count($listaNumeroDependencia); $i++) { ?>
+                                                                <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_POST && $_POST["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
+                                                        <?php 
+                                                            } 
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <div class="form-group input-group-sm"> 
+                                                    <label class="control-label" for="numero_actividad">No. Actividad:</label>                        
+                                                    <select name="numero_actividad" id="numero_actividad" class="form-control" >
+                                                        <option value="">Todas...</option>
+                                                        <?php 
+                                                        if($listaTodasActividades){
+                                                            for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
+                                                                <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
+                                                        <?php 
+                                                            } 
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <div class="form-group"><br>
+                                                    <button type="submit" id="btnSearch" name="btnSearch" class="btn btn-primary btn-sm" >
+                                                        Buscar <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                    </button> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center">No. Actividad</th>
-                                <th>Actividad</th>
-                                <th class="text-center">Cumplimiento Trim. I</th>
-                                <th class="text-center">Cumplimiento Trim. II</th>
-                                <th class="text-center">Cumplimiento Trim. III</th>
-                                <th class="text-center">Cumplimiento Trim. IV</th>
-                                <th class="text-center">Avance POA</th>
+                                <th class="text-center"><small>No. Actividad</small></th>
+                                <th><small>Actividad</small></th>
+                                <th class="text-center"><small>Cumplimiento Trim. I</small></th>
+                                <th class="text-center"><small>Cumplimiento Trim. II</small></th>
+                                <th class="text-center"><small>Cumplimiento Trim. III</small></th>
+                                <th class="text-center"><small>Cumplimiento Trim. IV</small></th>
+                                <th class="text-center"><small>Avance POA</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,12 +207,12 @@
                                         echo "<a class='btn btn-primary btn-xs' title='Ver Detalle Actividad No. " . $lista["numero_actividad"] . "' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'>". $lista['numero_actividad'] . " <span class='fa fa-eye' aria-hidden='true'></span></a>";
                                      ?>
                                     </td>
-                                    <td><?php echo $lista["descripcion_actividad"] ?></td>
-                                    <td class="text-right"><?php echo $trim1 ?></td>
-                                    <td class="text-right"><?php echo $trim2; ?></td>
-                                    <td class="text-right"><?php echo $trim3; ?></td>
-                                    <td class="text-right"><?php echo $trim4; ?></td>
-                                    <td class="text-right"><?php echo $avancePoa; ?></td>
+                                    <td><small><?php echo $lista["descripcion_actividad"] ?></small></td>
+                                    <td class="text-right"><small><?php echo $trim1 ?></small></td>
+                                    <td class="text-right"><small><?php echo $trim2; ?></small></td>
+                                    <td class="text-right"><small><?php echo $trim3; ?></small></td>
+                                    <td class="text-right"><small><?php echo $trim4; ?></small></td>
+                                    <td class="text-right"><small><?php echo $avancePoa; ?></small></td>
                                 </tr>
                         <?php
                                 endforeach;
