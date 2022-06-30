@@ -298,6 +298,12 @@ Subir Actividades <span class="glyphicon glyphicon glyphicon-chevron-right" aria
 								<br><br>
 <a class="btn btn-success btn-xs" href=" <?php echo base_url(). 'settings/subir_archivo/cargar_actividades_ejecucion'; ?> ">
 Subir Actividades Ejecución <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> 
+
+								<br><br>
+								Actualizar mensaje de POA para primer trimestre
+								<br><br>
+<a class="btn btn-success btn-xs" href=" <?php echo base_url(). 'settings/subir_archivo/cargar_mensaje_poa'; ?> ">
+Subir Mensaje POA TRIM. I <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> 
 						
 							</div>
 						</div>

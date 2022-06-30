@@ -595,6 +595,25 @@
 		}
 
 		/**
+		 * Cargar el mensaje de POA a la tabla de actividad estado
+		 * @since 30/6/2022
+		 */
+		public function cargar_mensaje_poa($lista) 
+		{
+				$data = array(
+					'mensaje_poa_trimestre_1' => $lista["mensaje_poa"]
+				);
+				$this->db->where('fk_numero_actividad', $lista["numero_actividad"]);
+				$query = $this->db->update('actividad_estado', $data);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
 		 * Cargar informacion 
 		 * @since 14/8/2017
 		 */

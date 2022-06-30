@@ -87,8 +87,7 @@ class Dashboard extends CI_Controller {
 			if($numeroActividad != 'x') {
 				$arrParam = array("numeroActividad" => $numeroActividad);
 				$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
-				$data['infoEjecucion'] = $this->general_model->get_ejecucion_actividades($arrParam);
-
+				
 				$arrParam['numeroTrimestre'] = 1;
 				$data['listaHistorial1'] = $this->general_model->get_historial_actividad($arrParam);
 				$arrParam['numeroTrimestre'] = 2;
@@ -105,7 +104,10 @@ class Dashboard extends CI_Controller {
 					$data['listaHistorial2'] = false;
 					$data['listaHistorial3'] = false;
 					$data['listaHistorial4'] = false;
+				}else{
+					$arrParam = array("numeroActividad" => $numeroActividad);
 				}
+				$data['infoEjecucion'] = $this->general_model->get_ejecucion_actividades($arrParam);
 			}
 
 			$data["activarBTN1"] = true;//para activar el boton
