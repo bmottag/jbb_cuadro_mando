@@ -117,13 +117,11 @@ if ($retornoError) {
                             </div>
                             <div class="panel-body small">
                                 <?php 
-                                    $idEstrategia = $lista['id_estrategia'];
-                                    $arrParam = array('idEstrategia' => $idEstrategia);
+                                    $numeroObjetivoEstrategico = $lista['numero_objetivo_estrategico'];
+                                    $arrParam = array('numeroObjetivoEstrategico' => $numeroObjetivoEstrategico);
                                     $metas = $this->general_model->get_lista_metas($arrParam);
                                     $indicadores = $this->general_model->get_lista_indicadores($arrParam);
                                     $resultados = $this->general_model->get_lista_resultados($arrParam);
-
-                                    $arrParam = array('numeroObjetivoEstrategico' => $lista['numero_objetivo_estrategico']);
                                     $cuadroBase = $this->general_model->get_lista_cuadro_mando($arrParam);
 
                                     if($metas){
