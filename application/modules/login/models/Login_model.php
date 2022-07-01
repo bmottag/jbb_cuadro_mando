@@ -56,16 +56,10 @@
 	     */
 	    public function redireccionarUsuario()
 		{
-			$idEquipo = $this->session->userdata("idEquipo");
 			$state = $this->session->userdata("state");
 			$userRole = $this->session->userdata("rol");
 			$dashboardURL = $this->session->userdata("dashboardURL");
 
-			if($idEquipo != "x")
-			{				
-					$state = 88;
-			}
-			
 	    	switch($state){
 	    		case 0: //NEW USER, must change the password
 	    				redirect("/usuarios","location",301);
@@ -85,9 +79,6 @@
 									
 						$data["view"] = "template/answer";
 						$this->load->view("layout", $data);
-	    				break;
-	    		case 88: //ES PARA UNA INSPECCION, LO REDIRECCIONO AL FORMUALIO DE LA BD
-	    				redirect('equipos/detalle/' . $idEquipo,"location",301);
 	    				break;
 				case 66: //USUARIO QUE INGRESO CON LLAVE DE RECUPERACION, LO REDIRECCIONO AL CAMBIO DE CONTRASEÑA
 						redirect("/usuarios","location",301);

@@ -17,24 +17,14 @@ class Login extends CI_Controller {
 	public function index($id = 'x')
 	{
 			$this->session->sess_destroy();
-			$data['idEquipo'] = FALSE;
-			$data['idTipoEquipo'] = FALSE;
-			//si envio llave encriptada, entonces busco el ID del equipo para pasarlo a la vista
-			if ($id != 'x') {				
-				$arrParam['encryption'] = $id;
-				$data['equipoInfo'] = $this->general_model->get_equipos_info($arrParam);
-
-				$data['idEquipo'] = $data['equipoInfo'][0]['id_equipo'];
-			}
-			$this->load->view('login', $data);
+			$this->load->view('login');
 	}
 	
 	public function validateUser()
 	{
 			$login = $this->security->xss_clean($this->input->post("inputLogin"));
 			$passwd = $this->security->xss_clean($this->input->post("inputPassword"));
-			$data['idEquipo'] = $this->input->post("hddId");
-						
+	
 			//busco datos del usuario
 			$arrParam = array(
 				"table" => "usuarios",
@@ -72,8 +62,7 @@ class Login extends CI_Controller {
 							"logUser" => $user["logUser"],
 							"state" => $user["state"],
 							"role" => $user["role"],
-							"photo" => $user["photo"],
-							"idEquipo" => $data['idEquipo']
+							"photo" => $user["photo"]
 						);
 												
 						$this->session->set_userdata($sessionData);
@@ -138,7 +127,7 @@ class Login extends CI_Controller {
 				$this->login_model->saveKey($idUsuario, $email, $llave);
 				
 				//envio correo con url para cambio de contraseña
-				//$this->email($llave);
+				$this->email($llave);
 
 				$data["msjSuccess"] = "Se envío correo a <strong>" . $email . "</strong> para recuperar la contraseña.";
 				$this->load->view('form_email', $data);
@@ -175,34 +164,53 @@ class Login extends CI_Controller {
 			$arrParam = array("key" => $key);
 			$information = $this->login_model->validateLoginKey($arrParam);//brings user information from user table
 										
-			$subjet = "Recuperar contrasela - JBB-APP";
+			$subjet = "Recuperar contraseña - JBB-APP";
 			$user = $information["firstname"] . ' ' . $information["lastname"];
 			$to = $information["email"];
-				
-			//mensaje del correo
-			$msj = "<p>Siga el enlace para recuperar su contraseña:</p>";
-			$msj .= "<a href='" . base_url("login/keyLogin/" . $key) . "'>Recuperar contraseña</a>";
-			
-			$mensaje = "<html>
-			<head>
-			  <title> $subjet </title>
-			</head>
-			<body>
-				<p>Señor(a)	$user:</p>
-				<p>$msj</p>
-				<p>Cordialmente,</p>
-				<p><strong>Administrador JBB-APP</strong></p>
-			</body>
-			</html>";
-			
-			$cabeceras  = 'MIME-Version: 1.0' . "\r\n";
-			$cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$cabeceras .= 'To: ' . $user . '<' . $to . '>' . "\r\n";
-			$cabeceras .= 'From: JBB-APP <admin@tuapoyo.com.co>' . "\r\n";
+							
+			//busco datos parametricos de configuracion para envio de correo
+			$arrParam2 = array(
+				"table" => "parametros",
+				"order" => "id_parametro",
+				"id" => "x"
+			);
+			$parametric = $this->general_model->get_basic_search($arrParam2);
 
-			//enviar correo al cliente
-			mail($to, $subjet, $mensaje, $cabeceras);
-			
+			$paramHost = $parametric[0]["parametro_valor"];
+			$paramUsername = $parametric[1]["parametro_valor"];
+			$paramPassword = $parametric[2]["parametro_valor"];
+			$paramFromName = $parametric[3]["parametro_valor"];
+			$paramCompanyName = $parametric[4]["parametro_valor"];
+			$paramAPPName = $parametric[5]["parametro_valor"];
+
+			//mensaje del correo
+			$msj = 'Sr.(a) ' . $user . ', ';
+			$msj .= "<p>Siga el enlace para recuperar su contraseña:</p>";
+			$msj .= "<a href='" . base_url("login/keyLogin/" . $key) . "'>Recuperar contraseña</a>";
+									
+			$mensaje = "<p>$msj</p>
+						<p>Cordialmente,</p>
+						<p><strong>$paramCompanyName</strong></p>";	
+
+			require_once(APPPATH.'libraries/PHPMailer/class.phpmailer.php');
+            $mail = new PHPMailer(true);
+
+            $mail->IsSMTP(); // set mailer to use SMTP
+            $mail->Host = $paramHost; // specif smtp server
+            $mail->SMTPSecure= "tls"; // Used instead of TLS when only POP mail is selected
+            $mail->Port = 587; // Used instead of 587 when only POP mail is selected
+            $mail->SMTPAuth = true;
+			$mail->Username = $paramUsername; // SMTP username
+            $mail->Password = $paramPassword; // SMTP password
+            $mail->FromName = $paramFromName;
+            $mail->From = $paramUsername;
+            $mail->AddAddress($to, 'Usuario JBB Cuadro de Mando');
+            $mail->WordWrap = 50;
+            $mail->CharSet = 'UTF-8';
+            $mail->IsHTML(true); // set email format to HTML
+            $mail->Subject = $paramCompanyName . ' - ' . $paramAPPName;
+            $mail->Body = nl2br ($mensaje,false);
+            $mail->Send();
 			return true;
 	}
 	
@@ -214,8 +222,6 @@ class Login extends CI_Controller {
 	{
 			$arrParam = array("key" => $valor);
 			$user = $this->login_model->validateLoginKey($arrParam);//brings user information from user table
-			$data['idVehicle'] = FALSE;
-			$data['inspectionType'] = FALSE;
 
 			if (($user["valid"] == true)) 
 			{
@@ -233,13 +239,11 @@ class Login extends CI_Controller {
 					"firstname" => $user["firstname"],
 					"lastname" => $user["lastname"],
 					"name" => $user["firstname"] . ' ' . $user["lastname"],
+					"dependencia" => $user["dependencia"],
 					"logUser" => $user["logUser"],
 					"state" => 66,
 					"role" => $user["role"],
-					"idVehicle" => 'x',
-					"inspectionType" => FALSE,
-					"linkInspection" => FALSE,
-					"formInspection" => FALSE
+					"photo" => $user["photo"],
 				);
 				$this->session->set_userdata($sessionData);
 				
