@@ -49,7 +49,6 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Autenticación 
-                            <b>*** Ambiente de Pruebas ***</b>
                         </h3>
                     </div>
                     <div class="panel-body">
