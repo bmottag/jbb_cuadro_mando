@@ -71,9 +71,99 @@
         </div>
     </div>
 
+
+<?php
+    $userRol = $this->session->userdata("role");           
+    if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
+?>
 <!--INICIO ADDITIONAL INFORMATION -->
     <div class="row">
-        <div class="col-lg-8"> 
+        <div class="col-lg-12">              
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    SEGUIMIENTO EJECUCIÓN POR TRIMESTRE
+                </div>
+                <div class="panel-body">
+<?php
+    $retornoExito = $this->session->flashdata('retornoExito');
+    if ($retornoExito) {
+?>
+        <div class="alert alert-success ">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <?php echo $retornoExito ?>     
+        </div>
+<?php
+    }
+    $retornoError = $this->session->flashdata('retornoError');
+    if ($retornoError) {
+?>
+        <div class="alert alert-danger ">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <?php echo $retornoError ?>
+        </div>
+<?php
+    }
+?>
+
+                    <form name="formEstado" id="formEstado" method="post">
+                        <div class="panel panel-default">
+                            <div class="panel-footer">
+                                <div class="row">
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group input-group-sm"> 
+                                            <label class="control-label" for="idTipoEquipoSearch">Trimestre: *</label>                             
+                                            <select name="trimestre" Iid="trimestre" class="form-control" required >
+                                                <option value="">Seleccione...</option>
+                                                <option value=1 >Trimestre I</option>
+                                                <option value=2 >Trimestre II</option>
+                                                <option value=3 >Trimestre III</option>
+                                                <option value=4 >Trimestre IV</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group input-group-sm"> 
+                                            <label class="control-label" for="idTipoEquipoSearch">Estado: *</label>                             
+                                            <select name="valorEstado" id="valorEstado" class="form-control" required >
+                                                <option value="">Seleccione...</option>
+                                                <?php for ($i = 0; $i < count($listaEstados); $i++) { ?>
+                                                    <option value="<?php echo $listaEstados[$i]["valor"]; ?>" ><?php echo $listaEstados[$i]["estado"]; ?></option>        
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                   <div class="col-lg-6">
+                                        <div class="form-group input-group-sm"> 
+                                            <label class="control-label" for="idTipoEquipoSearch">Observación: *</label>                             
+                                            <textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required ></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group"><br>
+                                            <button type="button" id="btnEstado" name="btnEstado" class="btn btn-primary" >
+                                                Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
+                                            </button> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </form>
+
+                </div>
+            </div>
+        </div> 
+    </div>
+<!--FIN ADDITIONAL INFORMATION -->
+<?php
+    }
+?>
+    <div class="row">
+        <div class="col-lg-12"> 
              <div class="panel panel-primary">
                 <div class="panel-heading">
                     <i class="fa fa-bell fa-fw"></i> No. Actividades: <b><?php echo $nroActividades; ?></b>
@@ -222,82 +312,9 @@
                     </table>
                 </div>
             </div>           
-        </div>
-        <div class="col-lg-4">              
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    SEGUIMIENTO EJECUCIÓN POR TRIMESTRE
-                </div>
-                <div class="panel-body">
-<?php
-    $retornoExito = $this->session->flashdata('retornoExito');
-    if ($retornoExito) {
-?>
-        <div class="alert alert-success ">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            <?php echo $retornoExito ?>     
-        </div>
-<?php
-    }
-    $retornoError = $this->session->flashdata('retornoError');
-    if ($retornoError) {
-?>
-        <div class="alert alert-danger ">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <?php echo $retornoError ?>
-        </div>
-<?php
-    }
-?>
-                    <div class="col-lg-12"> 
-                        <form name="formEstado" id="formEstado" method="post">
-                            <div class="form-group">
-                                <label for="trimestre">Trimestre:</label>
-                                <div>
-                                    <select name="trimestre" Iid="trimestre" class="form-control" required >
-                                        <option value="">Seleccione...</option>
-                                        <option value=1 >Trimestre I</option>
-                                        <option value=2 >Trimestre II</option>
-                                        <option value=3 >Trimestre III</option>
-                                        <option value=4 >Trimestre IV</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="estado">Estado:</label>
-                                <div>
-                                    <select name="valorEstado" id="valorEstado" class="form-control" required >
-                                        <option value="">Seleccione...</option>
-                                        <?php for ($i = 0; $i < count($listaEstados); $i++) { ?>
-                                            <option value="<?php echo $listaEstados[$i]["valor"]; ?>" ><?php echo $listaEstados[$i]["estado"]; ?></option>        
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="information">Observación:</label>
-                                <div>
-                                <textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required ></textarea>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="row" align="center">
-                                    <div style="width:100%;" align="center">
-                                        <button type="button" id="btnEstado" name="btnEstado" class="btn btn-primary" >
-                                            Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
-                                        </button> 
-                                    </div>
-                                </div>
-                            </div>                          
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>      
+        </div>     
     </div>
-<!--FIN ADDITIONAL INFORMATION -->
+
 
 
 </div>

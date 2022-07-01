@@ -1078,7 +1078,8 @@ class General_model extends CI_Model {
 				'trimestre_' . $arrData["numeroTrimestre"] => $arrData["cumplimientoX"],
 				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
 				'avance_poa' => $arrData["avancePOA"],
-				'cumplimiento' => $arrData["cumplimientoActual"]
+				'cumplimiento' => $arrData["cumplimientoActual"],
+				'mensaje_poa_trimestre_' . $arrData["numeroTrimestre"] => $arrData["observacion"]
 			);	
 			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
 			$query = $this->db->update('actividad_estado', $data);

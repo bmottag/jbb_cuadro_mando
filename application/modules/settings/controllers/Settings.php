@@ -1713,7 +1713,7 @@ class Settings extends CI_Controller {
             $config['file_name'] = $model . '.csv';
 
             $this->load->library('upload', $config);
-
+            $bandera = false;
             if (!$this->upload->do_upload()) {
                 $error = $this->upload->display_errors();
                 $msgError = html_escape(substr($error, 3, -4));
