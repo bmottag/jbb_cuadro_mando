@@ -1046,6 +1046,8 @@ class Dashboard extends CI_Controller {
 			$msj = 'Sr.(a) ' . $infoUsuario[0]['first_name'] . ', ';
 			$msj .= $arrData["mensaje"] . '</br></br>';
 			$msj .= '<strong>Enlace aplicación: </strong>' . base_url();
+
+			$msj .= "<a href='" . base_url() . "'>APP Programa Institucional - Cuadro de Mando</a>";
 									
 			$mensaje = "<p>$msj</p>
 						<p>Cordialmente,</p>
