@@ -407,10 +407,10 @@ class Dashboard extends CI_Controller {
             if($listaSupervisores){
             	foreach ($listaSupervisores as $infoSupervisor):
 					$arrParam = array(
-						"mensaje" => 'la actividad No. ' . $numeroActividad . ' fue cerrada por el ENLACE para el Trimeste '. $numeroTrimestre .', por favor ingresar a la plataforma y revisar la información.',
-						"idSupervisor" => $infoSupervisor["id_user"]
+						"mensaje" => 'la actividad <b>No. ' . $numeroActividad . '</b> fue <b>CERRADA</b> por el ENLACE para el <b>Trimeste '. $numeroTrimestre .'</b>, por favor ingresar a la plataforma y revisar la información.',
+						"idUsuario" => $infoSupervisor["id_user"]
 					);
-					//$this->send_email($arrParam);
+					$this->send_email($arrParam);
 				endforeach;
             }
             //FIN
@@ -594,16 +594,16 @@ class Dashboard extends CI_Controller {
 				if($this->general_model->updateEstadoActividadTotales($arrParam)){
 					//envio correos a los usuarios
 					if($idEstado == 3){
-						$mensaje = "se revisó la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre . ", fue APROBADA y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
+						$mensaje = "se revisó la información registrada para la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre . "</b>, fue <b>APROBADA</b> y se escalo al Área de Planeación para realizar el respectivo seguimiento.";
 					}elseif($idEstado == 4){
-						$mensaje = "se revisó la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre . ", fue RECHAZADA. Por favor ingresar y realizar los ajustes respectivos.";
+						$mensaje = "se revisó la información registrada para la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre . "</b>, fue <b>RECHAZADA</b>. Por favor ingresar y realizar los ajustes respectivos.";
 					}elseif($idEstado == 5){
-						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre. "y fue APROBADA por Planeación.";
+						$mensaje = "se realizó seguimiento a la información registrada para la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre. "</b> y fue <b>APROBADA</b> por Planeación.";
 					}elseif($idEstado == 6){
-						$mensaje = "se realizó seguimiento a la información registrada para la actividad No. " . $numeroActividad  . ", para el Trimestre " . $numeroTrimestre . "y fue RECHAZADA por Planeación. Por favor ingresar y realizar los ajustes respectivos.";
+						$mensaje = "se realizó seguimiento a la información registrada para la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre . "</b> y fue RECHAZADA por Planeación. Por favor ingresar y realizar los ajustes respectivos.";
 					}
 
-					$mensaje .= "<br><b>Observación: </b>" . $observacion;
+					$mensaje .= "<br><br><b>Observación: </b>" . $observacion;
 
 					//INICIO
 					//SE BUSCA EL ENLACE DE LA DEPENDENCIA Y SE ENVIA CORREO
@@ -619,9 +619,27 @@ class Dashboard extends CI_Controller {
 								"mensaje" => $mensaje,
 								"idUsuario" => $infoUsuario["id_user"]
 							);
-							//$this->send_email($arrParam);
+							$this->send_email($arrParam);
 						endforeach;
 		            }
+
+					//SE BUSCA USUARIOS DE PLANEACION Y SE ENVIA CORREO
+					if($idEstado == 3){
+			            $arrParam2 = array(
+			                "idRole" => ID_ROL_PLANEACION
+			            );
+			            $listaUsuarios = $this->general_model->get_user($arrParam2);
+
+			            if($listaUsuarios){
+			            	foreach ($listaUsuarios as $infoUsuario):
+								$arrParam = array(
+									"mensaje" => $mensaje,
+									"idUsuario" => $infoUsuario["id_user"]
+								);
+								$this->send_email($arrParam);
+							endforeach;
+			            }
+		        	}
 		            //FIN
 				}
 				
@@ -879,11 +897,15 @@ class Dashboard extends CI_Controller {
 
 			if($filtroObjetivosEstrategicos){
 				$tot = count($filtroObjetivosEstrategicos);
-				for ($i = 0; $i < $tot; $i++) {
-					$valor = $valor . $filtroObjetivosEstrategicos[$i]['id_objetivo_estrategico'];
-					if($i != ($tot-1)){
-						$valor .= ",";
+				if($tot > 0){
+					for ($i = 0; $i < $tot; $i++) {
+						$valor = $valor . $filtroObjetivosEstrategicos[$i]['id_objetivo_estrategico'];
+						if($i != ($tot-1)){
+							$valor .= ",";
+						}
 					}
+				}else{
+					$valor = false;
 				}
 			}
 			$data['listaObjetivosEstrategicos'] = false;
@@ -1001,7 +1023,9 @@ class Dashboard extends CI_Controller {
 	{
 			$arrParam = array('idUser' => $arrData["idUsuario"]);
 			$infoUsuario = $this->general_model->get_user($arrParam);
-			$to = $infoUsuario[0]['email'];
+			//$to = $infoUsuario[0]['email'];
+			$to = 'nina.suarez@jbb.gov.co';
+			//$to = 'bmotta@jbb.gov.co';
 
 			//busco datos parametricos de configuracion para envio de correo
 			$arrParam2 = array(
@@ -1020,8 +1044,8 @@ class Dashboard extends CI_Controller {
 
 			//mensaje del correo
 			$msj = 'Sr.(a) ' . $infoUsuario[0]['first_name'] . ', ';
-			$msj .= $arrData["mensaje"] . '</br>';
-			$msj .= '<strong>Enlace: </strong>' . base_url();
+			$msj .= $arrData["mensaje"] . '</br></br>';
+			$msj .= '<strong>Enlace aplicación: </strong>' . base_url();
 									
 			$mensaje = "<p>$msj</p>
 						<p>Cordialmente,</p>
