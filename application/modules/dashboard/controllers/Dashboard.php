@@ -1023,7 +1023,8 @@ class Dashboard extends CI_Controller {
 	{
 			$arrParam = array('idUser' => $arrData["idUsuario"]);
 			$infoUsuario = $this->general_model->get_user($arrParam);
-			$to = $infoUsuario[0]['email'];
+			//$to = $infoUsuario[0]['email'];
+			$to = "nina.suarez@jbb.gov.co";
 
 			//busco datos parametricos de configuracion para envio de correo
 			$arrParam2 = array(
@@ -1043,7 +1044,7 @@ class Dashboard extends CI_Controller {
 			//mensaje del correo
 			$msj = 'Sr.(a) ' . $infoUsuario[0]['first_name'] . ', ';
 			$msj .= $arrData["mensaje"] . '</br></br>';
-			$msj .= '<strong>Enlace aplicación: </strong>' . base_url();
+			$msj .= '<strong>Enlace aplicación: </strong>';
 
 			$msj .= "<a href='" . base_url() . "'>APP Programa Institucional - Cuadro de Mando</a>";
 									
