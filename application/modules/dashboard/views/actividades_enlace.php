@@ -289,8 +289,8 @@
 									</th>
 									<th class="column-title text-center">
 <?php if($estadoActividad){ ?>
-										<!-- si esta CERRADO o APROBALDO POR EL SUPERVISOR o APROBADO POR PLANEACION, no muestre el boton -->
-										<?php if($estadoActividad[0]['estado_trimestre_1'] != 2 && $estadoActividad[0]['estado_trimestre_1'] != 3 && $estadoActividad[0]['estado_trimestre_1'] != 5){ ?>
+										<!-- si esta CERRADO o APROBADO POR EL SUPERVISOR o APROBADO POR PLANEACION o con OBSERVACION DE CONTROL INTERNO, no muestre el boton -->
+										<?php if($estadoActividad[0]['estado_trimestre_1'] != 2 && $estadoActividad[0]['estado_trimestre_1'] != 3 && $estadoActividad[0]['estado_trimestre_1'] != 5 && $estadoActividad[0]['estado_trimestre_1'] != 8){ ?>
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' title="Registrar Ejecución I">
 													Registrar Ejecución I <span class="fa fa-edit" aria-hidden="true"> </span>
 											</a></p>
@@ -329,7 +329,7 @@
 									<th class="column-title text-center">
 <?php if($estadoActividad){ ?>
 										<!-- si esta CERRADO o APROBALDO POR EL SUPERVISOR o APROBADO POR PLANEACION, no muestre el boton -->
-										<?php if($estadoActividad[0]['estado_trimestre_2'] != 2 && $estadoActividad[0]['estado_trimestre_2'] != 3 && $estadoActividad[0]['estado_trimestre_2'] != 5){ ?>
+										<?php if($estadoActividad[0]['estado_trimestre_2'] != 2 && $estadoActividad[0]['estado_trimestre_2'] != 3 && $estadoActividad[0]['estado_trimestre_2'] != 5 && $estadoActividad[0]['estado_trimestre_2'] != 8){ ?>
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/2') ?>' title="Registrar Ejecución II">
 													Registrar Ejecución II <span class="fa fa-edit" aria-hidden="true"> </span>
 											</a></p>
@@ -368,7 +368,7 @@
 									<th class="column-title text-center">
 <?php if($estadoActividad){ ?>
 										<!-- si esta CERRADO o APROBALDO POR EL SUPERVISOR o APROBADO POR PLANEACION, no muestre el boton -->
-										<?php if($estadoActividad[0]['estado_trimestre_3'] != 2 && $estadoActividad[0]['estado_trimestre_3'] != 3 && $estadoActividad[0]['estado_trimestre_3'] != 5){ ?>
+										<?php if($estadoActividad[0]['estado_trimestre_3'] != 2 && $estadoActividad[0]['estado_trimestre_3'] != 3 && $estadoActividad[0]['estado_trimestre_3'] != 5 && $estadoActividad[0]['estado_trimestre_3'] != 8){ ?>
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/3') ?>' title="Registrar Ejecución III">
 													Registrar Ejecución III <span class="fa fa-edit" aria-hidden="true"> </span>
 											</a></p>
@@ -407,7 +407,7 @@
 									<th class="column-title text-center">
 <?php if($estadoActividad){ ?>
 										<!-- si esta CERRADO o APROBALDO POR EL SUPERVISOR o APROBADO POR PLANEACION, no muestre el boton -->
-										<?php if($estadoActividad[0]['estado_trimestre_4'] != 2 && $estadoActividad[0]['estado_trimestre_4'] != 3 && $estadoActividad[0]['estado_trimestre_4'] != 5){ ?>
+										<?php if($estadoActividad[0]['estado_trimestre_4'] != 2 && $estadoActividad[0]['estado_trimestre_4'] != 3 && $estadoActividad[0]['estado_trimestre_4'] != 5 && $estadoActividad[0]['estado_trimestre_4'] != 8){ ?>
 											<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/4') ?>' title="Registrar Ejecución IV">
 													Registrar Ejecución IV <span class="fa fa-edit" aria-hidden="true"> </span>
 											</a></p>

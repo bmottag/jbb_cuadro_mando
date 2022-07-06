@@ -118,6 +118,8 @@ class Dashboard extends CI_Controller {
 				$data["view"] = "actividades_enlace";
 			}elseif($userRol == ID_ROL_SUPERVISOR){
 				$data["view"] = "actividades_supervisor";
+			}elseif($userRol == ID_ROL_CONTROL_INTERNO){
+				$data["view"] = "actividades_control";
 			}
 			$this->load->view("layout_calendar", $data);
 	}	
@@ -1182,6 +1184,133 @@ class Dashboard extends CI_Controller {
 				echo "<option value='" . $fila["numero_actividad"] . "' >" . $fila["numero_actividad"] . "</option>";
 			}
 		}			
+    }
+
+	/**
+	 * CONTROL DASHBOARD
+	 * @since 7/07/2022
+	 */
+	public function control()
+	{
+			$arrParam = array(
+				"table" => "estrategias",
+				"order" => "estrategia",
+				"id" => "x"
+			);
+			$data['listaEstretegias'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"filtro" => true
+			);
+			$data['listaDependencia'] = $this->general_model->get_app_dependencias($arrParam);
+
+			$arrParam = array(
+				"vigencia" => date("Y")
+			);
+			$filtroObjetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_dependencia($arrParam);
+
+			$valor = '';
+			if($filtroObjetivosEstrategicos){
+				$tot = count($filtroObjetivosEstrategicos);
+				for ($i = 0; $i < $tot; $i++) {
+					$valor = $valor . $filtroObjetivosEstrategicos[$i]['id_objetivo_estrategico'];
+					if($i != ($tot-1)){
+						$valor .= ",";
+					}
+				}
+			}
+			$data['listaObjetivosEstrategicos'] = false;
+			if($valor){
+				$arrParam = array("filtroEstrategias" => $valor);
+		        if($_POST && $_POST["numero_objetivo"] != ""){
+		            $arrParam = array(
+		                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+		            );  
+		        }
+				$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+			}
+
+			//INICIO LISTAS PARA FILTROS
+			$arrParam = array("filtroEstrategias" => $valor);
+			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
+
+	        $arrParam = array();
+	        if($_POST && $_POST["numero_objetivo"] != ""){
+	            $arrParam = array(
+	                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+	            );  
+	        }
+	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
+            if($_POST && $_POST["numero_proyecto"] != ""){
+                $arrParam["numeroProyecto"] = $_POST["numero_proyecto"];
+            }
+			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
+	        //FIN LISTAS PARA FILTROS
+
+			$data["view"] = "dashboard_principal";
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * Save OBSERVACION de la actividad
+     * @since 6/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_observacion_actividad()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$data["idCuadroBase"] = $this->input->post('hddIdCuadroBase');
+			$numeroActividad = $this->input->post('hddNumeroActividad');
+			$numeroTrimestre = $this->input->post('hddNumeroTrimestre');
+			$observacion = $this->input->post('observacion');
+			$data["record"] = $data["idCuadroBase"] . '/' . $numeroActividad . '/' . $numeroTrimestre;
+			$msj = "Se adiciono la Observación a la actividad para el <b>Trimestre " . $numeroTrimestre .  "</b>.";
+
+			$arrParam = array(
+				"numeroActividad" => $numeroActividad,
+				"numeroTrimestre" => $numeroTrimestre,
+				"observacion" => $observacion,
+				"estado" => 8,
+			);
+			if($this->general_model->addHistorialActividad($arrParam)) 
+			{
+				//actualizo el estado del trimestre de la actividad
+				if($this->general_model->updateObservacionActividadTotales($arrParam)){
+					//envio correos a los usuarios
+					$mensaje = "se adiciono una Observación a la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre . "</b>.";
+
+					$mensaje .= "<br><br><b>Observación: </b>" . $observacion;
+
+					//INICIO
+					//SE BUSCA USUARIOS DE PLANEACION Y SE ENVIA CORREO
+			            $arrParam2 = array(
+			                "idRole" => ID_ROL_PLANEACION
+			            );
+			            $listaUsuarios = $this->general_model->get_user($arrParam2);
+
+			            if($listaUsuarios){
+			            	foreach ($listaUsuarios as $infoUsuario):
+								$arrParam = array(
+									"mensaje" => $mensaje,
+									"idUsuario" => $infoUsuario["id_user"]
+								);
+								//$this->send_email($arrParam);
+							endforeach;
+			            }
+		            //FIN
+				}
+				
+				$data["result"] = true;
+				$data["mensaje"] = $msj;
+				$this->session->set_flashdata('retornoExito', $msj);
+			} else {
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Ask for help.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
+			}
+
+			echo json_encode($data);
     }
 
 
