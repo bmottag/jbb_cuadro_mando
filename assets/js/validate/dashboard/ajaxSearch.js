@@ -5,6 +5,55 @@
  */
 
 $(document).ready(function () {
+
+    $('#id_estrategia').change(function () {
+        $('#id_estrategia option:selected').each(function () {
+			var id_estrategia = $('#id_estrategia').val();
+			$.ajax ({
+				type: 'POST',
+				url: base_url + 'dashboard/numeroObjetivosEstrategicosList',
+				data: {'id_estrategia': id_estrategia},
+				cache: false,
+				success: function (data)
+				{
+					$('#numero_objetivo').html(data);
+				}
+			});
+
+			$.ajax ({
+				type: 'POST',
+				url: base_url + 'dashboard/numeroProyectosList',
+				data: {'id_estrategia': id_estrategia, 'numero_objetivo': ''},
+				cache: false,
+				success: function (data)
+				{
+					$('#numero_proyecto').html(data);
+				}
+			});
+
+			$.ajax ({
+				type: 'POST',
+				url: base_url + 'dashboard/dependenciaList',
+				data: {'id_estrategia': id_estrategia, 'numero_objetivo': '', 'numero_proyecto': ''},
+				cache: false,
+				success: function (data)
+				{
+					$('#id_dependencia').html(data);
+				}
+			});
+
+			$.ajax ({
+				type: 'POST',
+				url: base_url + 'dashboard/numeroActividadesList',
+				data: {'id_estrategia': id_estrategia, 'numero_objetivo': '', 'numero_proyecto': '', 'id_dependencia': ''},
+				cache: false,
+				success: function (data)
+				{
+					$('#numero_actividad').html(data);
+				}
+			});
+        });
+    });
 	
     $('#numero_objetivo').change(function () {
         $('#numero_objetivo option:selected').each(function () {

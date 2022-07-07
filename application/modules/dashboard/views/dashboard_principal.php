@@ -96,7 +96,7 @@
                         </thead>
                         <?php
                         $i=0;
-                        foreach ($listaEstretegias as $lista):
+                        foreach ($listaEstrategias as $lista):
                             $arrParam = array(
                                 "idEstrategia" => $lista["id_estrategia"],
                                 "vigencia" => date("Y")
@@ -170,6 +170,9 @@
                         echo '</div>';
                     }else{
                             $arrParam2 = array();
+                            if($_POST && $_POST["id_estrategia"] != ""){
+                                $arrParam2["idEstrategia"] = $_POST["id_estrategia"];
+                            }
                             if($_POST && $_POST["numero_objetivo"] != ""){
                                 $arrParam2["numeroObjetivoEstrategico"] = $_POST["numero_objetivo"];
                             }
@@ -189,6 +192,17 @@
                                     <div class="panel panel-default">
                                         <div class="panel-footer">
                                             <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="form-group input-group-sm"> 
+                                                        <label class="control-label" for="id_estrategia">Estrategia:</label>             
+                                                        <select name="id_estrategia" id="id_estrategia" class="form-control" >
+                                                            <option value="">Todas...</option>
+                                                            <?php for ($i = 0; $i < count($listaEstrategiasFiltro); $i++) { ?>
+                                                                <option value="<?php echo $listaEstrategiasFiltro[$i]["id_estrategia"]; ?>" <?php if($_POST && $_POST["id_estrategia"] == $listaEstrategiasFiltro[$i]["id_estrategia"]) { echo "selected"; }  ?>><?php echo $listaEstrategiasFiltro[$i]["estrategia"]; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-2">
                                                     <div class="form-group input-group-sm"> 
                                                         <label class="control-label" for="numero_objetivo">No. Objetivo Estratégico:</label>             
@@ -252,7 +266,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-2">
                                                     <div class="form-group"><br>
                                                         <button type="submit" id="btnSearch" name="btnSearch" class="btn btn-primary btn-sm" >
                                                             Buscar <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -281,13 +295,19 @@
                                 $arrParam["idDependencia"] = $infoDependencia[0]['id_dependencia'];
                             }
                             if($_POST){
-                                if($_POST && $_POST["numero_actividad"] != ""){
+                                if($_POST["id_estrategia"] != ""){
+                                    $arrParam["idEstrategia"] = $_POST["id_estrategia"];
+                                }
+                                if($_POST["numero_objetivo"] != ""){
+                                    $arrParam2["numeroObjetivoEstrategico"] = $_POST["numero_objetivo"];
+                                }
+                                if($_POST["numero_actividad"] != ""){
                                     $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
                                 }
-                                if($_POST && $_POST["numero_proyecto"] != ""){
+                                if($_POST["numero_proyecto"] != ""){
                                     $arrParam["numeroProyecto"] = $this->input->post('numero_proyecto');
                                 }
-                                if($_POST && $_POST["id_dependencia"] != ""){
+                                if($_POST["id_dependencia"] != ""){
                                     $arrParam["idDependencia"] = $this->input->post('id_dependencia');
                                 }
                             }

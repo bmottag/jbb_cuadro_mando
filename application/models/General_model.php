@@ -275,12 +275,34 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
 					$this->db->where('E.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('E.fk_id_estrategia', $arrData["idEstrategia"]);
+				}
 				if (array_key_exists("filtroEstrategias", $arrData)) {
 					$where = "E.id_objetivo_estrategico IN (" . $arrData["filtroEstrategias"] . ")";
 					$this->db->where($where);
 				}
 				$this->db->order_by('numero_objetivo_estrategico', 'asc');
 				$query = $this->db->get('objetivos_estrategicos E');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta estrategias
+		 * @since 07/07/2022
+		 */
+		public function get_estrategias($arrData) 
+		{		
+				$this->db->select();
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('E.id_estrategia', $arrData["idEstrategia"]);
+				}
+				$this->db->order_by('estrategia', 'asc');
+				$query = $this->db->get('estrategias E');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {
@@ -732,6 +754,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('ES.fk_id_estrategia', $arrData["idEstrategia"]);
+				}
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
 					$this->db->where('C.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
@@ -808,6 +833,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('ES.fk_id_estrategia', $arrData["idEstrategia"]);
+				}
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
 					$this->db->where('ES.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
@@ -836,6 +864,9 @@ class General_model extends CI_Model {
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
 				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('ES.fk_id_estrategia', $arrData["idEstrategia"]);
+				}
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
 					$this->db->where('ES.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
@@ -843,6 +874,31 @@ class General_model extends CI_Model {
 					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
 				}
 				$this->db->order_by("fk_numero_proyecto_inversion", "ASC");
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta lista de ESTRATEGIAS actividades para una dependencia
+		 * @since 7/07/2022
+		 */
+		public function get_estrategias_full_by_dependencia($arrData) 
+		{		
+				$this->db->select("distinct(id_estrategia) id_estrategia, estrategia");
+				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
+				$this->db->join('objetivos_estrategicos ES', 'ES.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
+				$this->db->join('estrategias E', 'E.id_estrategia = ES.fk_id_estrategia', 'INNER');
+				if (array_key_exists("idDependencia", $arrData)) {
+					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
+				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('ES.fk_id_estrategia', $arrData["idEstrategia"]);
+				}
+				$this->db->order_by("estrategia", "ASC");
 				$query = $this->db->get('actividades A');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
@@ -864,6 +920,9 @@ class General_model extends CI_Model {
 
 				if (array_key_exists("idDependencia", $arrData)) {
 					$this->db->where('A.fk_id_dependencia', $arrData["idDependencia"]);
+				}
+				if (array_key_exists("idEstrategia", $arrData)) {
+					$this->db->where('ES.fk_id_estrategia', $arrData["idEstrategia"]);
 				}
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
 					$this->db->where('ES.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
