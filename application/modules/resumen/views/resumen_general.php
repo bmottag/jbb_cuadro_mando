@@ -81,7 +81,7 @@
         <div class="col-lg-12">              
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    SEGUIMIENTO EJECUCIÓN POR TRIMESTRE
+                    <i class="fa fa-cogs fa-fw"></i> Formulario para cambiar el estado por trimestre de todas las actividades
                 </div>
                 <div class="panel-body">
 <?php
