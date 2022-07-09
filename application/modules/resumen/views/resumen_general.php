@@ -256,19 +256,22 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center"><small>No. Actividad</small></th>
-                                <th><small>Actividad</small></th>
-                                <th class="text-center"><small>Cumplimiento Trim. I</small></th>
-                                <th class="text-center"><small>Cumplimiento Trim. II</small></th>
-                                <th class="text-center"><small>Cumplimiento Trim. III</small></th>
-                                <th class="text-center"><small>Cumplimiento Trim. IV</small></th>
-                                <th class="text-center"><small>Avance POA</small></th>
+                                <th width="5%" class="text-center"><small>No. Actividad</small></th>
+                                <th width="45%"><small>Actividad</small></th>
+                                <th width="10%" class="text-right"><small>Cumplimiento Trim. I</small></th>
+                                <th width="10%" class="text-right"><small>Cumplimiento Trim. II</small></th>
+                                <th width="10%" class="text-right"><small>Cumplimiento Trim. III</small></th>
+                                <th width="10%" class="text-right"><small>Cumplimiento Trim. IV</small></th>
+                                <th width="10%" class="text-right"><small>Avance POA</small></th>
                             </tr>
                         </thead>
                         <tbody>
                         <?php
                             if($listaActividades){
                                 foreach ($listaActividades as $lista):
+                                    $arrParam = array("numeroActividad" => $lista["numero_actividad"]);
+                                    $listaHistorial = $this->general_model->get_historial_actividad($arrParam);
+
                                     $trim1 = "0%";
                                     $trim2 = "0%";
                                     $trim3 = "0%";
@@ -304,6 +307,54 @@
                                     <td class="text-right"><small><?php echo $trim4; ?></small></td>
                                     <td class="text-right"><small><?php echo $avancePoa; ?></small></td>
                                 </tr>
+                        <?php
+                            if($listaHistorial)
+                            {
+                        ?>
+                                <tr>
+                                    <td ></td>
+                                    <td colspan="6">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th colspan="5" class="text-center">--- HISTORIAL ACTIVIDAD No. <?php echo $lista["numero_actividad"]; ?> ---</th>
+                                                </tr>
+                                                <tr class="info">
+                                                    <th><small>No. Trimestre</small></th>
+                                                    <th><small>Fecha</small></th>
+                                                    <th><small>Estado</small></th>
+                                                    <th><small>Usuario</small></th>
+                                                    <th><small>Observación</small></th>
+                                                </tr>
+                                            </thead>
+                                            <?php 
+                                                foreach ($listaHistorial as $data):     
+                                            ?>
+                                                <tr>
+                                                    <td><small><?php echo "Trimestre " .  $data['numero_trimestre']; ?></small></td>
+                                                    <td><small><?php echo $data['fecha_cambio']; ?></small></td>
+                                                    <td><small><?php echo '<p class="text-' . $data['clase'] . '"><strong><i class="fa ' . $data['icono']  . ' fa-fw"></i>' . $data['estado'] . '</strong></p>'; ?></small></td>
+                                                    <td><small><?php echo $data['first_name']; ?></small></td>
+                                                    <td><small><?php echo $data['observacion']; ?></small></td>
+                                                </tr>
+                                            <?php
+                                                endforeach;
+                                            ?>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+                            <?php
+                                }
+                            ?>
+
+
+
+
+
+
+
                         <?php
                                 endforeach;
                             }

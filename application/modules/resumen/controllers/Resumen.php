@@ -1,5 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+//require_once(FCPATH.'vendor/autoload.php');
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+
 
 class Resumen extends CI_Controller {
 	
@@ -454,5 +465,198 @@ class Resumen extends CI_Controller {
 	{				
 			$data["view"] = 'planes_institucionales';
 			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
+	 * RESUMEN
+	 * @since 24/06/2022
+	 */
+	public function reporte()
+	{	
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition:attachment;filename=cuadro_mando.xlsx');
+
+		$arrParam = array();
+		$listaActividades = $this->general_model->get_actividades_full($arrParam);
+
+		$spreadsheet = new Spreadsheet();
+		$spreadsheet->getActiveSheet()->setTitle('Consolidado General');
+		$spreadsheet->getActiveSheet(0)->setCellValue('A2', 'PRUEBAS DE COBBINAR CELDAS');
+		$spreadsheet->getActiveSheet()->mergeCells('A2:D2');
+
+		$spreadsheet->getActiveSheet(0)
+							->setCellValue('A3', 'Dependencia')
+							->setCellValue('B3', 'Proyecto de Inversión')
+							->setCellValue('C3', 'Meta proyecto de inversión')
+							->setCellValue('D3', 'Presupuesto Meta Proyecto de Inversión o Funcionamiento')
+							->setCellValue('E3', 'Propósito')
+							->setCellValue('F3', 'Logro')
+							->setCellValue('G3', 'Programa Estratégico')
+							->setCellValue('H3', 'Meta PDD')
+							->setCellValue('I3', 'Estrategias')
+							->setCellValue('J3', 'Objetivo Estratégico')
+							->setCellValue('K3', 'Proceso de Calidad')
+							->setCellValue('L3', 'No. Actividad')
+							->setCellValue('M3', 'Actividad')
+							->setCellValue('N3', 'Meta Plan Operativo Anual')
+							->setCellValue('O3', 'Unidad de Medida')
+							->setCellValue('P3', 'Nombre del indicador')
+							->setCellValue('Q3', 'Tipo de indicador')
+							->setCellValue('R3', 'Responsable')
+							->setCellValue('S3', 'Ponderación')
+							->setCellValue('T3', 'Fecha inicial')
+							->setCellValue('U3', 'Fecha Final')
+							->setCellValue('V3', 'Enero')
+							->setCellValue('W3', 'Febrero')
+							->setCellValue('X3', 'Marzo')
+							->setCellValue('Y3', 'Abril')
+							->setCellValue('Z3', 'Mayo')
+							->setCellValue('AA3', 'Junio')
+							->setCellValue('AB3', 'Julio')
+							->setCellValue('AC3', 'Agosto')
+							->setCellValue('AD3', 'Septiembre')
+							->setCellValue('AE3', 'Octubre')
+							->setCellValue('AF3', 'Noviembre')
+							->setCellValue('AG3', 'Diciembre')
+							->setCellValue('AH3', 'Trimestre I')
+							->setCellValue('AI3', 'Trimestre II')
+							->setCellValue('AJ3', 'Trimestre III')
+							->setCellValue('AK3', 'Trimestre IV')
+							->setCellValue('AL3', 'Avance POA');
+
+		$j=4;
+		if($listaActividades){
+			foreach ($listaActividades as $lista):
+				switch ($lista['tipo_indicador']) {
+					case 1:
+						$tipo_indicador = 'Eficacia';
+						break;
+					case 2:
+						$tipo_indicador = 'Eficiencia';
+						break;
+					case 3:
+						$tipo_indicador = 'Efectividad';
+						break;
+				}
+				$spreadsheet->getActiveSheet()->getStyle('D' . $j)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+				$spreadsheet->getActiveSheet()->getStyle('S' . $j)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+				$spreadsheet->getActiveSheet()
+							->setCellValue('A'.$j, $lista['dependencia'])
+							->setCellValue('B'.$j, $lista['proyecto_inversion'])
+							->setCellValue('C'.$j, $lista['meta_proyecto'])
+							->setCellValue('D'.$j, $lista['presupuesto_meta'])
+							->setCellValue('E'.$j, $lista['proposito'])
+							->setCellValue('F'.$j, $lista['logro'])
+							->setCellValue('G'.$j, $lista['programa'])
+							->setCellValue('H'.$j, $lista['meta_pdd'])
+							->setCellValue('I'.$j, $lista['estrategia'])
+							->setCellValue('J'.$j, $lista['objetivo_estrategico'])
+							->setCellValue('K'.$j, $lista['proceso_calidad'])
+							->setCellValue('L'.$j, $lista['numero_actividad'])
+							->setCellValue('M'.$j, $lista['descripcion_actividad'])
+							->setCellValue('N'.$j, $lista['meta_plan_operativo_anual'])
+							->setCellValue('O'.$j, $lista['unidad_medida'])
+							->setCellValue('P'.$j, $lista['nombre_indicador'])
+							->setCellValue('Q'.$j, $tipo_indicador)
+							->setCellValue('R'.$j, $lista['area_responsable'])
+							->setCellValue('S'.$j, $lista['ponderacion'] . '%')
+							->setCellValue('T'.$j, $lista['mes_inicial'])
+							->setCellValue('U'.$j, $lista['mes_final'])
+							->setCellValue('V'.$j, $lista['mes_final'])
+							->setCellValue('W'.$j, $lista['mes_final'])
+							->setCellValue('X'.$j, $lista['mes_final'])
+							->setCellValue('Y'.$j, $lista['mes_final'])
+							->setCellValue('Z'.$j, $lista['mes_final'])
+							->setCellValue('AA'.$j, $lista['mes_final'])
+							->setCellValue('AB'.$j, $lista['mes_final'])
+							->setCellValue('AC'.$j, $lista['mes_final'])
+							->setCellValue('AD'.$j, $lista['mes_final'])
+							->setCellValue('AE'.$j, $lista['mes_final'])
+							->setCellValue('AF'.$j, $lista['mes_final'])
+							->setCellValue('AG'.$j, $lista['mes_final'])
+							->setCellValue('AH'.$j, $lista['trimestre_1'])
+							->setCellValue('AI'.$j, $lista['trimestre_2'])
+							->setCellValue('AJ'.$j, $lista['trimestre_3'])
+							->setCellValue('AK'.$j, $lista['trimestre_4'])
+							->setCellValue('AL'.$j, $lista['avance_poa']);
+					$j++;
+			endforeach;
+		}
+
+		// Set column widths							  
+		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('T')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('U')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('X')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('Z')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AA')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AB')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AC')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AD')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AE')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AF')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AG')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AH')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AI')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AJ')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AK')->setAutoSize(true);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AL')->setAutoSize(true);
+
+
+		// Set fonts	
+		$spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+		$spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setBold(true);
+		$spreadsheet->getActiveSheet()->getStyle('A3:AL3')->getFont()->setBold(true);
+		$spreadsheet->getActiveSheet()->getStyle('A3:AL3')->getFont()->getColor()->setARGB(Color::COLOR_WHITE);
+ 		$spreadsheet->getActiveSheet()->getStyle('A3:AL3')->getFill()->setFillType(Fill::FILL_SOLID);
+		$spreadsheet->getActiveSheet()->getStyle('A3:AL3')->getFill()->getStartColor()->setARGB('86B659');
+
+
+
+		
+
+
+
+$spreadsheet->getActiveSheet()->getStyle('A3:AL3')->applyFromArray(
+    [
+        'borders' => [
+            'top' => ['borderStyle' => Border::BORDER_MEDIUM],
+            'left' => ['borderStyle' => Border::BORDER_MEDIUM],
+            'right' => ['borderStyle' => Border::BORDER_MEDIUM],
+            'bottom' => ['borderStyle' => Border::BORDER_MEDIUM],
+        ],
+    ]
+);
+
+
+		$spreadsheet->createSheet();
+		$spreadsheet->setActiveSheetIndex(1)->setCellValue('A1', 'Pruebas de hojas');
+		$spreadsheet->getActiveSheet()->setTitle('Objetivo Estratégico');
+
+		$spreadsheet->setActiveSheetIndex(0);
+
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('php://output');
 	}
 }

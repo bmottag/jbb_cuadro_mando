@@ -515,7 +515,7 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('H.numero_trimestre', $arrData["numeroTrimestre"]);
 				}
-				$this->db->order_by('H.id_historial ', 'desc');
+				$this->db->order_by('H.numero_trimestre, H.id_historial ', 'desc');
 				$query = $this->db->get('actividad_historial H');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
@@ -648,12 +648,17 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full($arrData) 
 		{		
-				$this->db->select("A.*, E.avance_poa, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_objetivo_estrategico, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, meta_proyecto, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods");
-				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad ', 'LEFT');
+				$this->db->select("A.*, D.dependencia, E.avance_poa, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_objetivo_estrategico, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, CONCAT(ES.numero_objetivo_estrategico, ' ', ES.objetivo_estrategico) objetivo_estrategico, EG.estrategia, PR.proceso_calidad, meta_proyecto, presupuesto_meta, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, R.area_responsable");
+				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad', 'LEFT');
+				$this->db->join('param_proceso_calidad PR', 'PR.id_proceso_calidad = A.fk_id_proceso_calidad', 'INNER');
+				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
+				$this->db->join('param_dependencias D', 'D.id_dependencia = A.fk_id_dependencia', 'INNER');
 				$this->db->join('param_meses W', 'W.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses K', 'K.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('cuadro_base C', 'C.id_cuadro_base = A.fk_id_cuadro_base', 'INNER');
 				$this->db->join('proyecto_inversion P', 'P.numero_proyecto_inversion = C.fk_numero_proyecto_inversion', 'INNER');
+				$this->db->join('objetivos_estrategicos ES', 'ES.numero_objetivo_estrategico = C.fk_numero_objetivo_estrategico', 'INNER');
+				$this->db->join('estrategias EG', 'EG.id_estrategia = ES.fk_id_estrategia', 'INNER');
 				$this->db->join('meta_proyecto_inversion M', 'M.nu_meta_proyecto = C.fk_nu_meta_proyecto_inversion', 'INNER');
 				$this->db->join('propositos X', 'X.numero_proposito = C.fk_numero_proposito', 'INNER');
 				$this->db->join('logros L', 'L.numero_logro  = C.fk_numero_logro', 'INNER');
