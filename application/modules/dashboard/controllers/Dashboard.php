@@ -309,10 +309,18 @@ class Dashboard extends CI_Controller {
 	 */
 	public function update_programacion()
 	{					
-			$idActividad = $this->input->post('hddIdActividad');
+			$numeroActividad = $this->input->post('hddNumeroActividad');
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
+			$jsondataForm = json_encode($_POST["form"]);
 
 			if ($this->dashboard_model->guardarProgramacion()) {
+				$arrParam = array(
+					"numeroActividad" => $numeroActividad,
+					"numeroTrimestre" => "",
+					"jsondataForm" => $jsondataForm
+				);
+				//ingreso todos los cambios en la tabla de auditoria
+				$this->general_model->addAuditoriaActividadEjecucion($arrParam);
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', "Se actualizó la información!!");
 			} else {
@@ -320,7 +328,7 @@ class Dashboard extends CI_Controller {
 				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
 			}
 
-			redirect(base_url('dashboard/actividades/' . $idCuadroBase . '/' . $idActividad), 'refresh');
+			redirect(base_url('dashboard/actividades/' . $idCuadroBase . '/' . $numeroActividad), 'refresh');
     }
 
 	/**
@@ -1385,6 +1393,22 @@ class Dashboard extends CI_Controller {
 			}
 
 			echo json_encode($data);
+    }
+
+    /**
+     * Cargo modal - Listado auditoria de la actividad
+     * @since 10/07/2022
+     */
+    public function cargarModalAuditoriaActividad() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data["numeroActividad"] = $this->input->post("numeroActividad");
+
+			$arrParam = array("numeroActividad" => $data["numeroActividad"]);
+			$data['information'] = $this->general_model->get_auditoria_actividades($arrParam);
+
+			$this->load->view("auditoria_actividad_modal", $data);
     }
 
 

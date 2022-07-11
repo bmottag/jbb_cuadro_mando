@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/form_estado_actividad.js"); ?>"></script>
+
 
 <script>
 $(function(){ 
@@ -40,6 +40,19 @@ $(function(){
                 }
             });
 	});	
+	$(".btn-default").click(function () {	
+			var oID = $(this).attr("id");
+            $.ajax ({
+                type: 'POST',
+				url: base_url + 'dashboard/cargarModalAuditoriaActividad',
+				data: {'numeroActividad': oID},
+                cache: false,
+                success: function (data) {
+                    $('#tablaDatosAuditoria').html(data);
+                }
+            });
+	});	
+
 });
 </script>
 
@@ -203,6 +216,10 @@ $(function(){
 
 											<button type="button" id="<?php echo $lista["id_actividad"]; ?>" class='btn btn-danger btn-xs' title="Eliminar Actividad">
 													<span class="fa fa-trash-o" aria-hidden="true"> </span>
+											</button>
+
+											<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAuditoria" id="<?php echo $lista['numero_actividad']; ?>" title="Auditoría Cambios Programación/Ejecución Actividad">
+													<i class="fa fa-exclamation-circle"></i>
 											</button>
 						<?php
 										}
@@ -513,7 +530,7 @@ $(function(){
 					<div class="table-responsive">
 						<form  name="ejecucion" id="ejecucion" method="post" action="<?php echo base_url("dashboard/update_programacion"); ?>">
 
-							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $numeroActividad; ?>"/>
+							<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $numeroActividad; ?>"/>
 							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>		
 
 							<table class='table table-hover'>
@@ -615,6 +632,16 @@ $(function(){
 <div class="modal fade text-center" id="modalEjecucion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
 	<div class="modal-dialog" role="document">
 		<div class="modal-content" id="tablaDatosEjecucion">
+
+		</div>
+	</div>
+</div>                       
+<!--FIN Modal -->
+
+<!--INICIO Modal -->
+<div class="modal fade text-center" id="modalAuditoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content" id="tablaDatosAuditoria">
 
 		</div>
 	</div>

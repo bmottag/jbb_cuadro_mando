@@ -1328,5 +1328,25 @@ class General_model extends CI_Model {
 			}
 		}
 
+		/**
+		 * Consulta lista de tabla auditoria actividades
+		 * @since 10/07/2022
+		 */
+		public function get_auditoria_actividades($arrData) 
+		{									
+				$this->db->select("A.*, CONCAT(first_name, ' ', last_name) usuario");
+				$this->db->join('usuarios U', 'U.id_user = A.fk_id_usuario', 'INNER');
+				if(array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('A.fk_numero_actividad', $arrData["numeroActividad"]);
+				}
+				$this->db->order_by('A.id_auditoria_actividad_ejecucion', 'asc');
+				$query = $this->db->get('auditoria_actividad_ejecucion A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }
