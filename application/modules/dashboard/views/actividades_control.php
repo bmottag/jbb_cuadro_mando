@@ -239,7 +239,7 @@
 											<span class="glyphicon glyphicon-ok"></span> Plan de Previsión de Recursos Humanos <br>
 											<?php } ?>
 											<?php if($lista['plan_talento'] == 1 ){ ?>
-											<span class="glyphicon glyphicon-ok"></span> Plan Estretégico de Talento Humano <br>
+											<span class="glyphicon glyphicon-ok"></span> Plan Estratégico de Talento Humano <br>
 											<?php } ?>
 											<?php if($lista['plan_capacitacion'] == 1 ){ ?>
 											<span class="glyphicon glyphicon-ok"></span> Plan Institucional de Capacitación <br>
@@ -254,7 +254,7 @@
 											<span class="glyphicon glyphicon-ok"></span> Plan Anticorrupción y de Atención al Ciudadano <br>
 											<?php } ?>
 											<?php if($lista['plan_tecnologia'] == 1 ){ ?>
-											<span class="glyphicon glyphicon-ok"></span> Plan estrategico de Tecnologías de la Información y las Comunicaciones <br>
+											<span class="glyphicon glyphicon-ok"></span> Plan Estratégico de Tecnologías de la Información y las Comunicaciones <br>
 											<?php } ?>
 											<?php if($lista['plan_riesgos'] == 1 ){ ?>
 											<span class="glyphicon glyphicon-ok"></span> Plan de Tratamiento de Riesgos de Seguridad y Privacidad de la Información <br>

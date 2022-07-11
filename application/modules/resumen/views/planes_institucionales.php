@@ -196,7 +196,7 @@
 	                                }
 	                            }
 								echo "<tr>";
-								echo "<td>Plan Estretégico de Talento Humano</td>";
+								echo "<td>Plan Estratégico de Talento Humano</td>";
 								echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
 	                            echo "<td class='text-center'>";
 	                            echo "<b>" . $promedioCumplimiento ."%</b>";
@@ -351,7 +351,7 @@
 	                                }
 	                            }
 								echo "<tr>";
-								echo "<td>Plan estrategico de Tecnologías de la Información y las Comunicaciones</td>";
+								echo "<td>Plan estratégico de Tecnologías de la Información y las Comunicaciones</td>";
 								echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
 	                            echo "<td class='text-center'>";
 	                            echo "<b>" . $promedioCumplimiento ."%</b>";

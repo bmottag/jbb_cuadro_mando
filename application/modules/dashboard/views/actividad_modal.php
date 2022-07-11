@@ -193,7 +193,7 @@
 		<div class="row">
 			<div class="col-sm-3">		
 				<div class="form-group text-left">
-					<label class="control-label" for="plan_talento"><small><small>Plan Estretégico de Talento Humano: *</small></small></label>
+					<label class="control-label" for="plan_talento"><small><small>Plan Estratégico de Talento Humano: *</small></small></label>
 					<select name="plan_talento" id="plan_talento" class="form-control" required>
 						<option value=''>Seleccione...</option>
 						<option value=1 <?php if($information && $information[0]["plan_talento"] == 1) { echo "selected"; }  ?>>Si</option>
@@ -249,7 +249,7 @@
 
 			<div class="col-sm-3">		
 				<div class="form-group text-left">
-					<label class="control-label" for="plan_tecnologia"><small><small>Plan estrategico de Tecnologías de la Información y las Comunicaciones: *</small></small></label>
+					<label class="control-label" for="plan_tecnologia"><small><small>Plan Estratégico de Tecnologías de la Información y las Comunicaciones: *</small></small></label>
 					<select name="plan_tecnologia" id="plan_tecnologia" class="form-control" required>
 						<option value=''>Seleccione...</option>
 						<option value=1 <?php if($information && $information[0]["plan_tecnologia"] == 1) { echo "selected"; }  ?>>Si</option>
