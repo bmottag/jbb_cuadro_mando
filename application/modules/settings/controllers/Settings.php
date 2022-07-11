@@ -1955,5 +1955,76 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 
 			echo json_encode($data);	
     }
+
+	/**
+	 * Lista de propositos X vigencia
+     * @since 16/04/2022
+     * @author BMOTTAG
+	 */
+	public function propositos_x_vigencia($vigencia=2022)
+	{
+			$data['vigencia']  = $vigencia;
+			$arrParam = array('vigencia'=>$vigencia);
+			$data['info'] = $this->general_model->get_propositos_x_vigencia($arrParam);
+			
+			$data["view"] = 'propositos_x_vigencia';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario porpositos
+     * @since 16/04/2022
+     */
+    public function cargarModalPropositosXVigencia() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idPropositoVigencia"] = $this->input->post("idPropositoVigencia");	
+
+			$arrParam = array(
+				"table" => " propositos",
+				"order" => "numero_proposito",
+				"id" => "x"
+			);
+			$data['listaProposito'] = $this->general_model->get_basic_search($arrParam);
+			
+			if ($data["idPropositoVigencia"] != 'x') {
+				$arrParam = array(
+					"idPropositoVigencia" => $data["idPropositoVigencia"]
+				);
+				$data['information'] = $this->general_model->get_propositos_x_vigencia($arrParam);
+			}
+			
+			$this->load->view("propositos_x_vigencia_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar metas_proyectos
+     * @since 16/04/2022
+     * @author BMOTTAG
+	 */
+	public function save_propositos_x_vigencia()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idPropositoVigencia = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Registro!";
+			if ($idPropositoVigencia != '') {
+				$msj = "Se actualizó Registro!";
+			}
+
+			if ($idPropositoVigencia = $this->settings_model->savePropositosXVigencia()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 }

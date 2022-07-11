@@ -332,20 +332,47 @@ class Dashboard extends CI_Controller {
 	{					
 			$numeroActividad = $this->input->post('hddNumeroActividad');
 			$idCuadroBase = $this->input->post('hddIdCuadroBase');
+			$jsondataForm = json_encode($_POST["form"]);
+
+			$datos = $this->input->post('form');
+			if($datos) {
+				$tot = count($datos['id']);
+
+				$descripcion_actividad = "";
+				$evidencia = "";
+				for ($i = 0; $i < $tot; $i++) 
+				{	
+					if($i != 0){
+						if($datos['descripcion'][$i] != ""){
+							$descripcion_actividad .= "<br>";
+						}
+						if($datos['evidencia'][$i] != ""){
+							$evidencia .= "<br>";
+						}
+					}
+					$descripcion_actividad .= $datos['descripcion'][$i];
+					$evidencia .= $datos['evidencia'][$i];
+				}
+			}
 
 			if ($this->dashboard_model->guardarEjecucion()) {
-
 				//actualizo el estado del trimestre de la actividad
 				$arrParam = array(
 					"numeroActividad" => $numeroActividad,
 					"numeroTrimestre" => $this->input->post('hddNumeroTrimestre'),
 					"observacion" => $this->input->post('observacion'),
-					"estado" => 1
+					"estado" => 1,
+					"descripcion_actividad" => $descripcion_actividad,
+					"evidencia" => $evidencia,
+					"jsondataForm" => $jsondataForm
+
 				);
 				$this->general_model->addHistorialActividad($arrParam);
 
 				//actualizo el estado del trimestre de la actividad
 				$this->general_model->updateEstadoActividad($arrParam);
+				//ingreso todos los cambios en la tabla de auditoria
+				$this->general_model->addAuditoriaActividadEjecucion($arrParam);
 
 				$data["result"] = true;
 				$this->session->set_flashdata('retornoExito', "Se actualizó la información!!");

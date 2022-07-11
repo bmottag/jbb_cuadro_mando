@@ -1110,7 +1110,9 @@ class General_model extends CI_Model {
 		public function updateEstadoActividad($arrData)
 		{			
 			$data = array(
-				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"]
+				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
+				'descripcion_actividad_trimestre_' . $arrData["numeroTrimestre"] => $arrData["descripcion_actividad"],
+				'evidencias_trimestre_' . $arrData["numeroTrimestre"] => $arrData["evidencia"]
 			);	
 			//si esta aprobado por planeacion, debo guardar los calculos
 			if($arrData["estado"] == 5){
@@ -1271,6 +1273,56 @@ class General_model extends CI_Model {
 
 			if ($query->num_rows() > 0) {
 				return $query->row_array();
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Consulta lista de propositos por vigencia
+		 * @since 9/07/2022
+		 */
+		public function get_propositos_x_vigencia($arrData) 
+		{		
+				$this->db->select();
+				$this->db->join('propositos P', 'P.numero_proposito = PV.fk_numero_proposito', 'INNER');
+				if (array_key_exists("idPropositoVigencia", $arrData)) {
+					$this->db->where('PV.id_proposito_vigencia', $arrData["idPropositoVigencia"]);
+				}
+				if (array_key_exists("numeroProposito", $arrData)) {
+					$this->db->where('P.fk_numero_proposito', $arrData["numeroProposito"]);
+				}
+				if (array_key_exists("vigencia", $arrData)) {
+					$this->db->where('PV.vigencia_proposito', $arrData["vigencia"]);
+				}
+				$this->db->order_by('proposito', 'asc');
+				$query = $this->db->get('proposito_x_vigencia PV');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Add estado actividad
+		 * @since 10/07/2022
+		 */
+		public function addAuditoriaActividadEjecucion($arrData) 
+		{
+			$idUser = $this->session->userdata("id");
+			
+			$data = array(
+				'fk_numero_actividad' => $arrData["numeroActividad"],
+				'fk_id_usuario' => $idUser,
+				'numero_trimestre' => $arrData["numeroTrimestre"],
+				'fecha_registro' => date("Y-m-d G:i:s"),
+				'valores' => $arrData["jsondataForm"]
+			);
+			$query = $this->db->insert('auditoria_actividad_ejecucion', $data);
+
+			if ($query) {
+				return true;
 			} else {
 				return false;
 			}

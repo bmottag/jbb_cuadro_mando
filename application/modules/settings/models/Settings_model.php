@@ -711,6 +711,38 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add/Edit ODS
+		 * @since 9/07/2022
+		 */
+		public function savePropositosXVigencia() 
+		{
+				$idPropositoVigencia= $this->input->post('hddId');
+				$vigencia= $this->input->post('vigencia');
+				$numeroProposito= $this->input->post('proposito');
+				$nu_proposito_vigencia = $vigencia . "-" . $numeroProposito;
+				
+				$data = array(
+					'nu_proposito_vigencia' => $nu_proposito_vigencia,
+					'fk_numero_proposito' => $numeroProposito,
+					'vigencia_proposito' => $vigencia,
+					'recurso_programado_proposito' => $this->input->post('recurso_programado_proposito')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idPropositoVigencia == '') {
+					$query = $this->db->insert('proposito_x_vigencia ', $data);		
+				} else {
+					$this->db->where('id_proposito_vigencia', $idPropositoVigencia);
+					$query = $this->db->update('proposito_x_vigencia', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		
