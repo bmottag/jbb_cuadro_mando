@@ -304,6 +304,13 @@ Subir Actividades Ejecución <span class="glyphicon glyphicon glyphicon-chevron-
 								<br><br>
 <a class="btn btn-success btn-xs" href=" <?php echo base_url(). 'settings/subir_archivo/cargar_mensaje_poa'; ?> ">
 Subir Mensaje POA TRIM. I <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> 
+
+								<br><br>
+								Actualizar Plan Institucional
+								<br><br>
+<a class="btn btn-success btn-xs" href=" <?php echo base_url(). 'settings/subir_archivo/cargar_plan_institucional'; ?> ">
+Actualizar Plan Institucional <span class="glyphicon glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a> 
+
 						
 							</div>
 						</div>

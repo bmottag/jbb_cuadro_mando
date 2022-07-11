@@ -614,6 +614,36 @@
 		}
 
 		/**
+		 * Cargar Plan Institucional
+		 * @since 11/7/2022
+		 */
+		public function cargar_plan_institucional($lista) 
+		{
+				$data = array(
+					'plan_archivos' => $lista["plan_archivos"],
+					'plan_adquisiciones' => $lista["plan_adquisiciones"],
+					'plan_vacantes' => $lista["plan_vacantes"],
+					'plan_recursos' => $lista["plan_recursos"],
+					'plan_talento' => $lista["plan_talento"],
+					'plan_capacitacion' => $lista["plan_capacitacion"],
+					'plan_incentivos' => $lista["plan_incentivos"],
+					'plan_trabajo' => $lista["plan_trabajo"],
+					'plan_anticorrupcion' => $lista["plan_anticorrupcion"],
+					'plan_tecnologia' => $lista["plan_tecnologia"],
+					'plan_riesgos' => $lista["plan_riesgos"],
+					'plan_informacion' => $lista["plan_informacion"]
+				);
+				$this->db->where('numero_actividad', $lista["numero_actividad"]);
+				$query = $this->db->update('actividades', $data);
+
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
 		 * Cargar informacion 
 		 * @since 14/8/2017
 		 */

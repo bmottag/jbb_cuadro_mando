@@ -1718,7 +1718,7 @@ class Settings extends CI_Controller {
                 $error = $this->upload->display_errors();
                 $msgError = html_escape(substr($error, 3, -4));
                 $this->subir_archivo($msgError);
-            }else {				
+            }else {
                 $file_info = $this->upload->data();
                 $data = array('upload_data' => $this->upload->data());
 
