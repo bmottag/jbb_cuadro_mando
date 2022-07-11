@@ -480,7 +480,7 @@ $(function(){
 		<div class="col-lg-6">				
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					SEGUIMIENTO EJECUCIÓN TRIMESTRE <?php echo $numeroTrimestre; ?>
+					<span class="fa fa-tag" aria-hidden="true"> </span> <b>SEGUIMIENTO EJECUCIÓN TRIMESTRE <?php echo $numeroTrimestre; ?></b>
 				</div>
 				<div class="panel-body">
 					<div class="col-lg-12">	
@@ -511,7 +511,7 @@ $(function(){
 								<div class="row" align="center">
 									<div style="width:100%;" align="center">
 										<button type="button" id="btnEstado" name="btnEstado" class="btn btn-primary" >
-											Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
+											Guardar Seguimiento <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
 										</button> 
 										
 									</div>
@@ -550,7 +550,7 @@ $(function(){
 									?>
 										<th class="column-title" >
 											<button type="submit" class="btn btn-primary" id="btnSubmit2" name="btnSubmit2" >
-												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+												Guardar Programación/Ejecución <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
 											</button>
 										</th>
 									<?php

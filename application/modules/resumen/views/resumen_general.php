@@ -334,7 +334,7 @@
                                                     <td><small><?php echo "Trimestre " .  $data['numero_trimestre']; ?></small></td>
                                                     <td><small><?php echo $data['fecha_cambio']; ?></small></td>
                                                     <td><small><?php echo '<p class="text-' . $data['clase'] . '"><strong><i class="fa ' . $data['icono']  . ' fa-fw"></i>' . $data['estado'] . '</strong></p>'; ?></small></td>
-                                                    <td><small><?php echo $data['first_name']; ?></small></td>
+                                                    <td><small><?php echo $data['usuario']; ?></small></td>
                                                     <td><small><?php echo $data['observacion']; ?></small></td>
                                                 </tr>
                                             <?php

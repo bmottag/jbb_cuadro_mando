@@ -506,7 +506,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_historial_actividad($arrData) 
 		{		
-				$this->db->select('H.*, U.first_name, P.estado, P.clase, P.icono');
+				$this->db->select("H.*, U.first_name, CONCAT(first_name, ' ', last_name) usuario, P.estado, P.clase, P.icono");
 				$this->db->join('param_estados P', 'P.valor = H.fk_id_estado', 'INNER');
 				$this->db->join('usuarios U', 'U.id_user = H.fk_id_usuario', 'INNER');
 				if (array_key_exists("numeroActividad", $arrData)) {
