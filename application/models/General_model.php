@@ -515,6 +515,10 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('H.numero_trimestre', $arrData["numeroTrimestre"]);
 				}
+				if (array_key_exists("filtroEstado", $arrData)) {
+					$where = "H.fk_id_estado IN (" . $arrData["filtroEstado"] . ")";
+					$this->db->where($where);
+				}
 				$this->db->order_by('H.numero_trimestre, H.id_historial ', 'desc');
 				$query = $this->db->get('actividad_historial H');
 				if ($query->num_rows() > 0) {

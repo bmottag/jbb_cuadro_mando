@@ -1,5 +1,3 @@
-
-
 <script>
 $(function(){ 
 	$(".btn-info").click(function () {	

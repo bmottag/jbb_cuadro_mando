@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-//require_once(FCPATH.'vendor/autoload.php');
+require_once(FCPATH.'vendor/autoload.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -623,7 +623,7 @@ class Resumen extends CI_Controller {
 		$spreadsheet->getActiveSheet()->getColumnDimension('AK')->setAutoSize(true);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AL')->setAutoSize(true);
 
-
+/*
 		// Set fonts	
 		$spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
 		$spreadsheet->getActiveSheet()->getStyle('A2')->getFont()->setBold(true);
@@ -632,11 +632,11 @@ class Resumen extends CI_Controller {
  		$spreadsheet->getActiveSheet()->getStyle('A3:AL3')->getFill()->setFillType(Fill::FILL_SOLID);
 		$spreadsheet->getActiveSheet()->getStyle('A3:AL3')->getFill()->getStartColor()->setARGB('86B659');
 
-
+*/
 
 		
 
-
+/*
 
 $spreadsheet->getActiveSheet()->getStyle('A3:AL3')->applyFromArray(
     [
@@ -649,7 +649,7 @@ $spreadsheet->getActiveSheet()->getStyle('A3:AL3')->applyFromArray(
     ]
 );
 
-
+*/
 		$spreadsheet->createSheet();
 		$spreadsheet->setActiveSheetIndex(1)->setCellValue('A1', 'Pruebas de hojas');
 		$spreadsheet->getActiveSheet()->setTitle('Objetivo Estratégico');
@@ -659,4 +659,22 @@ $spreadsheet->getActiveSheet()->getStyle('A3:AL3')->applyFromArray(
 		$writer = new Xlsx($spreadsheet);
 		$writer->save('php://output');
 	}
+
+    /**
+     * Cargo modal - Listado comentarios POA
+     * @since 11/07/2022
+     */
+    public function cargarModalComentariosPOA() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data["numeroActividad"] = $this->input->post("numeroActividad");
+
+			$arrParam = array(
+				"numeroActividad" => $data["numeroActividad"],
+				"filtroEstado" => "5,6"
+			);
+            $data['information'] = $this->general_model->get_historial_actividad($arrParam);
+			$this->load->view("comentarios_poa_modal", $data);
+    }
 }

@@ -1,6 +1,24 @@
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/resumen/form_estado_actividad.js"); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/ajaxSearch.js"); ?>"></script>
 
+<script>
+$(function(){ 
+    $(".btn-default").click(function () {   
+            var oID = $(this).attr("id");
+            $.ajax ({
+                type: 'POST',
+                url: base_url + 'resumen/cargarModalComentariosPOA',
+                data: {'numeroActividad': oID},
+                cache: false,
+                success: function (data) {
+                    $('#tablaDatosComentarios').html(data);
+                }
+            });
+    }); 
+
+});
+</script>
+
 <div id="page-wrapper">
     <br>
 
@@ -269,9 +287,6 @@
                         <?php
                             if($listaActividades){
                                 foreach ($listaActividades as $lista):
-                                    $arrParam = array("numeroActividad" => $lista["numero_actividad"]);
-                                    $listaHistorial = $this->general_model->get_historial_actividad($arrParam);
-
                                     $trim1 = "0%";
                                     $trim2 = "0%";
                                     $trim3 = "0%";
@@ -299,6 +314,9 @@
                                     <?php
                                         echo "<a class='btn btn-primary btn-xs' title='Ver Detalle Actividad No. " . $lista["numero_actividad"] . "' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'>". $lista['numero_actividad'] . " <span class='fa fa-eye' aria-hidden='true'></span></a>";
                                      ?>
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalComentarios" id="<?php echo $lista['numero_actividad']; ?>" title="Comentarios Monitoreo OAP">
+                                                    <i class="fa fa-comments fa-fw"></i>
+                                            </button>
                                     </td>
                                     <td><small><?php echo $lista["descripcion_actividad"] ?></small></td>
                                     <td class="text-right"><small><?php echo $trim1 ?></small></td>
@@ -307,54 +325,6 @@
                                     <td class="text-right"><small><?php echo $trim4; ?></small></td>
                                     <td class="text-right"><small><?php echo $avancePoa; ?></small></td>
                                 </tr>
-                        <?php
-                            if($listaHistorial)
-                            {
-                        ?>
-                                <tr>
-                                    <td ></td>
-                                    <td colspan="6">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr class="info">
-                                                    <th colspan="5" class="text-center">--- HISTORIAL ACTIVIDAD No. <?php echo $lista["numero_actividad"]; ?> ---</th>
-                                                </tr>
-                                                <tr class="info">
-                                                    <th><small>No. Trimestre</small></th>
-                                                    <th><small>Fecha</small></th>
-                                                    <th><small>Estado</small></th>
-                                                    <th><small>Usuario</small></th>
-                                                    <th><small>Observación</small></th>
-                                                </tr>
-                                            </thead>
-                                            <?php 
-                                                foreach ($listaHistorial as $data):     
-                                            ?>
-                                                <tr>
-                                                    <td><small><?php echo "Trimestre " .  $data['numero_trimestre']; ?></small></td>
-                                                    <td><small><?php echo $data['fecha_cambio']; ?></small></td>
-                                                    <td><small><?php echo '<p class="text-' . $data['clase'] . '"><strong><i class="fa ' . $data['icono']  . ' fa-fw"></i>' . $data['estado'] . '</strong></p>'; ?></small></td>
-                                                    <td><small><?php echo $data['usuario']; ?></small></td>
-                                                    <td><small><?php echo $data['observacion']; ?></small></td>
-                                                </tr>
-                                            <?php
-                                                endforeach;
-                                            ?>
-                                        </table>
-                                    </td>
-                                </tr>
-
-
-                            <?php
-                                }
-                            ?>
-
-
-
-
-
-
-
                         <?php
                                 endforeach;
                             }
@@ -365,7 +335,14 @@
             </div>           
         </div>     
     </div>
-
-
-
 </div>
+
+<!--INICIO Modal -->
+<div class="modal fade text-center" id="modalComentarios" tabindex="-1" role="dialog" aria-labelledby="modalComentarios">    
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="tablaDatosComentarios">
+
+        </div>
+    </div>
+</div>                       
+<!--FIN Modal -->
