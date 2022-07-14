@@ -19,6 +19,9 @@ $(function(){
 });
 </script>
 
+<?php
+    $userRol = $this->session->userdata("role");           
+?>
 <div id="page-wrapper">
     <br>
 
@@ -26,7 +29,22 @@ $(function(){
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <i class="fa fa-bell fa-fw"></i> No. Actividades: <b><?php echo $nroActividades; ?></b>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <i class="fa fa-bell fa-fw"></i> No. Actividades: <b><?php echo $nroActividades; ?></b>
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                <?php 
+                                    if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_PLANEACION){
+                                ?>
+                                    <a href="<?php echo base_url("resumen/reporte"); ?>" class="btn btn-primary btn-xs" target="_blank"><span class="fa fa-file-excel-o" aria-hidden="true" ></span> Descargar Consolidado</a>
+                                <?php 
+                                    }
+                                ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body small">
 
@@ -89,9 +107,7 @@ $(function(){
         </div>
     </div>
 
-
-<?php
-    $userRol = $this->session->userdata("role");           
+<?php          
     if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
 ?>
 <!--INICIO ADDITIONAL INFORMATION -->
