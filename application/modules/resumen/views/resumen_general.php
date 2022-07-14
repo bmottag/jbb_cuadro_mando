@@ -187,7 +187,41 @@ $(function(){
                             </div>
                         </div>                        
                     </form>
+<?php          
+    if($userRol == ID_ROL_SUPER_ADMIN){
+?>
+                    <form  name="formEvidencias" id="formEvidencias" method="post" action="<?php echo base_url("resumen/save_evidencias"); ?>">
+                        <div class="panel panel-default">
+                            <div class="panel-footer">
+                                <div class="row">
 
+                                    <div class="col-lg-2">
+                                        <div class="form-group input-group-sm"> 
+                                            <label class="control-label" for="idTipoEquipoSearch">Trimestre: *</label>                             
+                                            <select name="trimestre" Iid="trimestre" class="form-control" required >
+                                                <option value="">Seleccione...</option>
+                                                <option value=1 >Trimestre I</option>
+                                                <option value=2 >Trimestre II</option>
+                                                <option value=3 >Trimestre III</option>
+                                                <option value=4 >Trimestre IV</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group"><br>
+                                            <button type="submit" id="btnEvidencia" name="btnEvidencia" class="btn btn-primary" >
+                                                Guardar Evidencias <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
+                                            </button> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </form>
+<?php
+    }
+?>
                 </div>
             </div>
         </div> 

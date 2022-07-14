@@ -1139,6 +1139,26 @@ class General_model extends CI_Model {
 
 		/**
 		 * Update estado de la actividad
+		 * @since 24/04/2022
+		 */
+		public function updateEvidencias($arrData)
+		{			
+			$data = array(
+				'descripcion_actividad_trimestre_' . $arrData["numeroTrimestre"] => $arrData["descripcion_actividad"],
+				'evidencias_trimestre_' . $arrData["numeroTrimestre"] => $arrData["evidencia"]
+			);	
+			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
+			$query = $this->db->update('actividad_estado', $data);
+
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Update estado de la actividad
 		 * @since 24/06/2022
 		 */
 		public function updateEstadoActividadTotales($arrData)

@@ -443,6 +443,57 @@ class Resumen extends CI_Controller {
     }
 
 	/**
+	 * Save estado de la actividad
+     * @since 24/06/2022
+     * @author BMOTTAG
+	 */
+	public function save_evidencias()
+	{			
+			$numeroTrimestre = $this->input->post('trimestre');
+
+			$arrParam = array();
+			$listadoActividades = $this->general_model->get_actividades($arrParam);
+
+			foreach ($listadoActividades as $lista):
+				$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
+				$arrParam = array(
+					"numeroActividad" => $lista["numero_actividad"],
+					"numeroTrimestre" => $numeroTrimestre
+				);
+				$infoEjecucion = $this->general_model->get_ejecucion_actividades($arrParam);
+
+				$descripcion_actividad = "";
+				$evidencia = "";
+				$z=0;
+				if($infoEjecucion){
+					foreach ($infoEjecucion as $valores):	
+						if($z != 0){
+							if($valores['descripcion_actividades'] != ""){
+								$descripcion_actividad .= "<br>";
+							}
+							if($valores['evidencias'] != ""){
+								$evidencia .= "<br>";
+							}
+						}
+						$descripcion_actividad .= $valores['descripcion_actividades'];
+						$evidencia .= $valores['evidencias'];
+						$z++;
+					endforeach;
+
+					$arrParam = array(
+						"numeroActividad" => $lista["numero_actividad"],
+						"numeroTrimestre" => $numeroTrimestre,
+						"descripcion_actividad" => $descripcion_actividad,
+						"evidencia" => $evidencia
+					);
+					$this->general_model->updateEvidencias($arrParam);
+				}
+			endforeach;
+
+			echo "Termino ejecucion";
+    }
+
+	/**
 	 * objetivos_estrategicos
      * @since 26/06/2022
      * @author BMOTTAG
@@ -747,25 +798,25 @@ class Resumen extends CI_Controller {
 						break;
 					}
 				endforeach;
-
+				
 				$spreadsheet->getActiveSheet()
 							->setCellValue('AT'.$j, $lista['trimestre_1'] . "%")
 							->setCellValue('AU'.$j, $lista['trimestre_2'] . "%")
 							->setCellValue('AV'.$j, $lista['trimestre_3'] . "%")
 							->setCellValue('AW'.$j, $lista['trimestre_4'] . "%")
 							->setCellValue('AX'.$j, $lista['avance_poa'] . "%")
-							->setCellValue('AY'.$j, $lista['descripcion_actividad_trimestre_1'])
-							->setCellValue('AZ'.$j, $lista['descripcion_actividad_trimestre_2'])
-							->setCellValue('BA'.$j, $lista['descripcion_actividad_trimestre_3'])
-							->setCellValue('BB'.$j, $lista['descripcion_actividad_trimestre_4'])
-							->setCellValue('BC'.$j, $lista['evidencias_trimestre_1'])
-							->setCellValue('BD'.$j, $lista['evidencias_trimestre_2'])
-							->setCellValue('BE'.$j, $lista['evidencias_trimestre_3'])
-							->setCellValue('BF'.$j, $lista['evidencias_trimestre_4'])
-							->setCellValue('BG'.$j, $lista['mensaje_poa_trimestre_1'])
-							->setCellValue('BH'.$j, $lista['mensaje_poa_trimestre_2'])
-							->setCellValue('BI'.$j, $lista['mensaje_poa_trimestre_3'])
-							->setCellValue('BJ'.$j, $lista['mensaje_poa_trimestre_4']);
+							->setCellValue('AY'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_1']))
+							->setCellValue('AZ'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_2']))
+							->setCellValue('BA'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_3']))
+							->setCellValue('BB'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_4']))
+							->setCellValue('BC'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_1']))
+							->setCellValue('BD'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_2']))
+							->setCellValue('BE'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_3']))
+							->setCellValue('BF'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_4']))
+							->setCellValue('BG'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_1']))
+							->setCellValue('BH'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_2']))
+							->setCellValue('BI'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_3']))
+							->setCellValue('BJ'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_4']));
 					$j++;
 			endforeach;
 		}
@@ -821,18 +872,18 @@ class Resumen extends CI_Controller {
 		$spreadsheet->getActiveSheet()->getColumnDimension('AV')->setWidth(20);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AW')->setWidth(20);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AX')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AY')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AZ')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BA')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BB')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BC')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BD')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BE')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BF')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BG')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BH')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BI')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BJ')->setWidth(40);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AY')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AZ')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BA')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BB')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BC')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BD')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BE')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BF')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BG')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BH')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BI')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BJ')->setWidth(120);
 
 
 		// Set fonts

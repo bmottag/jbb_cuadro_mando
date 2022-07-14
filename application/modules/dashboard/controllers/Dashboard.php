@@ -149,7 +149,7 @@ class Dashboard extends CI_Controller {
 			$data["idActividad"] = $this->input->post("idActividad");
 
 			$arrParam = array(
-				"table" => " param_area_responsable",
+				"table" => "param_area_responsable",
 				"order" => "area_responsable",
 				"id" => "x"
 			);
