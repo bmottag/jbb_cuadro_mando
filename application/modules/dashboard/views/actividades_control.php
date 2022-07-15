@@ -423,85 +423,54 @@
 				}
 		?>
 					<div class="table-responsive">
-						<form  name="ejecucion" id="ejecucion" method="post" action="<?php echo base_url("dashboard/update_programacion"); ?>">
+						<table class='table table-hover'>
+							<thead>
+								<tr class="text-primary">
+									<th colspan="4">
+										<h2>-- Ejecución Actividad --</h2>
+										<?php
+											$deshabilidarCampos = "disabled";
+											if($numeroTrimestre){
+												echo '<p class="text-primary">Trimestre ' . $numeroTrimestre. '</p>'; 
+											}
+										?>
+									</th>
+								</tr>
+								
+								<tr class="headings">
+									<th class="column-title" style="width: 7%">Mes</th>
+									<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
+									<th class="column-title" style="width: 13%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
+									<th class="column-title" style="width: 70%">Descripción / Evidencias</th>
+								</tr>
+							</thead>
 
-							<input type="hidden" id="hddIdActividad" name="hddIdActividad" value="<?php echo $numeroActividad; ?>"/>
-							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>		
-
-							<table class='table table-hover'>
-								<thead>
-									<tr class="text-primary">
-										<th colspan="4">
-											<h2>-- Ejecución Actividad --</h2>
-											<?php
-												if($numeroTrimestre){
-													echo '<p class="text-primary">Trimestre ' . $numeroTrimestre. '</p>'; 
+							<tbody>
+							<?php
+								foreach ($infoEjecucion as $data):						
+							?>		
+									<tr>
+										<td><?php echo $data['mes']; ?></td>
+										<td><?php echo $data['programado']; ?></td>
+										<td><?php echo $data['ejecutado']; ?></td>
+										<td>
+											<small>
+											<?php 
+												if($data['descripcion_actividades']!=""){
+													echo "<b>Descripción: </b><br>". $data['descripcion_actividades'] . "<br>";
+												}
+												if($data['evidencias']!=""){
+													echo "<b>Evidencias: </b><br>". $data['evidencias'] . "<br>";
 												}
 											?>
-										</th>
-									<?php
-										$deshabilidarCampos = false;
-										if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
-									?>
-										<th class="column-title" >
-											<button type="submit" class="btn btn-primary" id="btnSubmit2" name="btnSubmit2" >
-												Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-											</button>
-										</th>
-									<?php
-										}else{
-											$deshabilidarCampos = "disabled";
-										}
-									?>
+											</small>
+										</td>
 									</tr>
-									
-									<tr class="headings">
-										<th class="column-title" style="width: 7%">Mes</th>
-										<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
-										<th class="column-title" style="width: 13%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
-										<th class="column-title" style="width: 50%">Descripción / Evidencias</th>
-										<th class="column-title text-center" style="width: 10%">Enlaces</th>
-									</tr>
-								</thead>
-
-								<tbody>
-								<?php
-									foreach ($infoEjecucion as $data):
-										echo "<tr>";
-										echo "<td >$data[mes]</td>";							
-										$idRecord = $data['id_ejecucion_actividad'];
-										$idActividad = $data['fk_numero_actividad'];
-								?>		
-										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
-										<td>
-											<input type="number" step="any" min="0" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" max="50000" required <?php echo $deshabilidarCampos; ?> >
-										</td>
-										<td>
-											<input type="number" step="any" min="0" max="50000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidarCampos; ?> >
-										</td>
-										<td>
-											<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="2" <?php echo $deshabilidarCampos; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
-												<br>
-											<textarea name="form[evidencia][]" placeholder="Evidencia" class="form-control" rows="2" <?php echo $deshabilidarCampos; ?>><?php echo $data['evidencias']; ?></textarea>
-										</td>
-										<td class='text-center'>
-									<?php
-										if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
-									?>
-											<a class='btn btn-violeta btn-xs' href='<?php echo base_url('dashboard/deleteEjecucion/' . $idCuadroBase . '/' . $idActividad . '/' . $idRecord) ?>' id="btn-delete" title="Eliminar Fecha" >
-													<span class="fa fa-trash-o" aria-hidden="true"> </span>
-											</a>
-									<?php
-										}
-									?>
-										</td>
-								<?php
-										echo "</tr>";
-									endforeach;
-								?>
-								</tbody>
-							</table>
-						</form>
+							<?php
+								endforeach;
+							?>
+							</tbody>
+						</table>
 					</div>	
 		<?php
 			}

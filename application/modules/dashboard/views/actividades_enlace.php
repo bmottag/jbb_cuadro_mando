@@ -517,14 +517,32 @@
 										<tr>
 											<td ><?php echo $data['mes']; ?></td>
 											<td ><?php echo $data['programado']; ?></td>
-											<td>
-												<input type="number" step="any" min="0" max="50000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidar; ?> >
-											</td>
-											<td>
-												<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="2" <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
-												<br>
-												<textarea name="form[evidencia][]" placeholder="Evidencia" class="form-control" rows="2" <?php echo $deshabilidar; ?>><?php echo $data['evidencias']; ?></textarea>
-											</td>
+											<?php 
+												if($deshabilidar){
+											?>
+												<td><?php echo $data['ejecutado']; ?></td>
+												<td>
+													<small>
+													<?php 
+														if($data['descripcion_actividades']!=""){
+															echo "<b>Descripción: </b><br>". $data['descripcion_actividades'] . "<br>";
+														}
+														if($data['evidencias']!=""){
+															echo "<b>Evidencias: </b><br>". $data['evidencias'] . "<br>";
+														}
+													?>
+													</small>
+												</td>
+											<?php }else{ ?>
+												<td>
+													<input type="number" step="any" min="0" max="50000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidar; ?> >
+												</td>
+												<td>
+													<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="3" <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
+													<br>
+													<textarea name="form[evidencia][]" placeholder="Evidencia" class="form-control" rows="3" <?php echo $deshabilidar; ?>><?php echo $data['evidencias']; ?></textarea>
+												</td>
+											<?php } ?>
 										</tr>
 
 								<?php

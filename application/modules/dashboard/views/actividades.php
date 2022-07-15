@@ -534,7 +534,7 @@ $(function(){
 							<table class='table table-hover'>
 								<thead>
 									<tr class="text-primary">
-										<th colspan="4">
+										<th colspan="3">
 											<h2>-- Ejecución Actividad --</h2>
 											<?php
 												if($numeroTrimestre){
@@ -546,7 +546,7 @@ $(function(){
 										$deshabilidarCampos = false;
 										if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
 									?>
-										<th class="column-title" >
+										<th class="column-title text-right" colspan="2">
 											<button type="submit" class="btn btn-primary" id="btnSubmit2" name="btnSubmit2" >
 												Guardar Programación/Ejecución <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
 											</button>
@@ -560,10 +560,10 @@ $(function(){
 									
 									<tr class="headings">
 										<th class="column-title" style="width: 7%">Mes</th>
-										<th class="column-title" style="width: 10%">Programado (<?php echo $unidadMedida; ?>)</th>
+										<th class="column-title" style="width: 15%">Programado (<?php echo $unidadMedida; ?>)</th>
 										<th class="column-title" style="width: 13%">Ejecutado (<?php echo $unidadMedida; ?>)</th>
-										<th class="column-title" style="width: 50%">Descripción / Evidencias</th>
-										<th class="column-title text-center" style="width: 10%">Enlaces</th>
+										<th class="column-title" style="width: 58%">Descripción / Evidencias</th>
+										<th class="column-title text-center" style="width: 7%">Enlaces</th>
 									</tr>
 								</thead>
 
@@ -583,9 +583,9 @@ $(function(){
 											<input type="number" step="any" min="0" max="50000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidarCampos; ?> >
 										</td>
 										<td>
-											<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="2" <?php echo $deshabilidarCampos; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
+											<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="3" <?php echo $deshabilidarCampos; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
 												<br>
-											<textarea name="form[evidencia][]" placeholder="Evidencia" class="form-control" rows="2" <?php echo $deshabilidarCampos; ?>><?php echo $data['evidencias']; ?></textarea>
+											<textarea name="form[evidencia][]" placeholder="Evidencia" class="form-control" rows="3" <?php echo $deshabilidarCampos; ?>><?php echo $data['evidencias']; ?></textarea>
 										</td>
 										<td class='text-center'>
 									<?php

@@ -188,7 +188,7 @@ $(function(){
                         </div>                        
                     </form>
 <?php          
-    if($userRol == ID_ROL_SUPER_ADMIN){
+    if($userRol == ID_ROL_SUPER_ADMIN && 1==2){
 ?>
                     <form  name="formEvidencias" id="formEvidencias" method="post" action="<?php echo base_url("resumen/save_evidencias"); ?>">
                         <div class="panel panel-default">

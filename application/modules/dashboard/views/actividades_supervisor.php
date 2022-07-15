@@ -512,14 +512,16 @@
 										<td><?php echo $data['programado']; ?></td>
 										<td><?php echo $data['ejecutado']; ?></td>
 										<td>
-											<?php
-												if($data['descripcion_actividades'] != ''){
-													echo "<b>Descripción:</b></br>" . $data['descripcion_actividades'];
+											<small>
+											<?php 
+												if($data['descripcion_actividades']!=""){
+													echo "<b>Descripción: </b><br>". $data['descripcion_actividades'] . "<br>";
 												}
-												if($data['evidencias'] != ''){
-													echo "<br><b>Evidencias:</b></br>" . $data['evidencias'];
+												if($data['evidencias']!=""){
+													echo "<b>Evidencias: </b><br>". $data['evidencias'] . "<br>";
 												}
 											?>
+											</small>
 										</td>
 									</tr>
 
