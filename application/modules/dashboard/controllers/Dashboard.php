@@ -130,7 +130,7 @@ class Dashboard extends CI_Controller {
 				$data["view"] = "actividades_enlace";
 			}elseif($userRol == ID_ROL_SUPERVISOR){
 				$data["view"] = "actividades_supervisor";
-			}elseif($userRol == ID_ROL_CONTROL_INTERNO){
+			}elseif($userRol == ID_ROL_CONTROL_INTERNO  || $userRol == ID_ROL_JEFEOCI){
 				$data["view"] = "actividades_control";
 			}
 			$this->load->view("layout_calendar", $data);

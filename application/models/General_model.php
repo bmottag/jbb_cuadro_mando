@@ -435,7 +435,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades($arrData) 
 		{									
-				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.avance_poa');
+				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, E.observacion_semestre_1, E.observacion_semestre_2, E.calificacion_semestre_1, E.calificacion_semestre_2');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
@@ -463,6 +463,9 @@ class General_model extends CI_Model {
 				}
 				if (array_key_exists("numeroProyecto", $arrData)) {
 					$this->db->where('C.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
+				}
+				if (array_key_exists("evaluacionFlag", $arrData)) {
+					$this->db->where('E.calificacion_semestre_1 !=', '');
 				}
 
 				$this->db->order_by('A.numero_actividad', 'asc');
@@ -521,6 +524,29 @@ class General_model extends CI_Model {
 				}
 				$this->db->order_by('H.numero_trimestre, H.id_historial ', 'desc');
 				$query = $this->db->get('actividad_historial H');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta evaluación OCI
+		 * @since 14/07/2022
+		 */
+		public function get_evaluacion_oci($arrData) 
+		{		
+				$this->db->select("H.*, U.first_name, CONCAT(first_name, ' ', last_name) usuario");
+				$this->db->join('usuarios U', 'U.id_user = H.fk_id_usuario', 'INNER');
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('H.fk_numero_actividad', $arrData["numeroActividad"]);
+				}
+				if (array_key_exists("numeroSemestre", $arrData)) {
+					$this->db->where('H.numero_semestre', $arrData["numeroSemestre"]);
+				}
+				$this->db->order_by('H.id_evaluacion_oci', 'asc');
+				$query = $this->db->get('actividad_evaluacion_oci H');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {
@@ -652,7 +678,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades_full($arrData) 
 		{		
-				$this->db->select("A.*, D.dependencia, E.avance_poa, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.descripcion_actividad_trimestre_1, E.descripcion_actividad_trimestre_2, E.descripcion_actividad_trimestre_3, E.descripcion_actividad_trimestre_4, E.evidencias_trimestre_1, E.evidencias_trimestre_2, E.evidencias_trimestre_3, E.evidencias_trimestre_4, E.mensaje_poa_trimestre_1, E.mensaje_poa_trimestre_2, E.mensaje_poa_trimestre_3, E.mensaje_poa_trimestre_4, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_objetivo_estrategico, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, CONCAT(ES.numero_objetivo_estrategico, ' ', ES.objetivo_estrategico) objetivo_estrategico, EG.estrategia, PR.proceso_calidad, meta_proyecto, presupuesto_meta, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, R.area_responsable");
+				$this->db->select("A.*, D.dependencia, E.avance_poa, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.descripcion_actividad_trimestre_1, E.descripcion_actividad_trimestre_2, E.descripcion_actividad_trimestre_3, E.descripcion_actividad_trimestre_4, E.evidencias_trimestre_1, E.evidencias_trimestre_2, E.evidencias_trimestre_3, E.evidencias_trimestre_4, E.mensaje_poa_trimestre_1, E.mensaje_poa_trimestre_2, E.mensaje_poa_trimestre_3, E.mensaje_poa_trimestre_4, E.observacion_semestre_1, E.observacion_semestre_2, E.calificacion_semestre_1, E.calificacion_semestre_2, W.mes mes_inicial, K.mes mes_final, C.id_cuadro_base, fk_numero_objetivo_estrategico, CONCAT(numero_proyecto_inversion, ' ', nombre_proyecto_inversion) proyecto_inversion, CONCAT(ES.numero_objetivo_estrategico, ' ', ES.objetivo_estrategico) objetivo_estrategico, EG.estrategia, PR.proceso_calidad, meta_proyecto, presupuesto_meta, vigencia_meta_proyecto, CONCAT(numero_proposito, ' ', proposito) proposito, CONCAT(numero_logro, ' ', logro) logro, CONCAT(numero_programa_estrategico, ' ', programa_estrategico) programa, CONCAT(numero_meta_pdd, ' ', meta_pdd) meta_pdd, CONCAT(numero_ods, ' ', ods) ods, R.area_responsable");
 				$this->db->join('actividad_estado E', 'E.fk_numero_actividad  = A.numero_actividad', 'LEFT');
 				$this->db->join('param_proceso_calidad PR', 'PR.id_proceso_calidad = A.fk_id_proceso_calidad', 'INNER');
 				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');
@@ -672,6 +698,9 @@ class General_model extends CI_Model {
 
 				if (array_key_exists("idActividad", $arrData)) {
 					$this->db->where('A.id_actividad', $arrData["idActividad"]);
+				}
+				if (array_key_exists("numeroActividad", $arrData)) {
+					$this->db->where('A.numero_actividad', $arrData["numeroActividad"]);
 				}
 				if (array_key_exists("idCuadroBase", $arrData)) {
 					$this->db->where('A.fk_id_cuadro_base', $arrData["idCuadroBase"]);
@@ -1149,6 +1178,53 @@ class General_model extends CI_Model {
 			);	
 			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
 			$query = $this->db->update('actividad_estado', $data);
+
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Update observaciones OCI
+		 * @since 14/07/2022
+		 */
+		public function updateEvaluacionOCI($arrData)
+		{			
+			$data = array(
+				'observacion_semestre_' . $arrData["numeroSemestre"] => $arrData["observacion"],
+				'calificacion_semestre_' . $arrData["numeroSemestre"] => $arrData["calificacion"]
+			);	
+			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
+			$query = $this->db->update('actividad_estado', $data);
+
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Add evaluacion OCI
+		 * @since 14/07/2022
+		 */
+		public function addEvaluacionOCI($arrData) 
+		{
+			$idUser = $this->session->userdata("id");
+			
+			$data = array(
+				'fk_numero_actividad' => $arrData["numeroActividad"],
+				'fk_id_usuario' => $idUser,
+				'numero_semestre' => $arrData["numeroSemestre"],
+				'fecha_cambio' => date("Y-m-d G:i:s"),
+				'observacion' => $arrData["observacion"],
+				'calificacion' => $arrData["calificacion"],
+				'comentario' => $arrData["comentario"]
+			);
+			
+			$query = $this->db->insert('actividad_evaluacion_oci', $data);
 
 			if ($query) {
 				return true;

@@ -92,3 +92,4 @@ defined('ID_ROL_CONTROL_INTERNO')   OR define('ID_ROL_CONTROL_INTERNO', 2);
 defined('ID_ROL_PLANEACION')   OR define('ID_ROL_PLANEACION', 3);
 defined('ID_ROL_ENLACE')   OR define('ID_ROL_ENLACE', 4);
 defined('ID_ROL_SUPERVISOR')   OR define('ID_ROL_SUPERVISOR', 5);
+defined('ID_ROL_JEFEOCI')   OR define('ID_ROL_JEFEOCI', 6);

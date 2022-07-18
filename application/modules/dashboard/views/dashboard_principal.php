@@ -58,7 +58,7 @@
                             }
                             echo "<tr>";
                             echo "<td><small>";
-                            if($userRol == ID_ROL_PLANEACION || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO){
+                            if($userRol == ID_ROL_PLANEACION || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI){
                                 echo "<a class='btn btn-info btn-xs' href='" . base_url('dashboard/dependencias/' . $lista["id_dependencia"]) . "' >" . $lista["dependencia"] . "</a>";
                             }else{
                                 echo $lista["dependencia"];
@@ -145,7 +145,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <?php 
-                        if($userRol == ID_ROL_PLANEACION || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO){
+                        if($userRol == ID_ROL_PLANEACION || $userRol == ID_ROL_ADMINISTRADOR || $userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO  || $userRol == ID_ROL_JEFEOCI){
                     ?>
                             <i class="fa fa-thumb-tack fa-fw"></i> <b>PLAN ESTRATÉGICO - <?php echo date("Y"); ?></b>
                     <?php

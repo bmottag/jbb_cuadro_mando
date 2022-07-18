@@ -175,6 +175,21 @@ class Resumen extends CI_Controller {
 	}
 
 	/**
+	 * EVALUACION
+	 * @since 14/07/2022
+	 */
+	public function evaluacion()
+	{	
+			$arrParam = array(
+				"evaluacionFlag" => true,
+			);
+			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
+
+			$data["view"] = "evaluacion_oci";
+			$this->load->view("layout_calendar", $data);
+	}
+
+	/**
 	 * RESUMEN
 	 * @since 24/06/2022
 	 */
@@ -524,8 +539,9 @@ class Resumen extends CI_Controller {
 	 */
 	public function reporte()
 	{	
+		$fechaActual = date('Y-m-d');
 		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition:attachment;filename=cuadro_mando.xlsx');
+		header('Content-Disposition:attachment;filename=consolidado_POA_'.$fechaActual.'.xlsx');
 
 		$arrParam = array();
 		$listaActividades = $this->general_model->get_actividades_full($arrParam);
@@ -1208,5 +1224,54 @@ class Resumen extends CI_Controller {
 			);
             $data['information'] = $this->general_model->get_historial_actividad($arrParam);
 			$this->load->view("comentarios_poa_modal", $data);
+    }
+
+    /**
+     * Cargo modal - Fprmulario de evaluación
+     * @since 14/07/2022
+     */
+    public function cargarModalEvaluacionOCI() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data["numeroActividad"] = $this->input->post("numeroActividad");
+			$arrParam = array("numeroActividad" => $data["numeroActividad"]);
+			$data['infoActividad'] = $this->general_model->get_actividades_full($arrParam);
+			
+            $data['information'] = $this->general_model->get_evaluacion_oci($arrParam);
+			$this->load->view("evaluacion_modal", $data);
+    }
+
+	/**
+	 * Guardar evaluación
+	 * @since 14/07/2022
+     * @author BMOTTAG
+	 */
+	public function guardar_evaluacion()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$numeroActividad = $this->input->post('hddId');
+			$msj = "Se guardo la información!";
+
+			$arrParam = array(
+				"numeroActividad" => $numeroActividad,
+				"numeroSemestre" => 1,
+				"observacion" => $this->input->post('observacion'),
+				"calificacion" => $this->input->post('calificacion'),
+				"comentario" => $this->input->post('comentario')
+			);
+			if ($this->general_model->updateEvaluacionOCI($arrParam)) 
+			{	
+				//actualizo el estado del trimestre de la actividad
+				$this->general_model->addEvaluacionOCI($arrParam);
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+		
+			echo json_encode($data);
     }
 }

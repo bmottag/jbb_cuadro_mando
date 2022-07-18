@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/form_estado_actividad.js"); ?>"></script>
+
 <script>
 $(function(){ 
 	$(".btn-info").click(function () {	
