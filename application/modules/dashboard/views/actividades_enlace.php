@@ -473,9 +473,29 @@
 							?>
 									<tr class="text-primary">
 										<th colspan="4">
-											<h4>Registrar la informacion para el <b>TRIMESTRE <?php echo $numeroTrimestre; ?></b></h4>
+											<h4>Registrar la informacion para el <b>TRIMESTRE <?php echo $numeroTrimestre; ?></b>.
+											<?php
+												$fechaActual = date("Y-m-d");
+
+												$fecha1= new DateTime($fechaActual);
+												$fecha2= new DateTime($infoFechaLimite[0]["fecha"]);
+												$diff = $fecha1->diff($fecha2);
+
+												if($infoFechaLimite[0]["fecha"] >= $fechaActual){
+													echo "Fecha limite de registro de información: <b>" . $infoFechaLimite[0]["fecha"] . "</b>.";
+													echo "<br>" . $diff->days . " días para la entrega.";
+												}else{
+													echo "No es posible registrar la ejecución de la actividad, la fecha limite era <b>" . $infoFechaLimite[0]["fecha"] . "</b>.";
+												}
+											?>
+											</h4>
 										</th>
 									</tr>
+
+							<?php
+								$fechaActual = date("Y-m-d");
+								if($infoFechaLimite[0]["fecha"] >= $fechaActual){
+							?>
 									<tr class="info">
 										<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>	
 										<th class="column-title text-right" colspan="4">
@@ -485,6 +505,9 @@
 											</button>
 										</th>
 									</tr>
+							<?php
+								}
+							?>
 							<?php
 								}else{
 									$deshabilidar = 'disabled';

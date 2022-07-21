@@ -2026,5 +2026,79 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 
 			echo json_encode($data);	
     }
+
+	/**
+	 * Fechas limite de registro de ejecución
+     * @since 18/08/2022
+     * @author BMOTTAG
+	 */
+	public function fechas_limite()
+	{
+			$arrParam = array(
+				"table" => "param_fechas_limites",
+				"order" => "id_fecha",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'fechas';
+			$this->load->view("layout_calendar", $data);
+	}
+
+    /**
+     * Cargo modal - formulario fechas limite registro ejecución
+     * @since 15/04/2022
+     */
+    public function cargarModalFechas() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$idFecha = $this->input->post("idFecha");	
+			
+			$arrParam = array(
+				"table" => "param_fechas_limites",
+				"order" => "id_fecha",
+				"column" => "id_fecha",
+				"id" => $idFecha
+			);
+			$data['information'] = $this->general_model->get_basic_search($arrParam);
+
+			$this->load->view("fechas_modal", $data);
+    }
+
+	/**
+	 * Actualizar fechas
+     * @since 18/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_fechas()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idFecha = $this->input->post('hddId');
+			$fecha = $this->input->post('fecha');
+			
+			$msj = "Se actualizó la información!";
+
+			$arrParam = array(
+				"table" => "param_fechas_limites",
+				"primaryKey" => "id_fecha",
+				"id" => $idFecha,
+				"column" => "fecha",
+				"value" => $fecha
+			);
+
+			if($this->general_model->updateRecord($arrParam)){
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 }

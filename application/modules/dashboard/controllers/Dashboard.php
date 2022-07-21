@@ -116,6 +116,15 @@ class Dashboard extends CI_Controller {
 					$data['listaHistorial2'] = false;
 					$data['listaHistorial3'] = false;
 					$data['listaHistorial4'] = false;
+
+					//fechas limite de registro
+					$arrParamFechas = array(
+						"table" => "param_fechas_limites",
+						"order" => "id_fecha",
+						"column" => "numero_trimestre",
+						"id" => $numeroTrimestre
+					);
+					$data['infoFechaLimite'] = $this->general_model->get_basic_search($arrParamFechas);
 				}else{
 					$arrParam = array("numeroActividad" => $numeroActividad);
 				}
