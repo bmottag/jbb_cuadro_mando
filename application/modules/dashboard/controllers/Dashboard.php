@@ -1075,7 +1075,7 @@ class Dashboard extends CI_Controller {
 			$arrParam = array('idUser' => $arrData["idUsuario"]);
 			$infoUsuario = $this->general_model->get_user($arrParam);
 			//$to = $infoUsuario[0]['email'];
-			$to = "nina.suarez@jbb.gov.co";
+			$to = "dcsantos@jbb.gov.co";
 
 			//busco datos parametricos de configuracion para envio de correo
 			$arrParam2 = array(

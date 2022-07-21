@@ -72,6 +72,7 @@ $(function(){
                                 <th class="text-right">Rechazada Supervisor</th>
                                 <th class="text-right">Aprobada Planeación</th>
                                 <th class="text-right">Rechazada Planeación</th>
+                                <th class="text-right">Incumplida</th>
                             </tr>
                         </thead>
                         <tr>
@@ -83,6 +84,7 @@ $(function(){
                             <th class="text-right"><?php echo $nroActividadesPrimerTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesPrimerTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesPrimerTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreIncumplidas; ?></th>
                         </tr>
                         <tr>
                             <th>Trimestre II</th>
@@ -93,6 +95,7 @@ $(function(){
                             <th class="text-right"><?php echo $nroActividadesSegundoTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesSegundoTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesSegundoTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreIncumplidas; ?></th>
                         </tr>
                         <tr>
                             <th>Trimestre III</th>
@@ -103,6 +106,7 @@ $(function(){
                             <th class="text-right"><?php echo $nroActividadesTercerTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesTercerTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesTercerTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreIncumplidas; ?></th>
                         </tr>
                         <tr>
                             <th>Trimestre IV</th>
@@ -113,6 +117,7 @@ $(function(){
                             <th class="text-right"><?php echo $nroActividadesCuartoTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesCuartoTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesCuartoTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreIncumplidas; ?></th>
                         </tr>
                     </table>
                 </div>
@@ -374,7 +379,7 @@ $(function(){
                                      
                         ?>
                                 <tr>
-                                    <td class="text-center">
+                                    <td>
                                     <?php
                                         echo "<a class='btn btn-primary btn-xs' title='Ver Detalle Actividad No. " . $lista["numero_actividad"] . "' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'>". $lista['numero_actividad'] . " <span class='fa fa-eye' aria-hidden='true'></span></a>";
                                      ?>
@@ -383,10 +388,10 @@ $(function(){
                                             </button>
 
                                     <?php
-                                        if($lista["estado_trimestre_1"] == 5 && $lista["estado_trimestre_2"] == 5 && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI)){
+                                        if(($lista["estado_trimestre_1"] == 5 || $lista["estado_trimestre_1"] == 6 || $lista["estado_trimestre_1"] == 7) && ($lista["estado_trimestre_2"] == 5 || $lista["estado_trimestre_2"] == 6 || $lista["estado_trimestre_2"] == 7) && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI)){
                                     ?>
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_actividad']; ?>" title="Evaluación OCI">
-                                        Evaluación OCI <span class="fa fa-pencil" aria-hidden="true"></span>
+                                        Evaluación OCI I <span class="fa fa-pencil" aria-hidden="true"></span>
                                     </button>
                                     <?php } ?>
                                     </td>
@@ -396,7 +401,13 @@ $(function(){
                                     <td class="text-right"><small><?php echo $trim3; ?></small></td>
                                     <td class="text-right"><small><?php echo $trim4; ?></small></td>
                                     <td class="text-right"><small><?php echo $avancePoa; ?></small></td>
-                                    <td class="text-right"><small><?php echo $lista["calificacion_semestre_1"] ?></small></td>
+                                    <td class="text-right"><small>
+                                        <?php 
+                                            if($lista["publicar_calificacion_1"] == 1){
+                                                 echo $lista["calificacion_semestre_1"];
+                                            }
+                                        ?>
+                                    </small></td>
                                 </tr>
                         <?php
                                 endforeach;

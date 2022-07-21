@@ -435,7 +435,7 @@ class General_model extends CI_Model {
 		 */
 		public function get_actividades($arrData) 
 		{									
-				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, E.observacion_semestre_1, E.observacion_semestre_2, E.calificacion_semestre_1, E.calificacion_semestre_2');
+				$this->db->select('A.*, D.dependencia, P.mes mes_inicial, X.mes mes_final, R.area_responsable responsable, E.trimestre_1, E.trimestre_2, E.trimestre_3, E.trimestre_4, E.avance_poa, E.estado_trimestre_1, E.estado_trimestre_2, E.estado_trimestre_3, E.estado_trimestre_4, E.observacion_semestre_1, E.observacion_semestre_2, E.calificacion_semestre_1, E.calificacion_semestre_2, E.publicar_calificacion_1, E.publicar_calificacion_2');
 				$this->db->join('param_meses P', 'P.id_mes = A.fecha_inicial', 'INNER');
 				$this->db->join('param_meses X', 'X.id_mes = A.fecha_final', 'INNER');
 				$this->db->join('param_area_responsable R', 'R.id_area_responsable = A.fk_id_area_responsable', 'INNER');

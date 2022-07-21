@@ -74,7 +74,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="observacion">Obserrvación: *</label>
+					<label class="control-label" for="observacion">Observación: *</label>
 					<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required><?php echo $infoActividad?$infoActividad[0]["observacion_semestre_1"]:""; ?></textarea>
 				</div>
 			</div>

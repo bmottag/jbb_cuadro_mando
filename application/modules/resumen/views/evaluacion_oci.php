@@ -59,7 +59,7 @@ $(function(){
                                 <th width="7%" class="text-right"><small>Cump. Trim. IV</small></th>
                                 <th width="7%" class="text-right"><small>Avance POA</small></th>
                                 <th width="10%" class="text-right"><small>Calificación OCI</small></th>
-                                <th width="10%" class="text-right"><small>Observación OCI</small></th>
+                                <th width="10%"><small>Observación OCI</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,7 +89,7 @@ $(function(){
                                      
                         ?>
                                 <tr>
-                                    <td class="text-center">
+                                    <td>
                                     <?php
                                         echo "<a class='btn btn-primary btn-xs' title='Ver Detalle Actividad No. " . $lista["numero_actividad"] . "' href='" . base_url('dashboard/actividades/' . $lista["fk_id_cuadro_base"] .  '/' . $lista["numero_actividad"]) . "'>". $lista['numero_actividad'] . " <span class='fa fa-eye' aria-hidden='true'></span></a>";
                                      ?>
@@ -97,8 +97,8 @@ $(function(){
                                                     <i class="fa fa-comments fa-fw"></i>
                                             </button>
 
-                                    <?php 
-                                        if($lista["estado_trimestre_1"] == 5 && $lista["estado_trimestre_2"] == 5 && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI)){
+                                    <?php
+                                        if(($lista["estado_trimestre_1"] == 5 || $lista["estado_trimestre_1"] == 6 || $lista["estado_trimestre_1"] == 7) && ($lista["estado_trimestre_2"] == 5 || $lista["estado_trimestre_2"] == 6 || $lista["estado_trimestre_2"] == 7) && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI)){
                                     ?>
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_actividad']; ?>" title="Evaluación OCI">
                                         Evaluación OCI <span class="fa fa-pencil" aria-hidden="true"></span>
