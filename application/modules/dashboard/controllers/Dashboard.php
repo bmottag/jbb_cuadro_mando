@@ -594,16 +594,16 @@ class Dashboard extends CI_Controller {
 			$estadoTrimestre4 = $estadoActividad[0]["estado_trimestre_4"];
 
 			$incluirTrimestre = 0;
-			if(($numeroTrimestre != 1 && $estadoTrimestre1 == 5) || ($numeroTrimestre == 1 && $idEstado == 5) ){
+			if(($numeroTrimestre != 1 && ($estadoTrimestre1 == 5 || $estadoTrimestre1 == 7)) || ($numeroTrimestre == 1 && ($idEstado == 5 || $idEstado == 7)) ){
 				$incluirTrimestre = $incluirTrimestre . "," . 1;
 			}
-			if(($numeroTrimestre != 2 && $estadoTrimestre2 == 5) || ($numeroTrimestre == 2 && $idEstado == 5) ){
+			if(($numeroTrimestre != 2 && ($estadoTrimestre2 == 5 || $estadoTrimestre2 == 7)) || ($numeroTrimestre == 2 && ($idEstado == 5 || $idEstado == 7)) ){
 				$incluirTrimestre = $incluirTrimestre . "," . 2;
 			}
-			if(($numeroTrimestre != 3 && $estadoTrimestre3 == 5) || ($numeroTrimestre == 3 && $idEstado == 5) ){
+			if(($numeroTrimestre != 3 && ($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7)) || ($numeroTrimestre == 3 && ($idEstado == 5 || $idEstado == 7)) ){
 				$incluirTrimestre = $incluirTrimestre . "," . 3;
 			}
-			if(($numeroTrimestre != 4 && $estadoTrimestre4 == 5) || ($numeroTrimestre == 4 && $idEstado == 5) ){
+			if(($numeroTrimestre != 4 && ($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7)) || ($numeroTrimestre == 4 && ($idEstado == 5 || $idEstado == 7)) ){
 				$incluirTrimestre = $incluirTrimestre . "," . 4;
 			}
 			$arrParam = array(
@@ -621,7 +621,7 @@ class Dashboard extends CI_Controller {
 				$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,2);
 			}
 
-			if($idEstado == 5){
+			if($idEstado == 5 || $idEstado == 7){
 				$arrParam = array(
 					"numeroActividad" => $numeroActividad,
 					"numeroTrimestre" => $numeroTrimestre
@@ -656,6 +656,8 @@ class Dashboard extends CI_Controller {
 						$mensaje = "se realizó seguimiento a la información registrada para la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre. "</b> y fue <b>APROBADA</b> por Planeación.";
 					}elseif($idEstado == 6){
 						$mensaje = "se realizó seguimiento a la información registrada para la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre . "</b> y fue RECHAZADA por Planeación. Por favor ingresar y realizar los ajustes respectivos.";
+					}elseif($idEstado == 7){
+						$mensaje = "se realizó seguimiento a la información registrada para la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre . "</b> y fue INCUMPLIDA. Por favor ingresar y realizar los ajustes respectivos.";
 					}
 
 					$mensaje .= "<br><br><b>Observación: </b>" . $observacion;

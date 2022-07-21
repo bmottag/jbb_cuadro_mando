@@ -496,6 +496,7 @@ $(function(){
 										<option value="">Seleccione...</option>
 										<option value=5 >Aprobada</option>
 										<option value=6 >Rechazada</option>
+										<option value=7 >Incumplida</option>
 									</select>
 								</div>
 							</div>
