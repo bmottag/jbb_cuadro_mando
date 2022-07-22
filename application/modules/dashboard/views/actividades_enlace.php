@@ -558,7 +558,7 @@
 												</td>
 											<?php }else{ ?>
 												<td>
-													<input type="number" step="any" min="0" max="50000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidar; ?> >
+													<input type="number" step="any" min="0" max="500000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidar; ?> >
 												</td>
 												<td>
 													<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="3" <?php echo $deshabilidar; ?>><?php echo $data['descripcion_actividades']; ?></textarea>

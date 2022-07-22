@@ -580,10 +580,10 @@ $(function(){
 								?>		
 										<input type="hidden" name="form[id][]" value="<?php echo $idRecord; ?>"/>
 										<td>
-											<input type="number" step="any" min="0" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" max="50000" required <?php echo $deshabilidarCampos; ?> >
+											<input type="number" step="any" min="0" name="form[programado][]" class="form-control" placeholder="Programado" value="<?php echo $data['programado']; ?>" max="500000" required <?php echo $deshabilidarCampos; ?> >
 										</td>
 										<td>
-											<input type="number" step="any" min="0" max="50000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidarCampos; ?> >
+											<input type="number" step="any" min="0" max="500000" name="form[ejecutado][]" class="form-control" placeholder="Ejecutado" value="<?php echo $data['ejecutado']; ?>"  <?php echo $deshabilidarCampos; ?> >
 										</td>
 										<td>
 											<textarea name="form[descripcion][]" placeholder="Descripción" class="form-control" rows="3" <?php echo $deshabilidarCampos; ?>><?php echo $data['descripcion_actividades']; ?></textarea>
