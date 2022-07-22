@@ -342,14 +342,15 @@ $(function(){
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th width="15%" class="text-center"><small>No. Actividad</small></th>
-                                <th width="30%"><small>Actividad</small></th>
-                                <th width="9%" class="text-right"><small>Cump. Trim. I</small></th>
-                                <th width="9%" class="text-right"><small>Cump. Trim. II</small></th>
-                                <th width="9%" class="text-right"><small>Cump. Trim. III</small></th>
-                                <th width="9%" class="text-right"><small>Cump. Trim. IV</small></th>
-                                <th width="9%" class="text-right"><small>Avance POA</small></th>
+                                <th width="10%" class="text-center"><small>No. Actividad</small></th>
+                                <th width="25%"><small>Actividad</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. I</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. II</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. III</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. IV</small></th>
+                                <th width="8%" class="text-right"><small>Avance POA</small></th>
                                 <th width="10%" class="text-right"><small>Calificación OCI</small></th>
+                                <th width="15%"><small>Observación OCI</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -403,8 +404,21 @@ $(function(){
                                     <td class="text-right"><small><?php echo $avancePoa; ?></small></td>
                                     <td class="text-right"><small>
                                         <?php 
-                                            if($lista["publicar_calificacion_1"] == 1){
-                                                 echo $lista["calificacion_semestre_1"];
+                                            if($lista["publicar_calificacion_1"] == 1 && $lista["calificacion_semestre_1"]){
+                                                echo "<b>Primer Semestre:</b><br>". $lista["calificacion_semestre_1"] . "<br>";
+                                            }
+                                            if($lista["publicar_calificacion_2"] == 1 && $lista["calificacion_semestre_2"]){
+                                                echo "<b>Segundo Semestre:</b><br>" . $lista["calificacion_semestre_2"];
+                                            }
+                                        ?>
+                                    </small></td>
+                                    <td><small>
+                                        <?php 
+                                            if($lista["publicar_calificacion_1"] == 1 && $lista["observacion_semestre_1"]){
+                                                echo "<b>Primer Semestre:</b><br>". $lista["observacion_semestre_1"] . "<br>";
+                                            }
+                                            if($lista["publicar_calificacion_2"] == 1 && $lista["observacion_semestre_2"]){
+                                                echo "<b>Segundo Semestre:</b><br>" . $lista["observacion_semestre_2"];
                                             }
                                         ?>
                                     </small></td>

@@ -64,7 +64,7 @@ $(function(){
                                 <div class="panel panel-default">
                                     <div class="panel-footer">
                                         <div class="row">
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <div class="form-group"><br>
                                                 <?php
                                                     if($listaActividades && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_JEFEOCI)){
@@ -77,8 +77,31 @@ $(function(){
                                                             $estilos = "btn-danger";
                                                         }
                                                 ?>
-                                                    <input type="hidden" id="estado" name="estado" value="<?php echo $listaActividades[0]["publicar_calificacion_1"]; ?>" >
+                                                    <input type="hidden" id="estado1" name="estado1" value="<?php echo $listaActividades[0]["publicar_calificacion_1"]; ?>" >
                                                     <button type="submit" id="btnPrimerSemestre" name="btnPrimerSemestre" class="btn <?php echo $estilos; ?> btn-sm" value="1">
+                                                        <?php echo $textoBoton; ?> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                    </button> 
+                                                <?php
+                                                    }
+                                                ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group"><br>
+                                                <?php
+                                                    if($listaActividades && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_JEFEOCI)){
+                                                        $valor = $listaActividades[0]["publicar_calificacion_2"];
+                                                        if($valor == 0){
+                                                            $textoBoton = "Publicar Calificación Primer Semestre";
+                                                            $estilos = "btn-primary";
+                                                        }else{
+                                                            $textoBoton = "Despublicar Calificación Primer Semestre";
+                                                            $estilos = "btn-danger";
+                                                        }
+                                                ?>
+                                                    <input type="hidden" id="estado2" name="estado2" value="<?php echo $listaActividades[0]["publicar_calificacion_2"]; ?>" >
+                                                    <button type="submit" id="btnSegundoSemestre" name="btnSegundoSemestre" class="btn <?php echo $estilos; ?> btn-sm" value="1">
                                                         <?php echo $textoBoton; ?> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                                     </button> 
                                                 <?php
@@ -97,14 +120,14 @@ $(function(){
                         <thead>
                             <tr>
                                 <th width="15%" class="text-center"><small>No. Actividad</small></th>
-                                <th width="30%"><small>Actividad</small></th>
+                                <th width="25%"><small>Actividad</small></th>
                                 <th width="7%" class="text-right"><small>Cump. Trim. I</small></th>
                                 <th width="7%" class="text-right"><small>Cump. Trim. II</small></th>
                                 <th width="7%" class="text-right"><small>Cump. Trim. III</small></th>
                                 <th width="7%" class="text-right"><small>Cump. Trim. IV</small></th>
                                 <th width="7%" class="text-right"><small>Avance POA</small></th>
                                 <th width="10%" class="text-right"><small>Calificación OCI</small></th>
-                                <th width="10%"><small>Observación OCI</small></th>
+                                <th width="15%"><small>Observación OCI</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -156,8 +179,26 @@ $(function(){
                                     <td class="text-right"><small><?php echo $trim3; ?></small></td>
                                     <td class="text-right"><small><?php echo $trim4; ?></small></td>
                                     <td class="text-right"><small><?php echo $avancePoa; ?></small></td>
-                                    <td class="text-right"><small><?php echo $lista["calificacion_semestre_1"] ?></small></td>
-                                    <td><small><?php echo $lista["observacion_semestre_1"] ?></small></td>
+                                    <td class="text-right"><small>
+                                        <?php 
+                                            if($lista["calificacion_semestre_1"]){
+                                                echo "<b>Primer Semestre:</b><br>". $lista["calificacion_semestre_1"] . "<br>";
+                                            }
+                                            if($lista["calificacion_semestre_2"]){
+                                                echo "<b>Segundo Semestre:</b><br>" . $lista["calificacion_semestre_2"];
+                                            }
+                                        ?>
+                                    </small></td>
+                                    <td><small>
+                                        <?php 
+                                            if($lista["observacion_semestre_1"]){
+                                                echo "<b>Primer Semestre:</b><br>". $lista["observacion_semestre_1"] . "<br>";
+                                            }
+                                            if($lista["observacion_semestre_2"]){
+                                                echo "<b>Segundo Semestre:</b><br>" . $lista["observacion_semestre_2"];
+                                            }
+                                        ?>
+                                    </small></td>
                                 </tr>
                         <?php
                                 endforeach;
