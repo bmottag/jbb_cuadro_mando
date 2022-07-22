@@ -195,6 +195,22 @@ class Resumen extends CI_Controller {
 	 */
 	public function evaluacion()
 	{	
+			$data["retornoExito"] = false;
+
+	        if($_POST && $_POST["btnPrimerSemestre"]){
+				$arrParam = array(
+					"numeroSemestre" => 1,
+					"estado" => $_POST["estado"]
+				);
+				if($this->general_model->updatePublicacionActividades($arrParam)){
+					if($_POST["estado"] == 0){
+						$data["retornoExito"] = "Se publicó la información.";
+					}else{
+						$data["retornoExito"] = "Se despublicó la información.";
+					}			
+				}
+	        }
+
 			$arrParam = array(
 				"evaluacionFlag" => true,
 			);

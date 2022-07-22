@@ -38,9 +38,6 @@ $(function(){
 <div id="page-wrapper">
     <br>
 
-
-
-
     <div class="row">
         <div class="col-lg-12"> 
              <div class="panel panel-primary">
@@ -48,6 +45,54 @@ $(function(){
                     <i class="fa fa-bell fa-fw"></i> Actividades seleccionadas para evaluación por la Oficina de Control Interno
                 </div>
                 <div class="panel-body small">
+
+<?php         
+    $userRol = $this->session->userdata("role");
+
+    if ($retornoExito) {
+?>
+        <div class="alert alert-success ">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <?php echo $retornoExito ?>     
+        </div>
+<?php
+    }
+?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form name="formCheckin" id="formCheckin" method="post">
+                                <div class="panel panel-default">
+                                    <div class="panel-footer">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <div class="form-group"><br>
+                                                <?php
+                                                    if($listaActividades && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_JEFEOCI)){
+                                                        $valor = $listaActividades[0]["publicar_calificacion_1"];
+                                                        if($valor == 0){
+                                                            $textoBoton = "Publicar Calificación Primer Semestre";
+                                                            $estilos = "btn-primary";
+                                                        }else{
+                                                            $textoBoton = "Despublicar Calificación Primer Semestre";
+                                                            $estilos = "btn-danger";
+                                                        }
+                                                ?>
+                                                    <input type="hidden" id="estado" name="estado" value="<?php echo $listaActividades[0]["publicar_calificacion_1"]; ?>" >
+                                                    <button type="submit" id="btnPrimerSemestre" name="btnPrimerSemestre" class="btn <?php echo $estilos; ?> btn-sm" value="1">
+                                                        <?php echo $textoBoton; ?> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                    </button> 
+                                                <?php
+                                                    }
+                                                ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                     <table class="table table-hover">
                         <thead>
                             <tr>

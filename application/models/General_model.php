@@ -1258,6 +1258,28 @@ class General_model extends CI_Model {
 		}
 
 		/**
+		 * Update publicacion calificacion
+		 * @since 21/07/2022
+		 */
+		public function updatePublicacionActividades($arrData)
+		{
+			$valor = 1;
+			if($arrData["estado"] == 1){
+				$valor = 0;
+			}	
+			$data = array(
+				'publicar_calificacion_' . $arrData["numeroSemestre"] => $valor
+			);	
+			$query = $this->db->update('actividad_estado', $data);
+
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
 		 * Update observacion de la actividad
 		 * @since 24/06/2022
 		 */
