@@ -45,6 +45,7 @@
                                 <th class="text-right">Rechazada Supervisor</th>
                                 <th class="text-right">Aprobada Planeación</th>
                                 <th class="text-right">Rechazada Planeación</th>
+                                <th class="text-right">Incumplida</th>
                             </tr>
                         </thead>
                         <tr>
@@ -56,6 +57,7 @@
                             <th class="text-right"><?php echo $nroActividadesPrimerTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesPrimerTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesPrimerTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesPrimerTrimestreIncumplidas; ?></th>
                         </tr>
                         <tr>
                             <th>Trimestre II</th>
@@ -66,6 +68,7 @@
                             <th class="text-right"><?php echo $nroActividadesSegundoTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesSegundoTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesSegundoTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesSegundoTrimestreIncumplidas; ?></th>
                         </tr>
                         <tr>
                             <th>Trimestre III</th>
@@ -76,6 +79,7 @@
                             <th class="text-right"><?php echo $nroActividadesTercerTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesTercerTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesTercerTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesTercerTrimestreIncumplidas; ?></th>
                         </tr>
                         <tr>
                             <th>Trimestre IV</th>
@@ -86,6 +90,7 @@
                             <th class="text-right"><?php echo $nroActividadesCuartoTrimestreRechazadaSupervisor; ?></th>
                             <th class="text-right"><?php echo $nroActividadesCuartoTrimestreAprobadaPlaneacion; ?></th>
                             <th class="text-right"><?php echo $nroActividadesCuartoTrimestreRechazadaPlaneacion; ?></th>
+                            <th class="text-right"><?php echo $nroActividadesCuartoTrimestreIncumplidas; ?></th>
                         </tr>
                     </table>                    
                 </div>

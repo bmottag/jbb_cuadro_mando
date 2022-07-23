@@ -914,6 +914,22 @@ class Dashboard extends CI_Controller {
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 
+			//INCUMPLIDAS
+			$arrParam2 = array(
+				"numeroTrimestre" => 1,
+				"estadoTrimestre" => 7,
+				"vigencia" => date("Y"),
+				"idDependencia" => $idDependencia
+			);
+			$data['nroActividadesPrimerTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
+
+			$arrParam2["numeroTrimestre"] = 2;
+			$data['nroActividadesSegundoTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 3;
+			$data['nroActividadesTercerTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
+			$arrParam2["numeroTrimestre"] = 4;
+			$data['nroActividadesCuartoTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
+
 			$data["view"] = "info_dependencias";
 			$this->load->view("layout_calendar", $data);
 	}
