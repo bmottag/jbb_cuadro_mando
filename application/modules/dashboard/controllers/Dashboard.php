@@ -1344,68 +1344,6 @@ class Dashboard extends CI_Controller {
 			$this->load->view("layout_calendar", $data);
 	}
 
-	/**
-	 * Save OBSERVACION de la actividad
-     * @since 6/07/2022
-     * @author BMOTTAG
-	 */
-	public function save_observacion_actividad()
-	{			
-			header('Content-Type: application/json');
-			$data = array();
-			$data["idCuadroBase"] = $this->input->post('hddIdCuadroBase');
-			$numeroActividad = $this->input->post('hddNumeroActividad');
-			$numeroTrimestre = $this->input->post('hddNumeroTrimestre');
-			$observacion = $this->input->post('observacion');
-			$data["record"] = $data["idCuadroBase"] . '/' . $numeroActividad . '/' . $numeroTrimestre;
-			$msj = "Se adiciono la Observación a la actividad para el <b>Trimestre " . $numeroTrimestre .  "</b>.";
-
-			$arrParam = array(
-				"numeroActividad" => $numeroActividad,
-				"numeroTrimestre" => $numeroTrimestre,
-				"observacion" => $observacion,
-				"estado" => 8,
-			);
-			if($this->general_model->addHistorialActividad($arrParam)) 
-			{
-				//actualizo el estado del trimestre de la actividad
-				if($this->general_model->updateObservacionActividadTotales($arrParam)){
-					//envio correos a los usuarios
-					$mensaje = "se adiciono una Observación a la actividad <b>No. " . $numeroActividad  . "</b>, para el <b>Trimestre " . $numeroTrimestre . "</b>.";
-
-					$mensaje .= "<br><br><b>Observación: </b>" . $observacion;
-
-					//INICIO
-					//SE BUSCA USUARIOS DE PLANEACION Y SE ENVIA CORREO
-			            $arrParam2 = array(
-			                "idRole" => ID_ROL_PLANEACION
-			            );
-			            $listaUsuarios = $this->general_model->get_user($arrParam2);
-
-			            if($listaUsuarios){
-			            	foreach ($listaUsuarios as $infoUsuario):
-								$arrParam = array(
-									"mensaje" => $mensaje,
-									"idUsuario" => $infoUsuario["id_user"]
-								);
-								//$this->send_email($arrParam);
-							endforeach;
-			            }
-		            //FIN
-				}
-				
-				$data["result"] = true;
-				$data["mensaje"] = $msj;
-				$this->session->set_flashdata('retornoExito', $msj);
-			} else {
-				$data["result"] = "error";
-				$data["mensaje"] = "Error!!! Ask for help.";
-				$this->session->set_flashdata('retornoError', '<strong>Error!!!</strong> Ask for help');
-			}
-
-			echo json_encode($data);
-    }
-
     /**
      * Cargo modal - Listado auditoria de la actividad
      * @since 10/07/2022

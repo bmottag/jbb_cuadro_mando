@@ -1280,26 +1280,6 @@ class General_model extends CI_Model {
 		}
 
 		/**
-		 * Update observacion de la actividad
-		 * @since 24/06/2022
-		 */
-		public function updateObservacionActividadTotales($arrData)
-		{			
-			$data = array(
-				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
-				'observacion_trimestre_' . $arrData["numeroTrimestre"] => $arrData["observacion"]
-			);	
-			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
-			$query = $this->db->update('actividad_estado', $data);
-
-			if ($query) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		/**
 		 * Sumatoria avance POA
 		 * @since 17/5/2022
 		 */

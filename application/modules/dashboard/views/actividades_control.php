@@ -1,5 +1,3 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/dashboard/form_observacion_actividad.js"); ?>"></script>
-
 <div id="page-wrapper">
 	<br>
 	
@@ -294,13 +292,6 @@
 											<p class="<?php echo 'text-' . $estadoActividad[0]['primer_clase']; ?>"><b><?php echo $estadoActividad[0]['primer_estado']; ?></b></p>
 											<?php } ?>
 										</th>
-										<th class="column-title text-center">
-											<?php if($estadoActividad && $estadoActividad[0]['estado_trimestre_1'] == 5){ ?>
-												<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/1') ?>' title="Revisar Trim. I">
-														Revisar Trim. I <span class="fa fa-tag" aria-hidden="true"> </span>
-												</a></p>	
-											<?php } ?>										
-										</th>
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
@@ -313,13 +304,6 @@
 											<?php if($estadoActividad){ ?>
 											<p class="<?php echo 'text-' . $estadoActividad[0]['segundo_clase']; ?>"><b><?php echo $estadoActividad[0]['segundo_estado']; ?></b></p>
 											<?php } ?>
-										</th>
-										<th class="column-title text-center">
-											<?php if($estadoActividad && $estadoActividad[0]['estado_trimestre_2'] == 5){ ?>
-												<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/2') ?>' title="Revisar Trim. II">
-														Revisar Trim. II <span class="fa fa-tag" aria-hidden="true"> </span>
-												</a></p>
-											<?php } ?>										
 										</th>	
 									</tr>
 									<tr class="headings">
@@ -334,13 +318,6 @@
 											<p class="<?php echo 'text-' . $estadoActividad[0]['tercer_clase']; ?>"><b><?php echo $estadoActividad[0]['tercer_estado']; ?></b></p>
 											<?php } ?>
 										</th>
-										<th class="column-title text-center">
-											<?php if($estadoActividad && $estadoActividad[0]['estado_trimestre_3'] == 5){ ?>
-												<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/3') ?>' title="Revisar Trim. III">
-														Revisar Trim. III <span class="fa fa-tag" aria-hidden="true"> </span>
-												</a></p>
-											<?php } ?>										
-										</th>
 									</tr>
 									<tr class="headings">
 										<th class="column-title">
@@ -354,19 +331,11 @@
 											<p class="<?php echo 'text-' . $estadoActividad[0]['cuarta_clase']; ?>"><b><?php echo $estadoActividad[0]['cuarta_estado']; ?></b></p>
 											<?php } ?>
 										</th>
-										<th class="column-title text-center">
-											<?php if($estadoActividad && $estadoActividad[0]['estado_trimestre_1'] == 4){ ?>
-												<p><a class='btn btn-primary btn-xs' href='<?php echo base_url('dashboard/actividades/' . $idCuadroBase . '/' . $lista['id_actividad'] . '/4') ?>' title="Revisar Trim. IV">
-														Revisar Trim. IV <span class="fa fa-tag" aria-hidden="true"> </span>
-												</a></p>
-											<?php } ?>											
-										</th>
 									</tr>
 									<tr class="headings default">
 										<td width="28%"><small>Suma Programado Trimestre</small></td>
 										<td width="29%"><small>Suma Ejecutado Trimestre /Suma Programado Trimestre * 100</small></td>
 										<td width="20%"></td>
-										<td width="23%"></td>
 									</tr>
 								</thead>
 				
@@ -379,48 +348,6 @@
 <!-- INICIO HISTORICO -->
 		<?php
 			if($infoEjecucion){
-				if($numeroTrimestre && $listaHistorial && $listaHistorial[0]['fk_id_estado'] == 5){
-		?>
-<!--INICIO ADDITIONAL INFORMATION -->
-	<div class="row">
-		<div class="col-lg-6">				
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					ADICIONAR OBERVACIÓN AL TRIMESTRE <?php echo $numeroTrimestre; ?>
-				</div>
-				<div class="panel-body">
-					<div class="col-lg-12">	
-						<form name="formEstado" id="formEstado" class="form-horizontal" method="post">
-							<input type="hidden" id="hddIdCuadroBase" name="hddIdCuadroBase" value="<?php echo $idCuadroBase; ?>"/>
-							<input type="hidden" id="hddNumeroActividad" name="hddNumeroActividad" value="<?php echo $lista['numero_actividad']; ?>"/>
-							<input type="hidden" id="hddNumeroTrimestre" name="hddNumeroTrimestre" value="<?php echo $numeroTrimestre; ?>"/>
-							
-							<div class="form-group">
-								<label class="col-sm-4 control-label" for="information">Observación:</label>
-								<div class="col-sm-8">
-								<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" ></textarea>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="row" align="center">
-									<div style="width:100%;" align="center">
-										<button type="button" id="btnEstado" name="btnEstado" class="btn btn-primary" >
-											Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" />
-										</button> 
-										
-									</div>
-								</div>
-							</div>							
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>		
-	</div>
-<!--FIN ADDITIONAL INFORMATION -->
-		<?php
-				}
 		?>
 					<div class="table-responsive">
 						<table class='table table-hover'>
