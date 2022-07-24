@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <?php if(!$_POST){ ?>
+    <?php if(!$_GET){ ?>
     <div class="row">
         <div class="col-lg-6">
             <div class="panel panel-primary">
@@ -170,17 +170,17 @@
                         echo '</div>';
                     }else{
                             $arrParam2 = array();
-                            if($_POST && $_POST["id_estrategia"] != ""){
-                                $arrParam2["idEstrategia"] = $_POST["id_estrategia"];
+                            if($_GET && isset($_GET["id_estrategia"]) && $_GET["id_estrategia"] != ""){
+                                $arrParam2["idEstrategia"] = $_GET["id_estrategia"];
                             }
-                            if($_POST && $_POST["numero_objetivo"] != ""){
-                                $arrParam2["numeroObjetivoEstrategico"] = $_POST["numero_objetivo"];
+                            if($_GET && $_GET["numero_objetivo"] != ""){
+                                $arrParam2["numeroObjetivoEstrategico"] = $_GET["numero_objetivo"];
                             }
-                            if($_POST && $_POST["numero_proyecto"] != ""){
-                                $arrParam2["numeroProyecto"] = $_POST["numero_proyecto"];
+                            if($_GET && $_GET["numero_proyecto"] != ""){
+                                $arrParam2["numeroProyecto"] = $_GET["numero_proyecto"];
                             }
-                            if($_POST && $_POST["id_dependencia"] != ""){
-                                $arrParam2["idDependencia"] = $_POST["id_dependencia"];
+                            if($_GET && $_GET["id_dependencia"] != ""){
+                                $arrParam2["idDependencia"] = $_GET["id_dependencia"];
                             }elseif($userRol == ID_ROL_SUPERVISOR || $userRol == ID_ROL_ENLACE){
                                 $arrParam2["idDependencia"] = $infoDependencia[0]['id_dependencia'];  
                             }
@@ -188,7 +188,7 @@
                     ?>
                         <div class="row">
                             <div class="col-lg-12">
-                                <form name="formCheckin" id="formCheckin" method="post">
+                                <form name="formCheckin" id="formCheckin" method="get">
                                     <div class="panel panel-default">
                                         <div class="panel-footer">
                                             <div class="row">
@@ -198,7 +198,7 @@
                                                         <select name="id_estrategia" id="id_estrategia" class="form-control" >
                                                             <option value="">Todas...</option>
                                                             <?php for ($i = 0; $i < count($listaEstrategiasFiltro); $i++) { ?>
-                                                                <option value="<?php echo $listaEstrategiasFiltro[$i]["id_estrategia"]; ?>" <?php if($_POST && $_POST["id_estrategia"] == $listaEstrategiasFiltro[$i]["id_estrategia"]) { echo "selected"; }  ?>><?php echo $listaEstrategiasFiltro[$i]["estrategia"]; ?></option>
+                                                                <option value="<?php echo $listaEstrategiasFiltro[$i]["id_estrategia"]; ?>" <?php if($_GET && $_GET["id_estrategia"] == $listaEstrategiasFiltro[$i]["id_estrategia"]) { echo "selected"; }  ?>><?php echo $listaEstrategiasFiltro[$i]["estrategia"]; ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -209,7 +209,7 @@
                                                         <select name="numero_objetivo" id="numero_objetivo" class="form-control" >
                                                             <option value="">Todas...</option>
                                                             <?php for ($i = 0; $i < count($listaNumeroObjetivoEstrategicos); $i++) { ?>
-                                                                <option value="<?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?>" <?php if($_POST && $_POST["numero_objetivo"] == $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]) { echo "selected"; }  ?>><?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?></option>
+                                                                <option value="<?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?>" <?php if($_GET && $_GET["numero_objetivo"] == $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]) { echo "selected"; }  ?>><?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?></option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -223,7 +223,7 @@
                                                             <?php 
                                                             if($listaProyectos){
                                                                 for ($i = 0; $i < count($listaProyectos); $i++) { ?>
-                                                                    <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_POST && $_POST["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
+                                                                    <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_GET && $_GET["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
                                                             <?php 
                                                                 } 
                                                             }
@@ -240,7 +240,7 @@
                                                             <?php
                                                             if($listaNumeroDependencia){
                                                                 for ($i = 0; $i < count($listaNumeroDependencia); $i++) { ?>
-                                                                    <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_POST && $_POST["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
+                                                                    <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_GET && $_GET["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
                                                             <?php 
                                                                 } 
                                                             }
@@ -257,7 +257,7 @@
                                                             <?php 
                                                             if($listaTodasActividades){
                                                                 for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
-                                                                    <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
+                                                                    <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_GET && $_GET["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
                                                             <?php 
                                                                 } 
                                                             }
@@ -294,21 +294,21 @@
                             if($userRol == ID_ROL_ENLACE ||  $userRol == ID_ROL_SUPERVISOR){
                                 $arrParam["idDependencia"] = $infoDependencia[0]['id_dependencia'];
                             }
-                            if($_POST){
-                                if($_POST["id_estrategia"] != ""){
-                                    $arrParam["idEstrategia"] = $_POST["id_estrategia"];
+                            if($_GET){
+                                if(isset($_GET["id_estrategia"]) && $_GET["id_estrategia"] != ""){
+                                    $arrParam["idEstrategia"] = $_GET["id_estrategia"];
                                 }
-                                if($_POST["numero_objetivo"] != ""){
-                                    $arrParam2["numeroObjetivoEstrategico"] = $_POST["numero_objetivo"];
+                                if($_GET["numero_objetivo"] != ""){
+                                    $arrParam2["numeroObjetivoEstrategico"] = $_GET["numero_objetivo"];
                                 }
-                                if($_POST["numero_actividad"] != ""){
-                                    $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
+                                if($_GET["numero_actividad"] != ""){
+                                    $arrParam["numeroActividad"] = $_GET["numero_actividad"];
                                 }
-                                if($_POST["numero_proyecto"] != ""){
-                                    $arrParam["numeroProyecto"] = $this->input->post('numero_proyecto');
+                                if($_GET["numero_proyecto"] != ""){
+                                    $arrParam["numeroProyecto"] = $_GET["numero_proyecto"];
                                 }
-                                if($_POST["id_dependencia"] != ""){
-                                    $arrParam["idDependencia"] = $this->input->post('id_dependencia');
+                                if($_GET["id_dependencia"] != ""){
+                                    $arrParam["idDependencia"] = $_GET["id_dependencia"];
                                 }
                             }
                             $listaActividades = $this->general_model->get_actividades_full_by_dependencia($arrParam);

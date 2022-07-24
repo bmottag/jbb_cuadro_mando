@@ -14,10 +14,21 @@ class Dashboard extends CI_Controller {
 	 * @since 15/04/2022
 	 */
 	public function admin()
-	{				
+	{	
+			if($_GET)
+			{								
+				$arrParam = array(
+					"numero_objetivo" => $_GET["numero_objetivo"],
+					"numero_proyecto" => $_GET["numero_proyecto"],
+					"id_dependencia" => $_GET["id_dependencia"],
+					"numero_actividad" => $_GET["numero_actividad"]
+				);
+				$this->general_model->saveInfoGoBack($arrParam);
+			}
+
 			$arrParam = array();
-            if($_POST && $_POST["numero_objetivo"] != ""){
-                $arrParam["numeroObjetivoEstrategico"] = $this->input->post('numero_objetivo');
+            if($_GET && $_GET["numero_objetivo"] != ""){
+                $arrParam["numeroObjetivoEstrategico"] = $_GET["numero_objetivo"] ;
             }
 			$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
@@ -26,22 +37,22 @@ class Dashboard extends CI_Controller {
 			$data['listaEstrategiasFiltro'] = $this->general_model->get_estrategias($arrParam);
 
 			$arrParam = array();
-	        if($_POST && $_POST["id_estrategia"] != ""){
+	        if($_GET && isset($_GET["id_estrategia"]) && $_GET["id_estrategia"] != ""){
 	            $arrParam = array(
-	                "idEstrategia" => $_POST["id_estrategia"]
+	                "idEstrategia" => $_GET["id_estrategia"]
 	            );  
 	        }
 			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
 	        $arrParam = array();
-	        if($_POST && $_POST["id_estrategia"] != ""){
+	        if($_GET && isset($_GET["id_estrategia"]) && $_GET["id_estrategia"] != ""){
 	            $arrParam = array(
-	                "idEstrategia" => $_POST["id_estrategia"]
+	                "idEstrategia" => $_GET["id_estrategia"]
 	            );  
 	        }
-	        if($_POST && $_POST["numero_objetivo"] != ""){
+	        if($_GET && $_GET["numero_objetivo"] != ""){
 	            $arrParam = array(
-	                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+	                "numeroObjetivoEstrategico" => $_GET["numero_objetivo"]
 	            );  
 	        }
 	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
@@ -54,22 +65,21 @@ class Dashboard extends CI_Controller {
 			$arrParam = array(
 				"filtro" => true
 			);
-	        if($_POST && $_POST["id_estrategia"] != ""){
+	        if($_GET && isset($_GET["id_estrategia"]) && $_GET["id_estrategia"] != ""){
 	            $arrParam = array(
-	                "idEstrategia" => $_POST["id_estrategia"]
+	                "idEstrategia" => $_GET["id_estrategia"]
 	            );  
 	        }
-	        if($_POST && $_POST["numero_objetivo"] != ""){
+	        if($_GET && $_GET["numero_objetivo"] != ""){
 	            $arrParam = array(
-	                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+	                "numeroObjetivoEstrategico" => $_GET["numero_objetivo"]
 	            );  
 	        }
-            if($_POST && $_POST["numero_proyecto"] != ""){
-                $arrParam["numeroProyecto"] = $_POST["numero_proyecto"];
+            if($_GET && $_GET["numero_proyecto"] != ""){
+                $arrParam["numeroProyecto"] = $_GET["numero_proyecto"];
             }
 			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
 
-			//$data["view"] = "dashboard";
 			$data["view"] = "dashboard_principal";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -79,7 +89,23 @@ class Dashboard extends CI_Controller {
 	 * @since 15/04/2022
 	 */
 	public function actividades($idCuadroBase, $numeroActividad = 'x', $numeroTrimestre = 'x')
-	{				
+	{	
+			/*
+			 * Buscar informacion para e boton regresar
+			 */
+			$goBackInfo = $this->general_model->get_go_back();
+			$dashboarURL = $this->session->userdata("dashboardURL");
+
+			$urlBotonRegresar = $dashboarURL;
+			if($goBackInfo){
+				$get_numero_objetivo = $goBackInfo['get_numero_objetivo'] != 0 ? $goBackInfo['get_numero_objetivo'] : "";
+				$get_numero_proyecto = $goBackInfo['get_numero_proyecto'] != 0 ? $goBackInfo['get_numero_proyecto'] : "";
+				$get_id_dependencia = $goBackInfo['get_id_dependencia'] != 0 ? $goBackInfo['get_id_dependencia'] : "";
+				$get_numero_actividad = $goBackInfo['get_numero_actividad'] != 0 ? $goBackInfo['get_numero_actividad'] : "";
+				$urlBotonRegresar .= "?numero_objetivo=" . $get_numero_objetivo . "&numero_proyecto=".$get_numero_proyecto."&id_dependencia=".$get_id_dependencia."&numero_actividad=" . $get_numero_actividad;
+			}
+			$data['urlBotonRegresar'] = $urlBotonRegresar;
+
 			$data['numeroActividad'] = $numeroActividad;
 			$data['idCuadroBase'] = $idCuadroBase;
 			$data['numeroTrimestre'] = false;
@@ -486,7 +512,18 @@ class Dashboard extends CI_Controller {
 	 * @since 23/04/2022
 	 */
 	public function supervisor()
-	{				
+	{
+			if($_GET)
+			{								
+				$arrParam = array(
+					"numero_objetivo" => $_GET["numero_objetivo"],
+					"numero_proyecto" => $_GET["numero_proyecto"],
+					"id_dependencia" => $_GET["id_dependencia"],
+					"numero_actividad" => $_GET["numero_actividad"]
+				);
+				$this->general_model->saveInfoGoBack($arrParam);
+			}
+
 			$userRol = $this->session->userdata("role");
 			$idUser = $this->session->userdata("id");
 			$idDependencia = $this->session->userdata("dependencia");
@@ -939,7 +976,18 @@ class Dashboard extends CI_Controller {
 	 * @since 9/06/2022
 	 */
 	public function enlace()
-	{		
+	{
+			if($_GET)
+			{								
+				$arrParam = array(
+					"numero_objetivo" => $_GET["numero_objetivo"],
+					"numero_proyecto" => $_GET["numero_proyecto"],
+					"id_dependencia" => $_GET["id_dependencia"],
+					"numero_actividad" => $_GET["numero_actividad"]
+				);
+				$this->general_model->saveInfoGoBack($arrParam);
+			}
+
 			$userRol = $this->session->userdata("role");
 			$idUser = $this->session->userdata("id");
 			$idDependencia = $this->session->userdata("dependencia");
@@ -980,9 +1028,9 @@ class Dashboard extends CI_Controller {
 			$data['listaObjetivosEstrategicos'] = false;
 			if($valor){
 				$arrParam = array("filtroEstrategias" => $valor);
-		        if($_POST && $_POST["numero_objetivo"] != ""){
+		        if($_POST && $_GET["numero_objetivo"] != ""){
 		            $arrParam = array(
-		                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+		                "numeroObjetivoEstrategico" => $_GET["numero_objetivo"]
 		            );  
 		        }
 				$data['listaObjetivosEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
@@ -993,16 +1041,16 @@ class Dashboard extends CI_Controller {
 			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
 	        $arrParam = array();
-	        if($_POST && $_POST["numero_objetivo"] != ""){
+	        if($_GET && $_GET["numero_objetivo"] != ""){
 	            $arrParam = array(
-	                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+	                "numeroObjetivoEstrategico" => $_GET["numero_objetivo"]
 	            );  
 	        }
 	        $arrParam["idDependencia"] = $idDependencia;
 			$data['listaEstrategiasFiltro'] = $this->general_model->get_estrategias_full_by_dependencia($arrParam);
 	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
-            if($_POST && $_POST["numero_proyecto"] != ""){
-                $arrParam["numeroProyecto"] = $_POST["numero_proyecto"];
+            if($_GET && $_GET["numero_proyecto"] != ""){
+                $arrParam["numeroProyecto"] = $_GET["numero_proyecto"];
             }
 			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
 	        //FIN LISTAS PARA FILTROS
@@ -1304,6 +1352,17 @@ class Dashboard extends CI_Controller {
 	 */
 	public function control()
 	{
+			if($_GET)
+			{								
+				$arrParam = array(
+					"numero_objetivo" => $_GET["numero_objetivo"],
+					"numero_proyecto" => $_GET["numero_proyecto"],
+					"id_dependencia" => $_GET["id_dependencia"],
+					"numero_actividad" => $_GET["numero_actividad"]
+				);
+				$this->general_model->saveInfoGoBack($arrParam);
+			}
+		
 			$arrParam = array();
 			$data['listaEstrategias'] = $this->general_model->get_estrategias($arrParam);
 			$data['listaEstrategiasFiltro'] = $this->general_model->get_estrategias($arrParam);

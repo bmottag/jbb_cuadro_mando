@@ -27,6 +27,17 @@ class Resumen extends CI_Controller {
 	 */
 	public function index()
 	{	
+			if($_GET)
+			{								
+				$arrParam = array(
+					"numero_objetivo" => $_GET["numero_objetivo"],
+					"numero_proyecto" => $_GET["numero_proyecto"],
+					"id_dependencia" => $_GET["id_dependencia"],
+					"numero_actividad" => $_GET["numero_actividad"]
+				);
+				$this->general_model->saveInfoGoBack($arrParam);
+			}
+
 			$arrParam = array(
 				"table" => "param_estados",
 				"order" => "valor",
@@ -39,25 +50,25 @@ class Resumen extends CI_Controller {
 			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
 	        $arrParam = array();
-	        if($_POST && $_POST["numero_objetivo"] != ""){
+	        if($_GET && $_GET["numero_objetivo"] != ""){
 	            $arrParam = array(
-	                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+	                "numeroObjetivoEstrategico" => $_GET["numero_objetivo"]
 	            );  
 	        }
 	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
 
-            if($_POST && $_POST["numero_proyecto"] != ""){
-                $arrParam["numeroProyecto"] = $_POST["numero_proyecto"];
+            if($_GET && $_GET["numero_proyecto"] != ""){
+                $arrParam["numeroProyecto"] = $_GET["numero_proyecto"];
             }
 			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
 
-            if($_POST && $_POST["id_dependencia"] != ""){
-                $arrParam["idDependencia"] = $_POST["id_dependencia"];
+            if($_GET && $_GET["id_dependencia"] != ""){
+                $arrParam["idDependencia"] = $_GET["id_dependencia"];
             }
             $data['listaTodasActividades'] = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam);
 
-            if($_POST && $_POST["numero_actividad"] != ""){
-                $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
+            if($_GET && $_GET["numero_actividad"] != ""){
+                $arrParam["numeroActividad"] = $_GET["numero_actividad"];
             }
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
 
@@ -233,7 +244,18 @@ class Resumen extends CI_Controller {
 	 * @since 24/06/2022
 	 */
 	public function enlace()
-	{	
+	{
+			if($_GET)
+			{								
+				$arrParam = array(
+					"numero_objetivo" => $_GET["numero_objetivo"],
+					"numero_proyecto" => $_GET["numero_proyecto"],
+					"id_dependencia" => $_GET["id_dependencia"],
+					"numero_actividad" => $_GET["numero_actividad"]
+				);
+				$this->general_model->saveInfoGoBack($arrParam);
+			}
+		
 			//INICIO LISTAS PARA FILTROS
 			$idDependencia = $this->session->userdata("dependencia");
 			$arrParam = array(
@@ -259,25 +281,25 @@ class Resumen extends CI_Controller {
 			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
 
 	        $arrParam = array();
-	        if($_POST && $_POST["numero_objetivo"] != ""){
+	        if($_GET && $_GET["numero_objetivo"] != ""){
 	            $arrParam = array(
-	                "numeroObjetivoEstrategico" => $_POST["numero_objetivo"]
+	                "numeroObjetivoEstrategico" => $_GET["numero_objetivo"]
 	            );  
 	        }
 	        $arrParam["idDependencia"] = $idDependencia;
 	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
 
-            if($_POST && $_POST["numero_proyecto"] != ""){
-                $arrParam["numeroProyecto"] = $_POST["numero_proyecto"];
+            if($_GET && $_GET["numero_proyecto"] != ""){
+                $arrParam["numeroProyecto"] = $_GET["numero_proyecto"];
             }
 			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
 
-            if($_POST && $_POST["id_dependencia"] != ""){
-                $arrParam["idDependencia"] = $_POST["id_dependencia"];
+            if($_GET && $_GET["id_dependencia"] != ""){
+                $arrParam["idDependencia"] = $_GET["id_dependencia"];
             }
             $data['listaTodasActividades'] = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam);
 
-            if($_POST && $_POST["numero_actividad"] != ""){
+            if($_GET && $_GET["numero_actividad"] != ""){
                 $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
             }
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);

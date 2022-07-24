@@ -1450,5 +1450,49 @@ class General_model extends CI_Model {
 				}
 		}
 
+		/**
+		 * Info go back
+		 * @since 23/07/2022
+		 */
+		public function get_go_back() 
+		{						
+				$idUser = $this->session->userdata("id");
+				$this->db->where('fk_id_user', $idUser);
+				$query = $this->db->get('actividad_go_back');
+
+				if ($query->num_rows() > 0) {
+					return $query->row_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Add info boton go back
+		 * @since 23/07/2022
+		 */
+		public function saveInfoGoBack($arrData) 
+		{
+			$idUser = $this->session->userdata("id");
+			
+			//delete datos anteriores del usuario
+			$this->db->delete('actividad_go_back', array('fk_id_user' => $idUser));
+			
+			$data = array('fk_id_user' => $idUser);
+			if (array_key_exists("numero_objetivo", $arrData)) {
+				$data['get_numero_objetivo'] = $arrData["numero_objetivo"];
+			}
+			if (array_key_exists("numero_proyecto", $arrData)) {
+				$data['get_numero_proyecto'] = $arrData["numero_proyecto"];
+			}
+			if (array_key_exists("id_dependencia", $arrData)) {
+				$data['get_id_dependencia'] = $arrData["id_dependencia"];
+			}
+			if (array_key_exists("numero_actividad", $arrData)) {
+				$data['get_numero_actividad'] = $arrData["numero_actividad"];
+			}
+			$query = $this->db->insert('actividad_go_back', $data);
+		}
+
 
 }

@@ -258,7 +258,7 @@ $(function(){
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <form name="formCheckin" id="formCheckin" method="post">
+                            <form name="formCheckin" id="formCheckin" method="get">
                                 <div class="panel panel-default">
                                     <div class="panel-footer">
                                         <div class="row">
@@ -268,7 +268,7 @@ $(function(){
                                                     <select name="numero_objetivo" id="numero_objetivo" class="form-control" >
                                                         <option value="">Todas...</option>
                                                         <?php for ($i = 0; $i < count($listaNumeroObjetivoEstrategicos); $i++) { ?>
-                                                            <option value="<?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?>" <?php if($_POST && $_POST["numero_objetivo"] == $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]) { echo "selected"; }  ?>><?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?></option>
+                                                            <option value="<?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?>" <?php if($_GET && $_GET["numero_objetivo"] == $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]) { echo "selected"; }  ?>><?php echo $listaNumeroObjetivoEstrategicos[$i]["numero_objetivo_estrategico"]; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -282,7 +282,7 @@ $(function(){
                                                         <?php 
                                                         if($listaProyectos){
                                                             for ($i = 0; $i < count($listaProyectos); $i++) { ?>
-                                                                <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_POST && $_POST["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
+                                                                <option value="<?php echo $listaProyectos[$i]["numero_proyecto"]; ?>" <?php if($_GET && $_GET["numero_proyecto"] == $listaProyectos[$i]["numero_proyecto"]) { echo "selected"; }  ?>><?php echo $listaProyectos[$i]["numero_proyecto"]; ?></option>
                                                         <?php 
                                                             } 
                                                         }
@@ -299,7 +299,7 @@ $(function(){
                                                         <?php
                                                         if($listaNumeroDependencia){
                                                             for ($i = 0; $i < count($listaNumeroDependencia); $i++) { ?>
-                                                                <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_POST && $_POST["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
+                                                                <option value="<?php echo $listaNumeroDependencia[$i]["id_dependencia"]; ?>" <?php if($_GET && $_GET["id_dependencia"] == $listaNumeroDependencia[$i]["id_dependencia"]) { echo "selected"; }  ?>><?php echo $listaNumeroDependencia[$i]["dependencia"]; ?></option>
                                                         <?php 
                                                             } 
                                                         }
@@ -316,7 +316,7 @@ $(function(){
                                                         <?php 
                                                         if($listaTodasActividades){
                                                             for ($i = 0; $i < count($listaTodasActividades); $i++) { ?>
-                                                                <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_POST && $_POST["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
+                                                                <option value="<?php echo $listaTodasActividades[$i]["numero_actividad"]; ?>" <?php if($_GET && $_GET["numero_actividad"] == $listaTodasActividades[$i]["numero_actividad"]) { echo "selected"; }  ?>><?php echo $listaTodasActividades[$i]["numero_actividad"]; ?></option>
                                                         <?php 
                                                             } 
                                                         }
