@@ -18,27 +18,6 @@
 					<input type="number" id="numero_proyecto_inversion" name="numero_proyecto_inversion" class="form-control" value="<?php echo $information?$information[0]["numero_proyecto_inversion"]:""; ?>" placeholder="No. Proyecto" required >
 				</div>
 			</div>
-
-			<div class="col-sm-6">		
-				<div class="form-group text-left">
-					<label class="control-label" for="vigencia">Vigencia: *</label>
-					<select name="vigencia" id="vigencia" class="form-control" required>
-						<option value='' >Select...</option>
-						<?php
-							$year = date('Y');
-							$lastYear = $year - 1;
-							$nextYear = $year + 2;
-							for ($i = $lastYear; $i < $nextYear; $i++) {
-						?>
-							<option value='<?php echo $i; ?>' <?php
-							if ($information && $i == $information[0]["vigencia"]) {
-								echo 'selected="selected"';
-							}
-							?>><?php echo $i; ?></option>
-						<?php } ?>									
-					</select>
-				</div>
-			</div>
 		</div>
 
 		<div class="row">

@@ -1494,5 +1494,31 @@ class General_model extends CI_Model {
 			$query = $this->db->insert('actividad_go_back', $data);
 		}
 
+		/**
+		 * Consulta lista de proyectos por vigencia
+		 * @since 24/07/2022
+		 */
+		public function get_proyectos_x_vigencia($arrData) 
+		{		
+				$this->db->select();
+				$this->db->join('proyecto_inversion P', 'P.numero_proyecto_inversion = PV.fk_numero_proyecto_inversion', 'INNER');
+				if (array_key_exists("idProyectoVigencia", $arrData)) {
+					$this->db->where('PV.id_proyecto_vigencia', $arrData["idProyectoVigencia"]);
+				}
+				if (array_key_exists("numeroProyecto", $arrData)) {
+					$this->db->where('P.fk_numero_proyecto_inversion', $arrData["numeroProyecto"]);
+				}
+				if (array_key_exists("vigencia", $arrData)) {
+					$this->db->where('PV.vigencia_proyecto', $arrData["vigencia"]);
+				}
+				$this->db->order_by('numero_proyecto_inversion', 'asc');
+				$query = $this->db->get('proyecto_inversion_x_vigencia PV');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }

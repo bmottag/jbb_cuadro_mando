@@ -116,8 +116,7 @@
 				
 				$data = array(
 					'numero_proyecto_inversion' => $this->input->post('numero_proyecto_inversion'),
-					'nombre_proyecto_inversion' => $this->input->post('proyecto'),
-					'vigencia' => $this->input->post('vigencia')
+					'nombre_proyecto_inversion' => $this->input->post('proyecto')
 				);
 				
 				//revisar si es para adicionar o editar
@@ -743,8 +742,8 @@
 		}
 
 		/**
-		 * Add/Edit ODS
-		 * @since 9/07/2022
+		 * Add/Edit Proposito
+		 * @since 24/07/2022
 		 */
 		public function savePropositosXVigencia() 
 		{
@@ -766,6 +765,38 @@
 				} else {
 					$this->db->where('id_proposito_vigencia', $idPropositoVigencia);
 					$query = $this->db->update('proposito_x_vigencia', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Add/Edit Proyecto Vigencia
+		 * @since 24/07/2022
+		 */
+		public function saveProyectosXVigencia() 
+		{
+				$idProyectoVigencia= $this->input->post('hddId');
+				$vigencia= $this->input->post('vigencia');
+				$numeroProyecto= $this->input->post('proyecto');
+				$nu_proyecto_vigencia = $vigencia . "-" . $numeroProyecto;
+				
+				$data = array(
+					'nu_proyecto_vigencia' => $nu_proyecto_vigencia,
+					'fk_numero_proyecto_inversion' => $numeroProyecto,
+					'vigencia_proyecto' => $vigencia,
+					'recurso_programado_proyecto' => $this->input->post('recurso_programado_proyecto')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idProyectoVigencia == '') {
+					$query = $this->db->insert('proyecto_inversion_x_vigencia', $data);		
+				} else {
+					$this->db->where('id_proyecto_vigencia', $idProyectoVigencia);
+					$query = $this->db->update('proyecto_inversion_x_vigencia', $data);
 				}
 				if ($query) {
 					return true;

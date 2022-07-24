@@ -90,9 +90,11 @@ $(function(){
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_proposito']; ?>" >
 										Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
 									</button>
+<!--
 									<button type="button" id="<?php echo $lista['id_proposito']; ?>" class='btn btn-danger btn-xs' title="Eliminar">
 											<i class="fa fa-trash-o"></i>
 									</button>
+-->
 						<?php
 									echo "</td>";
 							endforeach;
