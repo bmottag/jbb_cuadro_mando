@@ -804,6 +804,38 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add/Edit Meta PDD Vigencia
+		 * @since 24/07/2022
+		 */
+		public function saveMetasPDDXVigencia() 
+		{
+				$idMetaPDDVigencia= $this->input->post('hddId');
+				$vigencia= $this->input->post('vigencia');
+				$numeroMetaPDD= $this->input->post('metaPDD');
+				$nu_meta_pdd_vigencia = $vigencia . "-" . $numeroMetaPDD;
+				
+				$data = array(
+					'nu_meta_pdd_vigencia ' => $nu_meta_pdd_vigencia,
+					'fk_numero_meta_pdd' => $numeroMetaPDD,
+					'vigencia_meta_pdd' => $vigencia,
+					'recurso_programado_meta_pdd' => $this->input->post('recurso_programado_meta_pdd')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idMetaPDDVigencia == '') {
+					$query = $this->db->insert('meta_pdd_x_vigencia', $data);		
+				} else {
+					$this->db->where('id_meta_pdd_vigencia', $idMetaPDDVigencia);
+					$query = $this->db->update('meta_pdd_x_vigencia', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		

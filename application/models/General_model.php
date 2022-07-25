@@ -1520,5 +1520,31 @@ class General_model extends CI_Model {
 				}
 		}
 
+		/**
+		 * Consulta lista de mestas pdd por vigencia
+		 * @since 24/07/2022
+		 */
+		public function get_metas_pdd_x_vigencia($arrData) 
+		{		
+				$this->db->select();
+				$this->db->join('meta_pdd P', 'P.numero_meta_pdd = PV.fk_numero_meta_pdd', 'INNER');
+				if (array_key_exists("idMetaPDDVigencia", $arrData)) {
+					$this->db->where('PV.id_meta_pdd_vigencia', $arrData["idMetaPDDVigencia"]);
+				}
+				if (array_key_exists("numeroMetaPDD", $arrData)) {
+					$this->db->where('P.fk_numero_meta_pdd', $arrData["numeroMetaPDD"]);
+				}
+				if (array_key_exists("vigencia", $arrData)) {
+					$this->db->where('PV.vigencia_meta_pdd', $arrData["vigencia"]);
+				}
+				$this->db->order_by('numero_meta_pdd', 'asc');
+				$query = $this->db->get('meta_pdd_x_vigencia PV');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }

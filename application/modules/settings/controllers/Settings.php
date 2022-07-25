@@ -2175,5 +2175,80 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 
 			echo json_encode($data);	
     }	
+
+	/**
+	 * Lista de metas_pdd X vigencia
+     * @since 24/07/2022
+     * @author BMOTTAG
+	 */
+	public function metas_pdd_x_vigencia($vigencia='x')
+	{
+			$data['vigencia']  = $vigencia;
+			if($vigencia == 'x'){
+				$data['vigencia']  = date('Y');
+			}
+
+			$arrParam = array('vigencia'=>$data['vigencia']);
+			$data['info'] = $this->general_model->get_metas_pdd_x_vigencia($arrParam);
+	
+			$data["view"] = 'metas_pdd_x_vigencia';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario metas_pdd
+     * @since 24/07/2022
+     */
+    public function cargarModalMetasPDDXVigencia() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idMetaPDDVigencia"] = $this->input->post("idMetaPDDVigencia");
+
+			$arrParam = array(
+				"table" => " meta_pdd",
+				"order" => "numero_meta_pdd",
+				"id" => "x"
+			);
+			$data['listaMetasPDD'] = $this->general_model->get_basic_search($arrParam);
+	
+			if ($data["idMetaPDDVigencia"] != 'x') {
+				$arrParam = array(
+					"idMetaPDDVigencia" => $data["idMetaPDDVigencia"]
+				);
+				$data['information'] = $this->general_model->get_metas_pdd_x_vigencia($arrParam);
+			}
+			
+			$this->load->view("metas_pdd_x_vigencia_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar metas_pdd X vigencia
+     * @since 24/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_metas_pdd_x_vigencia()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idMetaPDDVigencia = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Registro!";
+			if ($idMetaPDDVigencia != '') {
+				$msj = "Se actualizó Registro!";
+			}
+
+			if ($idMetaPDDVigencia = $this->settings_model->saveMetasPDDXVigencia()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }	
 	
 }

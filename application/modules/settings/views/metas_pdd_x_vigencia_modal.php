@@ -1,10 +1,10 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/proyectos_x_vigencia.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/settings/metas_pdd_x_vigencia.js"); ?>"></script>
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="exampleModalLabel">Formulario Proyectos de Inversión por Vigencia
-	<br><small>Adicionar/Editar Proyectos de Inversión por Vigencia.</small>
+	<h4 class="modal-title" id="exampleModalLabel">Formulario Metas PDD por Vigencia
+	<br><small>Adicionar/Editar Metas PDD por Vigencia.</small>
 	<?php if($information){
-		echo "<br><small>Número Único: ". $information[0]["nu_proyecto_vigencia"] . "</small>";
+		echo "<br><small>Número Único: ". $information[0]["nu_meta_pdd_vigencia"] . "</small>";
 	} ?>
 	</h4>
 </div>
@@ -12,16 +12,16 @@
 <div class="modal-body">
 	<p class="text-danger text-left">Los campos con * son obligatorios.</p>
 	<form name="form" id="form" role="form" method="post" >
-		<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_proyecto_vigencia"]:""; ?>"/>
+		<input type="hidden" id="hddId" name="hddId" value="<?php echo $information?$information[0]["id_meta_pdd_vigencia"]:""; ?>"/>
 		
 		<div class="row">
 			<div class="col-sm-12">		
 				<div class="form-group text-left">
-					<label class="control-label" for="proyecto">Proyecto Inversión: </label>
-					<select name="proyecto" id="proyecto" class="form-control" required >
+					<label class="control-label" for="metaPDD">Meta PDD: </label>
+					<select name="metaPDD" id="metaPDD" class="form-control" required >
 						<option value="">Seleccione...</option>
-						<?php for ($i = 0; $i < count($listaProyecto); $i++) { ?>
-							<option value="<?php echo $listaProyecto[$i]["numero_proyecto_inversion"]; ?>" <?php if($information && $information[0]["fk_numero_proyecto_inversion"] == $listaProyecto[$i]["numero_proyecto_inversion"]) { echo "selected"; }  ?>><?php echo $listaProyecto[$i]["numero_proyecto_inversion"] . ' ' . $listaProyecto[$i]["nombre_proyecto_inversion"]; ?></option>	
+						<?php for ($i = 0; $i < count($listaMetasPDD); $i++) { ?>
+							<option value="<?php echo $listaMetasPDD[$i]["numero_meta_pdd"]; ?>" <?php if($information && $information[0]["fk_numero_meta_pdd"] == $listaMetasPDD[$i]["numero_meta_pdd"]) { echo "selected"; }  ?>><?php echo $listaMetasPDD[$i]["numero_meta_pdd"] . ' ' . $listaMetasPDD[$i]["meta_pdd"]; ?></option>	
 						<?php } ?>
 					</select>
 				</div>
@@ -42,7 +42,7 @@
 							for ($i = $lastYear; $i < $nextYear; $i++) {
 						?>
 							<option value='<?php echo $i; ?>' <?php
-							if ($information && $i == $information[0]["vigencia_proyecto"]) {
+							if ($information && $i == $information[0]["vigencia_meta_pdd"]) {
 								echo 'selected="selected"';
 							}
 							?>><?php echo $i; ?></option>
@@ -53,8 +53,8 @@
 
 			<div class="col-sm-6">		
 				<div class="form-group text-left">
-					<label class="control-label" for="recurso_programado_proyecto">Recurso Programado: *</label>
-					<input type="number" min="0" id="recurso_programado_proyecto" name="recurso_programado_proyecto" class="form-control" value="<?php echo $information?$information[0]["recurso_programado_proyecto"]:""; ?>" placeholder="Recurso Programado" required >
+					<label class="control-label" for="recurso_programado_meta_pdd">Recurso Programado: *</label>
+					<input type="number" min="0" id="recurso_programado_meta_pdd" name="recurso_programado_meta_pdd" class="form-control" value="<?php echo $information?$information[0]["recurso_programado_meta_pdd"]:""; ?>" placeholder="Recurso Programado" required >
 				</div>
 			</div>
 		</div>
