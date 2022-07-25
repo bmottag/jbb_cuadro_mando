@@ -652,10 +652,10 @@ class Dashboard extends CI_Controller {
 
 			$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
 			if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
-				$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
+				$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,3);
 			}
 			if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
-				$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,2);
+				$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,3);
 			}
 
 			if($idEstado == 5 || $idEstado == 7){
@@ -667,7 +667,7 @@ class Dashboard extends CI_Controller {
 				$sumaEjecutadoTrimestreX = $this->general_model->sumarEjecutado($arrParam);
 
 				if($sumaProgramadoTrimestreX['programado'] > 0){
-					$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100, 2);
+					$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100,3);
 				}
 			}
 

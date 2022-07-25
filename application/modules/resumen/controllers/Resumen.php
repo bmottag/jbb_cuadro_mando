@@ -492,10 +492,10 @@ class Resumen extends CI_Controller {
 
 				$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
 				if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
-					$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,2);
+					$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,3);
 				}
 				if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
-					$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,2);
+					$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,3);
 				}
 
 				if($idEstado == 5){
@@ -679,6 +679,9 @@ class Resumen extends CI_Controller {
 		$spreadsheet->getActiveSheet(0)->setCellValue('BM2', 'Semestre I');
 		$spreadsheet->getActiveSheet()->mergeCells('BM2:BN2');
 
+		$spreadsheet->getActiveSheet(0)->setCellValue('BO1', 'Programación');
+		$spreadsheet->getActiveSheet()->mergeCells('BO1:BZ2');
+
 		$spreadsheet->getActiveSheet(0)
 							->setCellValue('A1', 'Dependencia')
 							->setCellValue('B3', 'Proyecto de Inversión')
@@ -745,7 +748,19 @@ class Resumen extends CI_Controller {
 							->setCellValue('BK3', 'Calificación Semestre')
 							->setCellValue('BL3', 'Observaciones de la Evaluación')
 							->setCellValue('BM3', 'Calificación Semestre')
-							->setCellValue('BN3', 'Observaciones de la Evaluación');
+							->setCellValue('BN3', 'Observaciones de la Evaluación')
+							->setCellValue('BO3', 'Enero')
+							->setCellValue('BP3', 'Febrero')
+							->setCellValue('BQ3', 'Marzo')
+							->setCellValue('BR3', 'Abril')
+							->setCellValue('BS3', 'Mayo')
+							->setCellValue('BT3', 'Junio')
+							->setCellValue('BU3', 'Julio')
+							->setCellValue('BV3', 'Agosto')
+							->setCellValue('BW3', 'Septiembre')
+							->setCellValue('BX3', 'Octubre')
+							->setCellValue('BY3', 'Noviembre')
+							->setCellValue('BZ3', 'Diciembre');
 
 		$j=4;
 		if($listaActividades){
@@ -825,6 +840,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 1){
 						$spreadsheet->getActiveSheet()->setCellValue('AH'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BO'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -832,6 +848,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 2){
 						$spreadsheet->getActiveSheet()->setCellValue('AI'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BP'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -839,6 +856,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 3){
 						$spreadsheet->getActiveSheet()->setCellValue('AJ'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BQ'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -846,6 +864,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 4){
 						$spreadsheet->getActiveSheet()->setCellValue('AK'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BR'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -853,6 +872,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 5){
 						$spreadsheet->getActiveSheet()->setCellValue('AL'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BS'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -860,6 +880,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 6){
 						$spreadsheet->getActiveSheet()->setCellValue('AM'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BT'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -867,6 +888,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 7){
 						$spreadsheet->getActiveSheet()->setCellValue('AN'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BU'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -874,6 +896,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 8){
 						$spreadsheet->getActiveSheet()->setCellValue('AO'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BV'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -881,6 +904,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 9){
 						$spreadsheet->getActiveSheet()->setCellValue('AP'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BW'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -888,6 +912,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 10){
 						$spreadsheet->getActiveSheet()->setCellValue('AQ'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BX'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -895,6 +920,7 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 11){
 						$spreadsheet->getActiveSheet()->setCellValue('AR'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BY'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
@@ -902,16 +928,29 @@ class Resumen extends CI_Controller {
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 12){
 						$spreadsheet->getActiveSheet()->setCellValue('AS'.$j, $ejecucion['ejecutado']);
+						$spreadsheet->getActiveSheet()->setCellValue('BZ'.$j, $ejecucion['programado']);
 						break;
 					}
 				endforeach;
+
+				$trimestre_1 = $lista['trimestre_1'];
+				$trimestre_2 = $lista['trimestre_2'];
+				$trimestre_3 = $lista['trimestre_3'];
+				$trimestre_4 = $lista['trimestre_4'];
+				$avance_poa = $lista['avance_poa'];
+				
+				$trimestre_1 = floatval($trimestre_1);
+				$trimestre_2 = floatval($trimestre_2);
+				$trimestre_3 = floatval($trimestre_3);
+				$trimestre_4 = floatval($trimestre_4);
+				$avance_poa = floatval($avance_poa);
 				
 				$spreadsheet->getActiveSheet()
-							->setCellValue('AT'.$j, $lista['trimestre_1'] . "%")
-							->setCellValue('AU'.$j, $lista['trimestre_2'] . "%")
-							->setCellValue('AV'.$j, $lista['trimestre_3'] . "%")
-							->setCellValue('AW'.$j, $lista['trimestre_4'] . "%")
-							->setCellValue('AX'.$j, $lista['avance_poa'] . "%")
+							->setCellValue('AT'.$j, $trimestre_1)
+							->setCellValue('AU'.$j, $trimestre_2)
+							->setCellValue('AV'.$j, $trimestre_3)
+							->setCellValue('AW'.$j, $trimestre_4)
+							->setCellValue('AX'.$j, $avance_poa)
 							->setCellValue('AY'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_1']))
 							->setCellValue('AZ'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_2']))
 							->setCellValue('BA'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_3']))
@@ -1134,7 +1173,7 @@ class Resumen extends CI_Controller {
 	            );
 	            $nroActividades = $this->general_model->countActividades($arrParam);
 	            $avance = $this->general_model->sumAvance($arrParam);
-	            $avancePOA = number_format($avance["avance_poa"],2);
+	            $avancePOA = number_format($avance["avance_poa"],3);
 	            if(!$avancePOA){
 	                $avancePOA = 0;
 	            }
@@ -1204,7 +1243,7 @@ class Resumen extends CI_Controller {
                 $cumplimiento = $this->general_model->sumCumplimiento($arrParam);
                 $promedioCumplimiento = 0;
                 if($nroActividades){
-                    $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+                    $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,3);
                 }
                 if(!$promedioCumplimiento){
                     $promedioCumplimiento = 0;
@@ -1275,7 +1314,7 @@ class Resumen extends CI_Controller {
 				$cumplimiento = $this->general_model->sumCumplimiento($arrParam);
                 $promedioCumplimiento = 0;
                 if($nroActividades){
-                    $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+                    $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,3);
                 }
                              
                 if(!$promedioCumplimiento){
