@@ -1521,7 +1521,7 @@ class General_model extends CI_Model {
 		}
 
 		/**
-		 * Consulta lista de mestas pdd por vigencia
+		 * Consulta lista de metas pdd por vigencia
 		 * @since 24/07/2022
 		 */
 		public function get_metas_pdd_x_vigencia($arrData) 
@@ -1539,6 +1539,32 @@ class General_model extends CI_Model {
 				}
 				$this->db->order_by('numero_meta_pdd', 'asc');
 				$query = $this->db->get('meta_pdd_x_vigencia PV');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta lista de programas SEGPLAN por vigencia
+		 * @since 24/07/2022
+		 */
+		public function get_programa_sp_x_vigencia($arrData) 
+		{		
+				$this->db->select();
+				$this->db->join('programa P', 'P.numero_programa = PV.fk_numero_programa', 'INNER');
+				if (array_key_exists("idProgramaSPVigencia", $arrData)) {
+					$this->db->where('PV.id_programa_vigencia', $arrData["idProgramaSPVigencia"]);
+				}
+				if (array_key_exists("numeroProgramaSG", $arrData)) {
+					$this->db->where('P.fk_numero_programa', $arrData["numeroProgramaSG"]);
+				}
+				if (array_key_exists("vigencia", $arrData)) {
+					$this->db->where('PV.vigencia_programa', $arrData["vigencia"]);
+				}
+				$this->db->order_by('numero_programa', 'asc');
+				$query = $this->db->get('programa_x_vigencia PV');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
 				} else {

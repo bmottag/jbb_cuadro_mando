@@ -836,6 +836,65 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add/Edit PROGRAMA SEGPLAN
+		 * @since 24/74/2022
+		 */
+		public function saveProgramaSP() 
+		{
+				$idPrograma = $this->input->post('hddId');
+				
+				$data = array(
+					'numero_programa' => $this->input->post('numero_programa'),
+					'programa' => $this->input->post('programa')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idPrograma == '') {
+					$query = $this->db->insert('programa', $data);		
+				} else {
+					$this->db->where('id_programa', $idPrograma);
+					$query = $this->db->update('programa', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Add/Edit Meta PDD Vigencia
+		 * @since 24/07/2022
+		 */
+		public function saveProgramasSPXVigencia() 
+		{
+				$idProgramaSPVigencia= $this->input->post('hddId');
+				$vigencia= $this->input->post('vigencia');
+				$numeroProgramaSP= $this->input->post('programa');
+				$nu_programa_sp_vigencia = $vigencia . "-" . $numeroProgramaSP;
+				
+				$data = array(
+					'nu_programa_vigencia' => $nu_programa_sp_vigencia,
+					'fk_numero_programa' => $numeroProgramaSP,
+					'vigencia_programa' => $vigencia,
+					'recurso_programado_programa' => $this->input->post('recurso_programado_programa')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idProgramaSPVigencia == '') {
+					$query = $this->db->insert('programa_x_vigencia', $data);		
+				} else {
+					$this->db->where('id_programa_vigencia', $idProgramaSPVigencia);
+					$query = $this->db->update('programa_x_vigencia', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		

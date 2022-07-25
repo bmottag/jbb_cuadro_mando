@@ -588,7 +588,7 @@ class Settings extends CI_Controller {
 	public function metas_pdd()
 	{
 			$arrParam = array(
-				"table" => " meta_pdd",
+				"table" => "meta_pdd",
 				"order" => "numero_meta_pdd",
 				"id" => "x"
 			);
@@ -2207,7 +2207,7 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 			$data["idMetaPDDVigencia"] = $this->input->post("idMetaPDDVigencia");
 
 			$arrParam = array(
-				"table" => " meta_pdd",
+				"table" => "meta_pdd",
 				"order" => "numero_meta_pdd",
 				"id" => "x"
 			);
@@ -2249,6 +2249,151 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 			}
 
 			echo json_encode($data);	
-    }	
+    }
+
+	/**
+	 * Lista de programas segplan
+     * @since 24/07/2022
+     * @author BMOTTAG
+	 */
+	public function programas_sp()
+	{
+			$arrParam = array(
+				"table" => "programa",
+				"order" => "numero_programa",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'programa_sp';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario programas segplan
+     * @since 24/07/2022
+     */
+    public function cargarModalProgramaSP() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idPrograma"] = $this->input->post("idPrograma");	
+			
+			if ($data["idPrograma"] != 'x') {
+				$arrParam = array(
+					"table" => "programa",
+					"order" => "numero_programa",
+					"column" => "id_programa",
+					"id" => $data["idPrograma"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("programa_sp_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar programas segplan
+     * @since 24/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_programa_sp()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idPrograma = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Programa!";
+			if ($idPrograma != '') {
+				$msj = "Se actualizó el Programa!";
+			}
+
+			if ($idPrograma = $this->settings_model->saveProgramaSP()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
+
+	/**
+	 * Lista de programas segplan X vigencia
+     * @since 24/07/2022
+     * @author BMOTTAG
+	 */
+	public function programa_sp_x_vigencia($vigencia='x')
+	{
+			$data['vigencia']  = $vigencia;
+			if($vigencia == 'x'){
+				$data['vigencia']  = date('Y');
+			}
+
+			$arrParam = array('vigencia'=>$data['vigencia']);
+			$data['info'] = $this->general_model->get_programa_sp_x_vigencia($arrParam);
+	
+			$data["view"] = 'programa_sp_x_vigencia';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario programas segplan
+     * @since 24/07/2022
+     */
+    public function cargarModalProgramaSPXVigencia() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idProgramaSPVigencia"] = $this->input->post("idProgramaSPVigencia");
+
+			$arrParam = array(
+				"table" => "programa",
+				"order" => "numero_programa",
+				"id" => "x"
+			);
+			$data['listaProgramas'] = $this->general_model->get_basic_search($arrParam);
+	
+			if ($data["idProgramaSPVigencia"] != 'x') {
+				$arrParam = array(
+					"idProgramaSPVigencia" => $data["idProgramaSPVigencia"]
+				);
+				$data['information'] = $this->general_model->get_programa_sp_x_vigencia($arrParam);
+			}
+			
+			$this->load->view("programa_sp_x_vigencia_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar programas segplan X vigencia
+     * @since 24/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_programa_sp_x_vigencia()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idProgramaSPVigencia = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Registro!";
+			if ($idProgramaSPVigencia != '') {
+				$msj = "Se actualizó Registro!";
+			}
+
+			if ($idProgramaSPVigencia = $this->settings_model->saveProgramasSPXVigencia()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 }
