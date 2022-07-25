@@ -183,6 +183,7 @@ $(function(){
                                                 <?php for ($i = 0; $i < count($listaEstados); $i++) { ?>
                                                     <option value="<?php echo $listaEstados[$i]["valor"]; ?>" ><?php echo $listaEstados[$i]["estado"]; ?></option>        
                                                 <?php } ?>
+                                                    <option value="99" >Realizar Cálculo</option>
                                             </select>
                                         </div>
                                     </div>

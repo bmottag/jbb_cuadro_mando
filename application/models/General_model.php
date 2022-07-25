@@ -1240,12 +1240,32 @@ class General_model extends CI_Model {
 		public function updateEstadoActividadTotales($arrData)
 		{			
 			$data = array(
-				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
 				'trimestre_' . $arrData["numeroTrimestre"] => $arrData["cumplimientoX"],
 				'estado_trimestre_' . $arrData["numeroTrimestre"] => $arrData["estado"],
 				'avance_poa' => $arrData["avancePOA"],
 				'cumplimiento' => $arrData["cumplimientoActual"],
 				'mensaje_poa_trimestre_' . $arrData["numeroTrimestre"] => $arrData["observacion"]
+			);	
+			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
+			$query = $this->db->update('actividad_estado', $data);
+
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Update calculos de la actividad
+		 * @since 25/07/2022
+		 */
+		public function updateCalculosActividadTotales($arrData)
+		{			
+			$data = array(
+				'trimestre_' . $arrData["numeroTrimestre"] => $arrData["cumplimientoX"],
+				'avance_poa' => $arrData["avancePOA"],
+				'cumplimiento' => $arrData["cumplimientoActual"]
 			);	
 			$this->db->where('fk_numero_actividad', $arrData["numeroActividad"]);
 			$query = $this->db->update('actividad_estado', $data);

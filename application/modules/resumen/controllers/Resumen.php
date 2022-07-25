@@ -452,7 +452,10 @@ class Resumen extends CI_Controller {
 			$idEstado = $this->input->post('valorEstado');
 			$observacion = $this->input->post('observacion');
 			$msj = "Se cambio el estado de las actividades para el <b>Trimestre " . $numeroTrimestre .  "</b>.";
-
+			if($idEstado==99){
+				$msj = "Se realizó el cálculo de valores para el <b>Trimestre " . $numeroTrimestre .  "</b>.";
+			}
+			
 			$arrParam = array();
 			$listadoActividades = $this->general_model->get_actividades($arrParam);
 
@@ -470,19 +473,35 @@ class Resumen extends CI_Controller {
 				$estadoTrimestre3 = $estadoActividad[0]["estado_trimestre_3"];
 				$estadoTrimestre4 = $estadoActividad[0]["estado_trimestre_4"];
 
-				$incluirTrimestre = 0;
-				if(($numeroTrimestre != 1 && $estadoTrimestre1 == 5) || ($numeroTrimestre == 1 && $idEstado == 5) ){
-					$incluirTrimestre = $incluirTrimestre . "," . 1;
+				$incluirTrimestre = 0;//trimestres a incluir para el calculo del avance POA
+				if($idEstado==99){
+					if($estadoTrimestre1 == 5 || $estadoTrimestre1 == 7 ){
+						$incluirTrimestre = $incluirTrimestre . "," . 1;
+					}
+					if($estadoTrimestre2 == 5 || $estadoTrimestre2 == 7 ){
+						$incluirTrimestre = $incluirTrimestre . "," . 2;
+					}
+					if($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7 ){
+						$incluirTrimestre = $incluirTrimestre . "," . 3;
+					}
+					if($estadoTrimestre4 == 5 || $estadoTrimestre4 == 7 ){
+						$incluirTrimestre = $incluirTrimestre . "," . 4;
+					}
+				}else{
+					if(($numeroTrimestre != 1 && ($estadoTrimestre1 == 5 || $estadoTrimestre1 == 7) ) || ($numeroTrimestre == 1 && ($idEstado == 5 || $idEstado == 7) ) ){
+						$incluirTrimestre = $incluirTrimestre . "," . 1;
+					}
+					if(($numeroTrimestre != 2 && ($estadoTrimestre2 == 5 || $estadoTrimestre2 == 7) ) || ($numeroTrimestre == 2 && ($idEstado == 5 || $idEstado == 7) ) ){
+						$incluirTrimestre = $incluirTrimestre . "," . 2;
+					}
+					if(($numeroTrimestre != 3 && ($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7) ) || ($numeroTrimestre == 3 && ($idEstado == 5 || $idEstado == 7) ) ){
+						$incluirTrimestre = $incluirTrimestre . "," . 3;
+					}
+					if(($numeroTrimestre != 4 && ($estadoTrimestre4 == 5 || $estadoTrimestre4 == 7) ) || ($numeroTrimestre == 4 && ($idEstado == 5 || $idEstado == 7) ) ){
+						$incluirTrimestre = $incluirTrimestre . "," . 4;
+					}				
 				}
-				if(($numeroTrimestre != 2 && $estadoTrimestre2 == 5) || ($numeroTrimestre == 2 && $idEstado == 5) ){
-					$incluirTrimestre = $incluirTrimestre . "," . 2;
-				}
-				if(($numeroTrimestre != 3 && $estadoTrimestre3 == 5) || ($numeroTrimestre == 3 && $idEstado == 5) ){
-					$incluirTrimestre = $incluirTrimestre . "," . 3;
-				}
-				if(($numeroTrimestre != 4 && $estadoTrimestre4 == 5) || ($numeroTrimestre == 4 && $idEstado == 5) ){
-					$incluirTrimestre = $incluirTrimestre . "," . 4;
-				}
+
 				$arrParam = array(
 					"numeroActividad" => $lista["numero_actividad"],
 					"filtroTrimestre" => $incluirTrimestre
@@ -498,32 +517,75 @@ class Resumen extends CI_Controller {
 					$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,3);
 				}
 
-				if($idEstado == 5){
-					$arrParam = array(
-						"numeroActividad" => $lista["numero_actividad"],
-						"numeroTrimestre" => $numeroTrimestre
-					);
-					$sumaProgramadoTrimestreX = $this->general_model->sumarProgramado($arrParam);
-					$sumaEjecutadoTrimestreX = $this->general_model->sumarEjecutado($arrParam);
-
-					if($sumaProgramadoTrimestreX['programado'] > 0){
-						$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100, 2);
+				if($idEstado==99){
+					switch ($numeroTrimestre) {
+						case 1:
+							$estadoRevisar = $estadoTrimestre1;
+							break;
+						case 2:
+							$estadoRevisar = $estadoTrimestre2;
+							break;
+						case 3:
+							$estadoRevisar = $estadoTrimestre3;
+							break;
+						case 4:
+							$estadoRevisar = $estadoTrimestre4;
+							break;
 					}
+
+
+					if( $estadoRevisar == 5 || $estadoRevisar == 7 ) {
+						$arrParam = array(
+							"numeroActividad" => $lista["numero_actividad"],
+							"numeroTrimestre" => $numeroTrimestre
+						);
+						$sumaProgramadoTrimestreX = $this->general_model->sumarProgramado($arrParam);
+						$sumaEjecutadoTrimestreX = $this->general_model->sumarEjecutado($arrParam);
+
+						if($sumaProgramadoTrimestreX['programado'] > 0){
+							$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100,3);
+						}
+					}
+				}else{
+					if($idEstado == 5){
+						$arrParam = array(
+							"numeroActividad" => $lista["numero_actividad"],
+							"numeroTrimestre" => $numeroTrimestre
+						);
+						$sumaProgramadoTrimestreX = $this->general_model->sumarProgramado($arrParam);
+						$sumaEjecutadoTrimestreX = $this->general_model->sumarEjecutado($arrParam);
+
+						if($sumaProgramadoTrimestreX['programado'] > 0){
+							$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100,3);
+						}
+					}					
 				}
 
-				$arrParam = array(
-					"numeroActividad" => $lista["numero_actividad"],
-					"numeroTrimestre" => $numeroTrimestre,
-					"observacion" => $observacion,
-					"estado" => $idEstado,
-					"cumplimientoX" => $cumplimientoX,
-					"avancePOA" => $avancePOA,
-					"cumplimientoActual" => $cumplimientoActual
-				);
-				if($this->general_model->addHistorialActividad($arrParam)) 
-				{
-					//actualizo el estado del trimestre de la actividad
-					$this->general_model->updateEstadoActividadTotales($arrParam);
+
+				if($idEstado==99){
+					$arrParam = array(
+						"numeroActividad" => $lista["numero_actividad"],
+						"numeroTrimestre" => $numeroTrimestre,
+						"cumplimientoX" => $cumplimientoX,
+						"avancePOA" => $avancePOA,
+						"cumplimientoActual" => $cumplimientoActual
+					);
+					$this->general_model->updateCalculosActividadTotales($arrParam);
+				}else{
+					$arrParam = array(
+						"numeroActividad" => $lista["numero_actividad"],
+						"numeroTrimestre" => $numeroTrimestre,
+						"observacion" => $observacion,
+						"estado" => $idEstado,
+						"cumplimientoX" => $cumplimientoX,
+						"avancePOA" => $avancePOA,
+						"cumplimientoActual" => $cumplimientoActual
+					);
+					if($this->general_model->addHistorialActividad($arrParam)) 
+					{
+						//actualizo el estado del trimestre de la actividad
+						$this->general_model->updateEstadoActividadTotales($arrParam);
+					}					
 				}
 
 			endforeach;
@@ -1222,12 +1284,12 @@ class Resumen extends CI_Controller {
 		 */
 		$spreadsheet->createSheet();
 		$spreadsheet->setActiveSheetIndex(2);
-		$spreadsheet->getActiveSheet()->setTitle('Cump. Estrategias');
+		$spreadsheet->getActiveSheet()->setTitle('Avance Estrategias');
 
 		$spreadsheet->getActiveSheet()
 							->setCellValue('A1', 'Estrategia')
 							->setCellValue('B1', 'No. Actividades')
-							->setCellValue('C1', 'Promedio de Cumplimiento');
+							->setCellValue('C1', 'Avance');
 
 		$arrParam = array();
 		$listaEstrategias = $this->general_model->get_estrategias($arrParam);
