@@ -1592,5 +1592,31 @@ class General_model extends CI_Model {
 				}
 		}
 
+		/**
+		 * Consulta lista de INDICADORES SEGPLAN por vigencia
+		 * @since 26/07/2022
+		 */
+		public function get_indicador_sp_x_vigencia($arrData) 
+		{		
+				$this->db->select();
+				$this->db->join('indicadores P', 'P.numero_indicador = PV.fk_numero_indicador', 'INNER');
+				if (array_key_exists("idIndicadorSPVigencia", $arrData)) {
+					$this->db->where('PV.id_indicador_vigencia', $arrData["idIndicadorSPVigencia"]);
+				}
+				if (array_key_exists("numeroIndicadorSG", $arrData)) {
+					$this->db->where('P.fk_numero_indicador', $arrData["numeroIndicadorSG"]);
+				}
+				if (array_key_exists("vigencia", $arrData)) {
+					$this->db->where('PV.vigencia_indicador', $arrData["vigencia"]);
+				}
+				$this->db->order_by('numero_indicador', 'asc');
+				$query = $this->db->get('indicadores_x_vigencia PV');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
 
 }

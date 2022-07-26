@@ -5,8 +5,8 @@ $(function(){
 			var oID = $(this).attr("id");
             $.ajax ({
                 type: 'POST',
-				url: base_url + 'settings/cargarModalProgramaSPXVigencia',
-                data: {'idProgramaSPVigencia': oID},
+				url: base_url + 'settings/cargarModalIndicadorSPXVigencia',
+                data: {'idIndicadorSPVigencia': oID},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatos').html(data);
@@ -23,7 +23,7 @@ $(function(){
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h4 class="list-group-item-heading">
-					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - PROGRAMAS SEGPLAN POR VIGENCIA
+					<i class="fa fa-gear fa-fw"></i> CONFIGURACIÓN - INDICADORES SEGPLAN POR VIGENCIA
 					</h4>
 				</div>
 			</div>
@@ -36,11 +36,11 @@ $(function(){
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-thumb-tack"></i> LISTA PROGRAMAS SEGPLAN POR VIGENCIA
+					<i class="fa fa-thumb-tack"></i> LISTA INDICADORES SEGPLAN POR VIGENCIA
 					<div class="pull-right">
 						<div class="btn-group">																				
 							<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="x">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Programa
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Indicador
 							</button>
 						</div>
 					</div>
@@ -68,15 +68,15 @@ $(function(){
 	}
 ?> 
 				<ul class="nav nav-tabs">
-					<li <?php if($vigencia == 2020){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/programa_sp_x_vigencia/2020"); ?>"><b>2020</b></a>
+					<li <?php if($vigencia == 2020){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/indicador_sp_x_vigencia/2020"); ?>"><b>2020</b></a>
 					</li>
-					<li <?php if($vigencia == 2021){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/programa_sp_x_vigencia/2021"); ?>"><b>2021</b></a>
+					<li <?php if($vigencia == 2021){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/indicador_sp_x_vigencia/2021"); ?>"><b>2021</b></a>
 					</li>
-					<li <?php if($vigencia == 2022){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/programa_sp_x_vigencia/2022"); ?>"><b>2022</b></a>
+					<li <?php if($vigencia == 2022){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/indicador_sp_x_vigencia/2022"); ?>"><b>2022</b></a>
 					</li>
-					<li <?php if($vigencia == 2023){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/programa_sp_x_vigencia/2023"); ?>"><b>2023</b></a>
+					<li <?php if($vigencia == 2023){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/indicador_sp_x_vigencia/2023"); ?>"><b>2023</b></a>
 					</li>
-					<li <?php if($vigencia == 2024){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/programa_sp_x_vigencia/2024"); ?>"><b>2024</b></a>
+					<li <?php if($vigencia == 2024){ echo "class='active'";} ?>><a href="<?php echo base_url("settings/indicador_sp_x_vigencia/2024"); ?>"><b>2024</b></a>
 					</li>
 				</ul>
 				<br>
@@ -87,11 +87,11 @@ $(function(){
 						<thead>
 							<tr>
 								<th width="5%" class="text-center">No.</th>
-								<th width="24%" class="text-center">Programa</th>
+								<th width="24%" class="text-center">Indicador</th>
 								<th width="5%" class="text-center">Vigencia</th>
-								<th width="30%" class="text-center">Recurso programado</th>
-								<th width="10%" class="text-center">Recurso ejecutado</th>
-								<th width="8%" class="text-center">Porcentaje cumplimiento</th>
+								<th width="30%" class="text-center">Programado Indicador PDD</th>
+								<th width="10%" class="text-center">Programado Indicador Real</th>
+								<th width="8%" class="text-center">Ejecutado Indicador</th>
 								<th width="10%" class="text-center">Editar</th>
 							</tr>
 						</thead>
@@ -99,15 +99,15 @@ $(function(){
 						<?php
 							foreach ($info as $lista):
 									echo "<tr>";
-									echo "<td class='text-center'>" . $lista['numero_programa'] . "</td>";
-									echo "<td>" . $lista['programa'] . "</td>";
-									echo "<td class='text-center'>" . $lista['vigencia_programa'] . "</td>";
-									echo "<td class='text-right'>$ " . number_format($lista['recurso_programado_programa']) . "</td>";
-									echo "<td class='text-right'>$ " . number_format($lista['recurso_ejecutado_programa']) . "</td>";
-									echo "<td class='text-right'>" . $lista['porcentaje_cumplimiento_programa'] . "</td>";
+									echo "<td class='text-center'>" . $lista['numero_indicador'] . "</td>";
+									echo "<td>" . $lista['indicador_sp'] . "</td>";
+									echo "<td class='text-center'>" . $lista['vigencia_indicador'] . "</td>";
+									echo "<td class='text-right'>$ " . number_format($lista['programado_indicador_pdd']) . "</td>";
+									echo "<td class='text-right'>$ " . number_format($lista['programado_indicador_real']) . "</td>";
+									echo "<td class='text-right'>" . $lista['ejecutado_indicador'] . "</td>";
 									echo "<td class='text-center'>";
 						?>
-									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_programa_vigencia']; ?>" >
+									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_indicador_vigencia']; ?>" >
 										Editar <span class="glyphicon glyphicon-edit" aria-hidden="true">
 									</button>
 <!--

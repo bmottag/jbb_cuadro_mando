@@ -2395,5 +2395,150 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 
 			echo json_encode($data);	
     }
+
+	/**
+	 * Lista de indicadores segplan
+     * @since 27/07/2022
+     * @author BMOTTAG
+	 */
+	public function indicadores_sp()
+	{
+			$arrParam = array(
+				"table" => "indicadores",
+				"order" => "numero_indicador",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'indicadores_sp';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario indicadores segplan
+     * @since 27/07/2022
+     */
+    public function cargarModalIndicadoresSP() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idIndicador"] = $this->input->post("idIndicador");	
+			
+			if ($data["idIndicador"] != 'x') {
+				$arrParam = array(
+					"table" => "indicadores",
+					"order" => "numero_indicador",
+					"column" => "id_indicador_sp",
+					"id" => $data["idIndicador"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("indicadores_sp_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar indicadores segplan
+     * @since 27/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_indicador_sp()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idIndicador = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Indicador!";
+			if ($idIndicador != '') {
+				$msj = "Se actualizó el Indicador!";
+			}
+
+			if ($idIndicador = $this->settings_model->saveIndicadorSP()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
+
+	/**
+	 * Lista de programas indicadores X vigencia
+     * @since 27/07/2022
+     * @author BMOTTAG
+	 */
+	public function indicador_sp_x_vigencia($vigencia='x')
+	{
+			$data['vigencia']  = $vigencia;
+			if($vigencia == 'x'){
+				$data['vigencia']  = date('Y');
+			}
+
+			$arrParam = array('vigencia'=>$data['vigencia']);
+			$data['info'] = $this->general_model->get_indicador_sp_x_vigencia($arrParam);
+	
+			$data["view"] = 'indicadores_sp_x_vigencia';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario indicadores segplan
+     * @since 27/07/2022
+     */
+    public function cargarModalIndicadorSPXVigencia() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idIndicadorSPVigencia"] = $this->input->post("idIndicadorSPVigencia");
+
+			$arrParam = array(
+				"table" => "indicadores",
+				"order" => "numero_indicador",
+				"id" => "x"
+			);
+			$data['listaIndicadores'] = $this->general_model->get_basic_search($arrParam);
+	
+			if ($data["idIndicadorSPVigencia"] != 'x') {
+				$arrParam = array(
+					"idIndicadorSPVigencia" => $data["idIndicadorSPVigencia"]
+				);
+				$data['information'] = $this->general_model->get_indicador_sp_x_vigencia($arrParam);
+			}
+			
+			$this->load->view("indicadores_sp_x_vigencia_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar indicadores segplan X vigencia
+     * @since 27/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_indicadores_sp_x_vigencia()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idIndicadorSPVigencia = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Registro!";
+			if ($idIndicadorSPVigencia != '') {
+				$msj = "Se actualizó Registro!";
+			}
+
+			if ($idIndicadorSPVigencia = $this->settings_model->saveIndicadorSPXVigencia()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 }

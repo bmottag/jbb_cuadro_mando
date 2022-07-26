@@ -895,6 +895,66 @@
 					return false;
 				}
 		}
+
+		/**
+		 * Add/Edit INDICADOR SEGPLAN
+		 * @since 26/74/2022
+		 */
+		public function saveIndicadorSP() 
+		{
+				$idIndicador = $this->input->post('hddId');
+		
+				$data = array(
+					'numero_indicador' => $this->input->post('numero_indicador'),
+					'indicador_sp' => $this->input->post('indicador_sp')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idIndicador == '') {
+					$query = $this->db->insert('indicadores', $data);		
+				} else {
+					$this->db->where('id_indicador_sp', $idIndicador);
+					$query = $this->db->update('indicadores', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Add/Edit INDICADOR Vigencia
+		 * @since 26/07/2022
+		 */
+		public function saveIndicadorSPXVigencia() 
+		{
+				$idIndicadorSPVigencia= $this->input->post('hddId');
+				$vigencia= $this->input->post('vigencia');
+				$numeroIndicadorSP= $this->input->post('indicador');
+				$nu_indicador_sp_vigencia = $vigencia . "-" . $numeroIndicadorSP;
+				
+				$data = array(
+					'nu_indicador_vigencia' => $nu_indicador_sp_vigencia,
+					'fk_numero_indicador' => $numeroIndicadorSP,
+					'vigencia_indicador' => $vigencia,
+					'programado_indicador_pdd' => $this->input->post('programado_indicador_pdd'),
+					'programado_indicador_real' => $this->input->post('programado_indicador_real')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idIndicadorSPVigencia == '') {
+					$query = $this->db->insert('indicadores_x_vigencia', $data);		
+				} else {
+					$this->db->where('id_indicador_vigencia', $idIndicadorSPVigencia);
+					$query = $this->db->update('indicadores_x_vigencia', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 		
