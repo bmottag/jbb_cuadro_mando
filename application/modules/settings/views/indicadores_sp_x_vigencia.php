@@ -102,8 +102,8 @@ $(function(){
 									echo "<td class='text-center'>" . $lista['numero_indicador'] . "</td>";
 									echo "<td>" . $lista['indicador_sp'] . "</td>";
 									echo "<td class='text-center'>" . $lista['vigencia_indicador'] . "</td>";
-									echo "<td class='text-right'>$ " . number_format($lista['programado_indicador_pdd']) . "</td>";
-									echo "<td class='text-right'>$ " . number_format($lista['programado_indicador_real']) . "</td>";
+									echo "<td class='text-right'>" . number_format($lista['programado_indicador_pdd']) . "</td>";
+									echo "<td class='text-right'>" . number_format($lista['programado_indicador_real']) . "</td>";
 									echo "<td class='text-right'>" . $lista['ejecutado_indicador'] . "</td>";
 									echo "<td class='text-center'>";
 						?>

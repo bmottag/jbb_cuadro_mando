@@ -104,7 +104,7 @@ $(function(){
 									echo "<td class='text-center'>" . $lista['vigencia_proposito'] . "</td>";
 									echo "<td class='text-right'>$ " . number_format($lista['recurso_programado_proposito']) . "</td>";
 									echo "<td class='text-right'>$ " . number_format($lista['recurso_ejecutado_proposito']) . "</td>";
-									echo "<td class='text-right'>" . $lista['porcentaje_cumplimiento_proposito'] . "</td>";
+									echo "<td class='text-right'>" . round($lista['porcentaje_cumplimiento_proposito'],2) . " %</td>";
 									echo "<td class='text-center'>";
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_proposito_vigencia']; ?>" >
