@@ -956,6 +956,32 @@
 				}
 		}
 		
+		/**
+		 * Add/Edit INDICADOR PMR
+		 * @since 28/74/2022
+		 */
+		public function saveIndicadorPMR() 
+		{
+				$idIndicador = $this->input->post('hddId');
+		
+				$data = array(
+					'numero_indicador_pmr' => $this->input->post('numero_indicador'),
+					'indicador_pmr' => $this->input->post('indicador_pmr')
+				);
+				
+				//revisar si es para adicionar o editar
+				if ($idIndicador == '') {
+					$query = $this->db->insert('indicadores_pmr', $data);		
+				} else {
+					$this->db->where('id_indicador_pmr', $idIndicador);
+					$query = $this->db->update('indicadores_pmr', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 		
 		
 	    

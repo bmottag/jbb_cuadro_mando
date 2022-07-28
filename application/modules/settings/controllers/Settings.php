@@ -2540,5 +2540,75 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 
 			echo json_encode($data);	
     }
+
+	/**
+	 * Lista de indicadores PMR
+     * @since 28/07/2022
+     * @author BMOTTAG
+	 */
+	public function indicadores_pmr()
+	{
+			$arrParam = array(
+				"table" => "indicadores_pmr",
+				"order" => "numero_indicador_pmr",
+				"id" => "x"
+			);
+			$data['info'] = $this->general_model->get_basic_search($arrParam);
+			
+			$data["view"] = 'indicadores_pmr';
+			$this->load->view("layout_calendar", $data);
+	}
+	
+    /**
+     * Cargo modal - formulario indicadores PMR
+     * @since 28/07/2022
+     */
+    public function cargarModalIndicadoresPMR() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idIndicador"] = $this->input->post("idIndicador");	
+			
+			if ($data["idIndicador"] != 'x') {
+				$arrParam = array(
+					"table" => "indicadores_pmr",
+					"order" => "numero_indicador_pmr",
+					"column" => "id_indicador_pmr",
+					"id" => $data["idIndicador"]
+				);
+				$data['information'] = $this->general_model->get_basic_search($arrParam);
+			}
+			
+			$this->load->view("indicadores_pmr_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar indicadores PMR
+     * @since 28/07/2022
+     * @author BMOTTAG
+	 */
+	public function save_indicador_pmr()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			
+			$idIndicador = $this->input->post('hddId');
+			
+			$msj = "Se adicionó el Indicador!";
+			if ($idIndicador != '') {
+				$msj = "Se actualizó el Indicador!";
+			}
+
+			if ($idIndicador = $this->settings_model->saveIndicadorPMR()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+
+			echo json_encode($data);	
+    }
 	
 }
