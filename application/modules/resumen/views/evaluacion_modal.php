@@ -4,6 +4,7 @@
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	<h4 class="modal-title" id="exampleModalLabel">Evaluación OCI
 	<br><b>Actividad No.: </b> <?php echo $numeroActividad; ?>
+	<br><b>Semestre: </b> <?php echo $numeroSemestre; ?>
 	</h4>
 </div>
 
@@ -12,11 +13,19 @@
 		<div class="col-sm-12">
 			<div class="form-group text-left">
 				<small>
-				<label class="control-label" for="calificacion">Descrición Actividades Trimeste I: </label><br>
-				<?php echo $infoActividad[0]["descripcion_actividad_trimestre_1"]; ?>
-				<br>
-				<label class="control-label" for="calificacion">Descrición Actividades Trimeste II: </label><br>
-				<?php echo $infoActividad[0]["descripcion_actividad_trimestre_2"]; ?>
+				<?php if($numeroSemestre == 1){ ?>
+					<label class="control-label" for="calificacion">Descrición Actividades Trimeste I: </label><br>
+					<?php echo $infoActividad[0]["descripcion_actividad_trimestre_1"]; ?>
+					<br>
+					<label class="control-label" for="calificacion">Descrición Actividades Trimeste II: </label><br>
+					<?php echo $infoActividad[0]["descripcion_actividad_trimestre_2"]; ?>
+				<?php }else{ ?>
+					<label class="control-label" for="calificacion">Descrición Actividades Trimeste III: </label><br>
+					<?php echo $infoActividad[0]["descripcion_actividad_trimestre_3"]; ?>
+					<br>
+					<label class="control-label" for="calificacion">Descrición Actividades Trimeste IV: </label><br>
+					<?php echo $infoActividad[0]["descripcion_actividad_trimestre_4"]; ?>
+				<?php } ?>
 				</small>
 			</div>
 		</div>
@@ -59,14 +68,28 @@
 		</table>
 <?php } ?>
 
+
+<?php 
+
+	$calificacion = "";
+	$observacion = "";
+	if($infoActividad && $numeroSemestre == 1){
+		$calificacion = $infoActividad[0]["calificacion_semestre_1"];
+		$observacion = $infoActividad[0]["observacion_semestre_1"];
+	}else{
+		$calificacion = $infoActividad[0]["calificacion_semestre_2"];
+		$observacion = $infoActividad[0]["observacion_semestre_2"];		
+	}
+?>
 	<form name="form" id="form" role="form" method="post" >
 		<input type="hidden" id="hddId" name="hddId" value="<?php echo $infoActividad?$infoActividad[0]["numero_actividad"]:""; ?>"/>
+		<input type="hidden" id="numeroSemestre" name="numeroSemestre" value="<?php echo $numeroSemestre; ?>"/>
 
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group text-left">
 					<label class="control-label" for="calificacion">Calificación: *</label>
-					<input type="number" id="calificacion" name="calificacion" class="form-control" value="<?php echo $infoActividad?$infoActividad[0]["calificacion_semestre_1"]:""; ?>" placeholder="Calificación" required >
+					<input type="number" id="calificacion" name="calificacion" class="form-control" value="<?php echo $calificacion; ?>" placeholder="Calificación" required >
 				</div>
 			</div>
 		</div>
@@ -75,7 +98,7 @@
 			<div class="col-sm-12">
 				<div class="form-group text-left">
 					<label class="control-label" for="observacion">Observación: *</label>
-					<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required><?php echo $infoActividad?$infoActividad[0]["observacion_semestre_1"]:""; ?></textarea>
+					<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required><?php echo $observacion; ?></textarea>
 				</div>
 			</div>
 		</div>

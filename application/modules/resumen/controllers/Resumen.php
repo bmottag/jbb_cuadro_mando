@@ -1458,9 +1458,12 @@ class Resumen extends CI_Controller {
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
 			
 			$data["numeroActividad"] = $this->input->post("numeroActividad");
+			$data["numeroSemestre"] = $this->input->post("numeroSemestre");
+
 			$arrParam = array("numeroActividad" => $data["numeroActividad"]);
 			$data['infoActividad'] = $this->general_model->get_actividades_full($arrParam);
 			
+			$arrParam["numeroSemestre"] = $data["numeroSemestre"];
             $data['information'] = $this->general_model->get_evaluacion_oci($arrParam);
 			$this->load->view("evaluacion_modal", $data);
     }
@@ -1475,11 +1478,12 @@ class Resumen extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$numeroActividad = $this->input->post('hddId');
+			$numeroSemestre = $this->input->post('numeroSemestre');
 			$msj = "Se guardo la información!";
 
 			$arrParam = array(
 				"numeroActividad" => $numeroActividad,
-				"numeroSemestre" => 1,
+				"numeroSemestre" => $numeroSemestre,
 				"observacion" => $this->input->post('observacion'),
 				"calificacion" => $this->input->post('calificacion'),
 				"comentario" => $this->input->post('comentario')
