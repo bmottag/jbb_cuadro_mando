@@ -314,8 +314,9 @@
 					'meta_proyecto' => $this->input->post('meta_proyecto'),
 					'presupuesto_meta' => $this->input->post('presupuesto_meta'),
 					'vigencia_meta_proyecto' => $vigencia,
-					'valor_meta_proyecto' => $this->input->post('valor_meta'),
-					'unidad_meta_proyecto' => $this->input->post('unidad_meta')
+					'programado_meta_proyecto' => $this->input->post('programado_meta_proyecto'),
+					'unidad_meta_proyecto' => $this->input->post('unidad_meta'),
+					'descripcion_anual' => $this->input->post('descripcion_anual')
 				);
 				
 				//revisar si es para adicionar o editar

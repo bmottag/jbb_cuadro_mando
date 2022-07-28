@@ -86,14 +86,17 @@ $(function(){
 					<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
 						<thead>
 							<tr>
-								<th width="5%" class="text-center">No.</th>
-								<th width="24%" class="text-center">Proyecto Inversión</th>
-								<th width="5%" class="text-center">Vigencia</th>
-								<th width="30%" class="text-center">Meta Proyecto Inversión</th>
-								<th width="10%" class="text-center">Presupuesto Meta</th>
-								<th width="8%" class="text-center">Valor</th>
-								<th width="8%" class="text-center">Unidad</th>
-								<th width="10%" class="text-center">Editar</th>
+								<th class="text-center">No.</th>
+								<th class="text-center">Proyecto Inversión</th>
+								<th class="text-center">Vigencia</th>
+								<th class="text-center">Meta Proyecto Inversión</th>
+								<th class="text-center">Presupuesto Meta</th>
+								<th class="text-center">Recurso Ejecutado Meta</th>
+								<th class="text-center">Programado Meta anual</th>
+								<th class="text-center">Ejecutado Meta</th>
+								<th class="text-center">Unidad</th>
+								<th class="text-center">Descripción</th>
+								<th class="text-center">Editar</th>
 							</tr>
 						</thead>
 						<tbody>							
@@ -105,8 +108,11 @@ $(function(){
 									echo "<td class='text-center'>" . $lista['vigencia_meta_proyecto'] . "</td>";
 									echo "<td>" . $lista['meta_proyecto'] . "</td>";
 									echo "<td class='text-right'>$ " . number_format($lista['presupuesto_meta']) . "</td>";
-									echo "<td class='text-right'>" . $lista['valor_meta_proyecto'] . "</td>";
+									echo "<td class='text-right'>$ " . number_format($lista['recurso_ejecutado_meta']) . "</td>";
+									echo "<td class='text-right'>" . $lista['programado_meta_proyecto'] . "</td>";
+									echo "<td class='text-right'>" . $lista['ejecutado_meta'] . "</td>";
 									echo "<td>" . $lista['unidad_meta_proyecto'] . "</td>";
+									echo "<td>" . $lista['descripcion_anual'] . "</td>";
 									echo "<td class='text-center'>";
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_meta_proyecto_inversion']; ?>" >

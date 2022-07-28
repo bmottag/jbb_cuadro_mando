@@ -11,8 +11,9 @@ $( document ).ready( function () {
 			numeroProyecto:				{ required: true },
 			meta_proyecto:				{ required: true },
 			presupuesto_meta:			{ required: true, minlength: 1, maxlength: 15 },
-			valor_meta:					{ required: true, minlength: 1, maxlength:10 },
-			unidad_meta:				{ required: true, minlength: 2, maxlength: 30 }
+			programado_meta_proyecto:					{ required: true, minlength: 1, maxlength:10 },
+			unidad_meta:				{ required: true, minlength: 2, maxlength: 30 },
+			descripcion_anual:				{ required: true, minlength: 2, maxlength: 30 }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {
