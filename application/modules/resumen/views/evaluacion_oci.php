@@ -21,7 +21,20 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'resumen/cargarModalEvaluacionOCI',
-                data: {'numeroActividad': oID},
+                data: {'numeroActividad': oID, 'numeroSemestre': 1},
+                cache: false,
+                success: function (data) {
+                    $('#tablaDatosEvaluacion').html(data);
+                }
+            });
+    });
+
+    $(".btn-warning").click(function () {   
+            var oID = $(this).attr("id");
+            $.ajax ({
+                type: 'POST',
+                url: base_url + 'resumen/cargarModalEvaluacionOCI',
+                data: {'numeroActividad': oID, 'numeroSemestre': 2},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatosEvaluacion').html(data);
@@ -170,6 +183,14 @@ $(function(){
                                     ?>
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_actividad']; ?>" title="Evaluación OCI">
                                         Evaluación OCI <span class="fa fa-pencil" aria-hidden="true"></span>
+                                    </button>
+                                    <?php } ?>
+
+                                    <?php
+                                        if(($lista["estado_trimestre_3"] == 5 || $lista["estado_trimestre_3"] == 6 || $lista["estado_trimestre_3"] == 7) && ($lista["estado_trimestre_4"] == 5 || $lista["estado_trimestre_4"] == 6 || $lista["estado_trimestre_4"] == 7) && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI)){
+                                    ?>
+                                    <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_actividad']; ?>" title="Evaluación OCI">
+                                        Evaluación OCI II <span class="fa fa-pencil" aria-hidden="true"></span>
                                     </button>
                                     <?php } ?>
                                     </td>
