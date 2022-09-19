@@ -1,18 +1,19 @@
 $( document ).ready( function () {
 
 	$("#firstName").bloquearNumeros().maxlength(25);
-	$("#lastName").bloquearNumeros().maxlength(25);		
+	$("#lastName").bloquearNumeros().maxlength(25);
+	$("#user").bloquearNumeros().maxlength(25);
 	$("#movilNumber").bloquearTexto().maxlength(10);
 	
 	$( "#form" ).validate( {
 		rules: {
 			firstName: 			{ required: true, minlength: 3, maxlength:25 },
 			lastName: 			{ required: true, minlength: 3, maxlength:25 },
-			user: 				{ required: true, minlength: 4, maxlength:15 },
+			user: 				{ required: true, minlength: 4, maxlength:20 },
 			email: 				{ required: true, email: true },
 			movilNumber: 		{ required: true },
 			id_role: 			{ required: true },
-			idDependencia: 			{ required: true }
+			idDependencia: 		{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {
