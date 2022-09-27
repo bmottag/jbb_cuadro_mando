@@ -34,3 +34,4 @@ files/
 images/equipos/QR
 images/
 application/config/database.php
+sftp-config.json

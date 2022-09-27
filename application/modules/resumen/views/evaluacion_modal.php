@@ -88,8 +88,8 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group text-left">
-					<label class="control-label" for="calificacion">Calificación: *</label>
-					<input type="number" id="calificacion" name="calificacion" class="form-control" value="<?php echo $calificacion; ?>" placeholder="Calificación" required >
+					<label class="control-label" for="calificacion">Calificación de la actividad: *</label>
+					<input type="text" id="calificacion" name="calificacion" class="form-control" value="<?php echo $calificacion; ?>" placeholder="Calificación" required >
 				</div>
 			</div>
 		</div>
@@ -97,7 +97,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="observacion">Observación: *</label>
+					<label class="control-label" for="observacion">Observación de la actividad: *</label>
 					<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required><?php echo $observacion; ?></textarea>
 				</div>
 			</div>
@@ -106,7 +106,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="comentario">Comentario adicional: *</label>
+					<label class="control-label" for="comentario">Comentario interno adicional OCI: *</label>
 					<textarea id="comentario" name="comentario" class="form-control" rows="3" placeholder="Estos comentarios son unicamente de la Oficina de Control Interno"></textarea>
 				</div>
 			</div>
