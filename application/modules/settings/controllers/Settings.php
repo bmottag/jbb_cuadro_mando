@@ -1321,6 +1321,13 @@ class Settings extends CI_Controller {
 			$data['listaLogros'] = $this->general_model->get_basic_search($arrParam);
 
 			$arrParam = array(
+				"table" => " programa",
+				"order" => "numero_programa",
+				"id" => "x"
+			);
+			$data['listaProgramaSEGPLAN'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
 				"table" => " programa_estrategico",
 				"order" => "numero_programa_estrategico",
 				"id" => "x"
@@ -1340,6 +1347,13 @@ class Settings extends CI_Controller {
 				"id" => "x"
 			);
 			$data['listaODS'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_dimensiones_mipg",
+				"order" => "id_dimension",
+				"id" => "x"
+			);
+			$data['listaDimensionesMIPG'] = $this->general_model->get_basic_search($arrParam);
 						
 			$this->load->view("plan_estrategico_modal", $data);
     }

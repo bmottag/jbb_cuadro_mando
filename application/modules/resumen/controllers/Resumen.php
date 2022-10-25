@@ -26,7 +26,7 @@ class Resumen extends CI_Controller {
 	 * @since 24/06/2022
 	 */
 	public function index()
-	{	
+	{
 			if($_GET)
 			{								
 				$arrParam = array(
@@ -688,143 +688,210 @@ class Resumen extends CI_Controller {
 		$spreadsheet = new Spreadsheet();
 		$spreadsheet->getActiveSheet()->setTitle('Consolidado');
 
-		$spreadsheet->getActiveSheet()->mergeCells('A1:A3');
+		$img1 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+		$img1->setPath('images/logo_alcaldia.png');
+		$img1->setCoordinates('A2');
+		$img1->setOffsetX(20);
+		$img1->setOffsetY(10);
+		$img1->setWorksheet($spreadsheet->getActiveSheet());
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('B1', 'Plan de Desarrollo Distrital');
-		$spreadsheet->getActiveSheet()->mergeCells('B1:H2');
+		$img2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+		$img2->setPath('images/logo_bogota.png');
+		$img2->setCoordinates('J2');
+		$img2->setOffsetX(10);
+		$img2->setOffsetY(10);
+		$img2->setWorksheet($spreadsheet->getActiveSheet());
 
+		$validation = $spreadsheet->getActiveSheet()->getCell('B8')->getDataValidation();
+		$validation->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
+		$validation->setErrorStyle(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::STYLE_INFORMATION);
+		$validation->setShowDropDown(true);
+		$validation->setFormula1('"Oficina Jurídica,Oficina Asesora de Planeación,Subdirección Científica,Subdirección Técnica Operativa,Subdirección Educativa y Cultural,Secretaría General"');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('I1', 'Plan Estratégico');
-		$spreadsheet->getActiveSheet()->mergeCells('I1:J2');
+		$spreadsheet->getActiveSheet()->setCellValue('B9','=IF(B8="","Seleccione la dependencia ↑",SUMIF(B14:B200,B8,BA14:BA200))');
 
-		$spreadsheet->getActiveSheet()->mergeCells('K1:K3');
+		$spreadsheet->getActiveSheet()->getStyle("AH")->getNumberFormat()
+					->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+		/*$spreadsheet->getActiveSheet()->getStyle("BK")->getNumberFormat()
+					->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+		$spreadsheet->getActiveSheet()->getStyle("BN")->getNumberFormat()
+					->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);*/
+		$spreadsheet->getActiveSheet()->getStyle("BP")->getNumberFormat()
+					->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('L1', 'Planes Institucionales');
-		$spreadsheet->getActiveSheet()->mergeCells('L1:W2');
+		$spreadsheet->getActiveSheet()->mergeCells('A2:A6');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('X1', 'Actividad');
-		$spreadsheet->getActiveSheet()->mergeCells('X1:Y2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('B2', 'MANUAL DE PROCESOS Y PROCEDIMIENTOS');
+		$spreadsheet->getActiveSheet()->mergeCells('B2:I2');
 
-		$spreadsheet->getActiveSheet()->mergeCells('Z1:Z3');
-		$spreadsheet->getActiveSheet()->mergeCells('AA1:AA3');
-		$spreadsheet->getActiveSheet()->mergeCells('AB1:AB3');
-		$spreadsheet->getActiveSheet()->mergeCells('AC1:AC3');
-		$spreadsheet->getActiveSheet()->mergeCells('AD1:AD3');
-		$spreadsheet->getActiveSheet()->mergeCells('AE1:AE3');
+		$spreadsheet->getActiveSheet(0)->setCellValue('B3', 'DYP - DIRECCIONAMIENTO Y PLANEACIÓN');
+		$spreadsheet->getActiveSheet()->mergeCells('B3:I3');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('AF1', 'Duración');
-		$spreadsheet->getActiveSheet()->mergeCells('AF1:AG2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('B4', 'MATRIZ PLAN OPERATIVO ANUAL');
+		$spreadsheet->getActiveSheet()->mergeCells('B4:I4');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('AH1', 'Ejecución');
-		$spreadsheet->getActiveSheet()->mergeCells('AH1:AS2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('B5', 'Código:');
+		$spreadsheet->getActiveSheet()->mergeCells('B5:C5');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('AT1', 'Estado de la actividad');
-		$spreadsheet->getActiveSheet()->mergeCells('AT1:AW2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('D5', 'Versión:');
+		$spreadsheet->getActiveSheet()->mergeCells('D5:E5');
 
-		$spreadsheet->getActiveSheet()->mergeCells('AX1:AX3');
+		$spreadsheet->getActiveSheet(0)->setCellValue('F5', 'Fecha:');
+		$spreadsheet->getActiveSheet()->mergeCells('F5:G5');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('AY1', 'Descripción de actividades');
-		$spreadsheet->getActiveSheet()->mergeCells('AY1:BB2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('H5', 'Página:');
+		$spreadsheet->getActiveSheet()->mergeCells('H5:I5');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('BC1', 'Evidencias');
-		$spreadsheet->getActiveSheet()->mergeCells('BC1:BF2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('B6', 'DYP.PR.17.F.01');
+		$spreadsheet->getActiveSheet()->mergeCells('B6:C6');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('BG1', 'Observaciones POA');
-		$spreadsheet->getActiveSheet()->mergeCells('BG1:BJ2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('D6', '1');
+		$spreadsheet->getActiveSheet()->mergeCells('D6:E6');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('BK1', 'EVALUACIÓN CONTROL INTERNO');
-		$spreadsheet->getActiveSheet()->mergeCells('BK1:BN1');
+		$spreadsheet->getActiveSheet(0)->setCellValue('F6', '29/09/2022');
+		$spreadsheet->getActiveSheet()->mergeCells('F6:G6');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('BK2', 'Semestre I');
-		$spreadsheet->getActiveSheet()->mergeCells('BK2:BL2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('H6', '1 de 6');
+		$spreadsheet->getActiveSheet()->mergeCells('H6:I6');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('BM2', 'Semestre I');
-		$spreadsheet->getActiveSheet()->mergeCells('BM2:BN2');
+		$spreadsheet->getActiveSheet()->mergeCells('J2:J6');
 
-		$spreadsheet->getActiveSheet(0)->setCellValue('BO1', 'Programación');
-		$spreadsheet->getActiveSheet()->mergeCells('BO1:BZ2');
+		$spreadsheet->getActiveSheet(0)->setCellValue('A8', 'Dependencia');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('A9', 'Avance POA Anual');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('E8', 'VIGENCIA: 2022');
+		$spreadsheet->getActiveSheet()->mergeCells('E8:F8');
+
+		$spreadsheet->getActiveSheet()->mergeCells('A11:A13');
+
+		$spreadsheet->getActiveSheet()->mergeCells('B11:B13');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('C11', 'Plan de Desarrollo Distrital');
+		$spreadsheet->getActiveSheet()->mergeCells('C11:J12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('K11', 'Plan Estratégico');
+		$spreadsheet->getActiveSheet()->mergeCells('K11:L12');
+
+		$spreadsheet->getActiveSheet()->mergeCells('M11:M13');
+
+		$spreadsheet->getActiveSheet()->mergeCells('N11:N13');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('O11', 'Planes Institucionales');
+		$spreadsheet->getActiveSheet()->mergeCells('O11:Z12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('AA11', 'Actividad');
+		$spreadsheet->getActiveSheet()->mergeCells('AA11:AB12');
+
+		$spreadsheet->getActiveSheet()->mergeCells('AC11:AC13');
+		$spreadsheet->getActiveSheet()->mergeCells('AD11:AD13');
+		$spreadsheet->getActiveSheet()->mergeCells('AE11:AE13');
+		$spreadsheet->getActiveSheet()->mergeCells('AF11:AF13');
+		$spreadsheet->getActiveSheet()->mergeCells('AG11:AG13');
+		$spreadsheet->getActiveSheet()->mergeCells('AH11:AH13');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('AI11', 'Duración');
+		$spreadsheet->getActiveSheet()->mergeCells('AI11:AJ12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('AK11', 'Ejecución');
+		$spreadsheet->getActiveSheet()->mergeCells('AK11:AV12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('AW11', 'Estado de la actividad');
+		$spreadsheet->getActiveSheet()->mergeCells('AW11:AZ12');
+
+		$spreadsheet->getActiveSheet()->mergeCells('BA11:BA13');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('BB11', 'Descripción de actividades');
+		$spreadsheet->getActiveSheet()->mergeCells('BB11:BE12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('BF11', 'Evidencias');
+		$spreadsheet->getActiveSheet()->mergeCells('BF11:BI12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('BJ11', 'EVALUACIÓN CONTROL INTERNO');
+		$spreadsheet->getActiveSheet()->mergeCells('BJ11:BQ11');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('BJ12', 'Semestre I');
+		$spreadsheet->getActiveSheet()->mergeCells('BJ12:BL12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('BM12', 'Semestre II');
+		$spreadsheet->getActiveSheet()->mergeCells('BM12:BO12');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('BP12', '% Avance Anual');
+		$spreadsheet->getActiveSheet()->mergeCells('BP12:BP13');
+
+		$spreadsheet->getActiveSheet(0)->setCellValue('BQ12', 'Total Evidenciado Evaluación');
+		$spreadsheet->getActiveSheet()->mergeCells('BQ12:BQ13');
 
 		$spreadsheet->getActiveSheet(0)
-							->setCellValue('A1', 'Dependencia')
-							->setCellValue('B3', 'Proyecto de Inversión')
-							->setCellValue('C3', 'Meta proyecto de inversión')
-							->setCellValue('D3', 'Presupuesto Meta Proyecto de Inversión o Funcionamiento')
-							->setCellValue('E3', 'Propósito')
-							->setCellValue('F3', 'Logro')
-							->setCellValue('G3', 'Programa Estratégico')
-							->setCellValue('H3', 'Meta PDD')
-							->setCellValue('I3', 'Estrategias')
-							->setCellValue('J3', 'Objetivo Estratégico')
-							->setCellValue('K1', 'Proceso de Calidad')
-							->setCellValue('L3', 'Plan Institucional de Archivos de la Entidad')
-							->setCellValue('M3', 'Plan Anual de Adquisiciones')
-							->setCellValue('N3', 'Plan Anual de Vacantes')
-							->setCellValue('O3', 'Plan de Previsión de Recursos Humanos')
-							->setCellValue('P3', 'Plan Estratégico de Talento Humano')
-							->setCellValue('Q3', 'Plan Institucional de Capacitación')
-							->setCellValue('R3', 'Plan de Incentivos Institucionales')
-							->setCellValue('S3', 'Plan de Trabajo Anual en Seguridad y Salud en el Trabajo')
-							->setCellValue('T3', 'Plan Anticorrupción y de Atención al Ciudadano')
-							->setCellValue('U3', 'Plan Estratégico de Tecnologías de la Información y las Comunicaciones')
-							->setCellValue('V3', 'Plan de Tratamiento de Riesgos de Seguridad y Privacidad de la Información ')
-							->setCellValue('W3', 'Plan de Seguridad y Privacidad de la Información ')
-							->setCellValue('X3', 'No.')
-							->setCellValue('Y3', 'Actividad')
-							->setCellValue('Z1', 'Meta Plan Operativo Anual')
-							->setCellValue('AA1', 'Unidad de Medida')
-							->setCellValue('AB1', 'Nombre del indicador')
-							->setCellValue('AC1', 'Tipo de indicador')
-							->setCellValue('AD1', 'Responsable')
-							->setCellValue('AE1', 'Ponderación')
-							->setCellValue('AF3', 'Fecha inicial')
-							->setCellValue('AG3', 'Fecha Final')
-							->setCellValue('AH3', 'Enero')
-							->setCellValue('AI3', 'Febrero')
-							->setCellValue('AJ3', 'Marzo')
-							->setCellValue('AK3', 'Abril')
-							->setCellValue('AL3', 'Mayo')
-							->setCellValue('AM3', 'Junio')
-							->setCellValue('AN3', 'Julio')
-							->setCellValue('AO3', 'Agosto')
-							->setCellValue('AP3', 'Septiembre')
-							->setCellValue('AQ3', 'Octubre')
-							->setCellValue('AR3', 'Noviembre')
-							->setCellValue('AS3', 'Diciembre')
-							->setCellValue('AT3', 'Trimestre I')
-							->setCellValue('AU3', 'Trimestre II')
-							->setCellValue('AV3', 'Trimestre III')
-							->setCellValue('AW3', 'Trimestre IV')
-							->setCellValue('AX1', 'Avance POA')
-							->setCellValue('AY3', 'Trimestre I')
-							->setCellValue('AZ3', 'Trimestre II')
-							->setCellValue('BA3', 'Trimestre III')
-							->setCellValue('BB3', 'Trimestre IV')
-							->setCellValue('BC3', 'Trimestre I')
-							->setCellValue('BD3', 'Trimestre II')
-							->setCellValue('BE3', 'Trimestre III')
-							->setCellValue('BF3', 'Trimestre IV')
-							->setCellValue('BG3', 'Trimestre I')
-							->setCellValue('BH3', 'Trimestre II')
-							->setCellValue('BI3', 'Trimestre III')
-							->setCellValue('BJ3', 'Trimestre IV')
-							->setCellValue('BK3', 'Calificación Semestre')
-							->setCellValue('BL3', 'Observaciones de la Evaluación')
-							->setCellValue('BM3', 'Calificación Semestre')
-							->setCellValue('BN3', 'Observaciones de la Evaluación')
-							->setCellValue('BO3', 'Enero')
-							->setCellValue('BP3', 'Febrero')
-							->setCellValue('BQ3', 'Marzo')
-							->setCellValue('BR3', 'Abril')
-							->setCellValue('BS3', 'Mayo')
-							->setCellValue('BT3', 'Junio')
-							->setCellValue('BU3', 'Julio')
-							->setCellValue('BV3', 'Agosto')
-							->setCellValue('BW3', 'Septiembre')
-							->setCellValue('BX3', 'Octubre')
-							->setCellValue('BY3', 'Noviembre')
-							->setCellValue('BZ3', 'Diciembre');
+							->setCellValue('A11', 'Año')
+							->setCellValue('B11', 'Dependencia')
+							->setCellValue('C13', 'Proyecto de Inversión')
+							->setCellValue('D13', 'Meta proyecto de inversión')
+							->setCellValue('E13', 'Presupuesto Meta Proyecto de Inversión o Funcionamiento')
+							->setCellValue('F13', 'Propósito')
+							->setCellValue('G13', 'Logro')
+							->setCellValue('H13', 'Programa Estratégico')
+							->setCellValue('I13', 'Programa')
+							->setCellValue('J13', 'Meta PDD')
+							->setCellValue('K13', 'Estrategias')
+							->setCellValue('L13', 'Objetivo Estratégico')
+							->setCellValue('M11', 'Dimensiones MIPG')
+							->setCellValue('N11', 'Proceso de Calidad')
+							->setCellValue('O13', 'Plan Institucional de Archivos de la Entidad')
+							->setCellValue('P13', 'Plan Anual de Adquisiciones')
+							->setCellValue('Q13', 'Plan Anual de Vacantes')
+							->setCellValue('R13', 'Plan de Previsión de Recursos Humanos')
+							->setCellValue('S13', 'Plan Estratégico de Talento Humano')
+							->setCellValue('T13', 'Plan Institucional de Capacitación')
+							->setCellValue('U13', 'Plan de Incentivos Institucionales')
+							->setCellValue('V13', 'Plan de Trabajo Anual en Seguridad y Salud en el Trabajo')
+							->setCellValue('W13', 'Plan Anticorrupción y de Atención al Ciudadano')
+							->setCellValue('X13', 'Plan Estratégico de Tecnologías de la Información y las Comunicaciones')
+							->setCellValue('Y13', 'Plan de Tratamiento de Riesgos de Seguridad y Privacidad de la Información ')
+							->setCellValue('Z13', 'Plan de Seguridad y Privacidad de la Información ')
+							->setCellValue('AA13', 'No.')
+							->setCellValue('AB13', 'Actividad')
+							->setCellValue('AC11', 'Meta Plan Operativo Anual')
+							->setCellValue('AD11', 'Unidad de Medida')
+							->setCellValue('AE11', 'Nombre del indicador')
+							->setCellValue('AF11', 'Tipo de indicador')
+							->setCellValue('AG11', 'Responsable')
+							->setCellValue('AH11', 'Ponderación')
+							->setCellValue('AI13', 'Fecha inicial')
+							->setCellValue('AJ13', 'Fecha Final')
+							->setCellValue('AK13', 'Enero')
+							->setCellValue('AL13', 'Febrero')
+							->setCellValue('AM13', 'Marzo')
+							->setCellValue('AN13', 'Abril')
+							->setCellValue('AO13', 'Mayo')
+							->setCellValue('AP13', 'Junio')
+							->setCellValue('AQ13', 'Julio')
+							->setCellValue('AR13', 'Agosto')
+							->setCellValue('AS13', 'Septiembre')
+							->setCellValue('AT13', 'Octubre')
+							->setCellValue('AU13', 'Noviembre')
+							->setCellValue('AV13', 'Diciembre')
+							->setCellValue('AW13', 'Trimestre I')
+							->setCellValue('AX13', 'Trimestre II')
+							->setCellValue('AY13', 'Trimestre III')
+							->setCellValue('AZ13', 'Trimestre IV')
+							->setCellValue('BA11', 'Avance POA')
+							->setCellValue('BB13', 'Trimestre I')
+							->setCellValue('BC13', 'Trimestre II')
+							->setCellValue('BD13', 'Trimestre III')
+							->setCellValue('BE13', 'Trimestre IV')
+							->setCellValue('BF13', 'Trimestre I')
+							->setCellValue('BG13', 'Trimestre II')
+							->setCellValue('BH13', 'Trimestre III')
+							->setCellValue('BI13', 'Trimestre IV')
+							->setCellValue('BJ13', 'Total Evidenciado Evaluación')
+							->setCellValue('BK13', '% Cumplimiento Semestre')
+							->setCellValue('BL13', 'Observaciones de la Evaluación')
+							->setCellValue('BM13', 'Total Evidenciado Evaluación')
+							->setCellValue('BN13', '% Cumplimiento Semestre')
+							->setCellValue('BO13', 'Observaciones de la Evaluación');
 
-		$j=4;
+		$j=14;
 		if($listaActividades){
 			foreach ($listaActividades as $lista):
 				$arrParam = array("numeroActividad" => $lista['numero_actividad']);
@@ -854,7 +921,7 @@ class Resumen extends CI_Controller {
 				$plan_riesgos = $lista['plan_riesgos'] == 1?"Si":"N/A";
 				$plan_informacion = $lista['plan_informacion'] == 1?"Si":"N/A";
 
-				$spreadsheet->getActiveSheet()->getStyle('A'.$j.':BN'.$j)->applyFromArray(
+				$spreadsheet->getActiveSheet()->getStyle('A'.$j.':BU'.$j)->applyFromArray(
 				    [
 					    'alignment' => [
 					        'wrapText' => TRUE
@@ -862,135 +929,126 @@ class Resumen extends CI_Controller {
 				    ]
 				);
 
-				$spreadsheet->getActiveSheet()->getStyle('D' . $j)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
-				$spreadsheet->getActiveSheet()->getStyle('S' . $j)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+				$spreadsheet->getActiveSheet()->getStyle('E' . $j)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+				$spreadsheet->getActiveSheet()->getStyle('AA' . $j)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
 				$spreadsheet->getActiveSheet()
-							->setCellValue('A'.$j, $lista['dependencia'])
-							->setCellValue('B'.$j, $lista['proyecto_inversion'])
-							->setCellValue('C'.$j, $lista['meta_proyecto'])
-							->setCellValue('D'.$j, $lista['presupuesto_meta'])
-							->setCellValue('E'.$j, $lista['proposito'])
-							->setCellValue('F'.$j, $lista['logro'])
-							->setCellValue('G'.$j, $lista['programa'])
-							->setCellValue('H'.$j, $lista['meta_pdd'])
-							->setCellValue('I'.$j, $lista['estrategia'])
-							->setCellValue('J'.$j, $lista['objetivo_estrategico'])
-							->setCellValue('K'.$j, $lista['proceso_calidad'])
-							->setCellValue('L'.$j, $plan_archivos)
-							->setCellValue('M'.$j, $plan_adquisiciones)
-							->setCellValue('N'.$j, $plan_vacantes)
-							->setCellValue('O'.$j, $plan_recursos)
-							->setCellValue('P'.$j, $plan_talento)
-							->setCellValue('Q'.$j, $plan_capacitacion)
-							->setCellValue('R'.$j, $plan_incentivos)
-							->setCellValue('S'.$j, $plan_trabajo)
-							->setCellValue('T'.$j, $plan_anticorrupcion)
-							->setCellValue('U'.$j, $plan_tecnologia)
-							->setCellValue('V'.$j, $plan_riesgos)
-							->setCellValue('W'.$j, $plan_informacion)
-							->setCellValue('X'.$j, $lista['numero_actividad'])
-							->setCellValue('Y'.$j, $lista['descripcion_actividad'])
-							->setCellValue('Z'.$j, $lista['meta_plan_operativo_anual'])
-							->setCellValue('AA'.$j, $lista['unidad_medida'])
-							->setCellValue('AB'.$j, $lista['nombre_indicador'])
-							->setCellValue('AC'.$j, $tipo_indicador)
-							->setCellValue('AD'.$j, $lista['area_responsable'])
-							->setCellValue('AE'.$j, $lista['ponderacion'] . '%')
-							->setCellValue('AF'.$j, $lista['mes_inicial'])
-							->setCellValue('AG'.$j, $lista['mes_final']);
+							->setCellValue('A'.$j, $lista['vigencia_meta_proyecto'])
+							->setCellValue('B'.$j, $lista['dependencia'])
+							->setCellValue('C'.$j, $lista['proyecto_inversion'])
+							->setCellValue('D'.$j, $lista['meta_proyecto'])
+							->setCellValue('E'.$j, $lista['presupuesto_meta'])
+							->setCellValue('F'.$j, $lista['proposito'])
+							->setCellValue('G'.$j, $lista['logro'])
+							->setCellValue('H'.$j, $lista['programa_estrategico'])
+							->setCellValue('I'.$j, $lista['programa'])
+							->setCellValue('J'.$j, $lista['meta_pdd'])
+							->setCellValue('K'.$j, $lista['estrategia'])
+							->setCellValue('L'.$j, $lista['objetivo_estrategico'])
+							->setCellValue('M'.$j, $lista['dimension'])
+							->setCellValue('N'.$j, $lista['proceso_calidad'])
+							->setCellValue('O'.$j, $plan_archivos)
+							->setCellValue('P'.$j, $plan_adquisiciones)
+							->setCellValue('Q'.$j, $plan_vacantes)
+							->setCellValue('R'.$j, $plan_recursos)
+							->setCellValue('S'.$j, $plan_talento)
+							->setCellValue('T'.$j, $plan_capacitacion)
+							->setCellValue('U'.$j, $plan_incentivos)
+							->setCellValue('V'.$j, $plan_trabajo)
+							->setCellValue('W'.$j, $plan_anticorrupcion)
+							->setCellValue('X'.$j, $plan_tecnologia)
+							->setCellValue('Y'.$j, $plan_riesgos)
+							->setCellValue('Z'.$j, $plan_informacion)
+							->setCellValue('AA'.$j, $lista['numero_actividad'])
+							->setCellValue('AB'.$j, $lista['descripcion_actividad'])
+							->setCellValue('AC'.$j, $lista['meta_plan_operativo_anual'])
+							->setCellValue('AD'.$j, $lista['unidad_medida'])
+							->setCellValue('AE'.$j, $lista['nombre_indicador'])
+							->setCellValue('AF'.$j, $tipo_indicador)
+							->setCellValue('AG'.$j, $lista['area_responsable'])
+							->setCellValue('AH'.$j, $lista['ponderacion'] . '%')
+							->setCellValue('AI'.$j, $lista['mes_inicial'])
+							->setCellValue('AJ'.$j, $lista['mes_final']);
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 1){
-						$spreadsheet->getActiveSheet()->setCellValue('AH'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BO'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AK'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 2){
-						$spreadsheet->getActiveSheet()->setCellValue('AI'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BP'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AL'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 3){
-						$spreadsheet->getActiveSheet()->setCellValue('AJ'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BQ'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AM'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 4){
-						$spreadsheet->getActiveSheet()->setCellValue('AK'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BR'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AN'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 5){
-						$spreadsheet->getActiveSheet()->setCellValue('AL'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BS'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AO'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 6){
-						$spreadsheet->getActiveSheet()->setCellValue('AM'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BT'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AP'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 7){
-						$spreadsheet->getActiveSheet()->setCellValue('AN'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BU'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AQ'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 8){
-						$spreadsheet->getActiveSheet()->setCellValue('AO'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BV'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AR'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 9){
-						$spreadsheet->getActiveSheet()->setCellValue('AP'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BW'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AS'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 10){
-						$spreadsheet->getActiveSheet()->setCellValue('AQ'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BX'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AT'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 11){
-						$spreadsheet->getActiveSheet()->setCellValue('AR'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BY'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AU'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
 
 				foreach ($infoEjecucion as $ejecucion):
 					if($ejecucion['fk_id_mes'] == 12){
-						$spreadsheet->getActiveSheet()->setCellValue('AS'.$j, $ejecucion['ejecutado']);
-						$spreadsheet->getActiveSheet()->setCellValue('BZ'.$j, $ejecucion['programado']);
+						$spreadsheet->getActiveSheet()->setCellValue('AV'.$j, $ejecucion['ejecutado']);
 						break;
 					}
 				endforeach;
@@ -1008,23 +1066,19 @@ class Resumen extends CI_Controller {
 				$avance_poa = floatval($avance_poa);
 				
 				$spreadsheet->getActiveSheet()
-							->setCellValue('AT'.$j, $trimestre_1)
-							->setCellValue('AU'.$j, $trimestre_2)
-							->setCellValue('AV'.$j, $trimestre_3)
-							->setCellValue('AW'.$j, $trimestre_4)
-							->setCellValue('AX'.$j, $avance_poa)
-							->setCellValue('AY'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_1']))
-							->setCellValue('AZ'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_2']))
-							->setCellValue('BA'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_3']))
-							->setCellValue('BB'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_4']))
-							->setCellValue('BC'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_1']))
-							->setCellValue('BD'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_2']))
-							->setCellValue('BE'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_3']))
-							->setCellValue('BF'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_4']))
-							->setCellValue('BG'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_1']))
-							->setCellValue('BH'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_2']))
-							->setCellValue('BI'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_3']))
-							->setCellValue('BJ'.$j, str_replace(array("<br>"),"\n",$lista['mensaje_poa_trimestre_4']));
+							->setCellValue('AW'.$j, $trimestre_1)
+							->setCellValue('AX'.$j, $trimestre_2)
+							->setCellValue('AY'.$j, $trimestre_3)
+							->setCellValue('AZ'.$j, $trimestre_4)
+							->setCellValue('BA'.$j, $avance_poa)
+							->setCellValue('BB'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_1']))
+							->setCellValue('BC'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_2']))
+							->setCellValue('BD'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_3']))
+							->setCellValue('BE'.$j, str_replace(array("<br>"),"\n",$lista['descripcion_actividad_trimestre_4']))
+							->setCellValue('BF'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_1']))
+							->setCellValue('BG'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_2']))
+							->setCellValue('BH'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_3']))
+							->setCellValue('BI'.$j, str_replace(array("<br>"),"\n",$lista['evidencias_trimestre_4']));
 
 				$calificacio1 = '';
 				$observacion1 = '';
@@ -1040,52 +1094,56 @@ class Resumen extends CI_Controller {
 				}
 
 				$spreadsheet->getActiveSheet()
-							->setCellValue('BK'.$j, $calificacio1)
+							->setCellValue('BJ'.$j, $calificacio1)
+							->setCellValue('BK'.$j, '=IFERROR(BJ'.$j.'/($AC$'.$j.'/2),"")')
 							->setCellValue('BL'.$j, $observacion1)
 							->setCellValue('BM'.$j, $calificacio2)
-							->setCellValue('BN'.$j, $observacion2);
+							->setCellValue('BN'.$j, '=IFERROR(BM'.$j.'/($AC$'.$j.'/2),"")')
+							->setCellValue('BO'.$j, $observacion2)
+							->setCellValue('BP'.$j, '=IFERROR((BJ'.$j.'+BM'.$j.')/$AC$'.$j.',"")')
+							->setCellValue('BQ'.$j, '=IFERROR(BP'.$j.'*AH'.$j.',"")');
 
 				$j++;
 			endforeach;
 		}
 
-		// Set column widths							  
-		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(40);
+		// Set column widths
+		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(40);
 		$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(30);
-		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(35);
-		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(40);
+		$spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(40);
+		$spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(30);
+		$spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(35);
 		$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(40);
 		$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(40);
 		$spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(30);
-		$spreadsheet->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('M')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('R')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('S')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('T')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('U')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('W')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('X')->setAutoSize(true);
-		$spreadsheet->getActiveSheet()->getColumnDimension('Y')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('Z')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AA')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(40);
+		$spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(30);
+		$spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(30);
+		$spreadsheet->getActiveSheet()->getColumnDimension('O')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('P')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('Q')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('R')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('S')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('T')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('U')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('V')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('W')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('X')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('Y')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('Z')->setWidth(5);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AA')->setWidth(5);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AB')->setWidth(40);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AC')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AD')->setWidth(30);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AE')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AD')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AE')->setWidth(40);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AF')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AG')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AH')->setWidth(10);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AI')->setWidth(10);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AJ')->setWidth(10);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AG')->setWidth(30);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AH')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AI')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AJ')->setWidth(20);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AK')->setWidth(10);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AL')->setWidth(10);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AM')->setWidth(10);
@@ -1095,14 +1153,14 @@ class Resumen extends CI_Controller {
 		$spreadsheet->getActiveSheet()->getColumnDimension('AQ')->setWidth(10);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AR')->setWidth(10);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AS')->setWidth(10);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AT')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AU')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AV')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AT')->setWidth(10);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AU')->setWidth(10);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AV')->setWidth(10);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AW')->setWidth(20);
 		$spreadsheet->getActiveSheet()->getColumnDimension('AX')->setWidth(20);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AY')->setWidth(120);
-		$spreadsheet->getActiveSheet()->getColumnDimension('AZ')->setWidth(120);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BA')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AY')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('AZ')->setWidth(20);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BA')->setWidth(20);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BB')->setWidth(120);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BC')->setWidth(120);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BD')->setWidth(120);
@@ -1111,53 +1169,85 @@ class Resumen extends CI_Controller {
 		$spreadsheet->getActiveSheet()->getColumnDimension('BG')->setWidth(120);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BH')->setWidth(120);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BI')->setWidth(120);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BJ')->setWidth(120);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BJ')->setWidth(40);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BK')->setWidth(40);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BL')->setWidth(80);
 		$spreadsheet->getActiveSheet()->getColumnDimension('BM')->setWidth(40);
-		$spreadsheet->getActiveSheet()->getColumnDimension('BN')->setWidth(80);
-
+		$spreadsheet->getActiveSheet()->getColumnDimension('BN')->setWidth(40);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BO')->setWidth(80);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BP')->setWidth(40);
+		$spreadsheet->getActiveSheet()->getColumnDimension('BQ')->setWidth(40);
 
 		// Set fonts
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN2')->getFont()->setSize(11);
-		$spreadsheet->getActiveSheet()->getStyle('BJ2:BN2')->getFont()->setSize(11);
-		$spreadsheet->getActiveSheet()->getStyle('A3:K3')->getFont()->setSize(11);
-		$spreadsheet->getActiveSheet()->getStyle('L3:W3')->getFont()->setSize(8);
-		$spreadsheet->getActiveSheet()->getStyle('X3:BN3')->getFont()->setSize(11);
+		$spreadsheet->getActiveSheet()->getStyle('B2:I4')->getFont()->setSize(14);
+		$spreadsheet->getActiveSheet()->getStyle('B5:I6')->getFont()->setSize(11);
+		$spreadsheet->getActiveSheet()->getStyle('E8:F8')->getFont()->setSize(11);
+		$spreadsheet->getActiveSheet()->getStyle('A8:B9')->getFont()->setSize(11);
 
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN2')->getFont()->setBold(true);
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ12')->getFont()->setSize(11);
+		$spreadsheet->getActiveSheet()->getStyle('BM12:BQ12')->getFont()->setSize(11);
+		$spreadsheet->getActiveSheet()->getStyle('A13:N13')->getFont()->setSize(11);
+		$spreadsheet->getActiveSheet()->getStyle('O13:Z13')->getFont()->setSize(8);
+		$spreadsheet->getActiveSheet()->getStyle('AA13:BQ13')->getFont()->setSize(11);
 
-		$spreadsheet->getActiveSheet()->getStyle('A3:K3')->getFont()->setBold(true);
-		$spreadsheet->getActiveSheet()->getStyle('X3:AG3')->getFont()->setBold(true);
-		$spreadsheet->getActiveSheet()->getStyle('AT3:BN3')->getFont()->setBold(true);
+		$spreadsheet->getActiveSheet()->getStyle('B2:I4')->getFont()->setBold(true);
 
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN2')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
- 		$spreadsheet->getActiveSheet()->getStyle('A1:BN2')->getFill()->setFillType(Fill::FILL_SOLID);
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN2')->getFill()->getStartColor()->setARGB('236e09');
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ12')->getFont()->setBold(true);
 
-		$spreadsheet->getActiveSheet()->getStyle('A2:BN2')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
- 		$spreadsheet->getActiveSheet()->getStyle('A2:BN2')->getFill()->setFillType(Fill::FILL_SOLID);
-		$spreadsheet->getActiveSheet()->getStyle('A2:BN2')->getFill()->getStartColor()->setARGB('236e09');
+		$spreadsheet->getActiveSheet()->getStyle('A13:N13')->getFont()->setBold(true);
+		$spreadsheet->getActiveSheet()->getStyle('AA13:AJ13')->getFont()->setBold(true);
+		$spreadsheet->getActiveSheet()->getStyle('AW13:BQ13')->getFont()->setBold(true);
 
-		$spreadsheet->getActiveSheet()->getStyle('A3:BN3')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
- 		$spreadsheet->getActiveSheet()->getStyle('A3:BN3')->getFill()->setFillType(Fill::FILL_SOLID);
-		$spreadsheet->getActiveSheet()->getStyle('A3:BN3')->getFill()->getStartColor()->setARGB('86B659');
+		$spreadsheet->getActiveSheet()->getStyle('B2:I6')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+ 		$spreadsheet->getActiveSheet()->getStyle('B2:I6')->getFill()->setFillType(Fill::FILL_SOLID);
+		$spreadsheet->getActiveSheet()->getStyle('B2:I6')->getFill()->getStartColor()->setARGB('236e09');
 
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('A8:B9')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+ 		$spreadsheet->getActiveSheet()->getStyle('A8:B9')->getFill()->setFillType(Fill::FILL_SOLID);
+		$spreadsheet->getActiveSheet()->getStyle('A8:B9')->getFill()->getStartColor()->setARGB('236e09');
 
-		$spreadsheet->getActiveSheet()->getStyle('BK2:BN2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-		$spreadsheet->getActiveSheet()->getStyle('BK2:BN2')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ12')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+ 		$spreadsheet->getActiveSheet()->getStyle('A11:BQ12')->getFill()->setFillType(Fill::FILL_SOLID);
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ12')->getFill()->getStartColor()->setARGB('236e09');
 
-		$spreadsheet->getActiveSheet()->getStyle('A3:K3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-		$spreadsheet->getActiveSheet()->getStyle('A3:K3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('A12:BQ12')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+ 		$spreadsheet->getActiveSheet()->getStyle('A12:BQ12')->getFill()->setFillType(Fill::FILL_SOLID);
+		$spreadsheet->getActiveSheet()->getStyle('A12:BQ12')->getFill()->getStartColor()->setARGB('236e09');
 
-		$spreadsheet->getActiveSheet()->getStyle('X3:BN3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-		$spreadsheet->getActiveSheet()->getStyle('X3:BN3')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('A13:BQ13')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+ 		$spreadsheet->getActiveSheet()->getStyle('A13:BQ13')->getFill()->setFillType(Fill::FILL_SOLID);
+		$spreadsheet->getActiveSheet()->getStyle('A13:BQ13')->getFill()->getStartColor()->setARGB('86B659');
 
-		$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(35);
-		$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(75);
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN2')->applyFromArray(
+		$spreadsheet->getActiveSheet()->getStyle('B2:I6')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('B2:I6')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$spreadsheet->getActiveSheet()->getStyle('A8:B9')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('A8:B9')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$spreadsheet->getActiveSheet()->getStyle('E8:F8')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('E8:F8')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ11')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$spreadsheet->getActiveSheet()->getStyle('BJ12:BQ12')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('BJ12:BQ12')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$spreadsheet->getActiveSheet()->getStyle('A13:N13')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('A13:N13')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$spreadsheet->getActiveSheet()->getStyle('AA13:BQ13')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+		$spreadsheet->getActiveSheet()->getStyle('AA13:BQ13')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		$spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(20);
+		$spreadsheet->getActiveSheet()->getRowDimension('3')->setRowHeight(20);
+		$spreadsheet->getActiveSheet()->getRowDimension('4')->setRowHeight(20);
+		$spreadsheet->getActiveSheet()->getRowDimension('5')->setRowHeight(20);
+		$spreadsheet->getActiveSheet()->getRowDimension('6')->setRowHeight(20);
+		$spreadsheet->getActiveSheet()->getRowDimension('8')->setRowHeight(20);
+		$spreadsheet->getActiveSheet()->getRowDimension('9')->setRowHeight(20);
+		$spreadsheet->getActiveSheet()->getRowDimension('13')->setRowHeight(160);
+		$spreadsheet->getActiveSheet()->getStyle('A2:J6')->applyFromArray(
 		    [
 		        'borders' => [
 		            'allBorders' => ['borderStyle' => Border::BORDER_THIN],
@@ -1165,7 +1255,7 @@ class Resumen extends CI_Controller {
 		    ]
 		);
 
-		$spreadsheet->getActiveSheet()->getStyle('A3:BN3')->applyFromArray(
+		$spreadsheet->getActiveSheet()->getStyle('A8:B9')->applyFromArray(
 		    [
 		        'borders' => [
 		            'allBorders' => ['borderStyle' => Border::BORDER_THIN],
@@ -1173,7 +1263,23 @@ class Resumen extends CI_Controller {
 		    ]
 		);
 
-		$spreadsheet->getActiveSheet()->getStyle('L3:W3')->applyFromArray(
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ12')->applyFromArray(
+		    [
+		        'borders' => [
+		            'allBorders' => ['borderStyle' => Border::BORDER_THIN],
+		        ],
+		    ]
+		);
+
+		$spreadsheet->getActiveSheet()->getStyle('A13:BQ13')->applyFromArray(
+		    [
+		        'borders' => [
+		            'allBorders' => ['borderStyle' => Border::BORDER_THIN],
+		        ],
+		    ]
+		);
+
+		$spreadsheet->getActiveSheet()->getStyle('O13:Z13')->applyFromArray(
 		    [
 			    'alignment' => [
 			        'textRotation' => 90,
@@ -1183,7 +1289,7 @@ class Resumen extends CI_Controller {
 		    ]
 		);
 
-		$spreadsheet->getActiveSheet()->getStyle('AH3:AS3')->applyFromArray(
+		$spreadsheet->getActiveSheet()->getStyle('AK13:AV13')->applyFromArray(
 		    [
 			    'alignment' => [
 			        'textRotation' => 90,
@@ -1193,7 +1299,7 @@ class Resumen extends CI_Controller {
 		    ]
 		);
 
-		$spreadsheet->getActiveSheet()->getStyle('A3:BN3')->applyFromArray(
+		$spreadsheet->getActiveSheet()->getStyle('A13:BQ13')->applyFromArray(
 		    [
 			    'alignment' => [
 			        'wrapText' => TRUE
@@ -1201,7 +1307,7 @@ class Resumen extends CI_Controller {
 		    ]
 		);
 
-		$spreadsheet->getActiveSheet()->getStyle('A1:BN2')->applyFromArray(
+		$spreadsheet->getActiveSheet()->getStyle('A11:BQ12')->applyFromArray(
 		    [
 			    'alignment' => [
 			        'wrapText' => TRUE

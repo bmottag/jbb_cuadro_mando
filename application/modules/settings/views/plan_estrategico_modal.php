@@ -44,6 +44,20 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
+					<label class="control-label" for="id_programa_sp">Programa SEGPLAN: *</label>
+					<select name="id_programa_sp" id="id_programa_sp" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($listaProgramaSEGPLAN); $i++) { ?>
+							<option value="<?php echo $listaProgramaSEGPLAN[$i]["numero_programa"]; ?>" <?php if($information && $information[0]["fk_numero_programa"] == $listaProgramaSEGPLAN[$i]["numero_programa"]) { echo "selected"; }  ?>><?php echo $listaProgramaSEGPLAN[$i]["numero_programa"] . ' ' . $listaProgramaSEGPLAN[$i]["programa"]; ?></option>		
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group text-left">
 					<label class="control-label" for="id_programa_estrategico">Programa Estratégico: *</label>
 					<select name="id_programa_estrategico" id="id_programa_estrategico" class="form-control" required >
 						<option value="">Seleccione...</option>
@@ -110,6 +124,17 @@
 				</div>
 			</div>
 
+			<div class="col-sm-6">
+				<div class="form-group text-left">
+					<label class="control-label" for="id_dimension">Dimensiones MIPG: *</label>
+					<select name="id_dimension" id="id_dimension" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($listaDimensionesMIPG); $i++) { ?>
+							<option value="<?php echo $listaDimensionesMIPG[$i]["id_dimension"]; ?>" <?php if($information && $information[0]["fk_id_dimension"] == $listaDimensionesMIPG[$i]["id_dimension"]) { echo "selected"; }  ?>><?php echo $listaDimensionesMIPG[$i]["id_dimension"] . ' ' . $listaDimensionesMIPG[$i]["nombre_dimension"]; ?></option>		
+						<?php } ?>
+					</select>
+				</div>
+			</div>
 		</div>
 								
 		<div class="form-group">

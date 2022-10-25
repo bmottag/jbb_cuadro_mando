@@ -375,9 +375,11 @@
 					'fk_nu_meta_proyecto_inversion' => $this->input->post('id_meta_proyecto_inversion'),
 					'fk_numero_proposito' => $this->input->post('id_proposito'),
 					'fk_numero_logro' => $this->input->post('id_logros'),
+					'fk_numero_programa' => $this->input->post('id_programa_sp'),
 					'fk_numero_programa_estrategico' => $this->input->post('id_programa_estrategico'),
 					'fk_numero_meta_pdd' => $this->input->post('id_meta_pdd'),
-					'fk_numero_ods' => $this->input->post('id_ods')
+					'fk_numero_ods' => $this->input->post('id_ods'),
+					'fk_id_dimension' => $this->input->post('id_dimension')
 				);
 
 				//revisar si es para adicionar o editar

@@ -189,10 +189,12 @@ if ($retornoError) {
                                                 <th><small>Meta Proyecto Inversión</small></th>
                                                 <th><small>Proyecto Inversión</small></th>
                                                 <th><small>Meta PDD</small></th>
+                                                <th><small>Programa SEGPLAN</small></th>
                                                 <th><small>Programa Estratégico</small></th>
                                                 <th><small>Logro</small></th>
                                                 <th><small>Propósito</small></th>
                                                 <th><small>ODS</small></th>
+                                                <th><small>Dimensiones MIPG</small></th>
                                                 <th><small>Dependencia</small></th>
                                                 <th><small>Enlaces</small></th>
                                             </tr>
@@ -209,9 +211,11 @@ if ($retornoError) {
                                             echo "<td><small>" . $lista["proyecto_inversion"] . "</small></td>";
                                             echo "<td><small>" . $lista["meta_pdd"] . "</small></td>";
                                             echo "<td><small>" . $lista["programa"] . "</small></td>";
+                                            echo "<td><small>" . $lista["programa_estrategico"] . "</small></td>";
                                             echo "<td><small>" . $lista["logro"] . "</small></td>";
                                             echo "<td><small>" . $lista["proposito"] . "</small></td>";
                                             echo "<td><small>" . $lista["ods"] . "</small></td>";
+                                            echo "<td><small>" . $lista["dimension"] . "</small></td>";
                                             echo "<td><small>";
                                             if($dependencias){
                                                 foreach ($dependencias as $datos):
