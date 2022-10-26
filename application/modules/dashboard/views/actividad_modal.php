@@ -46,7 +46,7 @@
 			<div class="col-sm-4">
 				<div class="form-group text-left">
 					<label class="control-label" for="meta_plan">Meta Plan Operativo Anual: *</label>
-					<input type="text" id="meta_plan" name="meta_plan" class="form-control" value="<?php echo $information?$information[0]["meta_plan_operativo_anual"]:""; ?>" placeholder="Meta Plan Operativo Anual" required >
+					<input type="number" id="meta_plan" name="meta_plan" class="form-control" value="<?php echo $information?$information[0]["meta_plan_operativo_anual"]:""; ?>" placeholder="Meta Plan Operativo Anual" required >
 				</div>
 			</div>
 			
