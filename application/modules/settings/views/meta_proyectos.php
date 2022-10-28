@@ -95,7 +95,7 @@ $(function(){
 								<th class="text-center">Programado Meta anual</th>
 								<th class="text-center">Ejecutado Meta</th>
 								<th class="text-center">Unidad</th>
-								<th class="text-center">Descripción</th>
+								<th class="text-center">Tipología de Anualidad</th>
 								<th class="text-center">Editar</th>
 							</tr>
 						</thead>
@@ -106,13 +106,13 @@ $(function(){
 									echo "<td class='text-center'>" . $lista['numero_meta_proyecto'] . "</td>";
 									echo "<td>" . $lista['numero_proyecto_inversion'] . " " . $lista['nombre_proyecto_inversion']  . "</td>";
 									echo "<td class='text-center'>" . $lista['vigencia_meta_proyecto'] . "</td>";
-									echo "<td>" . $lista['meta_proyecto'] . "</td>";
+									echo "<td>" . $lista['numero_meta_proyecto'] . " " . $lista['meta_proyecto'] . "</td>";
 									echo "<td class='text-right'>$ " . number_format($lista['presupuesto_meta']) . "</td>";
 									echo "<td class='text-right'>$ " . number_format($lista['recurso_ejecutado_meta']) . "</td>";
 									echo "<td class='text-right'>" . $lista['programado_meta_proyecto'] . "</td>";
 									echo "<td class='text-right'>" . $lista['ejecutado_meta'] . "</td>";
 									echo "<td>" . $lista['unidad_meta_proyecto'] . "</td>";
-									echo "<td>" . $lista['descripcion_anual'] . "</td>";
+									echo "<td>" . $lista['tipologia'] . "</td>";
 									echo "<td class='text-center'>";
 						?>
 									<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal" id="<?php echo $lista['id_meta_proyecto_inversion']; ?>" >

@@ -316,7 +316,7 @@
 					'vigencia_meta_proyecto' => $vigencia,
 					'programado_meta_proyecto' => $this->input->post('programado_meta_proyecto'),
 					'unidad_meta_proyecto' => $this->input->post('unidad_meta'),
-					'descripcion_anual' => $this->input->post('descripcion_anual')
+					'fk_id_tipologia' => $this->input->post('id_tipologia')
 				);
 				
 				//revisar si es para adicionar o editar

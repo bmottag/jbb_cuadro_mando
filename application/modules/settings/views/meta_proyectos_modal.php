@@ -93,8 +93,13 @@
 
 			<div class="col-sm-6">
 				<div class="form-group text-left">
-					<label class="control-label" for="descripcion_anual">Descripción: *</label>
-					<input type="text" id="descripcion_anual" name="descripcion_anual" class="form-control" value="<?php echo $information?$information[0]["descripcion_anual"]:""; ?>" placeholder="Descripción" required >
+					<label class="control-label" for="id_tipologia">Tipología de Anualidad: *</label>
+					<select name="id_tipologia" id="id_tipologia" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($listaTipologia); $i++) { ?>
+							<option value="<?php echo $listaTipologia[$i]["id_tipologia"]; ?>" <?php if($information && $information[0]["fk_id_tipologia"] == $listaTipologia[$i]["id_tipologia"]) { echo "selected"; }  ?>><?php echo $listaTipologia[$i]["tipologia"]; ?></option>
+						<?php } ?>
+					</select>
 				</div>
 			</div>
 		</div>

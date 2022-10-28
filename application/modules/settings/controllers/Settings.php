@@ -752,6 +752,12 @@ class Settings extends CI_Controller {
 				"id" => "x"
 			);
 			$data['listaProyectos'] = $this->general_model->get_basic_search($arrParam);
+			$arrParam = array(
+				"table" => "param_tipologia_anualidad",
+				"order" => "id_tipologia",
+				"id" => "x"
+			);
+			$data['listaTipologia'] = $this->general_model->get_basic_search($arrParam);
 			
 			if ($data["idMetaProyecto"] != 'x') {
 				$arrParam = array(

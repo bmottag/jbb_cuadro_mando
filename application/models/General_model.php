@@ -733,6 +733,7 @@ class General_model extends CI_Model {
 		{		
 				$this->db->select();
 				$this->db->join('proyecto_inversion P', 'P.numero_proyecto_inversion = M.fk_numero_proyecto', 'LEFT');
+				$this->db->join('param_tipologia_anualidad T', 'M.fk_id_tipologia = T.id_tipologia', 'LEFT');
 				if (array_key_exists("idMetaProyecto", $arrData)) {
 					$this->db->where('M.id_meta_proyecto_inversion', $arrData["idMetaProyecto"]);
 				}
