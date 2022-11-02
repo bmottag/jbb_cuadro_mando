@@ -15,7 +15,8 @@ $( document ).ready( function () {
 			fecha_inicial: 				{ required: true },
 			fecha_final: 				{ required: true },
 			proceso_calidad:			{ required: true },
-			id_dependencia:				{ required: true }
+			id_dependencia:				{ required: true },
+			id_indicador_pmr: 			{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {

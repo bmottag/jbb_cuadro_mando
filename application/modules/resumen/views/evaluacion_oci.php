@@ -129,7 +129,7 @@ $(function(){
                         </div>
                     </div>
 
-                    <table class="table table-hover">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
                         <thead>
                             <tr>
                                 <th width="15%" class="text-center"><small>No. Actividad</small></th>
@@ -252,3 +252,12 @@ $(function(){
     </div>
 </div>                       
 <!--FIN Modal -->
+<script>
+$(document).ready(function() {
+    $('#dataTables').DataTable({
+        responsive: true,
+        "pageLength": 100,
+        paging: false
+    });
+});
+</script>

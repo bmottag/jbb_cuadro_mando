@@ -986,6 +986,118 @@
 				}
 		}
 		
-		
+		/**
+		 * Consulta lista tablero PMR
+		 * @since 31/10/2022
+		 * @author AOCUBILLOSA
+		 */
+		public function get_tablero_pmr($arrData) {
+				$this->db->select();
+				$this->db->join('param_objetivos_pmr O', 'O.numero_objetivo_pmr = T.fk_numero_objetivo_pmr', 'INNER');
+				$this->db->join('param_elementos_pep_pmr E', 'E.id_elemento_pep_pmr = T.fk_id_elemento_pep_pmr', 'INNER');
+				$this->db->join('param_productos_pmr P', 'P.numero_producto_pmr = T.fk_numero_producto_pmr', 'INNER');
+				$this->db->join('proyecto_inversion PI', 'PI.numero_proyecto_inversion = T.fk_numero_proyecto_inversion', 'INNER');
+				$this->db->join('indicadores_pmr I', 'I.numero_indicador_pmr = T.fk_numero_indicador_pmr', 'INNER');
+				$this->db->join('param_unidad_medida_pmr U', 'U.id_unidad_medida_pmr = T.fk_id_unidad_medida_pmr', 'INNER');
+				$this->db->join('param_naturaleza_pmr N', 'N.id_naturaleza_pmr = T.fk_id_naturaleza_pmr', 'INNER');
+				$this->db->join('param_periodicidad_pmr PP', 'PP.id_periodicidad_pmr = T.fk_id_periodicidad_pmr', 'INNER');
+				if (array_key_exists("id_pmr", $arrData)) {
+					$this->db->where('T.id_pmr', $arrData['id_pmr']);
+				}
+				$this->db->order_by('fk_numero_indicador_pmr', 'asc');
+				$query = $this->db->get('tablero_pmr T');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Consulta lista de actividades por indicador PMR
+		 * @since 31/10/2022
+		 * @author AOCUBILLOSA
+		 */
+		public function get_actividades($indicador_pmr) {		
+				$this->db->select('numero_actividad');
+				$this->db->where('fk_numero_indicador_pmr', $indicador_pmr);
+				$this->db->order_by('numero_actividad', 'asc');
+				$query = $this->db->get('actividades');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Sumar metas de las actividades por indicador PMR
+		 * @author AOCUBILLOSA
+		 * @since  31/10/2022
+		 */
+		public function sumatoria_metas($indicador_pmr)
+		{
+				$this->db->select_sum('meta_plan_operativo_anual');
+				$this->db->where('fk_numero_indicador_pmr', $indicador_pmr);
+				$this->db->order_by('fk_numero_indicador_pmr', 'asc');
+				$query = $this->db->get('actividades');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Sumar avance de las actividades por indicador PMR y mes
+		 * @author AOCUBILLOSA
+		 * @since  31/10/2022
+		 */
+		public function sumatoria_mes($indicador_pmr, $mes)
+		{
+				$this->db->select_sum('ejecutado');
+				$this->db->join('actividad_ejecucion E', 'A.numero_actividad = E.fk_numero_actividad', 'INNER');
+				$this->db->where('fk_numero_indicador_pmr', $indicador_pmr);
+				$this->db->where('fk_id_mes', $mes);
+				$this->db->order_by('fk_numero_indicador_pmr', 'asc');
+				$query = $this->db->get('actividades A');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Guardar tablero PMR
+		 * @author AOCUBILLOSA
+		 * @since 31/10/2022
+		 */
+		public function saveTableroPMR() 
+		{
+				$idPMR = $this->input->post('hddIdPMR');
+				$data = array(
+					'fk_numero_objetivo_pmr' => $this->input->post('id_objetivo_pmr'),
+					'fk_id_elemento_pep_pmr' => $this->input->post('id_elemento_pep_pmr'),
+					'fk_numero_producto_pmr' => $this->input->post('id_producto_pmr'),
+					'fk_numero_proyecto_inversion' => $this->input->post('id_proyecto_inversion'),
+					'fk_numero_indicador_pmr' => $this->input->post('id_indicador_pmr'),
+					'fk_id_unidad_medida_pmr' => $this->input->post('id_unidad_medida_pmr'),
+					'fk_id_naturaleza_pmr' => $this->input->post('id_naturaleza_pmr'),
+					'fk_id_periodicidad_pmr' => $this->input->post('id_periodicidad_pmr')
+				);
+				//revisar si es para adicionar o editar
+				if ($idPMR == 'x') {
+					$query = $this->db->insert('tablero_pmr', $data);
+				} else {
+					$this->db->where('id_pmr', $idPMR);
+					$query = $this->db->update('tablero_pmr', $data);
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+		}
 	    
 	}

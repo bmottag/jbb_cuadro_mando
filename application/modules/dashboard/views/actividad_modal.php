@@ -279,6 +279,29 @@
 				</div>
 			</div>
 		</div>
+
+		<hr>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group text-lef">
+					<p class="text-primary"><span class="glyphicon glyphicon-info-sign"></span> SEGPLAN</p>	
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">		
+				<div class="form-group text-left">
+					<label class="control-label" for="id_indicador_pmr">Indicador PMR: *</label>
+					<select name="id_indicador_pmr" id="id_indicador_pmr" class="form-control" required >
+						<option value="">Seleccione...</option>
+						<?php for ($i = 0; $i < count($listaIndicadorPMR); $i++) { ?>
+							<option value="<?php echo $listaIndicadorPMR[$i]["id_indicador_pmr"]; ?>" <?php if($information && $information[0]["fk_numero_indicador_pmr"] == $listaIndicadorPMR[$i]["numero_indicador_pmr"]) { echo "selected"; }  ?>><?php echo $listaIndicadorPMR[$i]["numero_indicador_pmr"] . ' ' . $listaIndicadorPMR[$i]["indicador_pmr"]; ?></option>	
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+		</div>
 								
 		<div class="form-group">
 			<div id="div_load" style="display:none">		

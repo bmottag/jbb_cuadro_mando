@@ -2630,5 +2630,143 @@ FALTA GUARDA EL CAMBIO PARA UNA AUDITORIA
 
 			echo json_encode($data);	
     }
+
+    /**
+	 * TABLERO PMR
+	 * @since 31/10/2022
+	 * @author AOCUBILLOSA
+	 */
+	public function tablero_pmr()
+	{
+			$arrParam = array();
+			$data['info'] = $this->settings_model->get_tablero_pmr($arrParam);
+			$data["view"] = "tablero_pmr";
+			$this->load->view("layout_calendar", $data);
+	}
+
+    /**
+     * Cargo modal - tablero PMR
+     * @since 31/10/2022
+     * @author AOCUBILLOSA
+     */
+    public function cargarModalTableroPMR()
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			
+			$data['information'] = FALSE;
+			$data["idPMR"] = $this->input->post("idPMR");
+			if ($data["idPMR"] != 'x') {
+				$arrParam = array("id_pmr" => $data["idPMR"]);
+				$data['information'] = $this->settings_model->get_tablero_pmr($arrParam);
+			}
+
+			$arrParam = array(
+				"table" => "param_objetivos_pmr",
+				"order" => "numero_objetivo_pmr",
+				"id" => "x"
+			);
+			$data['listaObjetivoPMR'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_elementos_pep_pmr",
+				"order" => "id_elemento_pep_pmr",
+				"id" => "x"
+			);
+			$data['listaElementoPEP'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_productos_pmr",
+				"order" => "numero_producto_pmr",
+				"id" => "x"
+			);
+			$data['listaProductoPMR'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "proyecto_inversion",
+				"order" => "numero_proyecto_inversion",
+				"id" => "x"
+			);
+			$data['listaProyectoInversion'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "indicadores_pmr",
+				"order" => "numero_indicador_pmr",
+				"id" => "x"
+			);
+			$data['listaIndicadorPMR'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_unidad_medida_pmr",
+				"order" => "id_unidad_medida_pmr",
+				"id" => "x"
+			);
+			$data['listaUnidadMedida'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_naturaleza_pmr",
+				"order" => "id_naturaleza_pmr",
+				"id" => "x"
+			);
+			$data['listaNaturalezaPMR'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "param_periodicidad_pmr",
+				"order" => "id_periodicidad_pmr",
+				"id" => "x"
+			);
+			$data['listaPeriodicidadPMR'] = $this->general_model->get_basic_search($arrParam);
+
+			$this->load->view("tablero_pmr_modal", $data);
+    }
+	
+	/**
+	 * Ingresar/Actualizar tablero PMR
+     * @since 31/10/2022
+     * @author AOCUBILLOSA
+	 */
+	public function save_tablero_pmr()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$idPMR = $this->input->post('hddIdPMR');
+			$msj = "Se adicionó la información!";
+			if ($idPMR != 'x') {
+				$msj = "Se actualizó la información!";
+			}
+			if ($this->settings_model->saveTableroPMR()) {
+				$data["result"] = true;				
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";			
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+			echo json_encode($data);
+    }
+
+	/**
+	 * Delete tablero PMR
+     * @since 31/10/2022
+     * @author AOCUBILLOSA
+	 */
+	public function delete_tablero_pmr()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$idPMR = $this->input->post('identificador');
+			$arrParam = array(
+				"table" => "tablero_pmr ",
+				"primaryKey" => "id_pmr",
+				"id" => $idPMR
+			);
+			if ($this->general_model->deleteRecord($arrParam)) {
+				$data["result"] = true;
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> Se eliminó el indicador del tablero PMR.');
+			} else {
+				$data["result"] = "error";
+				$data["mensaje"] = "Error!!! Ask for help.";
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+			echo json_encode($data);
+    }
 	
 }

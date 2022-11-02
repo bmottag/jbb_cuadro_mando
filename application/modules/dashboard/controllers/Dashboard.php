@@ -208,6 +208,13 @@ class Dashboard extends CI_Controller {
 				"id" => "x"
 			);
 			$data['listaMeses'] = $this->general_model->get_basic_search($arrParam);
+
+			$arrParam = array(
+				"table" => "indicadores_pmr",
+				"order" => "numero_indicador_pmr",
+				"id" => "x"
+			);
+			$data['listaIndicadorPMR'] = $this->general_model->get_basic_search($arrParam);
 			
 			if ($data["idActividad"] != 'x') 
 			{
