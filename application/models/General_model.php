@@ -587,10 +587,12 @@ class General_model extends CI_Model {
 		public function sumarEjecutado($arrData)
 		{
 				$this->db->select_sum('ejecutado');
+				$this->db->join('actividad_estado A', 'A.fk_numero_actividad = E.fk_numero_actividad', 'INNER');
 				$this->db->join('param_meses P', 'P.id_mes = E.fk_id_mes', 'INNER');
 				$this->db->where('E.fk_numero_actividad', $arrData["numeroActividad"]);
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('P.numero_trimestre', $arrData["numeroTrimestre"]);
+					$this->db->where('A.estado_trimestre_' . $arrData["numeroTrimestre"], 5);
 				}
 				if (array_key_exists("filtroTrimestre", $arrData)) {
 					$where = "P.numero_trimestre IN (" . $arrData["filtroTrimestre"] . ")";
