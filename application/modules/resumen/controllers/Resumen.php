@@ -446,7 +446,7 @@ class Resumen extends CI_Controller {
      * @author BMOTTAG
 	 */
 	public function save_estado_actividad()
-	{			
+	{
 			header('Content-Type: application/json');
 			$numeroTrimestre = $this->input->post('trimestre');
 			$idEstado = $this->input->post('valorEstado');
@@ -475,31 +475,31 @@ class Resumen extends CI_Controller {
 
 				$incluirTrimestre = 0;//trimestres a incluir para el calculo del avance POA
 				if($idEstado==99){
-					if($estadoTrimestre1 == 5 || $estadoTrimestre1 == 7 ){
+					if($estadoTrimestre1 == 5){
 						$incluirTrimestre = $incluirTrimestre . "," . 1;
 					}
-					if($estadoTrimestre2 == 5 || $estadoTrimestre2 == 7 ){
+					if($estadoTrimestre2 == 5){
 						$incluirTrimestre = $incluirTrimestre . "," . 2;
 					}
-					if($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7 ){
+					if($estadoTrimestre3 == 5){
 						$incluirTrimestre = $incluirTrimestre . "," . 3;
 					}
-					if($estadoTrimestre4 == 5 || $estadoTrimestre4 == 7 ){
+					if($estadoTrimestre4 == 5){
 						$incluirTrimestre = $incluirTrimestre . "," . 4;
 					}
-				}else{
-					if(($numeroTrimestre != 1 && ($estadoTrimestre1 == 5 || $estadoTrimestre1 == 7) ) || ($numeroTrimestre == 1 && ($idEstado == 5 || $idEstado == 7) ) ){
+				} else {
+					if(($numeroTrimestre != 1 && $estadoTrimestre1 == 5) || ($numeroTrimestre == 1 && $idEstado == 5)){
 						$incluirTrimestre = $incluirTrimestre . "," . 1;
 					}
-					if(($numeroTrimestre != 2 && ($estadoTrimestre2 == 5 || $estadoTrimestre2 == 7) ) || ($numeroTrimestre == 2 && ($idEstado == 5 || $idEstado == 7) ) ){
+					if(($numeroTrimestre != 2 && $estadoTrimestre2 == 5) || ($numeroTrimestre == 2 && $idEstado == 5)){
 						$incluirTrimestre = $incluirTrimestre . "," . 2;
 					}
-					if(($numeroTrimestre != 3 && ($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7) ) || ($numeroTrimestre == 3 && ($idEstado == 5 || $idEstado == 7) ) ){
+					if(($numeroTrimestre != 3 && $estadoTrimestre3 == 5) || ($numeroTrimestre == 3 && $idEstado == 5)){
 						$incluirTrimestre = $incluirTrimestre . "," . 3;
 					}
-					if(($numeroTrimestre != 4 && ($estadoTrimestre4 == 5 || $estadoTrimestre4 == 7) ) || ($numeroTrimestre == 4 && ($idEstado == 5 || $idEstado == 7) ) ){
+					if(($numeroTrimestre != 4 && $estadoTrimestre4 == 5) || ($numeroTrimestre == 4 && $idEstado == 5)){
 						$incluirTrimestre = $incluirTrimestre . "," . 4;
-					}				
+					}
 				}
 
 				$arrParam = array(
@@ -534,7 +534,7 @@ class Resumen extends CI_Controller {
 					}
 
 
-					if( $estadoRevisar == 5 || $estadoRevisar == 7 ) {
+					if($estadoRevisar == 5) {
 						$arrParam = array(
 							"numeroActividad" => $lista["numero_actividad"],
 							"numeroTrimestre" => $numeroTrimestre
@@ -546,7 +546,7 @@ class Resumen extends CI_Controller {
 							$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100,3);
 						}
 					}
-				}else{
+				} else {
 					if($idEstado == 5){
 						$arrParam = array(
 							"numeroActividad" => $lista["numero_actividad"],
@@ -558,9 +558,8 @@ class Resumen extends CI_Controller {
 						if($sumaProgramadoTrimestreX['programado'] > 0){
 							$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100,3);
 						}
-					}					
+					}
 				}
-
 
 				if($idEstado==99){
 					$arrParam = array(
@@ -571,7 +570,7 @@ class Resumen extends CI_Controller {
 						"cumplimientoActual" => $cumplimientoActual
 					);
 					$this->general_model->updateCalculosActividadTotales($arrParam);
-				}else{
+				} else {
 					$arrParam = array(
 						"numeroActividad" => $lista["numero_actividad"],
 						"numeroTrimestre" => $numeroTrimestre,
@@ -587,7 +586,6 @@ class Resumen extends CI_Controller {
 						$this->general_model->updateEstadoActividadTotales($arrParam);
 					}					
 				}
-
 			endforeach;
 
 			$data["result"] = true;

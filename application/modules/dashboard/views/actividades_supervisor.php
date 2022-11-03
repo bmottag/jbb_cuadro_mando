@@ -168,7 +168,7 @@
 								$sumaProgramadoTrimestre4 = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutadoTrimestre4 = $this->general_model->sumarEjecutado($arrParam);
 
-								$sumaEjecutado['ejecutado'] = $sumaEjecutadoTrimestre2['ejecutado'] + $sumaEjecutadoTrimestre2['ejecutado'] + $sumaEjecutadoTrimestre3['ejecutado'] + $sumaEjecutadoTrimestre4['ejecutado'];
+								$sumaEjecutado['ejecutado'] = $sumaEjecutadoTrimestre1['ejecutado'] + $sumaEjecutadoTrimestre2['ejecutado'] + $sumaEjecutadoTrimestre3['ejecutado'] + $sumaEjecutadoTrimestre4['ejecutado'];
 
 								$cumplimiento1 = 0;
 								$cumplimiento2 = 0;
