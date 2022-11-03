@@ -638,16 +638,16 @@ class Dashboard extends CI_Controller {
 			$estadoTrimestre4 = $estadoActividad[0]["estado_trimestre_4"];
 
 			$incluirTrimestre = 0;
-			if(($numeroTrimestre != 1 && ($estadoTrimestre1 == 5 || $estadoTrimestre1 == 7)) || ($numeroTrimestre == 1 && ($idEstado == 5 || $idEstado == 7)) ){
+			if(($numeroTrimestre != 1 && $estadoTrimestre1 == 5) || ($numeroTrimestre == 1 && $idEstado == 5)){
 				$incluirTrimestre = $incluirTrimestre . "," . 1;
 			}
-			if(($numeroTrimestre != 2 && ($estadoTrimestre2 == 5 || $estadoTrimestre2 == 7)) || ($numeroTrimestre == 2 && ($idEstado == 5 || $idEstado == 7)) ){
+			if(($numeroTrimestre != 2 && $estadoTrimestre2 == 5) || ($numeroTrimestre == 2 && $idEstado == 5)){
 				$incluirTrimestre = $incluirTrimestre . "," . 2;
 			}
-			if(($numeroTrimestre != 3 && ($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7)) || ($numeroTrimestre == 3 && ($idEstado == 5 || $idEstado == 7)) ){
+			if(($numeroTrimestre != 3 && $estadoTrimestre3 == 5) || ($numeroTrimestre == 3 && $idEstado == 5)){
 				$incluirTrimestre = $incluirTrimestre . "," . 3;
 			}
-			if(($numeroTrimestre != 4 && ($estadoTrimestre3 == 5 || $estadoTrimestre3 == 7)) || ($numeroTrimestre == 4 && ($idEstado == 5 || $idEstado == 7)) ){
+			if(($numeroTrimestre != 4 && $estadoTrimestre3 == 5) || ($numeroTrimestre == 4 && $idEstado == 5)){
 				$incluirTrimestre = $incluirTrimestre . "," . 4;
 			}
 			$arrParam = array(
@@ -665,7 +665,7 @@ class Dashboard extends CI_Controller {
 				$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,3);
 			}
 
-			if($idEstado == 5 || $idEstado == 7){
+			if($idEstado == 5){
 				$arrParam = array(
 					"numeroActividad" => $numeroActividad,
 					"numeroTrimestre" => $numeroTrimestre
