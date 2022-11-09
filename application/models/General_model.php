@@ -592,7 +592,6 @@ class General_model extends CI_Model {
 				$this->db->where('E.fk_numero_actividad', $arrData["numeroActividad"]);
 				if (array_key_exists("numeroTrimestre", $arrData)) {
 					$this->db->where('P.numero_trimestre', $arrData["numeroTrimestre"]);
-					$this->db->where('A.estado_trimestre_' . $arrData["numeroTrimestre"], 5);
 				}
 				if (array_key_exists("filtroTrimestre", $arrData)) {
 					$where = "P.numero_trimestre IN (" . $arrData["filtroTrimestre"] . ")";
@@ -658,7 +657,7 @@ class General_model extends CI_Model {
 		 * Consulta informacion de los estados de las actividades
 		 * @since 24/04/2022
 		 */
-		public function get_estados_actividades($arrData) 
+		public function get_estados_actividades($arrData)
 		{		
 				$this->db->select('E.*, P.estado primer_estado, P.clase primer_clase, X.estado segundo_estado, X.clase segundo_clase, Y.estado tercer_estado, Y.clase tercer_clase, Z.estado cuarta_estado, Z.clase cuarta_clase');
 				$this->db->join('param_estados P', 'P.valor = E.estado_trimestre_1', 'INNER');

@@ -233,7 +233,6 @@ $(function(){
 								$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 								$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
 								$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
-								//$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);
 
 								$arrParam['numeroTrimestre'] = 1;
 								$sumaProgramadoTrimestre1 = $this->general_model->sumarProgramado($arrParam);
@@ -247,8 +246,20 @@ $(function(){
 								$arrParam['numeroTrimestre'] = 4;
 								$sumaProgramadoTrimestre4 = $this->general_model->sumarProgramado($arrParam);
 								$sumaEjecutadoTrimestre4 = $this->general_model->sumarEjecutado($arrParam);
-
-								$sumaEjecutado['ejecutado'] = $sumaEjecutadoTrimestre1['ejecutado'] + $sumaEjecutadoTrimestre2['ejecutado'] + $sumaEjecutadoTrimestre3['ejecutado'] + $sumaEjecutadoTrimestre4['ejecutado'];
+								
+								$sumaEjecutado['ejecutado'] = 0;
+								if ($estadoActividad[0]['estado_trimestre_1'] == 5){
+									$sumaEjecutado['ejecutado'] += $sumaEjecutadoTrimestre1['ejecutado'];
+								}
+								if ($estadoActividad[0]['estado_trimestre_2'] == 5){
+									$sumaEjecutado['ejecutado'] += $sumaEjecutadoTrimestre2['ejecutado'];
+								}
+								if ($estadoActividad[0]['estado_trimestre_3'] == 5){
+									$sumaEjecutado['ejecutado'] += $sumaEjecutadoTrimestre3['ejecutado'];
+								}
+								if ($estadoActividad[0]['estado_trimestre_4'] == 5){
+									$sumaEjecutado['ejecutado'] += $sumaEjecutadoTrimestre4['ejecutado'];
+								}
 
 								$valorProgramadoTotal = $sumaProgramado['programado'];
 								$valorProgramadoTrimestre1 = $sumaProgramadoTrimestre1['programado'];
