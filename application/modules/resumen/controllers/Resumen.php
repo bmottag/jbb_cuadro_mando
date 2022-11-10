@@ -1646,6 +1646,7 @@ class Resumen extends CI_Controller {
 				"numeroSemestre" => $numeroSemestre,
 				"observacion" => $this->input->post('observacion'),
 				"calificacion" => $this->input->post('calificacion'),
+				"unidadMedida" => $this->input->post('unidadMedida'),
 				"comentario" => $this->input->post('comentario')
 			);
 			if ($this->general_model->updateEvaluacionOCI($arrParam)) 

@@ -101,7 +101,7 @@
 								<th>Ponderación</th>
 								<th>Fechas</th>
 								<th>Responsable</th>
-								<th class="text-center">Enlaces</th>
+								<th class="text-center" style="width: 10%">Enlaces</th>
 							</tr>
 						</thead>
 						<tbody>							

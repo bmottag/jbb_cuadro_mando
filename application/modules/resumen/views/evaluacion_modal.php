@@ -37,7 +37,7 @@
 ?>
 	<p class="text-danger text-left">No hay registros.</p>
 <?php 
-	}else{ 
+	}else{
 ?>
 		<table class='table table-hover'>
 			<thead>
@@ -47,12 +47,20 @@
 					<th><small>Observación</small></th>
 					<th><small>Comentario</small></th>
 					<th class="text-right"><small>Calificación</small></th>
+					<th><small>Unidad de Medida</small></th>
+					<th><small>Avance del Semestre</small></th>
 				</tr>
 			</thead>
 
 			<tbody>
-                <?php 
-                    foreach ($information as $data):     
+                <?php
+                    foreach ($information as $data):
+                    	// Cambiar a un select con las opciones de porcentaje y otro cual en el futuro
+                    	if ($data['unidad_medida'] == "Porcentaje" || $data['unidad_medida'] == "porcentaje" || $data['unidad_medida'] == "PORCENTAJE") {
+                    		$avanceSemestral = round(($data['calificacion'] / 100) * ($infoActividad[0]["meta_plan_operativo_anual"] / 2), 2);
+                    	} else {
+                    		$avanceSemestral = round($data['calificacion'] / ($infoActividad[0]["meta_plan_operativo_anual"] / 2), 2);
+                    	}
                 ?>
                     <tr>
                         <td class="text-left"><small><?php echo $data['fecha_cambio']; ?></small></td>
@@ -60,6 +68,8 @@
                         <td class="text-left"><small><?php echo $data['observacion']; ?></small></td>
                         <td class="text-left"><small><?php echo $data['comentario']; ?></small></td>
                         <td class="text-right"><small><?php echo $data['calificacion']; ?></small></td>
+                        <td class="text-left"><small><?php echo $data['unidad_medida']; ?></small></td>
+                        <td class="text-left"><small><?php echo $avanceSemestral; ?></small></td>
                     </tr>
                 <?php
                     endforeach;
@@ -73,13 +83,17 @@
 
 	$calificacion = "";
 	$observacion = "";
+	$unidadMedida = "";
 	if($infoActividad && $numeroSemestre == 1){
 		$calificacion = $infoActividad[0]["calificacion_semestre_1"];
+		$unidadMedida = $infoActividad[0]["unidad_medida_semestre_1"];
 		$observacion = $infoActividad[0]["observacion_semestre_1"];
 	}else{
 		$calificacion = $infoActividad[0]["calificacion_semestre_2"];
+		$unidadMedida = $infoActividad[0]["unidad_medida_semestre_2"];
 		$observacion = $infoActividad[0]["observacion_semestre_2"];		
 	}
+	$metaAnual = $infoActividad[0]["meta_plan_operativo_anual"];
 ?>
 	<form name="form" id="form" role="form" method="post" >
 		<input type="hidden" id="hddId" name="hddId" value="<?php echo $infoActividad?$infoActividad[0]["numero_actividad"]:""; ?>"/>
@@ -88,8 +102,24 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="form-group text-left">
-					<label class="control-label" for="calificacion">Calificación de la actividad: *</label>
-					<input type="text" id="calificacion" name="calificacion" class="form-control" value="<?php echo $calificacion; ?>" placeholder="Calificación" required >
+					<label class="control-label" for="metaAnual">Meta Anual de la Actividad:</label>
+					<input type="text" id="metaAnual" name="metaAnual" class="form-control" disabled value="<?php echo $metaAnual; ?>">
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group text-left">
+					<label class="control-label" for="calificacion">Total evidenciado evaluación: *</label>
+					<input type="number" id="calificacion" name="calificacion" class="form-control" value="<?php echo $calificacion; ?>" placeholder="Total evidenciado evaluación" required >
+				</div>
+			</div>
+
+			<div class="col-sm-4">
+				<div class="form-group text-left">
+					<label class="control-label" for="unidadMedida">Unidad de medida evaluación: *</label>
+					<input type="text" id="unidadMedida" name="unidadMedida" class="form-control" value="<?php echo $unidadMedida; ?>" placeholder="Unidad de medida" required >
 				</div>
 			</div>
 		</div>
@@ -106,7 +136,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="comentario">Comentario interno adicional OCI: *</label>
+					<label class="control-label" for="comentario">Comentario interno adicional OCI:</label>
 					<textarea id="comentario" name="comentario" class="form-control" rows="3" placeholder="Estos comentarios son unicamente de la Oficina de Control Interno"></textarea>
 				</div>
 			</div>
