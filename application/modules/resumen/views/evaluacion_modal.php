@@ -48,7 +48,7 @@
 					<th><small>Comentario</small></th>
 					<th class="text-right"><small>Calificación</small></th>
 					<th><small>Unidad de Medida</small></th>
-					<th><small>Avance del Semestre</small></th>
+					<th><small>Avance de la Vigencia</small></th>
 				</tr>
 			</thead>
 
@@ -57,9 +57,9 @@
                     foreach ($information as $data):
                     	// Cambiar a un select con las opciones de porcentaje y otro cual en el futuro
                     	if ($data['unidad_medida'] == "porcentaje") {
-                    		$avanceSemestral = round(($data['calificacion'] / 100) * ($infoActividad[0]["meta_plan_operativo_anual"] / 2), 2);
+                    		$avanceSemestral = round(($data['calificacion'] / 100) * $infoActividad[0]["meta_plan_operativo_anual"], 2);
                     	} else {
-                    		$avanceSemestral = round($data['calificacion'] / ($infoActividad[0]["meta_plan_operativo_anual"] / 2), 2);
+                    		$avanceSemestral = round(($data['calificacion'] / $infoActividad[0]["meta_plan_operativo_anual"]) * 100, 2);
                     	}
                 ?>
                     <tr>
@@ -76,6 +76,7 @@
                 ?>
 			</tbody>
 		</table>
+		<hr>
 <?php } ?>
 
 
@@ -94,6 +95,7 @@
 		$observacion = $infoActividad[0]["observacion_semestre_2"];		
 	}
 	$metaAnual = $infoActividad[0]["meta_plan_operativo_anual"];
+	$descripcion = $infoActividad[0]["descripcion_actividad"];
 ?>
 	<form name="form" id="form" role="form" method="post" >
 		<input type="hidden" id="hddId" name="hddId" value="<?php echo $infoActividad?$infoActividad[0]["numero_actividad"]:""; ?>"/>
@@ -101,13 +103,14 @@
 		<input type="hidden" id="bandera" name="bandera" value="<?php echo $bandera; ?>"/>
 
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="metaAnual">Meta Anual de la Actividad:</label>
-					<input type="text" id="metaAnual" name="metaAnual" class="form-control" disabled value="<?php echo $metaAnual; ?>">
+					<p><b>Meta Anual de la Actividad:</b> <?php echo $metaAnual; ?></p>
+					<p><b>Descripción de la Actividad:</b> <?php echo $descripcion ?></p>
 				</div>
 			</div>
 		</div>
+		<hr>
 
 		<div class="row">
 			<div class="col-sm-4">
