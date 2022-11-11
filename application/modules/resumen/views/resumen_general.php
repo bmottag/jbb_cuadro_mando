@@ -21,7 +21,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'resumen/cargarModalEvaluacionOCI',
-                data: {'numeroActividad': oID, 'numeroSemestre': 1},
+                data: {'numeroActividad': oID, 'numeroSemestre': 1, 'bandera': 0},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatosEvaluacion').html(data);
@@ -34,7 +34,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'resumen/cargarModalEvaluacionOCI',
-                data: {'numeroActividad': oID, 'numeroSemestre': 2},
+                data: {'numeroActividad': oID, 'numeroSemestre': 2, 'bandera': 0},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatosEvaluacion').html(data);
@@ -404,10 +404,10 @@ $(function(){
 
                                     <?php
                                         if(($lista["estado_trimestre_1"] == 5 || $lista["estado_trimestre_1"] == 6 || $lista["estado_trimestre_1"] == 7) && ($lista["estado_trimestre_2"] == 5 || $lista["estado_trimestre_2"] == 6 || $lista["estado_trimestre_2"] == 7) && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI)){
-                                    ?>
+                                    ?><br><br>
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_actividad']; ?>" title="Evaluación OCI" <?php if($lista["publicar_calificacion_1"] == 1) { ?> disabled <?php } ?>>
                                         Evaluación OCI I <span class="fa fa-pencil" aria-hidden="true"></span>
-                                    </button>
+                                    </button><br><br>
                                     <?php } ?>
 
                                     <?php

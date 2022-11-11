@@ -196,6 +196,7 @@ class Resumen extends CI_Controller {
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
 
+			$data['bandera'] = 0;
 			$data["view"] = "resumen_general";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -234,6 +235,7 @@ class Resumen extends CI_Controller {
 				"evaluacionFlag" => true,
 			);
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
+			$data['bandera'] = 1;
 
 			$data["view"] = "evaluacion_oci";
 			$this->load->view("layout_calendar", $data);
@@ -1619,6 +1621,7 @@ class Resumen extends CI_Controller {
 			
 			$data["numeroActividad"] = $this->input->post("numeroActividad");
 			$data["numeroSemestre"] = $this->input->post("numeroSemestre");
+			$data["bandera"] = $this->input->post("bandera");
 
 			$arrParam = array("numeroActividad" => $data["numeroActividad"]);
 			$data['infoActividad'] = $this->general_model->get_actividades_full($arrParam);

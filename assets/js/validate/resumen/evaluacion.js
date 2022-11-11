@@ -27,7 +27,9 @@ $( document ).ready( function () {
 		}
 	});
 	
-	$("#btnSubmit").click(function(){		
+	$("#btnSubmit").click(function(){
+
+		var bandera = $("#bandera").val();
 	
 		if ($("#form").valid() == true){
 		
@@ -60,8 +62,13 @@ $( document ).ready( function () {
 							$("#div_load").css("display", "none");
 							$('#btnSubmit').removeAttr('disabled');
 
-							var url = base_url + "resumen";
-							$(location).attr("href", url);
+							if (bandera == 0) {
+								var url = base_url + "resumen";
+								$(location).attr("href", url);
+							} else {
+								var url = base_url + "resumen/evaluacion";
+								$(location).attr("href", url);
+							}
 						}
 						else
 						{

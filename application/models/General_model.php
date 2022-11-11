@@ -1306,11 +1306,14 @@ class General_model extends CI_Model {
 				$data = array(
 					'observacion_semestre_' . $arrData["numeroSemestre"] => $msj
 				);
-				$query = $this->db->update('actividad_estado', $data);
-				if ($query) {
-					return true;
-				} else {
-					return false;
+				if ($valor == 1) {
+					$this->db->where('calificacion_semestre_' . $arrData["numeroSemestre"], NULL);
+					$query = $this->db->update('actividad_estado', $data);
+					if ($query) {
+						return true;
+					} else {
+						return false;
+					}
 				}
 			} else {
 				return false;

@@ -21,7 +21,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'resumen/cargarModalEvaluacionOCI',
-                data: {'numeroActividad': oID, 'numeroSemestre': 1},
+                data: {'numeroActividad': oID, 'numeroSemestre': 1, 'bandera': 1},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatosEvaluacion').html(data);
@@ -34,7 +34,7 @@ $(function(){
             $.ajax ({
                 type: 'POST',
                 url: base_url + 'resumen/cargarModalEvaluacionOCI',
-                data: {'numeroActividad': oID, 'numeroSemestre': 2},
+                data: {'numeroActividad': oID, 'numeroSemestre': 2, 'bandera': 1},
                 cache: false,
                 success: function (data) {
                     $('#tablaDatosEvaluacion').html(data);
@@ -132,13 +132,13 @@ $(function(){
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
                         <thead>
                             <tr>
-                                <th width="15%" class="text-center"><small>No. Actividad</small></th>
+                                <th width="10%" class="text-center"><small>No. Actividad</small></th>
                                 <th width="25%"><small>Actividad</small></th>
-                                <th width="7%" class="text-right"><small>Cump. Trim. I</small></th>
-                                <th width="7%" class="text-right"><small>Cump. Trim. II</small></th>
-                                <th width="7%" class="text-right"><small>Cump. Trim. III</small></th>
-                                <th width="7%" class="text-right"><small>Cump. Trim. IV</small></th>
-                                <th width="7%" class="text-right"><small>Avance POA</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. I</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. II</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. III</small></th>
+                                <th width="8%" class="text-right"><small>Cump. Trim. IV</small></th>
+                                <th width="8%" class="text-right"><small>Avance POA</small></th>
                                 <th width="10%" class="text-right"><small>Calificación OCI</small></th>
                                 <th width="15%"><small>Observación OCI</small></th>
                             </tr>
@@ -180,10 +180,10 @@ $(function(){
 
                                     <?php
                                         if(($lista["estado_trimestre_1"] == 5 || $lista["estado_trimestre_1"] == 6 || $lista["estado_trimestre_1"] == 7) && ($lista["estado_trimestre_2"] == 5 || $lista["estado_trimestre_2"] == 6 || $lista["estado_trimestre_2"] == 7) && ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_CONTROL_INTERNO || $userRol == ID_ROL_JEFEOCI)){
-                                    ?>
+                                    ?><br><br>
                                     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_actividad']; ?>" title="Evaluación OCI" <?php if($lista["publicar_calificacion_1"] == 1) { ?> disabled <?php } ?>>
                                         Evaluación OCI <span class="fa fa-pencil" aria-hidden="true"></span>
-                                    </button>
+                                    </button><br><br>
                                     <?php } ?>
 
                                     <?php
