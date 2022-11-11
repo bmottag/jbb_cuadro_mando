@@ -96,7 +96,7 @@ $(function(){
 								<th class="text-center">Ejecutado Meta</th>
 								<th class="text-center">Unidad</th>
 								<th class="text-center">Tipología de Anualidad</th>
-								<th class="text-center">Editar</th>
+								<th class="text-center" style="width: 8%">Editar</th>
 							</tr>
 						</thead>
 						<tbody>							

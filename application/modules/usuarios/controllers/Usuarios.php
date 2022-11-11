@@ -113,7 +113,7 @@ class Usuarios extends CI_Controller {
 				$this->_create_thumbnail($file_info['file_name']);
 				$data = array('upload_data' => $this->upload->data());
 				$imagen = $file_info['file_name'];
-				$path = "images/usuarios/thumbs/" . $imagen;
+				$path = "images/usuarios/" . $imagen;
 				
 				//actualizamos el campo photo
 				$arrParam = array(
