@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/resumen/evaluacion.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/resumen/evaluacion_objetivos.js"); ?>"></script>
 
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -36,6 +36,7 @@
 	if(!$information){ 
 ?>
 	<p class="text-danger text-left">No hay registros.</p>
+	<hr>
 <?php 
 	}else{
 ?>

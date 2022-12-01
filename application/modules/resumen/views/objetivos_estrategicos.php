@@ -1,3 +1,20 @@
+<script>
+$(function(){ 
+    $(".btn-primary").click(function () {
+        var oID = $(this).attr("id");
+        $.ajax ({
+            type: 'POST',
+            url: base_url + 'resumen/cargarModalEvaluacionObjetivosEstrategicos',
+            data: {'numeroObjetivoEstrategico': oID},
+            cache: false,
+            success: function (data) {
+                $('#tablaDatos').html(data);
+            }
+        });
+    });
+});
+</script>
+
 <div id="page-wrapper">
 	<br>
 	<div class="row">
@@ -49,7 +66,8 @@
 					<table width="100%" class="table table-hover">
 						<thead>
 							<tr>
-								<th width='45%'>Objetivo Estratégico</th>
+								<th width='5%'>No.</th>
+								<th width='40%'>Objetivo Estratégico</th>
 								<th width='10%' class="text-center">No. Actividades</th>
 								<th width='45%' class="text-center">Promedio de Cumplimiento</th>
 							</tr>
@@ -81,8 +99,16 @@
 	                                }
 	                            }
 								echo "<tr>";
-								echo "<td>" . $lista['numero_objetivo_estrategico'] . ' ' . $lista['objetivo_estrategico'] .  "</td>";
-								echo "<td class='text-center'><small>" . $nroActividades . "</small></td>";
+								echo "<td>";
+								?>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_objetivo_estrategico']; ?>">
+                                        <?php echo $lista['numero_objetivo_estrategico'] ?>&nbsp;
+                                        <span class="fa fa-pencil" aria-hidden="true"></span>
+                                    </button>
+                                <?php
+                                echo "</td>";
+								echo "<td>" . $lista['objetivo_estrategico'] .  "</td>";
+								echo "<td class='text-center'>" . $nroActividades . "</td>";
 	                            echo "<td class='text-center'>";
 	                            echo "<b>" . $promedioCumplimiento ."%</b>";
 	                            echo '<div class="progress progress-striped">
@@ -102,13 +128,12 @@
 </div>
 	
 <!--INICIO Modal -->
-<div class="modal fade text-center" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">    
+<div class="modal fade text-center" id="modalEvaluacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content" id="tablaDatos">
-
 		</div>
 	</div>
-</div>                       
+</div>
 <!--FIN Modal  -->
 
 <!-- Tables -->

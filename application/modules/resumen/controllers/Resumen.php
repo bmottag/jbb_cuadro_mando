@@ -1612,7 +1612,7 @@ class Resumen extends CI_Controller {
     }
 
     /**
-     * Cargo modal - Fprmulario de evaluación
+     * Cargo modal - Formulario de evaluación
      * @since 14/07/2022
      */
     public function cargarModalEvaluacionOCI() 
@@ -1629,6 +1629,24 @@ class Resumen extends CI_Controller {
 			$arrParam["numeroSemestre"] = $data["numeroSemestre"];
             $data['information'] = $this->general_model->get_evaluacion_oci($arrParam);
 			$this->load->view("evaluacion_modal", $data);
+    }
+
+    /**
+     * Cargo modal - Formulario de evaluacion objetivos estrategicos
+     * @since 12/11/2022
+     */
+    public function cargarModalEvaluacionObjetivosEstrategicos()
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+
+			$data["numeroObjetivoEstrategico"] = $this->input->post("numeroObjetivoEstrategico");
+			$arrParam = array("numeroObjetivoEstrategico" => $data["numeroObjetivoEstrategico"]);
+			$data['infoObjetivoEstrategico'] = $this->general_model->get_objetivos_estrategicos_full($arrParam);
+            $data['information'] = $this->general_model->get_evaluacion_objetivos_estrategicos($arrParam);
+
+            //pr($data['information']); exit;
+
+			$this->load->view("objetivos_estrategicos_modal", $data);
     }
 
 	/**
@@ -1662,7 +1680,28 @@ class Resumen extends CI_Controller {
 				$data["result"] = "error";
 				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
 			}
-		
+			echo json_encode($data);
+    }
+
+    /**
+	 * Guardar evaluación objetivos estrategicos
+	 * @since 30/11/2022
+     * @author AOCUBILLOSA
+	 */
+	public function guardar_evaluacion_objetivos()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$msj = "Se guardo la información!";
+
+			if ($this->general_model->addEvaluacionObjetivos())
+			{
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
 			echo json_encode($data);
     }
 }
