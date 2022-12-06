@@ -66,26 +66,33 @@ $(function(){
 					<table width="100%" class="table table-hover">
 						<thead>
 							<tr>
-								<th width='5%'>No.</th>
+								<th width='6%'>No.</th>
 								<th width='40%'>Objetivo Estratégico</th>
 								<th width='10%' class="text-center">No. Actividades</th>
-								<th width='45%' class="text-center">Promedio de Cumplimiento</th>
+								<th width='44%' class="text-center">Promedio de Cumplimiento</th>
 							</tr>
 						</thead>
-						<tbody>							
+						<tbody>
 						<?php
 							foreach ($info as $lista):
+								$calificacion = array();
 	                            $arrParam = array(
 	                                "numeroObjetivoEstrategico" => $lista["numero_objetivo_estrategico"],
 	                                "vigencia" => date("Y")
 	                            );
 	                            $nroActividades = $this->general_model->countActividades($arrParam);
 								$cumplimiento = $this->general_model->sumCumplimiento($arrParam);
+								$calificacion = $this->general_model->get_evaluacion_calificacion($arrParam);
 	                            $promedioCumplimiento = 0;
 	                            if($nroActividades){
-	                                $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+	                                if (isset($calificacion[0]['calificacion']) > $promedioCumplimiento && $calificacion[0]['estado'] == 2) {
+		                            	$promedioCumplimiento = $calificacion[0]['calificacion'];
+		                            } else if (isset($calificacion[0]['calificacion']) > $promedioCumplimiento && $calificacion[0]['estado'] == 1 && isset($calificacion[1]['calificacion']) > $promedioCumplimiento && $calificacion[1]['estado'] == 2) {
+		                            	$promedioCumplimiento = $calificacion[1]['calificacion'];
+		                            } else {
+		                            	$promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+		                            }
 	                            }
-	                                         
 	                            if(!$promedioCumplimiento){
 	                                $promedioCumplimiento = 0;
 	                                $estilos = "bg-warning";
@@ -98,13 +105,39 @@ $(function(){
 	                                    $estilos = "progress-bar-danger";
 	                                }
 	                            }
+
+	                            // deshabilita la calificacion a los supervisores que no tienen asignado el objetivo estrategico 
+	                            $habilitar = '';
+	                            $warning = '';
+								$userRol = $this->session->userdata("role");
+								if ($userRol == ID_ROL_SUPERVISOR) {
+									$habilitar = ' disabled';
+									$idUser = $this->session->userdata("id");
+									$arrParam = array(
+		                                "numeroObjetivoEstrategico" => $lista["numero_objetivo_estrategico"],
+		                                "vigencia" => date("Y")
+		                            );
+									$supervisores = $this->general_model->get_objetivos_estrategicos_supervisores($arrParam);
+									$comentario = $this->general_model->get_comentario_supervisor($arrParam);
+									for ($i=0; $i<count($supervisores); $i++) {
+										if ($idUser == $supervisores[$i]['id_user']) {
+											$habilitar = '';
+										}
+									}
+									if (isset($calificacion[0]['estado']) == 1 && $comentario[0]['comentario_supervisor'] == NULL) {
+										$warning = '<span class="fa fa-exclamation-triangle fa-lg" style="color: orange"; aria-hidden="true"></span>';
+									}
+								}
+
 								echo "<tr>";
 								echo "<td>";
 								?>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_objetivo_estrategico']; ?>">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_objetivo_estrategico']; ?>" <?php echo $habilitar; ?>>
                                         <?php echo $lista['numero_objetivo_estrategico'] ?>&nbsp;
                                         <span class="fa fa-pencil" aria-hidden="true"></span>
                                     </button>
+                                    <?php echo $warning; ?>
+                                    
                                 <?php
                                 echo "</td>";
 								echo "<td>" . $lista['objetivo_estrategico'] .  "</td>";
@@ -129,7 +162,7 @@ $(function(){
 	
 <!--INICIO Modal -->
 <div class="modal fade text-center" id="modalEvaluacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content" id="tablaDatos">
 		</div>
 	</div>

@@ -1638,15 +1638,23 @@ class Resumen extends CI_Controller {
     public function cargarModalEvaluacionObjetivosEstrategicos()
 	{
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
-
 			$data["numeroObjetivoEstrategico"] = $this->input->post("numeroObjetivoEstrategico");
-			$arrParam = array("numeroObjetivoEstrategico" => $data["numeroObjetivoEstrategico"]);
-			$data['infoObjetivoEstrategico'] = $this->general_model->get_objetivos_estrategicos_full($arrParam);
-            $data['information'] = $this->general_model->get_evaluacion_objetivos_estrategicos($arrParam);
-
-            //pr($data['information']); exit;
-
-			$this->load->view("objetivos_estrategicos_modal", $data);
+			$arrParam = array(
+				"numeroObjetivoEstrategico" => $data["numeroObjetivoEstrategico"],
+				"vigencia" => date("Y")
+			);
+			$data['infoSupervisores'] = $this->general_model->get_objetivos_estrategicos_supervisores($arrParam);
+            $data['infoEvaluacion'] = $this->general_model->get_evaluacion_objetivos_estrategicos($arrParam);
+            $calificacion = $this->general_model->get_evaluacion_calificacion($arrParam);
+            $userRol = $this->session->userdata("role");
+            if($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR){
+            	$data['infoComentario'] = $this->general_model->get_comentarios_supervisores($arrParam);
+            	$this->load->view("objetivos_estrategicos_modal", $data);
+            }
+			if($userRol == ID_ROL_SUPERVISOR) {
+				$data['infoComentario'] = $this->general_model->get_comentario_supervisor($arrParam);
+				$this->load->view("objetivos_supervisor_modal", $data);
+			}
     }
 
 	/**
@@ -1694,7 +1702,73 @@ class Resumen extends CI_Controller {
 			$data = array();
 			$msj = "Se guardo la información!";
 
-			if ($this->general_model->addEvaluacionObjetivos())
+			if ($this->general_model->guardarEvaluacionObjetivos())
+			{
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+			echo json_encode($data);
+    }
+
+    /**
+	 * Guardar comentario supervisor
+	 * @since 01/12/2022
+     * @author AOCUBILLOSA
+	 */
+	public function guardar_evaluacion_supervisor()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$msj = "Se guardo la información!";
+
+			if ($this->general_model->guardarEvaluacionSupervisor())
+			{
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+			echo json_encode($data);
+    }
+
+    /**
+	 * Aprobar evaluacion objetivos
+	 * @since 01/12/2022
+     * @author AOCUBILLOSA
+	 */
+	public function aprobar_evaluacion_objetivos()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$msj = "Se guardo la información!";
+
+			if ($this->general_model->aprobarEvaluacionObjetivos())
+			{
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+			echo json_encode($data);
+    }
+
+    /**
+	 * Rechazar evaluacion objetivos
+	 * @since 01/12/2022
+     * @author AOCUBILLOSA
+	 */
+	public function rechazar_evaluacion_objetivos()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$msj = "Se guardo la información!";
+
+			if ($this->general_model->rechazarEvaluacionObjetivos())
 			{
 				$data["result"] = true;		
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);

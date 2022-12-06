@@ -3,7 +3,8 @@ $( document ).ready( function () {
 	$( "#form" ).validate( {
 		rules: {
 			calificacion: 			{ required: true, minlength: 1, maxlength:10 },
-			observacion: 			{ required: true }
+			observacion: 			{ required: true },
+			comentario: 			{ required: true }
 		},
 		errorElement: "em",
 		errorPlacement: function ( error, element ) {
@@ -26,7 +27,13 @@ $( document ).ready( function () {
 	
 	$("#btnSubmit").click(function(){
 
-		if ($("#form").valid() == true){
+		var calificacion = $("#calificacion").val();
+		var cumplimiento = $("#hddCumplimientoPOA").val();
+
+		if (calificacion <= cumplimiento) {
+			alert('la calificacion no puede ser menor o igual al promedio de cumplimiento actual.')
+		} else {
+			if ($("#form").valid() == true){
 		
 				//Activa icono guardando
 				$('#btnSubmit').attr('disabled','-1');
@@ -69,6 +76,107 @@ $( document ).ready( function () {
 						$("#div_load").css("display", "none");
 						$("#div_error").css("display", "inline");
 						$('#btnSubmit').removeAttr('disabled');
+					}
+				});	
+			}
+		}
+	});
+
+	$("#btnAprobar").click(function(){
+
+		if ($("#form").valid() == true){
+		
+				//Activa icono guardando
+				$('#btnAprobar').attr('disabled','-1');
+				$("#div_error").css("display", "none");
+				$("#div_load").css("display", "inline");
+			
+				$.ajax({
+					type: "POST",
+					url: base_url + "resumen/aprobar_evaluacion_objetivos",	
+					data: $("#form").serialize(),
+					dataType: "json",
+					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+					cache: false,
+					success: function(data){
+						if( data.result == "error" )
+						{
+							$("#div_load").css("display", "none");
+							$("#div_error").css("display", "inline");
+							$("#span_msj").html(data.mensaje);
+							$('#btnAprobar').removeAttr('disabled');
+							return false;
+						} 
+						if( data.result )//true
+						{	                                                        
+							$("#div_load").css("display", "none");
+							$('#btnAprobar').removeAttr('disabled');
+							var url = base_url + "resumen/objetivos_estrategicos";
+							$(location).attr("href", url);
+						}
+						else
+						{
+							alert('Error. Reload the web page.');
+							$("#div_load").css("display", "none");
+							$("#div_error").css("display", "inline");
+							$('#btnAprobar').removeAttr('disabled');
+						}	
+					},
+					error: function(result) {
+						alert('Error. Reload the web page.');
+						$("#div_load").css("display", "none");
+						$("#div_error").css("display", "inline");
+						$('#btnAprobar').removeAttr('disabled');
+					}
+				});	
+		}//if
+	});
+
+	$("#btnRechazar").click(function(){
+
+		if ($("#form").valid() == true){
+		
+				//Activa icono guardando
+				$('#btnRechazar').attr('disabled','-1');
+				$("#div_error").css("display", "none");
+				$("#div_load").css("display", "inline");
+			
+				$.ajax({
+					type: "POST",	
+					url: base_url + "resumen/rechazar_evaluacion_objetivos",	
+					data: $("#form").serialize(),
+					dataType: "json",
+					contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+					cache: false,
+					success: function(data){
+						if( data.result == "error" )
+						{
+							$("#div_load").css("display", "none");
+							$("#div_error").css("display", "inline");
+							$("#span_msj").html(data.mensaje);
+							$('#btnRechazar').removeAttr('disabled');
+							return false;
+						} 
+						if( data.result )//true
+						{	                                                        
+							$("#div_load").css("display", "none");
+							$('#btnRechazar').removeAttr('disabled');
+							var url = base_url + "resumen/objetivos_estrategicos";
+							$(location).attr("href", url);
+						}
+						else
+						{
+							alert('Error. Reload the web page.');
+							$("#div_load").css("display", "none");
+							$("#div_error").css("display", "inline");
+							$('#btnRechazar').removeAttr('disabled');
+						}	
+					},
+					error: function(result) {
+						alert('Error. Reload the web page.');
+						$("#div_load").css("display", "none");
+						$("#div_error").css("display", "inline");
+						$('#btnRechazar').removeAttr('disabled');
 					}
 				});	
 		}//if			

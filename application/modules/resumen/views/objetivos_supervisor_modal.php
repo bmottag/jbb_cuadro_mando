@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url("assets/js/validate/resumen/evaluacion_objetivos.js"); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url("assets/js/validate/resumen/evaluacion_supervisor.js"); ?>"></script>
 
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -26,8 +26,8 @@
 	</div>
 
 	<hr>
-<?php
-	if(!$infoEvaluacion){
+<?php 
+	if(!$infoEvaluacion){ 
 ?>
 	<p class="text-danger text-left">No hay registros.</p>
 	<hr>
@@ -82,49 +82,14 @@
                 $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
             }
 		?>
-		<input type="hidden" id="hddId" name="hddId" value="<?php echo $infoEvaluacion?$infoEvaluacion[0]["id_evaluacion_objetivo_estrategico"]:""; ?>"/>
-		<input type="hidden" id="hddNumero" name="hddNumero" value="<?php echo $infoSupervisores?$infoSupervisores[0]["numero_objetivo_estrategico"]:""; ?>"/>
+		<input type="hidden" id="hddId" name="hddId" value="<?php echo $infoComentario?$infoComentario[0]["id_historial"]:""; ?>"/>
 		<input type="hidden" id="hddCumplimientoPOA" name="hddCumplimientoPOA" value="<?php echo $promedioCumplimiento?$promedioCumplimiento:""; ?>"/>
 
 		<div class="row">
-			<div class="col-sm-4">
-				<div class="form-group text-left">
-					<label class="control-label" for="calificacion">Calificación: *</label>
-					<input type="number" id="calificacion" name="calificacion" class="form-control" value="<?php echo $infoEvaluacion?$infoEvaluacion[0]["calificacion"]:""; ?>" placeholder="Calificación" required >
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
 			<div class="col-sm-12">
 				<div class="form-group text-left">
-					<label class="control-label" for="observacion">Observación: *</label>
-					<textarea id="observacion" name="observacion" class="form-control" rows="3" placeholder="Observación" required><?php echo $infoEvaluacion?$infoEvaluacion[0]["observacion"]:""; ?></textarea>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="form-group text-left">
-					<label class="control-label" for="comentario">Comentario: *</label>
-					<textarea id="comentario" name="comentario" class="form-control" rows="3" placeholder="Comentario" required><?php echo $infoEvaluacion?$infoEvaluacion[0]["comentario"]:""; ?></textarea>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="form-group text-left">
-					<?php
-						if ($infoComentario) { 
-					?>
-						<label class="control-label" for="supervisores">Comentarios Supervisores:</label><br>
-					<?php
-						} for ($i=0; $i<count($infoSupervisores); $i++) {
-							echo $infoComentario?$infoComentario[$i]["first_name"] .' '. $infoComentario[$i]["last_name"] .': '. $infoComentario[$i]["comentario_supervisor"] . '<br>':"";
-						} 
-					?>
+					<label class="control-label" for="comentario">Comentario Supervisor: *</label>
+					<textarea id="comentario" name="comentario" class="form-control" rows="3" placeholder="Comentario Supervisor" required><?php echo $infoComentario?$infoComentario[0]["comentario_supervisor"]:""; ?></textarea>
 				</div>
 			</div>
 		</div>
@@ -145,34 +110,19 @@
 		<div class="form-group">
 			<div class="row" align="center">
 				<div style="width:50%;" align="center">
-					<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary">
-						Enviar <span class="glyphicon glyphicon-send" aria-hidden="true">
-					</button>
 					<?php
 					$arrParam = array(
                         "numeroObjetivoEstrategico" => $infoSupervisores[0]["numero_objetivo_estrategico"],
                         "vigencia" => date("Y")
                     );
                     $calificacion = $this->general_model->get_evaluacion_calificacion($arrParam);
-                    $comentarios = $this->general_model->get_comentarios_supervisores($arrParam);
                     $habilitar = ' disabled';
-                    $contador = 0;
                     if (isset($calificacion[0]['estado']) == 1) {
-                    	for ($i=0; $i<count($infoSupervisores); $i++) {
-                    		if ($comentarios[$i]["comentario_supervisor"] != NULL) {
-                    			$contador += 1;
-                    		}
-                    	}
-                    	if ($contador == count($infoSupervisores)) {
-                    		$habilitar = '';
-                    	}
+                    	$habilitar = '';
                     }
 					?>
-					<button type="button" id="btnAprobar" name="btnAprobar" class="btn btn-success" <?php echo $habilitar; ?>>
-						Aprobar <span class="glyphicon glyphicon-ok" aria-hidden="true">
-					</button>
-					<button type="button" id="btnRechazar" name="btnRechazar" class="btn btn-danger" <?php echo $habilitar; ?>>
-						Rechazar <span class="glyphicon glyphicon-remove" aria-hidden="true">
+					<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary" <?php echo $habilitar; ?>>
+						Guardar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
 					</button> 
 				</div>
 			</div>

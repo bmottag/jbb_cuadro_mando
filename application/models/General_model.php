@@ -312,11 +312,10 @@ class General_model extends CI_Model {
 		 * Consulta informacion evaluacion objetivos estrategicos
 		 * @since 12/11/2022
 		 */
-		public function get_objetivos_estrategicos_full($arrData) 
+		public function get_objetivos_estrategicos_supervisores($arrData) 
 		{		
-				$this->db->select('distinct(U.id_user) id_user, U.first_name, U.last_name, E.id_estrategia, E.estrategia, E.descripcion_estrategia, O.numero_objetivo_estrategico, O.objetivo_estrategico, OE.*');
+				$this->db->select('distinct(U.id_user) id_user, U.first_name, U.last_name, E.id_estrategia, E.estrategia, E.descripcion_estrategia, O.numero_objetivo_estrategico, O.objetivo_estrategico');
 				$this->db->join('estrategias E', 'E.id_estrategia = O.fk_id_estrategia', 'INNER');
-				$this->db->join('objetivos_estrategicos_evaluacion OE', 'OE.fk_numero_objetivo_estrategico = O.numero_objetivo_estrategico', 'LEFT');
 				$this->db->join('cuadro_base C', 'C.fk_numero_objetivo_estrategico = O.numero_objetivo_estrategico', 'INNER');
 				$this->db->join('actividades A', 'A.fk_id_cuadro_base = C.id_cuadro_base', 'INNER');
 				$this->db->join('usuarios U', 'U.fk_id_dependencia_u = A.fk_id_dependencia', 'INNER');
@@ -324,7 +323,7 @@ class General_model extends CI_Model {
 					$this->db->where('O.numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
 				$this->db->where('U.fk_id_user_role', 5);
-				$this->db->order_by('O.numero_objetivo_estrategico', 'asc');
+				$this->db->order_by('U.id_user', 'asc');
 				$query = $this->db->get('objetivos_estrategicos O');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
@@ -343,7 +342,7 @@ class General_model extends CI_Model {
 				if (array_key_exists("numeroObjetivoEstrategico", $arrData)) {
 					$this->db->where('fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
 				}
-				$this->db->order_by('id_evaluacion_objetivo_estrategico', 'asc');
+				$this->db->order_by('id_evaluacion_objetivo_estrategico', 'desc');
 				$query = $this->db->get('objetivos_estrategicos_evaluacion');
 				if ($query->num_rows() > 0) {
 					return $query->result_array();
@@ -1536,7 +1535,7 @@ class General_model extends CI_Model {
 		 * Consulta lista de tabla auditoria actividades
 		 * @since 10/07/2022
 		 */
-		public function get_auditoria_actividades($arrData) 
+		public function get_auditoria_actividades($arrData)
 		{									
 				$this->db->select("A.*, CONCAT(first_name, ' ', last_name) usuario");
 				$this->db->join('usuarios U', 'U.id_user = A.fk_id_usuario', 'INNER');
@@ -1703,30 +1702,203 @@ class General_model extends CI_Model {
 		
 
 		/**
-		 * Add evaluacion objetivos estrategicos
+		 * Guardar evaluacion objetivos estrategicos
 		 * @since 30/11/2022
 		 */
-		public function addEvaluacionObjetivos() 
+		public function guardarEvaluacionObjetivos() 
 		{
 			$idUser = $this->session->userdata("id");
+			$idEvaluacion = $this->input->post("hddId");
 			$fecha = date("Y-m-d G:i:s");
-			$data["numeroObjetivoEstrategico"] = $this->input->post("hddId");
-			$arrParam = array("numeroObjetivoEstrategico" => $data["numeroObjetivoEstrategico"]);
-			$infoObjetivoEstrategico = $this->general_model->get_objetivos_estrategicos_full($arrParam);
-			
-			for ($i=0; $i<count($infoObjetivoEstrategico); $i++) {
+			$arrParam = array("numeroObjetivoEstrategico" => $this->input->post("hddNumero"));
+			$infoSupervisores = $this->general_model->get_objetivos_estrategicos_supervisores($arrParam);
+			$infoEvaluacion = $this->general_model->get_evaluacion_objetivos_estrategicos($arrParam);
+
+			if ($idEvaluacion != NULL) {
+				if ($infoEvaluacion[0]['estado'] == 1) {
+					$data = array(
+						'observacion' => $this->input->post("observacion"),
+						'comentario' => $this->input->post("comentario"),
+						'calificacion' => $this->input->post("calificacion")
+					);
+					$this->db->where('estado', 1);
+					$this->db->where('id_evaluacion_objetivo_estrategico', $idEvaluacion);
+					$query = $this->db->update('objetivos_estrategicos_evaluacion', $data);
+				} else {
+					$data = array(
+						'fk_numero_objetivo_estrategico' => $this->input->post("hddNumero"),
+						'fk_id_usuario' => $idUser,
+						'fecha_cambio' => $fecha,
+						'observacion' => $this->input->post("observacion"),
+						'comentario' => $this->input->post("comentario"),
+						'cumplimiento_poa' => $this->input->post("hddCumplimientoPOA"),
+						'calificacion' => $this->input->post("calificacion"),
+						'estado' => 1
+					);
+					$query = $this->db->insert('objetivos_estrategicos_evaluacion', $data);
+					$idEval = $this->db->insert_id();
+					if ($query) {
+						for ($i=0; $i<count($infoSupervisores); $i++) {
+							$data = array(
+								'fk_id_evaluacion' => $idEval,
+								'fk_id_supervisor' => $infoSupervisores[$i]['id_user'],
+								'comentario_supervisor' => NULL
+							);
+							$query = $this->db->insert('objetivos_estrategicos_historial', $data);
+						}
+						if ($query) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				}
+				if ($query) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
 				$data = array(
-					'fk_numero_objetivo_estrategico' => $this->input->post("hddId"),
+					'fk_numero_objetivo_estrategico' => $this->input->post("hddNumero"),
 					'fk_id_usuario' => $idUser,
-					'fk_id_supervisor' => $infoObjetivoEstrategico[$i]["id_user"],
 					'fecha_cambio' => $fecha,
 					'observacion' => $this->input->post("observacion"),
-					'comentario_supervisor' => NULL,
+					'comentario' => $this->input->post("comentario"),
 					'cumplimiento_poa' => $this->input->post("hddCumplimientoPOA"),
-					'calificacion' => $this->input->post("calificacion")
+					'calificacion' => $this->input->post("calificacion"),
+					'estado' => 1
 				);
 				$query = $this->db->insert('objetivos_estrategicos_evaluacion', $data);
+				$idEval = $this->db->insert_id();
+				if ($query) {
+					for ($i=0; $i<count($infoSupervisores); $i++) {
+						$data = array(
+							'fk_id_evaluacion' => $idEval,
+							'fk_id_supervisor' => $infoSupervisores[$i]['id_user'],
+							'comentario_supervisor' => NULL
+						);
+						$query = $this->db->insert('objetivos_estrategicos_historial', $data);
+					}
+					if ($query) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
 			}
+		}
+
+		/**
+		 * Calificacion ultima evaluacion objetivos estrategicos
+		 * @since 01/12/2022
+		 */
+		public function get_evaluacion_calificacion($arrData)
+		{
+				$this->db->select('id_evaluacion_objetivo_estrategico, calificacion, estado');
+				$this->db->where('fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
+				$this->db->order_by('id_evaluacion_objetivo_estrategico', 'desc');
+				$query = $this->db->get('objetivos_estrategicos_evaluacion');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Informacion comentario supervisor
+		 * @since 01/12/2022
+		 */
+		public function get_comentario_supervisor($arrData)
+		{
+				$idUser = $this->session->userdata("id");
+				$this->db->select();
+				$this->db->join('objetivos_estrategicos_historial H', 'E.id_evaluacion_objetivo_estrategico = H.fk_id_evaluacion', 'INNER');
+				$this->db->where('E.fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
+				$this->db->where('H.fk_id_supervisor', $idUser);
+				$this->db->order_by('E.id_evaluacion_objetivo_estrategico', 'desc');
+				$query = $this->db->get('objetivos_estrategicos_evaluacion E');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Informacion comentarios supervisores
+		 * @since 01/12/2022
+		 */
+		public function get_comentarios_supervisores($arrData)
+		{
+				$this->db->select();
+				$this->db->join('objetivos_estrategicos_historial H', 'E.id_evaluacion_objetivo_estrategico = H.fk_id_evaluacion', 'INNER');
+				$this->db->join('usuarios U', 'H.fk_id_supervisor = U.id_user', 'INNER');
+				$this->db->where('fk_numero_objetivo_estrategico like', $arrData["numeroObjetivoEstrategico"]);
+				$this->db->order_by('E.id_evaluacion_objetivo_estrategico', 'desc');
+				$query = $this->db->get('objetivos_estrategicos_evaluacion E');
+				if ($query->num_rows() > 0) {
+					return $query->result_array();
+				} else {
+					return false;
+				}
+		}
+
+		/**
+		 * Guardar evaluacion objetivos estrategicos
+		 * @since 30/11/2022
+		 */
+		public function guardarEvaluacionSupervisor() 
+		{
+			$idHistorial = $this->input->post("hddId");
+			$data = array(
+				'comentario_supervisor' => $this->input->post("comentario")
+			);
+			$this->db->where('id_historial', $idHistorial);
+			$query = $this->db->update('objetivos_estrategicos_historial', $data);
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Aprobar evaluacion objetivos estrategicos
+		 * @since 01/12/2022
+		 */
+		public function aprobarEvaluacionObjetivos() 
+		{
+			$idEvaluacion = $this->input->post("hddId");
+			$data = array(
+				'estado' => 2
+			);
+			$this->db->where('id_evaluacion_objetivo_estrategico', $idEvaluacion);
+			$query = $this->db->update('objetivos_estrategicos_evaluacion', $data);
+			if ($query) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Rechazar evaluacion objetivos estrategicos
+		 * @since 01/12/2022
+		 */
+		public function rechazarEvaluacionObjetivos() 
+		{
+			$idEvaluacion = $this->input->post("hddId");
+			$data = array(
+				'estado' => 3
+			);
+			$this->db->where('id_evaluacion_objetivo_estrategico', $idEvaluacion);
+			$query = $this->db->update('objetivos_estrategicos_evaluacion', $data);
 			if ($query) {
 				return true;
 			} else {
