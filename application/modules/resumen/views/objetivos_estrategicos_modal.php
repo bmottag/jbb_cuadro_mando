@@ -59,7 +59,7 @@
                         <td class="text-left"><small><?php echo $data['observacion']; ?></small></td>
                         <td class="text-left"><small><?php echo $data['comentario']; ?></small></td>
                         <td class="text-right"><small><?php echo $data['calificacion']; ?></small></td>
-                        <td class="text-left"><small><?php if ($data['estado'] == 1) { echo 'Enviada'; } else if ($data['estado'] == 2) { echo 'Aprobada'; } else if ($data['estado'] == 3) { echo 'Rechazada'; } ?></small></td>
+                        <td class="text-left"><small><?php if ($data['estado'] == 1) { echo 'Enviada'; } else if ($data['estado'] == 2) { echo 'Aprobada'; } else if ($data['estado'] == 3) { echo 'Rechazada'; } else if ($data['estado'] == 4) { echo 'Devuelta'; } ?></small></td>
                     </tr>
                 <?php
                     endforeach;
@@ -112,6 +112,7 @@
 				</div>
 			</div>
 		</div>
+		<hr>
 
 		<div class="row">
 			<div class="col-sm-12">
@@ -119,15 +120,37 @@
 					<?php
 						if ($infoComentario) { 
 					?>
-						<label class="control-label" for="supervisores">Comentarios Supervisores:</label><br>
-					<?php
-						} for ($i=0; $i<count($infoSupervisores); $i++) {
-							echo $infoComentario?$infoComentario[$i]["first_name"] .' '. $infoComentario[$i]["last_name"] .': '. $infoComentario[$i]["comentario_supervisor"] . '<br>':"";
-						} 
-					?>
+					<label class="control-label" for="supervisores">Comentario de Supervisores Ultima Calificación:</label><br>
+					<table class='table table-hover'>
+						<thead>
+							<tr class="headings">
+								<th width='10%'><small>Fecha</small></th>
+								<th width='30%'><small>Supervisor</small></th>
+								<th width='60%'><small>Comentario</small></th>
+							</tr>
+						</thead>
+
+						<tbody>
+			                <?php
+			                    foreach ($infoComentario as $data):
+			                ?>
+			                    <tr>
+			                        <td class="text-left"><small><?php echo $data['fecha_comentario']; ?></small></td>
+			                        <td class="text-left"><small><?php echo $data['first_name'] . ' ' . $data['last_name']; ?></small></td>
+			                        <td class="text-left"><small><?php echo $data['comentario_supervisor']; ?></small></td>
+			                    </tr>
+			                <?php
+			                    endforeach;
+			                ?>
+						</tbody>
+					</table>
+				<?php } else { ?>
+					<p class="text-danger text-left">No hay comentarios de supervisores.</p>
+				<?php } ?>
 				</div>
 			</div>
 		</div>
+		<hr>
 				
 		<div class="form-group">
 			<div id="div_load" style="display:none">		
@@ -145,9 +168,6 @@
 		<div class="form-group">
 			<div class="row" align="center">
 				<div style="width:50%;" align="center">
-					<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary">
-						Enviar <span class="glyphicon glyphicon-send" aria-hidden="true">
-					</button>
 					<?php
 					$arrParam = array(
                         "numeroObjetivoEstrategico" => $infoSupervisores[0]["numero_objetivo_estrategico"],
@@ -155,25 +175,37 @@
                     );
                     $calificacion = $this->general_model->get_evaluacion_calificacion($arrParam);
                     $comentarios = $this->general_model->get_comentarios_supervisores($arrParam);
-                    $habilitar = ' disabled';
-                    $contador = 0;
-                    if (isset($calificacion[0]['estado']) == 1) {
-                    	for ($i=0; $i<count($infoSupervisores); $i++) {
-                    		if ($comentarios[$i]["comentario_supervisor"] != NULL) {
-                    			$contador += 1;
-                    		}
-                    	}
-                    	if ($contador == count($infoSupervisores)) {
-                    		$habilitar = '';
-                    	}
-                    }
+                    $calificacion_0 = isset($calificacion[0]['estado']);
+                    $habilitar_1 = '';
+                    $habilitar_2 = ' disabled';
+                    /*$contador = 0;*/
+                    if ($calificacion_0) {
+	                    if ($calificacion[0]['estado'] == 1) {
+	                    	for ($i=0; $i<count($infoSupervisores); $i++) {
+	                    		if ($comentarios[$i]["comentario_supervisor"] != NULL) {
+	                    			$habilitar_1 = ' disabled';
+	                    			$habilitar_2 = '';
+	                    			/*$contador += 1;*/
+	                    		}
+	                    	}
+	                    	/*if ($contador == count($infoSupervisores)) {
+	                    		$habilitar = '';
+	                    	}*/
+	                    }
+	                }
 					?>
-					<button type="button" id="btnAprobar" name="btnAprobar" class="btn btn-success" <?php echo $habilitar; ?>>
+					<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary" <?php echo $habilitar_1; ?>>
+						Enviar <span class="glyphicon glyphicon-send" aria-hidden="true">
+					</button>
+					<button type="button" id="btnAprobar" name="btnAprobar" class="btn btn-success" <?php echo $habilitar_2; ?>>
 						Aprobar <span class="glyphicon glyphicon-ok" aria-hidden="true">
 					</button>
-					<button type="button" id="btnRechazar" name="btnRechazar" class="btn btn-danger" <?php echo $habilitar; ?>>
-						Rechazar <span class="glyphicon glyphicon-remove" aria-hidden="true">
-					</button> 
+					<button type="button" id="btnRechazar" name="btnRechazar" class="btn btn-warning" <?php echo $habilitar_2; ?>>
+						Rechazar <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+					</button>
+					<button type="button" id="btnDevolver" name="btnDevolver" class="btn btn-danger" <?php if ((!$calificacion_0) || ($calificacion[0]['estado'] == 4) || ($calificacion[0]['estado'] == 2 && $promedioCumplimiento > $calificacion[0]['calificacion'])) { ?> disabled <?php } ?>>
+						Devolver <span class="glyphicon glyphicon-repeat" aria-hidden="true">
+					</button>
 				</div>
 			</div>
 		</div>

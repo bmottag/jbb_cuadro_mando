@@ -59,7 +59,7 @@
                         <td class="text-left"><small><?php echo $data['observacion']; ?></small></td>
                         <td class="text-left"><small><?php echo $data['comentario']; ?></small></td>
                         <td class="text-right"><small><?php echo $data['calificacion']; ?></small></td>
-                        <td class="text-left"><small><?php if ($data['estado'] == 1) { echo 'Enviada'; } else if ($data['estado'] == 2) { echo 'Aprobada'; } else if ($data['estado'] == 3) { echo 'Rechazada'; } ?></small></td>
+                        <td class="text-left"><small><?php if ($data['estado'] == 1) { echo 'Enviada'; } else if ($data['estado'] == 2) { echo 'Aprobada'; } else if ($data['estado'] == 3) { echo 'Rechazada'; } else if ($data['estado'] == 4) { echo 'Devuelta'; } ?></small></td>
                     </tr>
                 <?php
                     endforeach;
@@ -117,8 +117,10 @@
                     );
                     $calificacion = $this->general_model->get_evaluacion_calificacion($arrParam);
                     $habilitar = ' disabled';
-                    if (isset($calificacion[0]['estado']) == 1) {
-                    	$habilitar = '';
+                    if (isset($calificacion[0]['estado'])) {
+                    	if ($calificacion[0]['estado'] == 1) {
+	                    	$habilitar = '';
+	                    }
                     }
 					?>
 					<button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-primary" <?php echo $habilitar; ?>>

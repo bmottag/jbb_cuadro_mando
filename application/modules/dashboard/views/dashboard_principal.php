@@ -101,12 +101,53 @@
                                 "idEstrategia" => $lista["id_estrategia"],
                                 "vigencia" => date("Y")
                             );
+                            $objetivosEstrategicos = $this->general_model->get_objetivos_estrategicos_by_estrategia($arrParam);
+                            for ($i=0; $i<count($objetivosEstrategicos); $i++) {
+                                $arrParam = array(
+                                    "numeroObjetivoEstrategico" => $objetivosEstrategicos[$i]["numero_objetivo_estrategico"],
+                                    "vigencia" => date("Y")
+                                );
+                                $actividades = $this->general_model->countActividades($arrParam);
+                                $cumplimientos = $this->general_model->sumCumplimiento($arrParam);
+                                $calificacion = $this->general_model->get_evaluacion_calificacion($arrParam);
+                                $calificacion_0 = isset($calificacion[0]['calificacion']);
+                                $calificacion_1 = isset($calificacion[1]['calificacion']);
+                                if ($calificacion_0){
+                                    if ($calificacion[0]['estado'] == 2) {
+                                        $cumplimientos['cumplimiento'] = $calificacion[0]['calificacion'] * $actividades;
+                                    }
+                                    if ($calificacion[0]['estado'] == 1 || $calificacion[0]['estado'] == 3) {
+                                        if ($calificacion_1) {
+                                            if ($calificacion[1]['estado'] == 2) {
+                                                $cumplimientos['cumplimiento'] = $calificacion[1]['calificacion'] * $actividades;
+                                            }
+                                        }
+                                    }
+                                }
+                                $objetivosEstrategicos[$i]['actividades'] = $actividades;
+                                $objetivosEstrategicos[$i]['cumplimiento'] = $cumplimientos['cumplimiento'];
+                            }
+                            $nroActividades = 0;
+                            $cumplimiento = 0;
+                            $promedioCumplimiento = 0;
+                            for ($i=0; $i<count($objetivosEstrategicos); $i++) {
+                                $nroActividades += $objetivosEstrategicos[$i]['actividades'];
+                                $cumplimiento += $objetivosEstrategicos[$i]['cumplimiento'];
+                            }
+                            if($nroActividades){
+                                $promedioCumplimiento = number_format($cumplimiento/$nroActividades,2);
+                            }
+
+                            /*$arrParam = array(
+                                "idEstrategia" => $lista["id_estrategia"],
+                                "vigencia" => date("Y")
+                            );
                             $nroActividades = $this->general_model->countActividades($arrParam);
                             $cumplimiento = $this->general_model->sumCumplimiento($arrParam);
                             $promedioCumplimiento = 0;
                             if($nroActividades){
                                 $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
-                            }
+                            }*/
                                          
                             if(!$promedioCumplimiento){
                                 $promedioCumplimiento = 0;

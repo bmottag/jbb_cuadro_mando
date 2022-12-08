@@ -1,5 +1,5 @@
 <script>
-$(function(){ 
+$(function(){
     $(".btn-primary").click(function () {
         var oID = $(this).attr("id");
         $.ajax ({
@@ -9,6 +9,19 @@ $(function(){
             cache: false,
             success: function (data) {
                 $('#tablaDatos').html(data);
+            }
+        });
+    });
+
+    $(".btn-default").click(function () {   
+        var oID = $(this).attr("id");
+        $.ajax ({
+            type: 'POST',
+            url: base_url + 'resumen/cargarModalHistorialComentarios',
+            data: {'numeroObjetivoEstrategico': oID},
+            cache: false,
+            success: function (data) {
+                $('#tablaDatosComentarios').html(data);
             }
         });
     });
@@ -37,45 +50,41 @@ $(function(){
 					<i class="fa fa-crosshairs"></i> RESUMEN OBJETIVOS ESTRATÉGICOS
 				</div>
 				<div class="panel-body">
-
-<?php
-	$retornoExito = $this->session->flashdata('retornoExito');
-	if ($retornoExito) {
-?>
-		<div class="alert alert-success ">
-			<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-			<?php echo $retornoExito ?>		
-		</div>
-<?php
-	}
-	$retornoError = $this->session->flashdata('retornoError');
-	if ($retornoError) {
-?>
-		<div class="alert alert-danger ">
-			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-			<?php echo $retornoError ?>
-		</div>
-<?php
-	}
-?> 
-
+				<?php
+					$retornoExito = $this->session->flashdata('retornoExito');
+					if ($retornoExito) {
+				?>
+						<div class="alert alert-success ">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							<?php echo $retornoExito ?>		
+						</div>
+				<?php
+					}
+					$retornoError = $this->session->flashdata('retornoError');
+					if ($retornoError) {
+				?>
+						<div class="alert alert-danger ">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							<?php echo $retornoError ?>
+						</div>
+				<?php
+					}
+				?> 
 				<?php
 					if($info){
 				?>				
-
 					<table width="100%" class="table table-hover">
 						<thead>
 							<tr>
-								<th width='6%'>No.</th>
+								<th width='7%'>No.</th>
 								<th width='40%'>Objetivo Estratégico</th>
 								<th width='10%' class="text-center">No. Actividades</th>
-								<th width='44%' class="text-center">Promedio de Cumplimiento</th>
+								<th width='43%' class="text-center">Promedio de Cumplimiento</th>
 							</tr>
 						</thead>
 						<tbody>
 						<?php
 							foreach ($info as $lista):
-								$calificacion = array();
 	                            $arrParam = array(
 	                                "numeroObjetivoEstrategico" => $lista["numero_objetivo_estrategico"],
 	                                "vigencia" => date("Y")
@@ -83,25 +92,46 @@ $(function(){
 	                            $nroActividades = $this->general_model->countActividades($arrParam);
 								$cumplimiento = $this->general_model->sumCumplimiento($arrParam);
 								$calificacion = $this->general_model->get_evaluacion_calificacion($arrParam);
+								$calificacion_0 = isset($calificacion[0]['calificacion']);
+								$calificacion_1 = isset($calificacion[1]['calificacion']);
 	                            $promedioCumplimiento = 0;
-	                            if($nroActividades){
-	                                if (isset($calificacion[0]['calificacion']) > $promedioCumplimiento && $calificacion[0]['estado'] == 2) {
-		                            	$promedioCumplimiento = $calificacion[0]['calificacion'];
-		                            } else if (isset($calificacion[0]['calificacion']) > $promedioCumplimiento && $calificacion[0]['estado'] == 1 && isset($calificacion[1]['calificacion']) > $promedioCumplimiento && $calificacion[1]['estado'] == 2) {
-		                            	$promedioCumplimiento = $calificacion[1]['calificacion'];
-		                            } else {
-		                            	$promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
-		                            }
+	                            if ($nroActividades) {
+	                            	$promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
 	                            }
-	                            if(!$promedioCumplimiento){
+	                            
+	                            if ($calificacion_0){
+	                            	if ($promedioCumplimiento > $calificacion[0]['calificacion']) {
+	                            		$promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+		                            } else {
+		                            	if ($calificacion[0]['estado'] == 2) {
+				                            $promedioCumplimiento = $calificacion[0]['calificacion'];
+		                            	}
+		                            	if ($calificacion[0]['estado'] == 1 || $calificacion[0]['estado'] == 3) {
+		                            		if ($calificacion_1) {
+		                            			if ($calificacion[1]['estado'] == 2) {
+		                            				$promedioCumplimiento = $calificacion[1]['calificacion'];
+		                            			}
+		                            		} else {
+					                            $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+		                            		}
+		                            	}
+		                            	if ($calificacion[0]['estado'] == 4) {
+				                            $promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+		                            	}
+		                            }
+	                            } else {
+	                            	$promedioCumplimiento = number_format($cumplimiento["cumplimiento"]/$nroActividades,2);
+	                            }
+
+	                            if (!$promedioCumplimiento) {
 	                                $promedioCumplimiento = 0;
 	                                $estilos = "bg-warning";
-	                            }else{
-	                                if($promedioCumplimiento > 70){
+	                            } else {
+	                                if ($promedioCumplimiento > 70) {
 	                                    $estilos = "progress-bar-success";
-	                                }elseif($promedioCumplimiento > 40 && $promedioCumplimiento <= 70){
+	                                } elseif ($promedioCumplimiento > 40 && $promedioCumplimiento <= 70) {
 	                                    $estilos = "progress-bar-warning";
-	                                }else{
+	                                } else {
 	                                    $estilos = "progress-bar-danger";
 	                                }
 	                            }
@@ -124,7 +154,7 @@ $(function(){
 											$habilitar = '';
 										}
 									}
-									if (isset($calificacion[0]['estado']) == 1 && $comentario[0]['comentario_supervisor'] == NULL) {
+									if ($calificacion_0 == 1 && $comentario[0]['comentario_supervisor'] == NULL) {
 										$warning = '<span class="fa fa-exclamation-triangle fa-lg" style="color: orange"; aria-hidden="true"></span>';
 									}
 								}
@@ -132,13 +162,19 @@ $(function(){
 								echo "<tr>";
 								echo "<td>";
 								?>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_objetivo_estrategico']; ?>" <?php echo $habilitar; ?>>
-                                        <?php echo $lista['numero_objetivo_estrategico'] ?>&nbsp;
-                                        <span class="fa fa-pencil" aria-hidden="true"></span>
-                                    </button>
-                                    <?php echo $warning; ?>
-                                    
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEvaluacion" id="<?php echo $lista['numero_objetivo_estrategico']; ?>" <?php echo $habilitar; ?>>
+                                    <?php echo $lista['numero_objetivo_estrategico'] ?>&nbsp;
+                                    <span class="fa fa-pencil" aria-hidden="true"></span>
+                                </button>
                                 <?php
+                                echo $warning;
+                                if ($userRol == ID_ROL_SUPER_ADMIN || $userRol == ID_ROL_ADMINISTRADOR) {
+                                ?>
+                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalComentarios" id="<?php echo $lista['numero_objetivo_estrategico']; ?>" title="Historial Comentarios">
+									<i class="fa fa-comments fa-fw"></i>
+								</button>
+								<?php
+								}
                                 echo "</td>";
 								echo "<td>" . $lista['objetivo_estrategico'] .  "</td>";
 								echo "<td class='text-center'>" . $nroActividades . "</td>";
@@ -168,6 +204,15 @@ $(function(){
 	</div>
 </div>
 <!--FIN Modal  -->
+
+<!--INICIO Modal -->
+<div class="modal fade text-center" id="modalComentarios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="tablaDatosComentarios">
+        </div>
+    </div>
+</div>
+<!--FIN Modal -->
 
 <!-- Tables -->
 <script>

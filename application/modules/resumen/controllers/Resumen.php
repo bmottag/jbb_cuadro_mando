@@ -37,18 +37,15 @@ class Resumen extends CI_Controller {
 				);
 				$this->general_model->saveInfoGoBack($arrParam);
 			}
-
 			$arrParam = array(
 				"table" => "param_estados",
 				"order" => "valor",
 				"id" => "x"
 			);
 			$data['listaEstados'] = $this->general_model->get_basic_search($arrParam);
-
 			//INICIO LISTAS PARA FILTROS
 			$arrParam = array();
 			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
-
 	        $arrParam = array();
 	        if($_GET && $_GET["numero_objetivo"] != ""){
 	            $arrParam = array(
@@ -56,26 +53,21 @@ class Resumen extends CI_Controller {
 	            );  
 	        }
 	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
-
             if($_GET && $_GET["numero_proyecto"] != ""){
                 $arrParam["numeroProyecto"] = $_GET["numero_proyecto"];
             }
 			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
-
             if($_GET && $_GET["id_dependencia"] != ""){
                 $arrParam["idDependencia"] = $_GET["id_dependencia"];
             }
             $data['listaTodasActividades'] = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam);
-
             if($_GET && $_GET["numero_actividad"] != ""){
                 $arrParam["numeroActividad"] = $_GET["numero_actividad"];
             }
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
-
 			$arrParam["vigencia"] = date("Y");
 			$data['nroActividades'] = $this->general_model->countActividades($arrParam);          
 	        //FIN LISTAS PARA FILTROS
-
 			//NO INICIADA
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -83,14 +75,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//EN PROCESO
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -98,14 +88,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//CERRADA
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -113,14 +101,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//APROBADA SUPERVISOR
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -128,14 +114,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//RECHAZADA SUPERVISOR
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -143,14 +127,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//APROBADA PLANEACION
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -158,14 +140,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//RECHAZADA PLANEACIOON
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -173,14 +153,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//INCUMPLIDAS
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -188,14 +166,12 @@ class Resumen extends CI_Controller {
 				"vigencia" => date("Y")
 			);
 			$data['nroActividadesPrimerTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$data['bandera'] = 0;
 			$data["view"] = "resumen_general";
 			$this->load->view("layout_calendar", $data);
@@ -208,9 +184,7 @@ class Resumen extends CI_Controller {
 	public function evaluacion()
 	{	
 			$data["retornoExito"] = false;
-
 	        if($_POST){
-
 	        	if(isset($_POST["btnPrimerSemestre"])){
 	        		$numeroSemestre = 1;
 	        		$estado = $_POST["estado1"];
@@ -230,13 +204,11 @@ class Resumen extends CI_Controller {
 					}			
 				}
 	        }
-
 			$arrParam = array(
 				"evaluacionFlag" => true,
 			);
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
 			$data['bandera'] = 1;
-
 			$data["view"] = "evaluacion_oci";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -257,7 +229,6 @@ class Resumen extends CI_Controller {
 				);
 				$this->general_model->saveInfoGoBack($arrParam);
 			}
-		
 			//INICIO LISTAS PARA FILTROS
 			$idDependencia = $this->session->userdata("dependencia");
 			$arrParam = array(
@@ -281,7 +252,6 @@ class Resumen extends CI_Controller {
 			}
 			$arrParam = array("filtroEstrategias" => $valor);
 			$data['listaNumeroObjetivoEstrategicos'] = $this->general_model->get_objetivos_estrategicos($arrParam);
-
 	        $arrParam = array();
 	        if($_GET && $_GET["numero_objetivo"] != ""){
 	            $arrParam = array(
@@ -290,26 +260,21 @@ class Resumen extends CI_Controller {
 	        }
 	        $arrParam["idDependencia"] = $idDependencia;
 	        $data['listaProyectos'] = $this->general_model->get_numero_proyectos_full_by_dependencia($arrParam);
-
             if($_GET && $_GET["numero_proyecto"] != ""){
                 $arrParam["numeroProyecto"] = $_GET["numero_proyecto"];
             }
 			$data['listaNumeroDependencia'] = $this->general_model->get_dependencia_full_by_filtro($arrParam);
-
             if($_GET && $_GET["id_dependencia"] != ""){
                 $arrParam["idDependencia"] = $_GET["id_dependencia"];
             }
             $data['listaTodasActividades'] = $this->general_model->get_numero_actividades_full_by_dependencia($arrParam);
-
             if($_GET && $_GET["numero_actividad"] != ""){
                 $arrParam["numeroActividad"] = $this->input->post('numero_actividad');
             }
 			$data['listaActividades'] = $this->general_model->get_actividades($arrParam);
-
 			$arrParam["vigencia"] = date("Y");
 			$data['nroActividades'] = $this->general_model->countActividades($arrParam);          
 	        //FIN LISTAS PARA FILTROS
-
 			//NO INICIADA
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -318,14 +283,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreNoIniciada'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//EN PROCESO
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -334,14 +297,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreEnProceso'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//CERRADA
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -350,14 +311,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreCerrado'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//APROBADA SUPERVISOR
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -366,14 +325,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreAprobadoSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//RECHAZADA SUPERVISOR
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -382,14 +339,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreRechazadaSupervisor'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//APROBADA PLANEACION
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -398,14 +353,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreAprobadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//RECHAZADA PLANEACIOON
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -414,14 +367,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreRechazadaPlaneacion'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			//INCUMPLIDAS
 			$arrParam2 = array(
 				"numeroTrimestre" => 1,
@@ -430,14 +381,12 @@ class Resumen extends CI_Controller {
 				"idDependencia" => $idDependencia
 			);
 			$data['nroActividadesPrimerTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$arrParam2["numeroTrimestre"] = 2;
 			$data['nroActividadesSegundoTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 3;
 			$data['nroActividadesTercerTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
 			$arrParam2["numeroTrimestre"] = 4;
 			$data['nroActividadesCuartoTrimestreIncumplidas'] = $this->general_model->countActividadesEstado($arrParam2);
-
 			$data["view"] = "resumen_general";
 			$this->load->view("layout_calendar", $data);
 	}
@@ -457,10 +406,8 @@ class Resumen extends CI_Controller {
 			if($idEstado==99){
 				$msj = "Se realizó el cálculo de valores para el <b>Trimestre " . $numeroTrimestre .  "</b>.";
 			}
-			
 			$arrParam = array();
 			$listadoActividades = $this->general_model->get_actividades($arrParam);
-
 			foreach ($listadoActividades as $lista):
 				$cumplimientoX = 0;
 				$avancePOA = 0;
@@ -469,12 +416,10 @@ class Resumen extends CI_Controller {
 				//INICIO --- DEBO TENER EN CUENTA EL TRIMESTRE DE LOS DEMAS QUE ESTAN EN 5
 				$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 				$estadoActividad = $this->general_model->get_estados_actividades($arrParam);
-
 				$estadoTrimestre1 = $estadoActividad[0]["estado_trimestre_1"];
 				$estadoTrimestre2 = $estadoActividad[0]["estado_trimestre_2"];
 				$estadoTrimestre3 = $estadoActividad[0]["estado_trimestre_3"];
 				$estadoTrimestre4 = $estadoActividad[0]["estado_trimestre_4"];
-
 				$incluirTrimestre = 0;//trimestres a incluir para el calculo del avance POA
 				if($idEstado==99){
 					if($estadoTrimestre1 == 5){
@@ -503,14 +448,12 @@ class Resumen extends CI_Controller {
 						$incluirTrimestre = $incluirTrimestre . "," . 4;
 					}
 				}
-
 				$arrParam = array(
 					"numeroActividad" => $lista["numero_actividad"],
 					"filtroTrimestre" => $incluirTrimestre
 				);
 				$sumaEjecutado = $this->general_model->sumarEjecutado($arrParam);	
 				//FIN --- DEBO TENER EN CUENTA EL TRIMESTRE DE LOS DEMAS QUE ESTAN EN 5
-
 				$sumaProgramado = $this->general_model->sumarProgramado($arrParam);
 				if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
 					$avancePOA = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * $ponderacion,3);
@@ -518,7 +461,6 @@ class Resumen extends CI_Controller {
 				if($sumaProgramado['programado'] > 0 && $sumaEjecutado){
 					$cumplimientoActual = round(($sumaEjecutado['ejecutado']/$sumaProgramado['programado']) * 100,3);
 				}
-
 				if($idEstado==99){
 					switch ($numeroTrimestre) {
 						case 1:
@@ -534,8 +476,6 @@ class Resumen extends CI_Controller {
 							$estadoRevisar = $estadoTrimestre4;
 							break;
 					}
-
-
 					if($estadoRevisar == 5) {
 						$arrParam = array(
 							"numeroActividad" => $lista["numero_actividad"],
@@ -543,7 +483,6 @@ class Resumen extends CI_Controller {
 						);
 						$sumaProgramadoTrimestreX = $this->general_model->sumarProgramado($arrParam);
 						$sumaEjecutadoTrimestreX = $this->general_model->sumarEjecutado($arrParam);
-
 						if($sumaProgramadoTrimestreX['programado'] > 0){
 							$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100,3);
 						}
@@ -556,13 +495,11 @@ class Resumen extends CI_Controller {
 						);
 						$sumaProgramadoTrimestreX = $this->general_model->sumarProgramado($arrParam);
 						$sumaEjecutadoTrimestreX = $this->general_model->sumarEjecutado($arrParam);
-
 						if($sumaProgramadoTrimestreX['programado'] > 0){
 							$cumplimientoX = round($sumaEjecutadoTrimestreX['ejecutado'] / $sumaProgramadoTrimestreX['programado'] * 100,3);
 						}
 					}
 				}
-
 				if($idEstado==99){
 					$arrParam = array(
 						"numeroActividad" => $lista["numero_actividad"],
@@ -589,7 +526,6 @@ class Resumen extends CI_Controller {
 					}					
 				}
 			endforeach;
-
 			$data["result"] = true;
 			$data["mensaje"] = $msj;
 			$this->session->set_flashdata('retornoExito', $msj);
@@ -604,10 +540,8 @@ class Resumen extends CI_Controller {
 	public function save_evidencias()
 	{			
 			$numeroTrimestre = $this->input->post('trimestre');
-
 			$arrParam = array();
 			$listadoActividades = $this->general_model->get_actividades($arrParam);
-
 			foreach ($listadoActividades as $lista):
 				$arrParam = array("numeroActividad" => $lista["numero_actividad"]);
 				$arrParam = array(
@@ -615,7 +549,6 @@ class Resumen extends CI_Controller {
 					"numeroTrimestre" => $numeroTrimestre
 				);
 				$infoEjecucion = $this->general_model->get_ejecucion_actividades($arrParam);
-
 				$descripcion_actividad = "";
 				$evidencia = "";
 				$z=0;
@@ -633,7 +566,6 @@ class Resumen extends CI_Controller {
 						$evidencia .= $valores['evidencias'];
 						$z++;
 					endforeach;
-
 					$arrParam = array(
 						"numeroActividad" => $lista["numero_actividad"],
 						"numeroTrimestre" => $numeroTrimestre,
@@ -643,7 +575,6 @@ class Resumen extends CI_Controller {
 					$this->general_model->updateEvidencias($arrParam);
 				}
 			endforeach;
-
 			echo "Termino ejecucion";
     }
 
@@ -656,7 +587,6 @@ class Resumen extends CI_Controller {
 	{			
 			$arrParam = array();
 			$data['info'] = $this->general_model->get_objetivos_estrategicos($arrParam);
-			
 			$data["view"] = 'objetivos_estrategicos';
 			$this->load->view("layout_calendar", $data);
 	}
@@ -1566,18 +1496,14 @@ class Resumen extends CI_Controller {
 		$spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(70);
 		$spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(30);
 		$spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(30);
-
 		// Set fonts
 		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFont()->setSize(11);
 		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFont()->setBold(true);
-
 		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
  		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFill()->setFillType(Fill::FILL_SOLID);
 		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->getFill()->getStartColor()->setARGB('236e09');
-
 		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-
 		$spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(40);
 		$spreadsheet->getActiveSheet()->getStyle('A1:C1')->applyFromArray(
 		    [
@@ -1586,9 +1512,7 @@ class Resumen extends CI_Controller {
 		        ],
 		    ]
 		);
-		
 		$spreadsheet->setActiveSheetIndex(0);
-
 		$writer = new Xlsx($spreadsheet);
 		$writer->save('php://output');
 	}
@@ -1600,9 +1524,7 @@ class Resumen extends CI_Controller {
     public function cargarModalComentariosPOA() 
 	{
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
-			
 			$data["numeroActividad"] = $this->input->post("numeroActividad");
-
 			$arrParam = array(
 				"numeroActividad" => $data["numeroActividad"],
 				"filtroEstado" => "5,6"
@@ -1618,14 +1540,11 @@ class Resumen extends CI_Controller {
     public function cargarModalEvaluacionOCI() 
 	{
 			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
-			
 			$data["numeroActividad"] = $this->input->post("numeroActividad");
 			$data["numeroSemestre"] = $this->input->post("numeroSemestre");
 			$data["bandera"] = $this->input->post("bandera");
-
 			$arrParam = array("numeroActividad" => $data["numeroActividad"]);
 			$data['infoActividad'] = $this->general_model->get_actividades_full($arrParam);
-			
 			$arrParam["numeroSemestre"] = $data["numeroSemestre"];
             $data['information'] = $this->general_model->get_evaluacion_oci($arrParam);
 			$this->load->view("evaluacion_modal", $data);
@@ -1669,7 +1588,6 @@ class Resumen extends CI_Controller {
 			$numeroActividad = $this->input->post('hddId');
 			$numeroSemestre = $this->input->post('numeroSemestre');
 			$msj = "Se guardo la información!";
-
 			$arrParam = array(
 				"numeroActividad" => $numeroActividad,
 				"numeroSemestre" => $numeroSemestre,
@@ -1701,7 +1619,6 @@ class Resumen extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$msj = "Se guardo la información!";
-
 			if ($this->general_model->guardarEvaluacionObjetivos())
 			{
 				$data["result"] = true;		
@@ -1723,7 +1640,6 @@ class Resumen extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$msj = "Se guardo la información!";
-
 			if ($this->general_model->guardarEvaluacionSupervisor())
 			{
 				$data["result"] = true;		
@@ -1745,8 +1661,7 @@ class Resumen extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$msj = "Se guardo la información!";
-
-			if ($this->general_model->aprobarEvaluacionObjetivos())
+			if ($this->general_model->actualizarEvaluacionObjetivos(2))
 			{
 				$data["result"] = true;		
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
@@ -1767,8 +1682,7 @@ class Resumen extends CI_Controller {
 			header('Content-Type: application/json');
 			$data = array();
 			$msj = "Se guardo la información!";
-
-			if ($this->general_model->rechazarEvaluacionObjetivos())
+			if ($this->general_model->actualizarEvaluacionObjetivos(3))
 			{
 				$data["result"] = true;		
 				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
@@ -1777,5 +1691,42 @@ class Resumen extends CI_Controller {
 				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
 			}
 			echo json_encode($data);
+    }
+
+    /**
+	 * Devolver evaluacion objetivos
+	 * @since 06/12/2022
+     * @author AOCUBILLOSA
+	 */
+	public function devolver_evaluacion_objetivos()
+	{			
+			header('Content-Type: application/json');
+			$data = array();
+			$msj = "Se guardo la información!";
+			if ($this->general_model->actualizarEvaluacionObjetivos(4))
+			{
+				$data["result"] = true;		
+				$this->session->set_flashdata('retornoExito', '<strong>Correcto!</strong> ' . $msj);
+			} else {
+				$data["result"] = "error";
+				$this->session->set_flashdata('retornoError', '<strong>Error!</strong> Ask for help');
+			}
+			echo json_encode($data);
+    }
+
+    /**
+     * Cargo modal - Listado historial comentarios
+     * @since 06/12/2022
+     */
+    public function cargarModalHistorialComentarios() 
+	{
+			header("Content-Type: text/plain; charset=utf-8"); //Para evitar problemas de acentos
+			$data["numeroObjetivoEstrategico"] = $this->input->post("numeroObjetivoEstrategico");
+			$arrParam = array(
+				"numeroObjetivoEstrategico" => $data["numeroObjetivoEstrategico"],
+				"vigencia" => date("Y")
+			);
+            $data['comentarios'] = $this->general_model->get_historial_comentarios($arrParam);
+			$this->load->view("historial_comentarios_modal", $data);
     }
 }
